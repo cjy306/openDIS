@@ -1,7 +1,5 @@
 import os, sys
 import numpy as np
-import time as _time
-from pinning_module import PinningModule
 
 pyexadis_paths = ['../python', '../lib', '../core/pydis/python', '../core/exadis/python/']
 [sys.path.append(os.path.abspath(path)) for path in pyexadis_paths if not path in sys.path]
@@ -211,7 +209,7 @@ def generate_prismatic_config_by_density(crystal, Lbox_m, burgmag, target_densit
 # ============================================================
 # 模拟主函数
 # ============================================================
-def run_simulation(net, output_dir, restart_id=None,precipitates=None, pinning_module=None):
+def run_simulation(net, output_dir, restart_id=None, precipitates=None):
 
     state = {
         "crystal": 'fcc',
@@ -227,13 +225,6 @@ def run_simulation(net, output_dir, restart_id=None,precipitates=None, pinning_m
         "maxdt":   1e-6,
     }
 
-    if pinning_module is not None and precipitates is not None \
-            and len(precipitates.centers) > 0:
-        pinning_module.load_precipitates(
-            centers_m=precipitates.centers_m,
-            radii_m=precipitates.radii_m
-        )
-
     restart = None
     if restart_id is None:
         net_manager = DisNetManager(net)
@@ -244,11 +235,19 @@ def run_simulation(net, output_dir, restart_id=None,precipitates=None, pinning_m
             restart_file=os.path.join(output_dir, restart_filename)
         )
 
-    calforce  = CalForce(force_mode='SUBCYCLING_MODEL', state=state,Ngrid=64, cell=net_manager.cell)
-    mobility  = MobilityLaw(mobility_law='FCC_0', state=state,Medge=10000.0, Mscrew=1000.0,Mclimb=1.0, vmax=20000.0)
-    timeint   = TimeIntegration(integrator='Subcycling',rgroups=[0.0, 50.0, 300.0, 800.0],
+    # 加载球形杂质到 C++ System，由 CollisionOrowan 在每步自动执行 Orowan 约束
+    if precipitates is not None and len(precipitates.centers_m) > 0:
+        exadis_net = net_manager.get_disnet(ExaDisNet)
+        centers_m = [list(c) for c in precipitates.centers_m]
+        radii_m   = list(precipitates.radii_m)
+        exadis_net.load_obstacles(centers_m, radii_m)
+
+    calforce  = CalForce(force_mode='SUBCYCLING_MODEL', state=state, Ngrid=64, cell=net_manager.cell)
+    mobility  = MobilityLaw(mobility_law='FCC_0', state=state, Medge=10000.0, Mscrew=1000.0,
+                            Mclimb=1.0, vmax=20000.0)
+    timeint   = TimeIntegration(integrator='Subcycling', rgroups=[0.0, 50.0, 300.0, 800.0],
                                 state=state, force=calforce, mobility=mobility)
-    collision = Collision(collision_mode='Retroactive', state=state)
+    collision = Collision(collision_mode='Orowan', state=state)
     topology  = Topology(topology_mode='TopologyParallel', state=state,
                          force=calforce, mobility=mobility)
     remesh    = Remesh(remesh_rule='LengthBased', state=state)
@@ -268,45 +267,7 @@ def run_simulation(net, output_dir, restart_id=None,precipitates=None, pinning_m
         restart=restart,
     )
 
-    # 有钉扎模块时覆盖主循环，插入 Orowan 修正
-    if pinning_module is not None:
-        def run_with_orowan(N, state):
-            t0 = _time.perf_counter()
-
-            params = get_exadis_params(state)
-            system = pyexadis.System(N.get_disnet(ExaDisNet).net, params)
-            system.set_neighbor_cutoff(sim.calforce.force.neighbor_cutoff)
-
-            driver = sim.driver
-            driver.set_system(system)
-            driver.set_modules(
-                sim.calforce.force, sim.mobility.mobility,
-                sim.timeint.integrator, sim.collision.collision,
-                sim.topology.topology, sim.remesh.remesh,
-            )
-            driver.outputdir = sim.write_dir
-            driver.set_simulation("" if sim.restart is None else sim.restart)
-
-            stepper = pyexadis.Driver.MAX_STRAIN(sim.max_strain)
-            ctrl    = sim.get_exadis_ctrl(state)
-            driver.initialize(ctrl)
-
-            while stepper.iterate(driver):
-                driver.step(ctrl)
-                pinning_module.apply(N.get_disnet(ExaDisNet))
-
-            state = driver.update_state(state)
-            timetot = _time.perf_counter() - t0
-            system.print_timers(timetot=timetot)
-            print(f'RUN TIME: {timetot:.2f} sec')
-            return state
-
-        sim.run = run_with_orowan
-
     sim.run(net_manager, state)
-
-    if pinning_module is not None:
-        pinning_module.print_summary()
 
 
 # ============================================================
@@ -334,14 +295,10 @@ def main():
     precipitates.generate(large_count=sphere_count, large_diameter_m=sphere_diameter_m)
     precipitates.save_data_file(os.path.join(output_dir, 'precipitates.data'))
 
-    pinning_module = PinningModule(burgmag=burgmag, pinning_radius_factor=1.0, verbose=False)
-
     if args.restart is not None:
         run_simulation(ExaDisNet(), output_dir=output_dir,
                        restart_id=args.restart,
-                       precipitates=precipitates,
-                       pinning_module=pinning_module,
-                       restart_freq=100)
+                       precipitates=precipitates)
     else:
         G = generate_prismatic_config_by_density(
             crystal='fcc', Lbox_m=Lbox_m, burgmag=burgmag,
@@ -349,7 +306,7 @@ def main():
             radius_min_m=0.15e-6, radius_max_m=0.5e-6,
             seed=12345, precipitates=precipitates
         )
-        run_simulation(G, output_dir=output_dir,precipitates=precipitates,pinning_module=pinning_module)
+        run_simulation(G, output_dir=output_dir, precipitates=precipitates)
 
     pyexadis.finalize()
 
