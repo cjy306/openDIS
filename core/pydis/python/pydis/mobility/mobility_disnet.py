@@ -95,7 +95,7 @@ class MobilityLaw(MobilityLaw_Base):
            To do: add glide constraints
         """
         node1 = G.nodes(tag)
-        # set velocity of pinned nodes to zero
+        # set velocity of pinned nodes to zero 
         if node1.constraint == DisNode.Constraints.PINNED_NODE:
             vel = np.zeros(3)
         else:
@@ -109,7 +109,7 @@ class MobilityLaw(MobilityLaw_Base):
             vel = f / (Lsum/2.0) * self.mob
             normals = np.array([edge.plane_normal for edge in G.neighbor_segments_dict(tag).values()])
             #print("Mobility_SimpleGlide: tag = %s, vel = %s, normals = %s"%(tag, str(vel), str(normals)))
-            vel = self.ortho_vel_glide_planes(vel, normals)
+            vel = self.ortho_vel_glide_planes(vel, normals)#速度正交投影到滑移面上
             vel_norm = np.linalg.norm(vel)
             if vel_norm > self.vmax:
                 vel *= self.vmax / vel_norm

@@ -1,0 +1,1069 @@
+Host Parallel Execution Space:
+  KOKKOS_ENABLE_OPENMP: yes
+
+OpenMP Runtime Configuration:
+Kokkos::OpenMP thread_pool_topology[ 1 x 48 x 1 ]
+Reading restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.100.exadis
+Warning: skipped resetting the time-integrator
+ version = 1
+ nodes = 2220
+ segments = 2220
+Reading restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.100.exadis
+ version = 1
+ nodes = 2220
+ segments = 2220
+Warning: directory /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN already exists
+Step =    100: nodes = 2220, dt = 5.933245e-09, strain = 5.259538e-04, elapsed = 0.0 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.100.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.100.exadis
+Run until reaching strain = 0.010000
+Step =    101: nodes = 2247, dt = 7.119894e-09, strain = 5.330737e-04, elapsed = 1.2 sec
+Step =    102: nodes = 2252, dt = 4.271936e-09, strain = 5.373457e-04, elapsed = 2.3 sec
+Step =    103: nodes = 2251, dt = 4.271936e-09, strain = 5.416176e-04, elapsed = 3.2 sec
+Step =    104: nodes = 2279, dt = 5.126323e-09, strain = 5.467439e-04, elapsed = 3.8 sec
+Step =    105: nodes = 2300, dt = 6.151588e-09, strain = 5.528955e-04, elapsed = 4.7 sec
+Step =    106: nodes = 2337, dt = 7.381906e-09, strain = 5.602774e-04, elapsed = 6.2 sec
+Step =    107: nodes = 2343, dt = 4.429143e-09, strain = 5.647066e-04, elapsed = 7.4 sec
+Step =    108: nodes = 2350, dt = 4.429143e-09, strain = 5.691357e-04, elapsed = 8.2 sec
+Step =    109: nodes = 2386, dt = 5.314972e-09, strain = 5.744507e-04, elapsed = 9.1 sec
+Step =    110: nodes = 2423, dt = 6.377967e-09, strain = 5.808286e-04, elapsed = 10.8 sec
+Step =    111: nodes = 2468, dt = 7.653560e-09, strain = 5.884822e-04, elapsed = 23.2 sec
+Step =    112: nodes = 2489, dt = 4.592136e-09, strain = 5.930743e-04, elapsed = 27.2 sec
+Step =    113: nodes = 2513, dt = 4.592136e-09, strain = 5.976665e-04, elapsed = 28.1 sec
+Step =    114: nodes = 2544, dt = 5.510563e-09, strain = 6.031770e-04, elapsed = 30.3 sec
+Step =    115: nodes = 2590, dt = 6.612676e-09, strain = 6.097897e-04, elapsed = 36.2 sec
+Step =    116: nodes = 2678, dt = 7.935211e-09, strain = 6.177249e-04, elapsed = 46.0 sec
+Step =    117: nodes = 2722, dt = 4.761126e-09, strain = 6.224860e-04, elapsed = 52.7 sec
+Step =    118: nodes = 2755, dt = 4.761126e-09, strain = 6.272472e-04, elapsed = 62.2 sec
+Step =    119: nodes = 2792, dt = 5.713352e-09, strain = 6.329605e-04, elapsed = 74.4 sec
+Step =    120: nodes = 2867, dt = 6.856022e-09, strain = 6.398165e-04, elapsed = 95.2 sec
+Step =    121: nodes = 2966, dt = 8.227227e-09, strain = 6.480438e-04, elapsed = 129.2 sec
+Step =    122: nodes = 3015, dt = 4.936336e-09, strain = 6.529801e-04, elapsed = 148.5 sec
+Step =    123: nodes = 3069, dt = 4.936336e-09, strain = 6.579164e-04, elapsed = 170.4 sec
+Step =    124: nodes = 3136, dt = 5.923603e-09, strain = 6.638400e-04, elapsed = 198.4 sec
+Step =    125: nodes = 3231, dt = 7.108324e-09, strain = 6.709484e-04, elapsed = 230.0 sec
+Step =    126: nodes = 3377, dt = 8.529989e-09, strain = 6.794784e-04, elapsed = 274.9 sec
+Step =    127: nodes = 3405, dt = 2.558997e-09, strain = 6.820374e-04, elapsed = 286.4 sec
+Step =    128: nodes = 3449, dt = 2.558997e-09, strain = 6.845964e-04, elapsed = 298.0 sec
+Step =    129: nodes = 3473, dt = 3.070796e-09, strain = 6.876671e-04, elapsed = 318.5 sec
+Step =    130: nodes = 3550, dt = 3.684955e-09, strain = 6.913521e-04, elapsed = 327.1 sec
+Step =    131: nodes = 3631, dt = 4.421946e-09, strain = 6.957740e-04, elapsed = 339.2 sec
+Step =    132: nodes = 3717, dt = 5.306335e-09, strain = 7.010804e-04, elapsed = 401.2 sec
+Step =    133: nodes = 3760, dt = 3.183801e-09, strain = 7.042642e-04, elapsed = 413.0 sec
+Step =    134: nodes = 3790, dt = 3.183801e-09, strain = 7.074480e-04, elapsed = 418.6 sec
+Step =    135: nodes = 3857, dt = 3.820561e-09, strain = 7.112685e-04, elapsed = 421.4 sec
+Step =    136: nodes = 3942, dt = 4.584674e-09, strain = 7.158532e-04, elapsed = 430.0 sec
+Step =    137: nodes = 3990, dt = 2.750804e-09, strain = 7.186040e-04, elapsed = 437.1 sec
+Step =    138: nodes = 4043, dt = 2.750804e-09, strain = 7.213548e-04, elapsed = 443.0 sec
+Step =    139: nodes = 4100, dt = 3.300965e-09, strain = 7.246558e-04, elapsed = 466.1 sec
+Step =    140: nodes = 4205, dt = 3.961158e-09, strain = 7.286170e-04, elapsed = 482.7 sec
+Step =    141: nodes = 4259, dt = 2.376695e-09, strain = 7.309936e-04, elapsed = 493.3 sec
+Step =    142: nodes = 4304, dt = 2.376695e-09, strain = 7.333703e-04, elapsed = 497.8 sec
+Step =    143: nodes = 4328, dt = 7.130084e-10, strain = 7.340833e-04, elapsed = 498.5 sec
+Step =    144: nodes = 4342, dt = 7.130084e-10, strain = 7.347964e-04, elapsed = 498.9 sec
+Step =    145: nodes = 4346, dt = 8.556101e-10, strain = 7.356520e-04, elapsed = 499.4 sec
+Step =    146: nodes = 4379, dt = 1.026732e-09, strain = 7.366787e-04, elapsed = 499.8 sec
+Step =    147: nodes = 4412, dt = 1.232079e-09, strain = 7.379108e-04, elapsed = 501.0 sec
+Step =    148: nodes = 4456, dt = 1.478494e-09, strain = 7.393893e-04, elapsed = 502.5 sec
+Step =    149: nodes = 4485, dt = 1.774193e-09, strain = 7.411635e-04, elapsed = 504.5 sec
+Step =    150: nodes = 4524, dt = 2.129032e-09, strain = 7.432925e-04, elapsed = 515.0 sec
+Step =    151: nodes = 4590, dt = 2.554838e-09, strain = 7.458473e-04, elapsed = 525.1 sec
+Step =    152: nodes = 4676, dt = 3.065806e-09, strain = 7.489131e-04, elapsed = 543.4 sec
+Step =    153: nodes = 4771, dt = 3.678967e-09, strain = 7.525921e-04, elapsed = 574.6 sec
+Step =    154: nodes = 4926, dt = 4.414760e-09, strain = 7.570069e-04, elapsed = 607.5 sec
+Step =    155: nodes = 5093, dt = 5.297712e-09, strain = 7.623046e-04, elapsed = 686.6 sec
+Step =    156: nodes = 5126, dt = 3.178627e-09, strain = 7.654832e-04, elapsed = 843.1 sec
+Step =    157: nodes = 5090, dt = 3.178627e-09, strain = 7.686618e-04, elapsed = 1000.0 sec
+Step =    158: nodes = 5080, dt = 1.907176e-09, strain = 7.705690e-04, elapsed = 1049.7 sec
+Step =    159: nodes = 5085, dt = 1.907176e-09, strain = 7.724762e-04, elapsed = 1083.7 sec
+Step =    160: nodes = 5081, dt = 2.288612e-09, strain = 7.747648e-04, elapsed = 1133.7 sec
+Step =    161: nodes = 5116, dt = 2.746334e-09, strain = 7.775111e-04, elapsed = 1156.2 sec
+Step =    162: nodes = 5172, dt = 3.295601e-09, strain = 7.808067e-04, elapsed = 1178.6 sec
+Step =    163: nodes = 5227, dt = 3.954721e-09, strain = 7.847615e-04, elapsed = 1270.7 sec
+Step =    164: nodes = 5271, dt = 4.745665e-09, strain = 7.895071e-04, elapsed = 1474.5 sec
+Step =    165: nodes = 5302, dt = 2.847399e-09, strain = 7.923545e-04, elapsed = 1522.7 sec
+Step =    166: nodes = 5353, dt = 2.847399e-09, strain = 7.952019e-04, elapsed = 1583.6 sec
+Step =    167: nodes = 5406, dt = 3.416879e-09, strain = 7.986188e-04, elapsed = 1651.7 sec
+Step =    168: nodes = 5501, dt = 4.100255e-09, strain = 8.027191e-04, elapsed = 1705.8 sec
+Step =    169: nodes = 5643, dt = 4.920306e-09, strain = 8.076394e-04, elapsed = 1753.3 sec
+Step =    170: nodes = 5775, dt = 5.904367e-09, strain = 8.135437e-04, elapsed = 1927.1 sec
+Step =    171: nodes = 5793, dt = 1.771310e-09, strain = 8.153150e-04, elapsed = 2004.4 sec
+Step =    172: nodes = 5826, dt = 1.771310e-09, strain = 8.170863e-04, elapsed = 2038.7 sec
+Step =    173: nodes = 5858, dt = 2.125572e-09, strain = 8.192119e-04, elapsed = 2094.3 sec
+Step =    174: nodes = 5910, dt = 2.550687e-09, strain = 8.217626e-04, elapsed = 2133.8 sec
+Step =    175: nodes = 5941, dt = 1.530412e-09, strain = 8.232930e-04, elapsed = 2176.5 sec
+Step =    176: nodes = 5973, dt = 1.530412e-09, strain = 8.248234e-04, elapsed = 2189.0 sec
+Step =    177: nodes = 6021, dt = 1.836494e-09, strain = 8.266599e-04, elapsed = 2210.8 sec
+Step =    178: nodes = 6030, dt = 2.203793e-09, strain = 8.288637e-04, elapsed = 2272.3 sec
+Step =    179: nodes = 6080, dt = 2.644552e-09, strain = 8.315083e-04, elapsed = 2289.9 sec
+Step =    180: nodes = 6157, dt = 3.173462e-09, strain = 8.346817e-04, elapsed = 2309.4 sec
+Step =    181: nodes = 6194, dt = 1.904077e-09, strain = 8.365858e-04, elapsed = 2326.0 sec
+Step =    182: nodes = 6244, dt = 1.904077e-09, strain = 8.384899e-04, elapsed = 2332.8 sec
+Step =    183: nodes = 6289, dt = 2.284893e-09, strain = 8.407748e-04, elapsed = 2343.3 sec
+Step =    184: nodes = 6362, dt = 2.741871e-09, strain = 8.435167e-04, elapsed = 2372.4 sec
+Step =    185: nodes = 6442, dt = 3.290246e-09, strain = 8.468069e-04, elapsed = 2446.6 sec
+Step =    186: nodes = 6567, dt = 3.948295e-09, strain = 8.507552e-04, elapsed = 2495.7 sec
+Step =    187: nodes = 6675, dt = 4.737954e-09, strain = 8.554931e-04, elapsed = 2616.5 sec
+Step =    188: nodes = 6723, dt = 1.421386e-09, strain = 8.569145e-04, elapsed = 2639.0 sec
+Step =    189: nodes = 6756, dt = 1.421386e-09, strain = 8.583359e-04, elapsed = 2656.1 sec
+Step =    190: nodes = 6796, dt = 1.705663e-09, strain = 8.600416e-04, elapsed = 2676.7 sec
+Step =    191: nodes = 6859, dt = 2.046796e-09, strain = 8.620884e-04, elapsed = 2685.5 sec
+Step =    192: nodes = 6946, dt = 2.456155e-09, strain = 8.645445e-04, elapsed = 2700.2 sec
+Step =    193: nodes = 7067, dt = 2.947386e-09, strain = 8.674919e-04, elapsed = 2736.0 sec
+Step =    194: nodes = 7203, dt = 3.536863e-09, strain = 8.710288e-04, elapsed = 2802.4 sec
+Step =    195: nodes = 7360, dt = 4.244236e-09, strain = 8.752730e-04, elapsed = 2960.2 sec
+Step =    196: nodes = 7438, dt = 2.546542e-09, strain = 8.778196e-04, elapsed = 3044.5 sec
+Step =    197: nodes = 7467, dt = 1.273271e-09, strain = 8.790928e-04, elapsed = 3072.7 sec
+Step =    198: nodes = 7504, dt = 1.273271e-09, strain = 8.803661e-04, elapsed = 3085.6 sec
+Step =    199: nodes = 7565, dt = 1.527925e-09, strain = 8.818940e-04, elapsed = 3104.6 sec
+Step =    200: nodes = 7617, dt = 1.833510e-09, strain = 8.837275e-04, elapsed = 3124.9 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.200.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.200.exadis
+Step =    201: nodes = 7726, dt = 2.200212e-09, strain = 8.859277e-04, elapsed = 3148.5 sec
+Step =    202: nodes = 7806, dt = 2.640254e-09, strain = 8.885680e-04, elapsed = 3190.7 sec
+Step =    203: nodes = 7933, dt = 3.168305e-09, strain = 8.917363e-04, elapsed = 3268.1 sec
+Step =    204: nodes = 8079, dt = 3.801966e-09, strain = 8.955383e-04, elapsed = 3393.3 sec
+Step =    205: nodes = 8079, dt = 2.281180e-09, strain = 8.978195e-04, elapsed = 3534.6 sec
+Step =    206: nodes = 8058, dt = 2.281180e-09, strain = 9.001006e-04, elapsed = 3634.7 sec
+Step =    207: nodes = 8025, dt = 2.737416e-09, strain = 9.028381e-04, elapsed = 3784.8 sec
+Step =    208: nodes = 8079, dt = 3.284899e-09, strain = 9.061229e-04, elapsed = 3958.0 sec
+Step =    209: nodes = 8018, dt = 1.970939e-09, strain = 9.080939e-04, elapsed = 4067.7 sec
+Step =    210: nodes = 8041, dt = 1.970939e-09, strain = 9.100648e-04, elapsed = 4143.1 sec
+Step =    211: nodes = 8066, dt = 2.365127e-09, strain = 9.124300e-04, elapsed = 4237.4 sec
+Writing configuration in legacy data format
+ Output file: debug_max_conn_0.data
+Error: MAX_CONN = 10 exceeded during merge_node()
+Writing configuration in legacy data format
+ Output file: debug_max_conn_1.data
+Error: MAX_CONN = 10 exceeded during merge_node()
+Writing configuration in legacy data format
+ Output file: debug_max_conn_2.data
+Error: MAX_CONN = 10 exceeded during merge_node()
+Error: MAX_CONN = 10 exceeded during merge_node()
+Error: MAX_CONN = 10 exceeded during merge_node()
+Error: MAX_CONN = 10 exceeded during merge_node()
+Error: MAX_CONN = 10 exceeded during merge_node()
+Error: MAX_CONN = 10 exceeded during merge_node()
+Step =    212: nodes = 8052, dt = 2.838153e-09, strain = 9.152681e-04, elapsed = 4437.3 sec
+Error: MAX_CONN = 10 exceeded during merge_node()
+Error: MAX_CONN = 10 exceeded during merge_node()
+Error: MAX_CONN = 10 exceeded during merge_node()
+Error: MAX_CONN = 10 exceeded during merge_node()
+Error: MAX_CONN = 10 exceeded during merge_node()
+Error: MAX_CONN = 10 exceeded during merge_node()
+Error: MAX_CONN = 10 exceeded during merge_node()
+Error: MAX_CONN = 10 exceeded during merge_node()
+Error: MAX_CONN = 10 exceeded during merge_node()
+Error: MAX_CONN = 10 exceeded during merge_node()
+Error: MAX_CONN = 10 exceeded during merge_node()
+Error: MAX_CONN = 10 exceeded during merge_node()
+Error: MAX_CONN = 10 exceeded during merge_node()
+Error: MAX_CONN = 10 exceeded during merge_node()
+Error: MAX_CONN = 10 exceeded during merge_node()
+Step =    213: nodes = 8022, dt = 1.702892e-09, strain = 9.169710e-04, elapsed = 4521.2 sec
+Step =    214: nodes = 8003, dt = 1.702892e-09, strain = 9.186739e-04, elapsed = 4596.2 sec
+Step =    215: nodes = 8025, dt = 2.043470e-09, strain = 9.207174e-04, elapsed = 4727.2 sec
+Step =    216: nodes = 8093, dt = 2.452164e-09, strain = 9.231695e-04, elapsed = 4813.6 sec
+Step =    217: nodes = 8145, dt = 1.471298e-09, strain = 9.246408e-04, elapsed = 4872.4 sec
+Step =    218: nodes = 8173, dt = 1.471298e-09, strain = 9.261121e-04, elapsed = 4908.5 sec
+Step =    219: nodes = 8111, dt = 8.827790e-10, strain = 9.269949e-04, elapsed = 4977.0 sec
+Step =    220: nodes = 8101, dt = 8.827790e-10, strain = 9.278777e-04, elapsed = 5000.2 sec
+Step =    221: nodes = 8117, dt = 1.059335e-09, strain = 9.289370e-04, elapsed = 5017.9 sec
+Step =    222: nodes = 8161, dt = 1.271202e-09, strain = 9.302082e-04, elapsed = 5052.9 sec
+Step =    223: nodes = 8163, dt = 1.525442e-09, strain = 9.317337e-04, elapsed = 5127.3 sec
+Step =    224: nodes = 8141, dt = 1.830531e-09, strain = 9.335642e-04, elapsed = 5217.0 sec
+Step =    225: nodes = 8153, dt = 2.196637e-09, strain = 9.357608e-04, elapsed = 5284.7 sec
+Step =    226: nodes = 8181, dt = 2.635964e-09, strain = 9.383968e-04, elapsed = 5340.9 sec
+Error: MAX_CONN = 10 exceeded during merge_node()
+Error: MAX_CONN = 10 exceeded during merge_node()
+Step =    227: nodes = 8241, dt = 3.163157e-09, strain = 9.415599e-04, elapsed = 5493.4 sec
+Step =    228: nodes = 8268, dt = 1.897894e-09, strain = 9.434578e-04, elapsed = 5610.7 sec
+Error: MAX_CONN = 10 exceeded during merge_node()
+Error: MAX_CONN = 10 exceeded during merge_node()
+Error: MAX_CONN = 10 exceeded during merge_node()
+Step =    229: nodes = 8250, dt = 1.897894e-09, strain = 9.453557e-04, elapsed = 5752.6 sec
+Step =    230: nodes = 8245, dt = 1.138736e-09, strain = 9.464945e-04, elapsed = 5782.1 sec
+Step =    231: nodes = 8227, dt = 1.138736e-09, strain = 9.476332e-04, elapsed = 5830.8 sec
+Step =    232: nodes = 8222, dt = 1.366484e-09, strain = 9.489997e-04, elapsed = 5888.1 sec
+Step =    233: nodes = 8213, dt = 1.639780e-09, strain = 9.506395e-04, elapsed = 5938.6 sec
+Step =    234: nodes = 8237, dt = 1.967737e-09, strain = 9.526072e-04, elapsed = 5968.2 sec
+Step =    235: nodes = 8270, dt = 2.361284e-09, strain = 9.549685e-04, elapsed = 6018.8 sec
+Step =    236: nodes = 8262, dt = 2.833541e-09, strain = 9.578020e-04, elapsed = 6141.4 sec
+Step =    237: nodes = 8282, dt = 3.400249e-09, strain = 9.612023e-04, elapsed = 6234.7 sec
+Step =    238: nodes = 8340, dt = 4.080299e-09, strain = 9.652826e-04, elapsed = 6530.9 sec
+Step =    239: nodes = 8338, dt = 2.448179e-09, strain = 9.677308e-04, elapsed = 6715.8 sec
+Step =    240: nodes = 8349, dt = 1.224090e-09, strain = 9.689548e-04, elapsed = 6772.2 sec
+Step =    241: nodes = 8376, dt = 1.224090e-09, strain = 9.701789e-04, elapsed = 6793.9 sec
+Step =    242: nodes = 8411, dt = 1.468907e-09, strain = 9.716478e-04, elapsed = 6826.5 sec
+Step =    243: nodes = 8464, dt = 1.762689e-09, strain = 9.734105e-04, elapsed = 6862.7 sec
+Step =    244: nodes = 8478, dt = 2.115227e-09, strain = 9.755258e-04, elapsed = 6988.4 sec
+Step =    245: nodes = 8475, dt = 2.538272e-09, strain = 9.780640e-04, elapsed = 7113.6 sec
+Step =    246: nodes = 8488, dt = 1.522963e-09, strain = 9.795870e-04, elapsed = 7132.4 sec
+Step =    247: nodes = 8501, dt = 1.522963e-09, strain = 9.811100e-04, elapsed = 7137.6 sec
+Step =    248: nodes = 8535, dt = 1.827556e-09, strain = 9.829375e-04, elapsed = 7147.0 sec
+Step =    249: nodes = 8556, dt = 2.193067e-09, strain = 9.851306e-04, elapsed = 7162.7 sec
+Step =    250: nodes = 8613, dt = 2.631681e-09, strain = 9.877623e-04, elapsed = 7300.3 sec
+Step =    251: nodes = 8579, dt = 1.579008e-09, strain = 9.893413e-04, elapsed = 7366.7 sec
+Step =    252: nodes = 8587, dt = 1.579008e-09, strain = 9.909203e-04, elapsed = 7427.5 sec
+Step =    253: nodes = 8591, dt = 1.894810e-09, strain = 9.928151e-04, elapsed = 7493.0 sec
+Step =    254: nodes = 8622, dt = 2.273772e-09, strain = 9.950889e-04, elapsed = 7588.9 sec
+Step =    255: nodes = 8670, dt = 2.728526e-09, strain = 9.978174e-04, elapsed = 7649.9 sec
+Step =    256: nodes = 8710, dt = 3.274232e-09, strain = 1.001092e-03, elapsed = 7828.1 sec
+Step =    257: nodes = 8728, dt = 3.929078e-09, strain = 1.005021e-03, elapsed = 8129.5 sec
+Step =    258: nodes = 8730, dt = 2.357447e-09, strain = 1.007378e-03, elapsed = 8183.2 sec
+Step =    259: nodes = 8765, dt = 2.357447e-09, strain = 1.009736e-03, elapsed = 8230.8 sec
+Step =    260: nodes = 8727, dt = 2.828936e-09, strain = 1.012565e-03, elapsed = 8415.3 sec
+Error: MAX_CONN = 10 exceeded during merge_node()
+Step =    261: nodes = 8719, dt = 3.394723e-09, strain = 1.015959e-03, elapsed = 8570.1 sec
+Error: MAX_CONN = 10 exceeded during merge_node()
+Error: MAX_CONN = 10 exceeded during merge_node()
+Step =    262: nodes = 8742, dt = 4.073668e-09, strain = 1.020033e-03, elapsed = 8735.4 sec
+Step =    263: nodes = 8745, dt = 2.444201e-09, strain = 1.022477e-03, elapsed = 8817.2 sec
+Step =    264: nodes = 8775, dt = 2.444201e-09, strain = 1.024921e-03, elapsed = 8940.5 sec
+Step =    265: nodes = 8796, dt = 1.466521e-09, strain = 1.026388e-03, elapsed = 8971.7 sec
+Step =    266: nodes = 8824, dt = 1.466521e-09, strain = 1.027854e-03, elapsed = 8994.9 sec
+Step =    267: nodes = 8842, dt = 1.759825e-09, strain = 1.029614e-03, elapsed = 9009.0 sec
+Step =    268: nodes = 8903, dt = 2.111790e-09, strain = 1.031726e-03, elapsed = 9026.0 sec
+Step =    269: nodes = 8952, dt = 2.534147e-09, strain = 1.034260e-03, elapsed = 9092.7 sec
+Step =    270: nodes = 8995, dt = 3.040977e-09, strain = 1.037301e-03, elapsed = 9169.5 sec
+Error: MAX_CONN = 10 exceeded during merge_node()
+Step =    271: nodes = 9084, dt = 3.649172e-09, strain = 1.040950e-03, elapsed = 9218.6 sec
+Step =    272: nodes = 9102, dt = 1.094752e-09, strain = 1.042045e-03, elapsed = 9230.0 sec
+Step =    273: nodes = 9110, dt = 1.094752e-09, strain = 1.043140e-03, elapsed = 9234.6 sec
+Step =    274: nodes = 9136, dt = 1.313702e-09, strain = 1.044453e-03, elapsed = 9241.3 sec
+Step =    275: nodes = 9180, dt = 1.576442e-09, strain = 1.046030e-03, elapsed = 9253.8 sec
+Step =    276: nodes = 9207, dt = 1.891731e-09, strain = 1.047922e-03, elapsed = 9366.3 sec
+Step =    277: nodes = 9228, dt = 2.270077e-09, strain = 1.050192e-03, elapsed = 9426.2 sec
+Step =    278: nodes = 9255, dt = 2.724093e-09, strain = 1.052916e-03, elapsed = 9534.0 sec
+Step =    279: nodes = 9239, dt = 1.634456e-09, strain = 1.054550e-03, elapsed = 9623.0 sec
+Step =    280: nodes = 9223, dt = 1.634456e-09, strain = 1.056185e-03, elapsed = 9684.4 sec
+Step =    281: nodes = 9235, dt = 1.961347e-09, strain = 1.058146e-03, elapsed = 9728.2 sec
+Step =    282: nodes = 9286, dt = 2.353616e-09, strain = 1.060500e-03, elapsed = 9766.2 sec
+Step =    283: nodes = 9361, dt = 2.824339e-09, strain = 1.063324e-03, elapsed = 9784.5 sec
+Step =    284: nodes = 9398, dt = 1.694603e-09, strain = 1.065019e-03, elapsed = 9801.7 sec
+Step =    285: nodes = 9416, dt = 1.694603e-09, strain = 1.066713e-03, elapsed = 9812.1 sec
+Step =    286: nodes = 9463, dt = 2.033524e-09, strain = 1.068747e-03, elapsed = 9847.5 sec
+Step =    287: nodes = 9525, dt = 2.440229e-09, strain = 1.071187e-03, elapsed = 9881.0 sec
+Step =    288: nodes = 9552, dt = 2.928275e-09, strain = 1.074115e-03, elapsed = 9945.1 sec
+Step =    289: nodes = 9565, dt = 1.756965e-09, strain = 1.075872e-03, elapsed = 9973.4 sec
+Step =    290: nodes = 9570, dt = 1.756965e-09, strain = 1.077629e-03, elapsed = 10011.1 sec
+Step =    291: nodes = 9556, dt = 2.108358e-09, strain = 1.079738e-03, elapsed = 10188.3 sec
+Error: MAX_CONN = 10 exceeded during merge_node()
+Step =    292: nodes = 9521, dt = 2.530029e-09, strain = 1.082268e-03, elapsed = 10392.3 sec
+Step =    293: nodes = 9513, dt = 3.036035e-09, strain = 1.085304e-03, elapsed = 10544.9 sec
+Step =    294: nodes = 9492, dt = 1.821621e-09, strain = 1.087125e-03, elapsed = 10636.9 sec
+Error: MAX_CONN = 10 exceeded during merge_node()
+Step =    295: nodes = 9479, dt = 1.821621e-09, strain = 1.088947e-03, elapsed = 10789.9 sec
+Step =    296: nodes = 9454, dt = 2.185945e-09, strain = 1.091133e-03, elapsed = 10918.6 sec
+Step =    297: nodes = 9469, dt = 2.623135e-09, strain = 1.093756e-03, elapsed = 11072.7 sec
+Error: MAX_CONN = 10 exceeded during merge_node()
+Error: MAX_CONN = 10 exceeded during merge_node()
+Error: MAX_CONN = 10 exceeded during merge_node()
+Error: MAX_CONN = 10 exceeded during merge_node()
+Error: MAX_CONN = 10 exceeded during merge_node()
+Error: MAX_CONN = 10 exceeded during merge_node()
+Error: MAX_CONN = 10 exceeded during merge_node()
+Error: MAX_CONN = 10 exceeded during merge_node()
+Error: MAX_CONN = 10 exceeded during merge_node()
+Step =    298: nodes = 9465, dt = 3.147761e-09, strain = 1.096904e-03, elapsed = 11271.6 sec
+Error: MAX_CONN = 10 exceeded during merge_node()
+Error: MAX_CONN = 10 exceeded during merge_node()
+Error: MAX_CONN = 10 exceeded during merge_node()
+Error: MAX_CONN = 10 exceeded during merge_node()
+Step =    299: nodes = 9412, dt = 1.888657e-09, strain = 1.098792e-03, elapsed = 11421.9 sec
+Step =    300: nodes = 9403, dt = 1.888657e-09, strain = 1.100681e-03, elapsed = 11511.3 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.300.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.300.exadis
+Step =    301: nodes = 9423, dt = 2.266388e-09, strain = 1.102947e-03, elapsed = 11578.2 sec
+Step =    302: nodes = 9437, dt = 2.719666e-09, strain = 1.105667e-03, elapsed = 11795.4 sec
+Step =    303: nodes = 9485, dt = 3.263599e-09, strain = 1.108931e-03, elapsed = 11933.2 sec
+Step =    304: nodes = 9505, dt = 1.958159e-09, strain = 1.110889e-03, elapsed = 11991.0 sec
+Step =    305: nodes = 9505, dt = 1.958159e-09, strain = 1.112847e-03, elapsed = 12050.1 sec
+Step =    306: nodes = 9552, dt = 2.349791e-09, strain = 1.115197e-03, elapsed = 12133.0 sec
+Step =    307: nodes = 9572, dt = 2.819750e-09, strain = 1.118017e-03, elapsed = 12196.6 sec
+Step =    308: nodes = 9641, dt = 3.383700e-09, strain = 1.121400e-03, elapsed = 12296.6 sec
+Step =    309: nodes = 9687, dt = 4.060439e-09, strain = 1.125461e-03, elapsed = 12576.6 sec
+Step =    310: nodes = 9759, dt = 4.872527e-09, strain = 1.130333e-03, elapsed = 12820.2 sec
+Step =    311: nodes = 9751, dt = 1.461758e-09, strain = 1.131795e-03, elapsed = 12893.9 sec
+Step =    312: nodes = 9709, dt = 1.461758e-09, strain = 1.133257e-03, elapsed = 13013.9 sec
+Step =    313: nodes = 9724, dt = 1.754110e-09, strain = 1.135011e-03, elapsed = 13069.4 sec
+Step =    314: nodes = 9742, dt = 2.104932e-09, strain = 1.137116e-03, elapsed = 13097.1 sec
+Step =    315: nodes = 9749, dt = 2.525918e-09, strain = 1.139642e-03, elapsed = 13121.0 sec
+Step =    316: nodes = 9794, dt = 3.031102e-09, strain = 1.142673e-03, elapsed = 13145.6 sec
+Step =    317: nodes = 9764, dt = 3.637322e-09, strain = 1.146310e-03, elapsed = 13360.2 sec
+Step =    318: nodes = 9751, dt = 1.091197e-09, strain = 1.147401e-03, elapsed = 13403.5 sec
+Step =    319: nodes = 9718, dt = 1.091197e-09, strain = 1.148492e-03, elapsed = 13439.2 sec
+Step =    320: nodes = 9681, dt = 1.309436e-09, strain = 1.149802e-03, elapsed = 13481.2 sec
+Step =    321: nodes = 9664, dt = 1.571323e-09, strain = 1.151373e-03, elapsed = 13543.7 sec
+Step =    322: nodes = 9637, dt = 1.885588e-09, strain = 1.153259e-03, elapsed = 13650.8 sec
+Error: MAX_CONN = 10 exceeded during merge_node()
+Step =    323: nodes = 9625, dt = 2.262705e-09, strain = 1.155522e-03, elapsed = 13816.0 sec
+Step =    324: nodes = 9587, dt = 2.715246e-09, strain = 1.158237e-03, elapsed = 13983.3 sec
+Step =    325: nodes = 9537, dt = 1.629148e-09, strain = 1.159866e-03, elapsed = 14064.7 sec
+Step =    326: nodes = 9528, dt = 1.629148e-09, strain = 1.161495e-03, elapsed = 14116.0 sec
+Step =    327: nodes = 9513, dt = 1.954977e-09, strain = 1.163450e-03, elapsed = 14197.5 sec
+Step =    328: nodes = 9468, dt = 2.345973e-09, strain = 1.165796e-03, elapsed = 14297.3 sec
+Step =    329: nodes = 9446, dt = 1.407584e-09, strain = 1.167204e-03, elapsed = 14322.2 sec
+Step =    330: nodes = 9447, dt = 1.407584e-09, strain = 1.168611e-03, elapsed = 14341.6 sec
+Step =    331: nodes = 9417, dt = 1.689100e-09, strain = 1.170300e-03, elapsed = 14436.9 sec
+Step =    332: nodes = 9383, dt = 2.026921e-09, strain = 1.172327e-03, elapsed = 14601.0 sec
+Error: MAX_CONN = 10 exceeded during merge_node()
+Error: MAX_CONN = 10 exceeded during merge_node()
+Step =    333: nodes = 9303, dt = 2.432305e-09, strain = 1.174760e-03, elapsed = 14807.9 sec
+Step =    334: nodes = 9277, dt = 2.918766e-09, strain = 1.177678e-03, elapsed = 14957.9 sec
+Step =    335: nodes = 9244, dt = 3.502519e-09, strain = 1.181181e-03, elapsed = 15264.1 sec
+Error: MAX_CONN = 10 exceeded during merge_node()
+Step =    336: nodes = 9175, dt = 4.203023e-09, strain = 1.185384e-03, elapsed = 15642.7 sec
+Step =    337: nodes = 9166, dt = 2.521814e-09, strain = 1.187906e-03, elapsed = 15704.1 sec
+Step =    338: nodes = 9123, dt = 2.521814e-09, strain = 1.190427e-03, elapsed = 15896.5 sec
+Step =    339: nodes = 9087, dt = 1.513088e-09, strain = 1.191941e-03, elapsed = 15953.8 sec
+Step =    340: nodes = 9060, dt = 1.513088e-09, strain = 1.193454e-03, elapsed = 16013.0 sec
+Step =    341: nodes = 9032, dt = 1.815706e-09, strain = 1.195269e-03, elapsed = 16090.3 sec
+Step =    342: nodes = 9021, dt = 2.178847e-09, strain = 1.197448e-03, elapsed = 16187.9 sec
+Step =    343: nodes = 9005, dt = 1.307308e-09, strain = 1.198756e-03, elapsed = 16227.1 sec
+Step =    344: nodes = 8992, dt = 1.307308e-09, strain = 1.200063e-03, elapsed = 16286.2 sec
+Step =    345: nodes = 8970, dt = 1.568770e-09, strain = 1.201632e-03, elapsed = 16345.5 sec
+Step =    346: nodes = 8977, dt = 1.882524e-09, strain = 1.203514e-03, elapsed = 16431.5 sec
+Step =    347: nodes = 8956, dt = 2.259028e-09, strain = 1.205773e-03, elapsed = 16557.8 sec
+Step =    348: nodes = 8937, dt = 1.355417e-09, strain = 1.207129e-03, elapsed = 16596.7 sec
+Step =    349: nodes = 8926, dt = 1.355417e-09, strain = 1.208484e-03, elapsed = 16625.0 sec
+Step =    350: nodes = 8906, dt = 1.626500e-09, strain = 1.210110e-03, elapsed = 16720.0 sec
+Step =    351: nodes = 8866, dt = 1.951801e-09, strain = 1.212062e-03, elapsed = 16898.8 sec
+Step =    352: nodes = 8874, dt = 2.342161e-09, strain = 1.214404e-03, elapsed = 16944.4 sec
+Step =    353: nodes = 8911, dt = 2.810593e-09, strain = 1.217215e-03, elapsed = 17005.4 sec
+Step =    354: nodes = 8969, dt = 3.372711e-09, strain = 1.220588e-03, elapsed = 17026.9 sec
+Step =    355: nodes = 9026, dt = 4.047254e-09, strain = 1.224635e-03, elapsed = 17205.3 sec
+Step =    356: nodes = 9020, dt = 1.214176e-09, strain = 1.225849e-03, elapsed = 17238.6 sec
+Step =    357: nodes = 9020, dt = 1.214176e-09, strain = 1.227063e-03, elapsed = 17260.4 sec
+Step =    358: nodes = 9028, dt = 1.457011e-09, strain = 1.228520e-03, elapsed = 17306.9 sec
+Step =    359: nodes = 9034, dt = 1.748414e-09, strain = 1.230269e-03, elapsed = 17338.2 sec
+Step =    360: nodes = 9048, dt = 2.098096e-09, strain = 1.232367e-03, elapsed = 17382.3 sec
+Step =    361: nodes = 9078, dt = 2.517716e-09, strain = 1.234885e-03, elapsed = 17410.0 sec
+Step =    362: nodes = 9090, dt = 1.510629e-09, strain = 1.236395e-03, elapsed = 17418.5 sec
+Step =    363: nodes = 9094, dt = 1.510629e-09, strain = 1.237906e-03, elapsed = 17437.0 sec
+Step =    364: nodes = 9083, dt = 1.812755e-09, strain = 1.239719e-03, elapsed = 17511.5 sec
+Step =    365: nodes = 9081, dt = 2.175306e-09, strain = 1.241894e-03, elapsed = 17584.0 sec
+Step =    366: nodes = 9122, dt = 2.610368e-09, strain = 1.244504e-03, elapsed = 17599.5 sec
+Step =    367: nodes = 9162, dt = 3.132441e-09, strain = 1.247637e-03, elapsed = 17614.4 sec
+Step =    368: nodes = 9198, dt = 3.758929e-09, strain = 1.251396e-03, elapsed = 17634.9 sec
+Step =    369: nodes = 9298, dt = 4.510715e-09, strain = 1.255906e-03, elapsed = 17663.2 sec
+Step =    370: nodes = 9384, dt = 5.412858e-09, strain = 1.261319e-03, elapsed = 17974.3 sec
+Error: MAX_CONN = 10 exceeded during merge_node()
+Error: MAX_CONN = 10 exceeded during merge_node()
+Error: MAX_CONN = 10 exceeded during merge_node()
+Error: MAX_CONN = 10 exceeded during merge_node()
+Error: MAX_CONN = 10 exceeded during merge_node()
+Error: MAX_CONN = 10 exceeded during merge_node()
+Step =    371: nodes = 9354, dt = 1.623857e-09, strain = 1.262943e-03, elapsed = 18140.6 sec
+Step =    372: nodes = 9375, dt = 1.623857e-09, strain = 1.264567e-03, elapsed = 18169.9 sec
+Step =    373: nodes = 9387, dt = 1.948629e-09, strain = 1.266516e-03, elapsed = 18223.5 sec
+Step =    374: nodes = 9383, dt = 1.169177e-09, strain = 1.267685e-03, elapsed = 18232.3 sec
+Step =    375: nodes = 9374, dt = 1.169177e-09, strain = 1.268854e-03, elapsed = 18243.8 sec
+Step =    376: nodes = 9380, dt = 1.403013e-09, strain = 1.270257e-03, elapsed = 18253.3 sec
+Step =    377: nodes = 9390, dt = 1.683615e-09, strain = 1.271941e-03, elapsed = 18257.0 sec
+Step =    378: nodes = 9421, dt = 2.020338e-09, strain = 1.273961e-03, elapsed = 18264.3 sec
+Step =    379: nodes = 9460, dt = 2.424406e-09, strain = 1.276385e-03, elapsed = 18279.7 sec
+Step =    380: nodes = 9510, dt = 2.909287e-09, strain = 1.279295e-03, elapsed = 18296.8 sec
+Step =    381: nodes = 9493, dt = 3.491145e-09, strain = 1.282786e-03, elapsed = 18529.5 sec
+Step =    382: nodes = 9477, dt = 2.094687e-09, strain = 1.284880e-03, elapsed = 18627.7 sec
+Step =    383: nodes = 9455, dt = 2.094687e-09, strain = 1.286975e-03, elapsed = 18753.4 sec
+Step =    384: nodes = 9444, dt = 2.513624e-09, strain = 1.289489e-03, elapsed = 18885.6 sec
+Step =    385: nodes = 9407, dt = 3.016349e-09, strain = 1.292505e-03, elapsed = 19126.9 sec
+Step =    386: nodes = 9414, dt = 3.619619e-09, strain = 1.296125e-03, elapsed = 19354.2 sec
+Step =    387: nodes = 9397, dt = 2.171771e-09, strain = 1.298296e-03, elapsed = 19456.6 sec
+Step =    388: nodes = 9422, dt = 2.171771e-09, strain = 1.300468e-03, elapsed = 19530.5 sec
+Step =    389: nodes = 9430, dt = 1.303063e-09, strain = 1.301771e-03, elapsed = 19549.5 sec
+Step =    390: nodes = 9430, dt = 1.303063e-09, strain = 1.303074e-03, elapsed = 19569.5 sec
+Step =    391: nodes = 9452, dt = 1.563675e-09, strain = 1.304638e-03, elapsed = 19585.9 sec
+Step =    392: nodes = 9460, dt = 1.876410e-09, strain = 1.306514e-03, elapsed = 19610.6 sec
+Step =    393: nodes = 9470, dt = 2.251693e-09, strain = 1.308766e-03, elapsed = 19697.7 sec
+Step =    394: nodes = 9522, dt = 2.702031e-09, strain = 1.311468e-03, elapsed = 19777.1 sec
+Step =    395: nodes = 9540, dt = 3.242437e-09, strain = 1.314711e-03, elapsed = 19868.0 sec
+Step =    396: nodes = 9544, dt = 1.945462e-09, strain = 1.316656e-03, elapsed = 19940.7 sec
+Step =    397: nodes = 9551, dt = 1.945462e-09, strain = 1.318602e-03, elapsed = 19983.1 sec
+Step =    398: nodes = 9595, dt = 2.334555e-09, strain = 1.320936e-03, elapsed = 20053.7 sec
+Step =    399: nodes = 9583, dt = 1.400733e-09, strain = 1.322337e-03, elapsed = 20094.4 sec
+Step =    400: nodes = 9561, dt = 1.400733e-09, strain = 1.323738e-03, elapsed = 20153.8 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.400.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.400.exadis
+Step =    401: nodes = 9565, dt = 1.680879e-09, strain = 1.325418e-03, elapsed = 20184.4 sec
+Step =    402: nodes = 9591, dt = 2.017055e-09, strain = 1.327435e-03, elapsed = 20203.5 sec
+Step =    403: nodes = 9627, dt = 2.420466e-09, strain = 1.329856e-03, elapsed = 20249.7 sec
+Step =    404: nodes = 9664, dt = 2.904560e-09, strain = 1.332760e-03, elapsed = 20479.3 sec
+Step =    405: nodes = 9688, dt = 1.742736e-09, strain = 1.334503e-03, elapsed = 20515.5 sec
+Step =    406: nodes = 9694, dt = 1.742736e-09, strain = 1.336246e-03, elapsed = 20542.3 sec
+Step =    407: nodes = 9718, dt = 2.091283e-09, strain = 1.338337e-03, elapsed = 20571.9 sec
+Step =    408: nodes = 9745, dt = 2.509540e-09, strain = 1.340847e-03, elapsed = 20608.4 sec
+Step =    409: nodes = 9751, dt = 3.011448e-09, strain = 1.343858e-03, elapsed = 20701.3 sec
+Step =    410: nodes = 9804, dt = 3.613737e-09, strain = 1.347472e-03, elapsed = 20822.3 sec
+Step =    411: nodes = 9831, dt = 2.168242e-09, strain = 1.349640e-03, elapsed = 20868.0 sec
+Step =    412: nodes = 9843, dt = 2.168242e-09, strain = 1.351808e-03, elapsed = 20903.6 sec
+Step =    413: nodes = 9885, dt = 2.601891e-09, strain = 1.354410e-03, elapsed = 20985.7 sec
+Step =    414: nodes = 9909, dt = 3.122269e-09, strain = 1.357533e-03, elapsed = 21116.2 sec
+Step =    415: nodes = 9922, dt = 3.746723e-09, strain = 1.361279e-03, elapsed = 21367.7 sec
+Step =    416: nodes = 9941, dt = 2.248034e-09, strain = 1.363527e-03, elapsed = 21429.5 sec
+Step =    417: nodes = 9985, dt = 2.248034e-09, strain = 1.365775e-03, elapsed = 21442.0 sec
+Step =    418: nodes = 10013, dt = 2.697640e-09, strain = 1.368473e-03, elapsed = 21520.2 sec
+Step =    419: nodes = 10025, dt = 3.237168e-09, strain = 1.371710e-03, elapsed = 21642.6 sec
+Step =    420: nodes = 10108, dt = 3.884602e-09, strain = 1.375595e-03, elapsed = 21768.9 sec
+Step =    421: nodes = 10100, dt = 2.330761e-09, strain = 1.377926e-03, elapsed = 21944.6 sec
+Error: MAX_CONN = 10 exceeded during merge_node()
+Error: MAX_CONN = 10 exceeded during merge_node()
+Step =    422: nodes = 10030, dt = 2.330761e-09, strain = 1.380256e-03, elapsed = 22225.6 sec
+Step =    423: nodes = 10063, dt = 2.796913e-09, strain = 1.383053e-03, elapsed = 22348.9 sec
+Step =    424: nodes = 10095, dt = 3.356296e-09, strain = 1.386410e-03, elapsed = 22605.9 sec
+Error: MAX_CONN = 10 exceeded during merge_node()
+Step =    425: nodes = 10048, dt = 2.013778e-09, strain = 1.388423e-03, elapsed = 22812.5 sec
+Step =    426: nodes = 10039, dt = 2.013778e-09, strain = 1.390437e-03, elapsed = 22895.2 sec
+Error: MAX_CONN = 10 exceeded during merge_node()
+Error: MAX_CONN = 10 exceeded during merge_node()
+Error: MAX_CONN = 10 exceeded during merge_node()
+Error: MAX_CONN = 10 exceeded during merge_node()
+Step =    427: nodes = 10010, dt = 2.416533e-09, strain = 1.392854e-03, elapsed = 23013.4 sec
+Step =    428: nodes = 9992, dt = 1.449920e-09, strain = 1.394304e-03, elapsed = 23048.3 sec
+Step =    429: nodes = 9969, dt = 1.449920e-09, strain = 1.395753e-03, elapsed = 23072.5 sec
+Step =    430: nodes = 9964, dt = 1.739904e-09, strain = 1.397493e-03, elapsed = 23119.4 sec
+Step =    431: nodes = 9960, dt = 2.087885e-09, strain = 1.399581e-03, elapsed = 23198.5 sec
+Step =    432: nodes = 9929, dt = 2.505462e-09, strain = 1.402087e-03, elapsed = 23250.6 sec
+Step =    433: nodes = 9951, dt = 3.006554e-09, strain = 1.405093e-03, elapsed = 23320.8 sec
+Step =    434: nodes = 9916, dt = 9.019662e-10, strain = 1.405995e-03, elapsed = 23341.0 sec
+Step =    435: nodes = 9894, dt = 9.019662e-10, strain = 1.406897e-03, elapsed = 23356.5 sec
+Step =    436: nodes = 9901, dt = 1.082359e-09, strain = 1.407980e-03, elapsed = 23363.1 sec
+Step =    437: nodes = 9898, dt = 1.298831e-09, strain = 1.409278e-03, elapsed = 23375.0 sec
+Step =    438: nodes = 9891, dt = 1.558598e-09, strain = 1.410837e-03, elapsed = 23392.3 sec
+Step =    439: nodes = 9903, dt = 1.870317e-09, strain = 1.412707e-03, elapsed = 23419.9 sec
+Error: MAX_CONN = 10 exceeded during merge_node()
+Error: MAX_CONN = 10 exceeded during merge_node()
+Error: MAX_CONN = 10 exceeded during merge_node()
+Error: MAX_CONN = 10 exceeded during merge_node()
+Error: MAX_CONN = 10 exceeded during merge_node()
+Error: MAX_CONN = 10 exceeded during merge_node()
+Error: MAX_CONN = 10 exceeded during merge_node()
+Error: MAX_CONN = 10 exceeded during merge_node()
+Error: MAX_CONN = 10 exceeded during merge_node()
+Step =    440: nodes = 9891, dt = 2.244381e-09, strain = 1.414952e-03, elapsed = 23483.1 sec
+Step =    441: nodes = 9903, dt = 2.693257e-09, strain = 1.417645e-03, elapsed = 23837.0 sec
+Step =    442: nodes = 9936, dt = 3.231908e-09, strain = 1.420877e-03, elapsed = 23979.8 sec
+Step =    443: nodes = 9965, dt = 9.695724e-10, strain = 1.421846e-03, elapsed = 23991.1 sec
+Step =    444: nodes = 9979, dt = 9.695724e-10, strain = 1.422816e-03, elapsed = 23999.5 sec
+Step =    445: nodes = 9988, dt = 1.163487e-09, strain = 1.423980e-03, elapsed = 24011.1 sec
+Step =    446: nodes = 10005, dt = 1.396184e-09, strain = 1.425376e-03, elapsed = 24016.1 sec
+Step =    447: nodes = 10034, dt = 1.675421e-09, strain = 1.427051e-03, elapsed = 24080.0 sec
+Step =    448: nodes = 10054, dt = 2.010505e-09, strain = 1.429062e-03, elapsed = 24103.4 sec
+Step =    449: nodes = 10073, dt = 2.412606e-09, strain = 1.431474e-03, elapsed = 24234.4 sec
+Step =    450: nodes = 10087, dt = 2.895128e-09, strain = 1.434369e-03, elapsed = 24359.7 sec
+Step =    451: nodes = 10112, dt = 1.737077e-09, strain = 1.436106e-03, elapsed = 24412.4 sec
+Step =    452: nodes = 10116, dt = 1.737077e-09, strain = 1.437843e-03, elapsed = 24425.3 sec
+Step =    453: nodes = 10148, dt = 2.084492e-09, strain = 1.439928e-03, elapsed = 24558.1 sec
+Step =    454: nodes = 10158, dt = 1.250695e-09, strain = 1.441179e-03, elapsed = 24575.2 sec
+Step =    455: nodes = 10134, dt = 1.250695e-09, strain = 1.442429e-03, elapsed = 24617.9 sec
+Step =    456: nodes = 10119, dt = 1.500834e-09, strain = 1.443930e-03, elapsed = 24684.1 sec
+Step =    457: nodes = 10131, dt = 1.801001e-09, strain = 1.445731e-03, elapsed = 24746.3 sec
+Step =    458: nodes = 10135, dt = 2.161201e-09, strain = 1.447892e-03, elapsed = 24818.1 sec
+Step =    459: nodes = 10125, dt = 2.593441e-09, strain = 1.450486e-03, elapsed = 25014.2 sec
+Step =    460: nodes = 10137, dt = 3.112130e-09, strain = 1.453598e-03, elapsed = 25235.0 sec
+Step =    461: nodes = 10078, dt = 1.867278e-09, strain = 1.455465e-03, elapsed = 25374.1 sec
+Step =    462: nodes = 10058, dt = 1.867278e-09, strain = 1.457333e-03, elapsed = 25456.0 sec
+Step =    463: nodes = 10079, dt = 1.120367e-09, strain = 1.458453e-03, elapsed = 25487.7 sec
+Step =    464: nodes = 10084, dt = 1.120367e-09, strain = 1.459573e-03, elapsed = 25500.8 sec
+Step =    465: nodes = 10083, dt = 1.344440e-09, strain = 1.460918e-03, elapsed = 25506.3 sec
+Step =    466: nodes = 10105, dt = 1.613328e-09, strain = 1.462531e-03, elapsed = 25533.9 sec
+Step =    467: nodes = 10089, dt = 1.935994e-09, strain = 1.464467e-03, elapsed = 25664.6 sec
+Step =    468: nodes = 10101, dt = 2.323192e-09, strain = 1.466790e-03, elapsed = 25727.8 sec
+Step =    469: nodes = 10126, dt = 2.787831e-09, strain = 1.469578e-03, elapsed = 25825.2 sec
+Step =    470: nodes = 10122, dt = 3.345397e-09, strain = 1.472923e-03, elapsed = 26012.2 sec
+Step =    471: nodes = 10095, dt = 1.003619e-09, strain = 1.473927e-03, elapsed = 26063.3 sec
+Step =    472: nodes = 10096, dt = 1.003619e-09, strain = 1.474931e-03, elapsed = 26072.8 sec
+Step =    473: nodes = 10119, dt = 1.204343e-09, strain = 1.476135e-03, elapsed = 26083.6 sec
+Step =    474: nodes = 10122, dt = 1.445212e-09, strain = 1.477580e-03, elapsed = 26130.2 sec
+Step =    475: nodes = 10156, dt = 1.734254e-09, strain = 1.479315e-03, elapsed = 26158.9 sec
+Step =    476: nodes = 10190, dt = 2.081105e-09, strain = 1.481396e-03, elapsed = 26251.5 sec
+Step =    477: nodes = 10194, dt = 2.497325e-09, strain = 1.483893e-03, elapsed = 26381.7 sec
+Step =    478: nodes = 10158, dt = 2.996791e-09, strain = 1.486890e-03, elapsed = 26672.6 sec
+Step =    479: nodes = 10139, dt = 1.798074e-09, strain = 1.488688e-03, elapsed = 26723.0 sec
+Step =    480: nodes = 10164, dt = 1.798074e-09, strain = 1.490486e-03, elapsed = 26789.0 sec
+Step =    481: nodes = 10191, dt = 2.157689e-09, strain = 1.492644e-03, elapsed = 26867.3 sec
+Step =    482: nodes = 10168, dt = 2.589227e-09, strain = 1.495233e-03, elapsed = 26957.9 sec
+Step =    483: nodes = 10204, dt = 3.107072e-09, strain = 1.498340e-03, elapsed = 26992.7 sec
+Step =    484: nodes = 10210, dt = 1.864243e-09, strain = 1.500204e-03, elapsed = 27027.8 sec
+Step =    485: nodes = 10235, dt = 1.864243e-09, strain = 1.502068e-03, elapsed = 27037.6 sec
+Step =    486: nodes = 10226, dt = 2.237092e-09, strain = 1.504305e-03, elapsed = 27055.9 sec
+Step =    487: nodes = 10249, dt = 2.684511e-09, strain = 1.506990e-03, elapsed = 27127.6 sec
+Step =    488: nodes = 10241, dt = 1.610706e-09, strain = 1.508601e-03, elapsed = 27229.7 sec
+Step =    489: nodes = 10226, dt = 1.610706e-09, strain = 1.510211e-03, elapsed = 27285.7 sec
+Error: MAX_CONN = 10 exceeded during merge_node()
+Step =    490: nodes = 10217, dt = 9.664238e-10, strain = 1.511178e-03, elapsed = 27302.9 sec
+Step =    491: nodes = 10218, dt = 9.664238e-10, strain = 1.512144e-03, elapsed = 27318.7 sec
+Step =    492: nodes = 10234, dt = 1.159709e-09, strain = 1.513304e-03, elapsed = 27325.7 sec
+Step =    493: nodes = 10226, dt = 1.391650e-09, strain = 1.514696e-03, elapsed = 27347.0 sec
+Step =    494: nodes = 10218, dt = 8.349902e-10, strain = 1.515531e-03, elapsed = 27378.3 sec
+Step =    495: nodes = 10246, dt = 8.349902e-10, strain = 1.516366e-03, elapsed = 27380.9 sec
+Step =    496: nodes = 10246, dt = 1.001988e-09, strain = 1.517368e-03, elapsed = 27383.5 sec
+Step =    497: nodes = 10267, dt = 1.202386e-09, strain = 1.518570e-03, elapsed = 27386.4 sec
+Step =    498: nodes = 10273, dt = 7.214315e-10, strain = 1.519291e-03, elapsed = 27388.2 sec
+Step =    499: nodes = 10288, dt = 7.214315e-10, strain = 1.520013e-03, elapsed = 27389.9 sec
+Step =    500: nodes = 10290, dt = 8.657178e-10, strain = 1.520879e-03, elapsed = 27391.7 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.500.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.500.exadis
+Step =    501: nodes = 10301, dt = 1.038861e-09, strain = 1.521917e-03, elapsed = 27406.4 sec
+Step =    502: nodes = 10313, dt = 1.246634e-09, strain = 1.523164e-03, elapsed = 27441.8 sec
+Step =    503: nodes = 10327, dt = 1.495960e-09, strain = 1.524660e-03, elapsed = 27466.8 sec
+Step =    504: nodes = 10319, dt = 1.795152e-09, strain = 1.526455e-03, elapsed = 27517.4 sec
+Step =    505: nodes = 10345, dt = 2.154183e-09, strain = 1.528609e-03, elapsed = 27583.2 sec
+Step =    506: nodes = 10374, dt = 2.585020e-09, strain = 1.531194e-03, elapsed = 27731.9 sec
+Step =    507: nodes = 10375, dt = 1.551012e-09, strain = 1.532745e-03, elapsed = 27846.6 sec
+Step =    508: nodes = 10367, dt = 1.551012e-09, strain = 1.534296e-03, elapsed = 27895.0 sec
+Step =    509: nodes = 10355, dt = 1.861214e-09, strain = 1.536158e-03, elapsed = 27952.6 sec
+Step =    510: nodes = 10356, dt = 2.233457e-09, strain = 1.538391e-03, elapsed = 27987.2 sec
+Step =    511: nodes = 10369, dt = 2.680148e-09, strain = 1.541071e-03, elapsed = 28072.3 sec
+Step =    512: nodes = 10324, dt = 1.608089e-09, strain = 1.542679e-03, elapsed = 28145.9 sec
+Step =    513: nodes = 10287, dt = 1.608089e-09, strain = 1.544287e-03, elapsed = 28211.4 sec
+Step =    514: nodes = 10279, dt = 1.929707e-09, strain = 1.546217e-03, elapsed = 28246.3 sec
+Step =    515: nodes = 10282, dt = 2.315648e-09, strain = 1.548533e-03, elapsed = 28319.7 sec
+Step =    516: nodes = 10310, dt = 2.778778e-09, strain = 1.551311e-03, elapsed = 28384.9 sec
+Error: MAX_CONN = 10 exceeded during merge_node()
+Step =    517: nodes = 10347, dt = 3.334533e-09, strain = 1.554646e-03, elapsed = 28563.9 sec
+Step =    518: nodes = 10322, dt = 2.000720e-09, strain = 1.556647e-03, elapsed = 28690.6 sec
+Step =    519: nodes = 10292, dt = 2.000720e-09, strain = 1.558647e-03, elapsed = 28852.8 sec
+Step =    520: nodes = 10281, dt = 2.400864e-09, strain = 1.561048e-03, elapsed = 28919.9 sec
+Step =    521: nodes = 10272, dt = 2.881037e-09, strain = 1.563929e-03, elapsed = 29012.3 sec
+Step =    522: nodes = 10269, dt = 3.457244e-09, strain = 1.567387e-03, elapsed = 29141.1 sec
+Step =    523: nodes = 10265, dt = 2.074346e-09, strain = 1.569461e-03, elapsed = 29210.2 sec
+Step =    524: nodes = 10278, dt = 2.074346e-09, strain = 1.571535e-03, elapsed = 29315.9 sec
+Step =    525: nodes = 10269, dt = 2.489216e-09, strain = 1.574024e-03, elapsed = 29546.9 sec
+Step =    526: nodes = 10240, dt = 1.493529e-09, strain = 1.575518e-03, elapsed = 29612.0 sec
+Error: MAX_CONN = 10 exceeded during merge_node()
+Step =    527: nodes = 10226, dt = 1.493529e-09, strain = 1.577012e-03, elapsed = 29664.3 sec
+Step =    528: nodes = 10240, dt = 1.792235e-09, strain = 1.578804e-03, elapsed = 29687.8 sec
+Step =    529: nodes = 10261, dt = 1.075341e-09, strain = 1.579879e-03, elapsed = 29701.9 sec
+Step =    530: nodes = 10239, dt = 1.075341e-09, strain = 1.580954e-03, elapsed = 29736.4 sec
+Step =    531: nodes = 10243, dt = 1.290409e-09, strain = 1.582245e-03, elapsed = 29758.1 sec
+Step =    532: nodes = 10254, dt = 1.548491e-09, strain = 1.583793e-03, elapsed = 29777.9 sec
+Step =    533: nodes = 10247, dt = 1.858190e-09, strain = 1.585652e-03, elapsed = 29799.5 sec
+Step =    534: nodes = 10264, dt = 2.229828e-09, strain = 1.587881e-03, elapsed = 29858.0 sec
+Step =    535: nodes = 10304, dt = 2.675793e-09, strain = 1.590557e-03, elapsed = 29942.5 sec
+Step =    536: nodes = 10283, dt = 3.210952e-09, strain = 1.593768e-03, elapsed = 30103.5 sec
+Step =    537: nodes = 10289, dt = 3.853142e-09, strain = 1.597621e-03, elapsed = 30473.5 sec
+Step =    538: nodes = 10188, dt = 2.311885e-09, strain = 1.599933e-03, elapsed = 30666.5 sec
+Step =    539: nodes = 10151, dt = 1.155943e-09, strain = 1.601089e-03, elapsed = 30715.2 sec
+Step =    540: nodes = 10129, dt = 1.155943e-09, strain = 1.602245e-03, elapsed = 30754.2 sec
+Step =    541: nodes = 10126, dt = 1.387131e-09, strain = 1.603632e-03, elapsed = 30791.5 sec
+Step =    542: nodes = 10123, dt = 8.322787e-10, strain = 1.604464e-03, elapsed = 30803.3 sec
+Step =    543: nodes = 10105, dt = 8.322787e-10, strain = 1.605297e-03, elapsed = 30811.6 sec
+Step =    544: nodes = 10098, dt = 9.987344e-10, strain = 1.606295e-03, elapsed = 30821.5 sec
+Step =    545: nodes = 10099, dt = 1.198481e-09, strain = 1.607494e-03, elapsed = 30837.8 sec
+Step =    546: nodes = 10099, dt = 1.438178e-09, strain = 1.608932e-03, elapsed = 30873.6 sec
+Step =    547: nodes = 10082, dt = 1.725813e-09, strain = 1.610658e-03, elapsed = 30906.8 sec
+Step =    548: nodes = 10111, dt = 2.070976e-09, strain = 1.612729e-03, elapsed = 30927.4 sec
+Step =    549: nodes = 10114, dt = 2.485171e-09, strain = 1.615214e-03, elapsed = 30980.4 sec
+Step =    550: nodes = 10118, dt = 2.982205e-09, strain = 1.618196e-03, elapsed = 31074.3 sec
+Step =    551: nodes = 10097, dt = 3.578646e-09, strain = 1.621775e-03, elapsed = 31270.9 sec
+Step =    552: nodes = 10072, dt = 2.147188e-09, strain = 1.623922e-03, elapsed = 31367.4 sec
+Step =    553: nodes = 10065, dt = 2.147188e-09, strain = 1.626069e-03, elapsed = 31446.5 sec
+Step =    554: nodes = 10058, dt = 6.441563e-10, strain = 1.626713e-03, elapsed = 31459.0 sec
+Step =    555: nodes = 10058, dt = 6.441563e-10, strain = 1.627358e-03, elapsed = 31468.4 sec
+Step =    556: nodes = 10056, dt = 7.729875e-10, strain = 1.628131e-03, elapsed = 31480.6 sec
+Step =    557: nodes = 10070, dt = 9.275850e-10, strain = 1.629058e-03, elapsed = 31495.3 sec
+Step =    558: nodes = 10063, dt = 1.113102e-09, strain = 1.630171e-03, elapsed = 31525.0 sec
+Step =    559: nodes = 10056, dt = 1.335722e-09, strain = 1.631507e-03, elapsed = 31531.2 sec
+Step =    560: nodes = 10050, dt = 1.602867e-09, strain = 1.633110e-03, elapsed = 31541.0 sec
+Step =    561: nodes = 10057, dt = 1.923440e-09, strain = 1.635033e-03, elapsed = 31567.8 sec
+Step =    562: nodes = 10042, dt = 2.308128e-09, strain = 1.637341e-03, elapsed = 31653.7 sec
+Step =    563: nodes = 10029, dt = 1.384877e-09, strain = 1.638726e-03, elapsed = 31678.7 sec
+Step =    564: nodes = 10045, dt = 1.384877e-09, strain = 1.640111e-03, elapsed = 31690.1 sec
+Step =    565: nodes = 10038, dt = 1.661852e-09, strain = 1.641773e-03, elapsed = 31747.1 sec
+Error: MAX_CONN = 10 exceeded during merge_node()
+Step =    566: nodes = 10015, dt = 1.994223e-09, strain = 1.643767e-03, elapsed = 31988.4 sec
+Step =    567: nodes = 10011, dt = 1.196534e-09, strain = 1.644964e-03, elapsed = 32046.2 sec
+Step =    568: nodes = 10021, dt = 1.196534e-09, strain = 1.646160e-03, elapsed = 32083.2 sec
+Step =    569: nodes = 10004, dt = 1.435840e-09, strain = 1.647596e-03, elapsed = 32135.3 sec
+Step =    570: nodes = 9993, dt = 1.723009e-09, strain = 1.649319e-03, elapsed = 32191.5 sec
+Step =    571: nodes = 9971, dt = 2.067610e-09, strain = 1.651387e-03, elapsed = 32284.4 sec
+Step =    572: nodes = 9965, dt = 2.481132e-09, strain = 1.653868e-03, elapsed = 32406.3 sec
+Step =    573: nodes = 9934, dt = 2.977359e-09, strain = 1.656845e-03, elapsed = 32627.9 sec
+Step =    574: nodes = 9915, dt = 3.572831e-09, strain = 1.660418e-03, elapsed = 32834.9 sec
+Step =    575: nodes = 9884, dt = 2.143698e-09, strain = 1.662562e-03, elapsed = 32927.1 sec
+Step =    576: nodes = 9857, dt = 2.143698e-09, strain = 1.664706e-03, elapsed = 33019.1 sec
+Step =    577: nodes = 9812, dt = 2.572438e-09, strain = 1.667278e-03, elapsed = 33108.4 sec
+Step =    578: nodes = 9773, dt = 3.086926e-09, strain = 1.670365e-03, elapsed = 33227.2 sec
+Step =    579: nodes = 9679, dt = 1.852155e-09, strain = 1.672217e-03, elapsed = 33292.2 sec
+Step =    580: nodes = 9637, dt = 1.852155e-09, strain = 1.674069e-03, elapsed = 33334.2 sec
+Step =    581: nodes = 9603, dt = 1.111293e-09, strain = 1.675181e-03, elapsed = 33365.2 sec
+Step =    582: nodes = 9575, dt = 1.111293e-09, strain = 1.676292e-03, elapsed = 33378.3 sec
+Step =    583: nodes = 9558, dt = 1.333552e-09, strain = 1.677625e-03, elapsed = 33419.6 sec
+Step =    584: nodes = 9537, dt = 1.600262e-09, strain = 1.679226e-03, elapsed = 33461.7 sec
+Step =    585: nodes = 9510, dt = 1.920315e-09, strain = 1.681146e-03, elapsed = 33482.7 sec
+Step =    586: nodes = 9494, dt = 2.304378e-09, strain = 1.683450e-03, elapsed = 33532.9 sec
+Step =    587: nodes = 9453, dt = 2.765253e-09, strain = 1.686216e-03, elapsed = 33593.5 sec
+Step =    588: nodes = 9386, dt = 1.659152e-09, strain = 1.687875e-03, elapsed = 33690.1 sec
+Step =    589: nodes = 9366, dt = 8.295760e-10, strain = 1.688704e-03, elapsed = 33717.4 sec
+Step =    590: nodes = 9339, dt = 8.295760e-10, strain = 1.689534e-03, elapsed = 33743.6 sec
+Step =    591: nodes = 9315, dt = 4.977456e-10, strain = 1.690032e-03, elapsed = 33756.0 sec
+Step =    592: nodes = 9305, dt = 4.977456e-10, strain = 1.690529e-03, elapsed = 33767.8 sec
+Step =    593: nodes = 9294, dt = 5.972947e-10, strain = 1.691127e-03, elapsed = 33779.5 sec
+Step =    594: nodes = 9293, dt = 7.167536e-10, strain = 1.691843e-03, elapsed = 33783.2 sec
+Step =    595: nodes = 9299, dt = 8.601044e-10, strain = 1.692704e-03, elapsed = 33786.4 sec
+Step =    596: nodes = 9300, dt = 1.032125e-09, strain = 1.693736e-03, elapsed = 33797.7 sec
+Step =    597: nodes = 9304, dt = 1.238550e-09, strain = 1.694974e-03, elapsed = 33801.9 sec
+Step =    598: nodes = 9288, dt = 1.486260e-09, strain = 1.696460e-03, elapsed = 33832.2 sec
+Step =    599: nodes = 9270, dt = 1.783512e-09, strain = 1.698244e-03, elapsed = 33889.5 sec
+Step =    600: nodes = 9276, dt = 2.140215e-09, strain = 1.700384e-03, elapsed = 33962.6 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.600.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.600.exadis
+Step =    601: nodes = 9253, dt = 1.284129e-09, strain = 1.701668e-03, elapsed = 34015.5 sec
+Step =    602: nodes = 9226, dt = 1.284129e-09, strain = 1.702952e-03, elapsed = 34097.7 sec
+Step =    603: nodes = 9231, dt = 1.540955e-09, strain = 1.704493e-03, elapsed = 34121.6 sec
+Step =    604: nodes = 9230, dt = 1.849146e-09, strain = 1.706343e-03, elapsed = 34148.0 sec
+Step =    605: nodes = 9212, dt = 2.218975e-09, strain = 1.708562e-03, elapsed = 34193.8 sec
+Step =    606: nodes = 9217, dt = 2.662770e-09, strain = 1.711224e-03, elapsed = 34260.1 sec
+Step =    607: nodes = 9201, dt = 1.597662e-09, strain = 1.712822e-03, elapsed = 34300.8 sec
+Step =    608: nodes = 9167, dt = 1.597662e-09, strain = 1.714420e-03, elapsed = 34400.3 sec
+Error: MAX_CONN = 10 exceeded during merge_node()
+Error: MAX_CONN = 10 exceeded during merge_node()
+Error: MAX_CONN = 10 exceeded during merge_node()
+Error: MAX_CONN = 10 exceeded during merge_node()
+Error: MAX_CONN = 10 exceeded during merge_node()
+Error: MAX_CONN = 10 exceeded during merge_node()
+Error: MAX_CONN = 10 exceeded during merge_node()
+Error: MAX_CONN = 10 exceeded during merge_node()
+Error: MAX_CONN = 10 exceeded during merge_node()
+Step =    609: nodes = 9163, dt = 1.917194e-09, strain = 1.716337e-03, elapsed = 34450.0 sec
+Step =    610: nodes = 9192, dt = 2.300633e-09, strain = 1.718637e-03, elapsed = 34495.4 sec
+Step =    611: nodes = 9221, dt = 2.760760e-09, strain = 1.721398e-03, elapsed = 34567.1 sec
+Step =    612: nodes = 9247, dt = 3.312912e-09, strain = 1.724711e-03, elapsed = 34679.2 sec
+Step =    613: nodes = 9299, dt = 3.975494e-09, strain = 1.728687e-03, elapsed = 34711.4 sec
+Step =    614: nodes = 9321, dt = 2.385296e-09, strain = 1.731072e-03, elapsed = 34720.9 sec
+Step =    615: nodes = 9345, dt = 2.385296e-09, strain = 1.733457e-03, elapsed = 34734.6 sec
+Step =    616: nodes = 9350, dt = 2.862356e-09, strain = 1.736320e-03, elapsed = 34804.6 sec
+Step =    617: nodes = 9388, dt = 3.434827e-09, strain = 1.739754e-03, elapsed = 34871.3 sec
+Step =    618: nodes = 9399, dt = 1.030448e-09, strain = 1.740785e-03, elapsed = 34887.6 sec
+Step =    619: nodes = 9413, dt = 1.030448e-09, strain = 1.741815e-03, elapsed = 34905.8 sec
+Step =    620: nodes = 9425, dt = 1.236538e-09, strain = 1.743052e-03, elapsed = 34919.5 sec
+Step =    621: nodes = 9427, dt = 1.483845e-09, strain = 1.744536e-03, elapsed = 34943.5 sec
+Step =    622: nodes = 9456, dt = 1.780614e-09, strain = 1.746316e-03, elapsed = 34966.6 sec
+Step =    623: nodes = 9481, dt = 2.136737e-09, strain = 1.748453e-03, elapsed = 34979.5 sec
+Step =    624: nodes = 9523, dt = 2.564084e-09, strain = 1.751017e-03, elapsed = 35039.3 sec
+Step =    625: nodes = 9559, dt = 3.076901e-09, strain = 1.754094e-03, elapsed = 35144.1 sec
+Step =    626: nodes = 9630, dt = 3.692282e-09, strain = 1.757786e-03, elapsed = 35181.4 sec
+Step =    627: nodes = 9652, dt = 4.430738e-09, strain = 1.762217e-03, elapsed = 35458.0 sec
+Step =    628: nodes = 9604, dt = 2.658443e-09, strain = 1.764875e-03, elapsed = 35651.2 sec
+Step =    629: nodes = 9612, dt = 2.658443e-09, strain = 1.767534e-03, elapsed = 35731.0 sec
+Step =    630: nodes = 9645, dt = 3.190131e-09, strain = 1.770724e-03, elapsed = 35817.0 sec
+Step =    631: nodes = 9675, dt = 3.828158e-09, strain = 1.774552e-03, elapsed = 35941.6 sec
+Step =    632: nodes = 9733, dt = 4.593789e-09, strain = 1.779146e-03, elapsed = 36096.4 sec
+Step =    633: nodes = 9740, dt = 2.756273e-09, strain = 1.781902e-03, elapsed = 36186.0 sec
+Step =    634: nodes = 9706, dt = 2.756273e-09, strain = 1.784659e-03, elapsed = 36345.2 sec
+Step =    635: nodes = 9653, dt = 3.307528e-09, strain = 1.787966e-03, elapsed = 36518.9 sec
+Error: MAX_CONN = 10 exceeded during merge_node()
+Step =    636: nodes = 9624, dt = 1.984517e-09, strain = 1.789951e-03, elapsed = 36576.0 sec
+Step =    637: nodes = 9611, dt = 9.922584e-10, strain = 1.790943e-03, elapsed = 36591.3 sec
+Step =    638: nodes = 9610, dt = 9.922584e-10, strain = 1.791935e-03, elapsed = 36599.5 sec
+Step =    639: nodes = 9591, dt = 1.190710e-09, strain = 1.793126e-03, elapsed = 36614.0 sec
+Step =    640: nodes = 9583, dt = 1.428852e-09, strain = 1.794555e-03, elapsed = 36647.5 sec
+Step =    641: nodes = 9564, dt = 1.714623e-09, strain = 1.796269e-03, elapsed = 36719.3 sec
+Step =    642: nodes = 9559, dt = 2.057547e-09, strain = 1.798327e-03, elapsed = 36761.3 sec
+Step =    643: nodes = 9528, dt = 1.234528e-09, strain = 1.799561e-03, elapsed = 36789.1 sec
+Step =    644: nodes = 9553, dt = 1.234528e-09, strain = 1.800796e-03, elapsed = 36806.2 sec
+Step =    645: nodes = 9559, dt = 1.481434e-09, strain = 1.802277e-03, elapsed = 36816.6 sec
+Step =    646: nodes = 9581, dt = 1.777721e-09, strain = 1.804055e-03, elapsed = 36829.0 sec
+Step =    647: nodes = 9610, dt = 2.133265e-09, strain = 1.806188e-03, elapsed = 36845.0 sec
+Error: MAX_CONN = 10 exceeded during merge_node()
+Step =    648: nodes = 9600, dt = 2.559918e-09, strain = 1.808748e-03, elapsed = 36958.6 sec
+Step =    649: nodes = 9596, dt = 3.071901e-09, strain = 1.811820e-03, elapsed = 37157.8 sec
+Step =    650: nodes = 9558, dt = 1.843141e-09, strain = 1.813663e-03, elapsed = 37271.8 sec
+Step =    651: nodes = 9574, dt = 1.843141e-09, strain = 1.815506e-03, elapsed = 37347.1 sec
+Step =    652: nodes = 9563, dt = 2.211769e-09, strain = 1.817718e-03, elapsed = 37522.5 sec
+Step =    653: nodes = 9562, dt = 1.327061e-09, strain = 1.819045e-03, elapsed = 37559.2 sec
+Step =    654: nodes = 9588, dt = 1.327061e-09, strain = 1.820372e-03, elapsed = 37571.1 sec
+Step =    655: nodes = 9612, dt = 1.592474e-09, strain = 1.821965e-03, elapsed = 37578.5 sec
+Step =    656: nodes = 9629, dt = 1.910968e-09, strain = 1.823876e-03, elapsed = 37608.1 sec
+Step =    657: nodes = 9659, dt = 2.293162e-09, strain = 1.826169e-03, elapsed = 37633.5 sec
+Step =    658: nodes = 9656, dt = 2.751794e-09, strain = 1.828921e-03, elapsed = 37767.6 sec
+Step =    659: nodes = 9623, dt = 1.651077e-09, strain = 1.830572e-03, elapsed = 37873.6 sec
+Step =    660: nodes = 9593, dt = 1.651077e-09, strain = 1.832223e-03, elapsed = 37951.0 sec
+Step =    661: nodes = 9589, dt = 1.981292e-09, strain = 1.834204e-03, elapsed = 37990.6 sec
+Step =    662: nodes = 9589, dt = 2.377550e-09, strain = 1.836582e-03, elapsed = 38032.3 sec
+Step =    663: nodes = 9612, dt = 2.853060e-09, strain = 1.839435e-03, elapsed = 38093.7 sec
+Step =    664: nodes = 9628, dt = 3.423673e-09, strain = 1.842858e-03, elapsed = 38138.7 sec
+Step =    665: nodes = 9629, dt = 2.054204e-09, strain = 1.844913e-03, elapsed = 38191.6 sec
+Step =    666: nodes = 9598, dt = 2.054204e-09, strain = 1.846967e-03, elapsed = 38257.0 sec
+Step =    667: nodes = 9564, dt = 2.465044e-09, strain = 1.849432e-03, elapsed = 38352.8 sec
+Step =    668: nodes = 9554, dt = 1.479027e-09, strain = 1.850911e-03, elapsed = 38385.3 sec
+Step =    669: nodes = 9580, dt = 1.479027e-09, strain = 1.852390e-03, elapsed = 38418.3 sec
+Step =    670: nodes = 9589, dt = 1.774832e-09, strain = 1.854165e-03, elapsed = 38457.3 sec
+Step =    671: nodes = 9579, dt = 2.129798e-09, strain = 1.856295e-03, elapsed = 38581.1 sec
+Error: MAX_CONN = 10 exceeded during merge_node()
+Error: MAX_CONN = 10 exceeded during merge_node()
+Error: MAX_CONN = 10 exceeded during merge_node()
+Step =    672: nodes = 9532, dt = 2.555758e-09, strain = 1.858850e-03, elapsed = 38710.0 sec
+Step =    673: nodes = 9506, dt = 3.066909e-09, strain = 1.861917e-03, elapsed = 38978.2 sec
+Step =    674: nodes = 9464, dt = 1.840146e-09, strain = 1.863757e-03, elapsed = 39048.6 sec
+Step =    675: nodes = 9444, dt = 1.840146e-09, strain = 1.865597e-03, elapsed = 39064.3 sec
+Step =    676: nodes = 9448, dt = 2.208175e-09, strain = 1.867806e-03, elapsed = 39125.6 sec
+Step =    677: nodes = 9448, dt = 2.649810e-09, strain = 1.870455e-03, elapsed = 39284.1 sec
+Step =    678: nodes = 9415, dt = 1.589886e-09, strain = 1.872045e-03, elapsed = 39319.6 sec
+Error: MAX_CONN = 10 exceeded during merge_node()
+Error: MAX_CONN = 10 exceeded during merge_node()
+Error: MAX_CONN = 10 exceeded during merge_node()
+Step =    679: nodes = 9409, dt = 1.589886e-09, strain = 1.873635e-03, elapsed = 39425.0 sec
+Step =    680: nodes = 9386, dt = 1.907863e-09, strain = 1.875543e-03, elapsed = 39495.0 sec
+Step =    681: nodes = 9395, dt = 2.289436e-09, strain = 1.877833e-03, elapsed = 39549.1 sec
+Step =    682: nodes = 9391, dt = 2.747323e-09, strain = 1.880580e-03, elapsed = 39738.8 sec
+Step =    683: nodes = 9402, dt = 3.296787e-09, strain = 1.883877e-03, elapsed = 39826.1 sec
+Step =    684: nodes = 9416, dt = 9.890362e-10, strain = 1.884866e-03, elapsed = 39841.9 sec
+Step =    685: nodes = 9408, dt = 9.890362e-10, strain = 1.885855e-03, elapsed = 39852.5 sec
+Step =    686: nodes = 9416, dt = 1.186843e-09, strain = 1.887042e-03, elapsed = 39867.8 sec
+Step =    687: nodes = 9431, dt = 1.424212e-09, strain = 1.888466e-03, elapsed = 39907.8 sec
+Step =    688: nodes = 9458, dt = 1.709055e-09, strain = 1.890175e-03, elapsed = 39913.6 sec
+Step =    689: nodes = 9480, dt = 2.050865e-09, strain = 1.892226e-03, elapsed = 39933.0 sec
+Step =    690: nodes = 9489, dt = 2.461039e-09, strain = 1.894687e-03, elapsed = 40020.4 sec
+Step =    691: nodes = 9498, dt = 2.953246e-09, strain = 1.897640e-03, elapsed = 40105.8 sec
+Step =    692: nodes = 9494, dt = 1.771948e-09, strain = 1.899412e-03, elapsed = 40152.9 sec
+Step =    693: nodes = 9494, dt = 1.771948e-09, strain = 1.901184e-03, elapsed = 40187.5 sec
+Step =    694: nodes = 9496, dt = 2.126337e-09, strain = 1.903310e-03, elapsed = 40224.6 sec
+Step =    695: nodes = 9528, dt = 2.551605e-09, strain = 1.905862e-03, elapsed = 40271.6 sec
+Step =    696: nodes = 9551, dt = 3.061926e-09, strain = 1.908924e-03, elapsed = 40367.9 sec
+Step =    697: nodes = 9552, dt = 3.674311e-09, strain = 1.912598e-03, elapsed = 40485.5 sec
+Step =    698: nodes = 9521, dt = 2.204587e-09, strain = 1.914803e-03, elapsed = 40563.0 sec
+Step =    699: nodes = 9535, dt = 2.204587e-09, strain = 1.917007e-03, elapsed = 40680.9 sec
+Step =    700: nodes = 9491, dt = 1.322752e-09, strain = 1.918330e-03, elapsed = 40717.5 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.700.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.700.exadis
+Step =    701: nodes = 9497, dt = 1.322752e-09, strain = 1.919653e-03, elapsed = 40734.1 sec
+Step =    702: nodes = 9492, dt = 1.587302e-09, strain = 1.921240e-03, elapsed = 40767.4 sec
+Step =    703: nodes = 9496, dt = 1.904763e-09, strain = 1.923145e-03, elapsed = 40815.6 sec
+Step =    704: nodes = 9518, dt = 2.285715e-09, strain = 1.925431e-03, elapsed = 40886.6 sec
+Step =    705: nodes = 9538, dt = 2.742858e-09, strain = 1.928173e-03, elapsed = 40912.3 sec
+Step =    706: nodes = 9591, dt = 3.291430e-09, strain = 1.931465e-03, elapsed = 40952.2 sec
+Step =    707: nodes = 9576, dt = 3.949716e-09, strain = 1.935415e-03, elapsed = 41217.3 sec
+Error: MAX_CONN = 10 exceeded during merge_node()
+Error: MAX_CONN = 10 exceeded during merge_node()
+Step =    708: nodes = 9566, dt = 4.739659e-09, strain = 1.940154e-03, elapsed = 41523.2 sec
+Step =    709: nodes = 9522, dt = 1.421898e-09, strain = 1.941576e-03, elapsed = 41582.4 sec
+Step =    710: nodes = 9508, dt = 1.421898e-09, strain = 1.942998e-03, elapsed = 41601.3 sec
+Step =    711: nodes = 9520, dt = 1.706277e-09, strain = 1.944704e-03, elapsed = 41625.4 sec
+Step =    712: nodes = 9549, dt = 2.047533e-09, strain = 1.946752e-03, elapsed = 41653.0 sec
+Step =    713: nodes = 9569, dt = 2.457039e-09, strain = 1.949209e-03, elapsed = 41706.2 sec
+Step =    714: nodes = 9548, dt = 2.948447e-09, strain = 1.952157e-03, elapsed = 41832.2 sec
+Step =    715: nodes = 9548, dt = 1.769068e-09, strain = 1.953926e-03, elapsed = 41882.2 sec
+Step =    716: nodes = 9583, dt = 1.769068e-09, strain = 1.955695e-03, elapsed = 41895.6 sec
+Step =    717: nodes = 9624, dt = 2.122882e-09, strain = 1.957818e-03, elapsed = 41916.7 sec
+Step =    718: nodes = 9639, dt = 1.273729e-09, strain = 1.959092e-03, elapsed = 41938.4 sec
+Step =    719: nodes = 9641, dt = 1.273729e-09, strain = 1.960366e-03, elapsed = 41962.4 sec
+Step =    720: nodes = 9611, dt = 1.528475e-09, strain = 1.961894e-03, elapsed = 42044.0 sec
+Step =    721: nodes = 9640, dt = 1.834170e-09, strain = 1.963728e-03, elapsed = 42123.6 sec
+Step =    722: nodes = 9666, dt = 2.201004e-09, strain = 1.965929e-03, elapsed = 42233.6 sec
+Step =    723: nodes = 9677, dt = 2.641205e-09, strain = 1.968571e-03, elapsed = 42436.6 sec
+Step =    724: nodes = 9668, dt = 3.169446e-09, strain = 1.971740e-03, elapsed = 42733.8 sec
+Step =    725: nodes = 9646, dt = 1.901668e-09, strain = 1.973642e-03, elapsed = 42853.3 sec
+Step =    726: nodes = 9623, dt = 1.901668e-09, strain = 1.975543e-03, elapsed = 42957.7 sec
+Step =    727: nodes = 9601, dt = 1.141001e-09, strain = 1.976684e-03, elapsed = 42985.0 sec
+Step =    728: nodes = 9602, dt = 1.141001e-09, strain = 1.977825e-03, elapsed = 43006.1 sec
+Step =    729: nodes = 9617, dt = 1.369201e-09, strain = 1.979195e-03, elapsed = 43024.0 sec
+Step =    730: nodes = 9621, dt = 1.643041e-09, strain = 1.980838e-03, elapsed = 43077.1 sec
+Step =    731: nodes = 9650, dt = 1.971649e-09, strain = 1.982809e-03, elapsed = 43125.2 sec
+Step =    732: nodes = 9646, dt = 2.365979e-09, strain = 1.985175e-03, elapsed = 43215.8 sec
+Step =    733: nodes = 9678, dt = 2.839174e-09, strain = 1.988014e-03, elapsed = 43392.8 sec
+Step =    734: nodes = 9640, dt = 3.407009e-09, strain = 1.991421e-03, elapsed = 43540.6 sec
+Step =    735: nodes = 9646, dt = 4.088411e-09, strain = 1.995510e-03, elapsed = 43799.6 sec
+Step =    736: nodes = 9556, dt = 2.453047e-09, strain = 1.997963e-03, elapsed = 43970.7 sec
+Step =    737: nodes = 9461, dt = 1.226523e-09, strain = 1.999189e-03, elapsed = 44090.5 sec
+Step =    738: nodes = 9423, dt = 1.226523e-09, strain = 2.000416e-03, elapsed = 44134.0 sec
+Step =    739: nodes = 9396, dt = 1.471828e-09, strain = 2.001888e-03, elapsed = 44186.2 sec
+Step =    740: nodes = 9374, dt = 1.766194e-09, strain = 2.003654e-03, elapsed = 44285.5 sec
+Step =    741: nodes = 9354, dt = 2.119432e-09, strain = 2.005773e-03, elapsed = 44340.8 sec
+Step =    742: nodes = 9320, dt = 2.543319e-09, strain = 2.008317e-03, elapsed = 44465.6 sec
+Step =    743: nodes = 9284, dt = 7.629956e-10, strain = 2.009080e-03, elapsed = 44481.9 sec
+Step =    744: nodes = 9297, dt = 7.629956e-10, strain = 2.009843e-03, elapsed = 44484.0 sec
+Step =    745: nodes = 9297, dt = 9.155948e-10, strain = 2.010758e-03, elapsed = 44488.3 sec
+Step =    746: nodes = 9312, dt = 1.098714e-09, strain = 2.011857e-03, elapsed = 44494.4 sec
+Step =    747: nodes = 9323, dt = 1.318456e-09, strain = 2.013175e-03, elapsed = 44500.5 sec
+Step =    748: nodes = 9349, dt = 1.582148e-09, strain = 2.014758e-03, elapsed = 44506.4 sec
+Step =    749: nodes = 9374, dt = 1.898577e-09, strain = 2.016656e-03, elapsed = 44533.0 sec
+Step =    750: nodes = 9379, dt = 2.278293e-09, strain = 2.018934e-03, elapsed = 44611.8 sec
+Error: MAX_CONN = 10 exceeded during merge_node()
+Error: MAX_CONN = 10 exceeded during merge_node()
+Step =    751: nodes = 9341, dt = 2.733951e-09, strain = 2.021668e-03, elapsed = 44890.0 sec
+Error: MAX_CONN = 10 exceeded during merge_node()
+Error: MAX_CONN = 10 exceeded during merge_node()
+Error: MAX_CONN = 10 exceeded during merge_node()
+Error: MAX_CONN = 10 exceeded during merge_node()
+Error: MAX_CONN = 10 exceeded during merge_node()
+Error: MAX_CONN = 10 exceeded during merge_node()
+Error: MAX_CONN = 10 exceeded during merge_node()
+Step =    752: nodes = 9294, dt = 3.280742e-09, strain = 2.024949e-03, elapsed = 45167.7 sec
+Step =    753: nodes = 9254, dt = 1.968445e-09, strain = 2.026918e-03, elapsed = 45217.3 sec
+Step =    754: nodes = 9200, dt = 1.968445e-09, strain = 2.028886e-03, elapsed = 45308.5 sec
+Step =    755: nodes = 9138, dt = 2.362134e-09, strain = 2.031248e-03, elapsed = 45438.8 sec
+Step =    756: nodes = 9065, dt = 2.834561e-09, strain = 2.034083e-03, elapsed = 45556.7 sec
+Step =    757: nodes = 9022, dt = 3.401473e-09, strain = 2.037484e-03, elapsed = 45648.2 sec
+Step =    758: nodes = 9006, dt = 1.020442e-09, strain = 2.038505e-03, elapsed = 45666.3 sec
+Step =    759: nodes = 8993, dt = 1.020442e-09, strain = 2.039525e-03, elapsed = 45672.0 sec
+Step =    760: nodes = 9002, dt = 1.224530e-09, strain = 2.040750e-03, elapsed = 45684.1 sec
+Step =    761: nodes = 8988, dt = 1.469436e-09, strain = 2.042219e-03, elapsed = 45707.8 sec
+Step =    762: nodes = 8982, dt = 1.763324e-09, strain = 2.043982e-03, elapsed = 45755.6 sec
+Step =    763: nodes = 8971, dt = 2.115988e-09, strain = 2.046098e-03, elapsed = 45829.1 sec
+Step =    764: nodes = 8940, dt = 2.539186e-09, strain = 2.048638e-03, elapsed = 45905.6 sec
+Step =    765: nodes = 8969, dt = 3.047023e-09, strain = 2.051685e-03, elapsed = 45992.4 sec
+Step =    766: nodes = 9008, dt = 3.656428e-09, strain = 2.055341e-03, elapsed = 46149.5 sec
+Step =    767: nodes = 8998, dt = 2.193857e-09, strain = 2.057535e-03, elapsed = 46238.4 sec
+Step =    768: nodes = 8959, dt = 2.193857e-09, strain = 2.059729e-03, elapsed = 46413.1 sec
+Step =    769: nodes = 8929, dt = 1.316314e-09, strain = 2.061045e-03, elapsed = 46470.5 sec
+Step =    770: nodes = 8905, dt = 1.316314e-09, strain = 2.062361e-03, elapsed = 46507.0 sec
+Step =    771: nodes = 8898, dt = 1.579577e-09, strain = 2.063941e-03, elapsed = 46522.3 sec
+Step =    772: nodes = 8873, dt = 1.895492e-09, strain = 2.065836e-03, elapsed = 46710.9 sec
+Step =    773: nodes = 8900, dt = 2.274591e-09, strain = 2.068111e-03, elapsed = 46784.6 sec
+Step =    774: nodes = 8885, dt = 2.729509e-09, strain = 2.070841e-03, elapsed = 46923.9 sec
+Step =    775: nodes = 8852, dt = 1.637705e-09, strain = 2.072478e-03, elapsed = 47048.4 sec
+Step =    776: nodes = 8816, dt = 1.637705e-09, strain = 2.074116e-03, elapsed = 47116.2 sec
+Step =    777: nodes = 8810, dt = 1.965246e-09, strain = 2.076081e-03, elapsed = 47142.7 sec
+Step =    778: nodes = 8804, dt = 2.358295e-09, strain = 2.078440e-03, elapsed = 47163.0 sec
+Step =    779: nodes = 8808, dt = 2.829955e-09, strain = 2.081269e-03, elapsed = 47204.5 sec
+Step =    780: nodes = 8812, dt = 3.395945e-09, strain = 2.084665e-03, elapsed = 47404.0 sec
+Step =    781: nodes = 8794, dt = 2.037567e-09, strain = 2.086703e-03, elapsed = 47485.7 sec
+Step =    782: nodes = 8787, dt = 2.037567e-09, strain = 2.088741e-03, elapsed = 47540.6 sec
+Step =    783: nodes = 8779, dt = 2.445081e-09, strain = 2.091186e-03, elapsed = 47596.1 sec
+Step =    784: nodes = 8805, dt = 2.934097e-09, strain = 2.094120e-03, elapsed = 47686.1 sec
+Step =    785: nodes = 8817, dt = 3.520916e-09, strain = 2.097641e-03, elapsed = 47855.2 sec
+Step =    786: nodes = 8807, dt = 2.112550e-09, strain = 2.099753e-03, elapsed = 47903.8 sec
+Step =    787: nodes = 8819, dt = 1.056275e-09, strain = 2.100809e-03, elapsed = 47917.8 sec
+Step =    788: nodes = 8820, dt = 1.056275e-09, strain = 2.101866e-03, elapsed = 47930.2 sec
+Step =    789: nodes = 8825, dt = 1.267530e-09, strain = 2.103133e-03, elapsed = 47935.1 sec
+Step =    790: nodes = 8856, dt = 1.521036e-09, strain = 2.104654e-03, elapsed = 47952.8 sec
+Step =    791: nodes = 8887, dt = 1.825243e-09, strain = 2.106480e-03, elapsed = 47983.0 sec
+Step =    792: nodes = 8909, dt = 2.190292e-09, strain = 2.108670e-03, elapsed = 48035.8 sec
+Step =    793: nodes = 8949, dt = 2.628350e-09, strain = 2.111298e-03, elapsed = 48098.7 sec
+Step =    794: nodes = 8981, dt = 1.577010e-09, strain = 2.112875e-03, elapsed = 48107.4 sec
+Step =    795: nodes = 8980, dt = 1.577010e-09, strain = 2.114452e-03, elapsed = 48112.7 sec
+Step =    796: nodes = 9022, dt = 1.892412e-09, strain = 2.116345e-03, elapsed = 48121.5 sec
+Step =    797: nodes = 9047, dt = 2.270894e-09, strain = 2.118616e-03, elapsed = 48183.3 sec
+Step =    798: nodes = 9062, dt = 2.725073e-09, strain = 2.121341e-03, elapsed = 48312.8 sec
+Step =    799: nodes = 9033, dt = 1.635044e-09, strain = 2.122976e-03, elapsed = 48429.0 sec
+Step =    800: nodes = 9014, dt = 1.635044e-09, strain = 2.124611e-03, elapsed = 48482.3 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.800.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.800.exadis
+Step =    801: nodes = 9028, dt = 1.962053e-09, strain = 2.126573e-03, elapsed = 48507.9 sec
+Step =    802: nodes = 9057, dt = 2.354463e-09, strain = 2.128927e-03, elapsed = 48524.8 sec
+Step =    803: nodes = 9051, dt = 2.825356e-09, strain = 2.131753e-03, elapsed = 48558.0 sec
+Step =    804: nodes = 9064, dt = 1.695214e-09, strain = 2.133448e-03, elapsed = 48575.8 sec
+Step =    805: nodes = 9094, dt = 1.695214e-09, strain = 2.135143e-03, elapsed = 48594.5 sec
+Step =    806: nodes = 9109, dt = 2.034256e-09, strain = 2.137177e-03, elapsed = 48645.9 sec
+Error: MAX_CONN = 10 exceeded during merge_node()
+Error: MAX_CONN = 10 exceeded during merge_node()
+Error: MAX_CONN = 10 exceeded during merge_node()
+Step =    807: nodes = 9060, dt = 2.441107e-09, strain = 2.139618e-03, elapsed = 48800.3 sec
+Step =    808: nodes = 9032, dt = 2.929329e-09, strain = 2.142548e-03, elapsed = 48950.4 sec
+Step =    809: nodes = 9030, dt = 3.515195e-09, strain = 2.146063e-03, elapsed = 49060.3 sec
+Step =    810: nodes = 8982, dt = 4.218234e-09, strain = 2.150281e-03, elapsed = 49278.3 sec
+Step =    811: nodes = 8953, dt = 2.530940e-09, strain = 2.152812e-03, elapsed = 49480.1 sec
+Step =    812: nodes = 8923, dt = 2.530940e-09, strain = 2.155343e-03, elapsed = 49552.6 sec
+Step =    813: nodes = 8959, dt = 3.037128e-09, strain = 2.158380e-03, elapsed = 49598.2 sec
+Step =    814: nodes = 8974, dt = 3.644554e-09, strain = 2.162025e-03, elapsed = 49771.7 sec
+Step =    815: nodes = 8923, dt = 2.186732e-09, strain = 2.164211e-03, elapsed = 49837.6 sec
+Step =    816: nodes = 8928, dt = 2.186732e-09, strain = 2.166398e-03, elapsed = 49886.5 sec
+Step =    817: nodes = 8943, dt = 2.624079e-09, strain = 2.169022e-03, elapsed = 49913.7 sec
+Step =    818: nodes = 8967, dt = 3.148895e-09, strain = 2.172171e-03, elapsed = 50003.2 sec
+Step =    819: nodes = 9017, dt = 3.778674e-09, strain = 2.175950e-03, elapsed = 50072.0 sec
+Step =    820: nodes = 9043, dt = 2.267204e-09, strain = 2.178217e-03, elapsed = 50137.7 sec
+Step =    821: nodes = 9055, dt = 2.267204e-09, strain = 2.180484e-03, elapsed = 50200.6 sec
+Step =    822: nodes = 9064, dt = 2.720645e-09, strain = 2.183205e-03, elapsed = 50276.9 sec
+Step =    823: nodes = 9086, dt = 3.264774e-09, strain = 2.186470e-03, elapsed = 50440.2 sec
+Error: MAX_CONN = 10 exceeded during merge_node()
+Step =    824: nodes = 9150, dt = 3.917729e-09, strain = 2.190387e-03, elapsed = 50671.6 sec
+Step =    825: nodes = 9164, dt = 2.350637e-09, strain = 2.192738e-03, elapsed = 50818.3 sec
+Step =    826: nodes = 9194, dt = 2.350637e-09, strain = 2.195089e-03, elapsed = 50872.8 sec
+Step =    827: nodes = 9217, dt = 2.820765e-09, strain = 2.197909e-03, elapsed = 50920.7 sec
+Step =    828: nodes = 9241, dt = 3.384918e-09, strain = 2.201294e-03, elapsed = 51050.9 sec
+Step =    829: nodes = 9235, dt = 4.061901e-09, strain = 2.205356e-03, elapsed = 51383.6 sec
+Error: MAX_CONN = 10 exceeded during merge_node()
+Error: MAX_CONN = 10 exceeded during merge_node()
+Step =    830: nodes = 9238, dt = 2.437141e-09, strain = 2.207793e-03, elapsed = 51539.9 sec
+Step =    831: nodes = 9239, dt = 2.437141e-09, strain = 2.210230e-03, elapsed = 51600.6 sec
+Step =    832: nodes = 9224, dt = 2.924569e-09, strain = 2.213155e-03, elapsed = 51823.8 sec
+Step =    833: nodes = 9183, dt = 3.509483e-09, strain = 2.216665e-03, elapsed = 52134.1 sec
+Step =    834: nodes = 9215, dt = 4.211379e-09, strain = 2.220876e-03, elapsed = 52331.0 sec
+Step =    835: nodes = 9206, dt = 2.526827e-09, strain = 2.223403e-03, elapsed = 52411.9 sec
+Step =    836: nodes = 9221, dt = 2.526827e-09, strain = 2.225930e-03, elapsed = 52467.0 sec
+Step =    837: nodes = 9234, dt = 1.516096e-09, strain = 2.227446e-03, elapsed = 52510.6 sec
+Step =    838: nodes = 9205, dt = 1.516096e-09, strain = 2.228962e-03, elapsed = 52608.9 sec
+Step =    839: nodes = 9216, dt = 1.819316e-09, strain = 2.230781e-03, elapsed = 52656.1 sec
+Step =    840: nodes = 9208, dt = 2.183179e-09, strain = 2.232964e-03, elapsed = 52748.1 sec
+Step =    841: nodes = 9192, dt = 1.309907e-09, strain = 2.234274e-03, elapsed = 52774.7 sec
+Step =    842: nodes = 9200, dt = 1.309907e-09, strain = 2.235584e-03, elapsed = 52786.5 sec
+Step =    843: nodes = 9193, dt = 1.571889e-09, strain = 2.237156e-03, elapsed = 52798.2 sec
+Step =    844: nodes = 9185, dt = 9.431333e-10, strain = 2.238099e-03, elapsed = 52805.5 sec
+Step =    845: nodes = 9177, dt = 9.431333e-10, strain = 2.239042e-03, elapsed = 52863.9 sec
+Step =    846: nodes = 9198, dt = 1.131760e-09, strain = 2.240174e-03, elapsed = 52885.3 sec
+Step =    847: nodes = 9208, dt = 1.358112e-09, strain = 2.241532e-03, elapsed = 52890.1 sec
+Step =    848: nodes = 9246, dt = 1.629734e-09, strain = 2.243162e-03, elapsed = 52896.1 sec
+Step =    849: nodes = 9258, dt = 9.778406e-10, strain = 2.244140e-03, elapsed = 52898.7 sec
+Step =    850: nodes = 9282, dt = 9.778406e-10, strain = 2.245117e-03, elapsed = 52902.9 sec
+Step =    851: nodes = 9275, dt = 1.173409e-09, strain = 2.246291e-03, elapsed = 52931.2 sec
+Step =    852: nodes = 9279, dt = 1.408090e-09, strain = 2.247699e-03, elapsed = 52953.6 sec
+Step =    853: nodes = 9296, dt = 1.689709e-09, strain = 2.249389e-03, elapsed = 52960.6 sec
+Step =    854: nodes = 9308, dt = 2.027650e-09, strain = 2.251416e-03, elapsed = 52970.4 sec
+Step =    855: nodes = 9349, dt = 2.433180e-09, strain = 2.253850e-03, elapsed = 52991.9 sec
+Step =    856: nodes = 9418, dt = 2.919816e-09, strain = 2.256769e-03, elapsed = 53114.0 sec
+Step =    857: nodes = 9413, dt = 3.503780e-09, strain = 2.260273e-03, elapsed = 53261.5 sec
+Step =    858: nodes = 9458, dt = 4.204536e-09, strain = 2.264478e-03, elapsed = 53348.7 sec
+Step =    859: nodes = 9479, dt = 1.261361e-09, strain = 2.265739e-03, elapsed = 53385.9 sec
+Step =    860: nodes = 9486, dt = 1.261361e-09, strain = 2.267000e-03, elapsed = 53416.2 sec
+Step =    861: nodes = 9490, dt = 1.513633e-09, strain = 2.268514e-03, elapsed = 53437.1 sec
+Step =    862: nodes = 9508, dt = 1.816359e-09, strain = 2.270330e-03, elapsed = 53473.4 sec
+Step =    863: nodes = 9524, dt = 2.179631e-09, strain = 2.272510e-03, elapsed = 53495.3 sec
+Step =    864: nodes = 9548, dt = 2.615558e-09, strain = 2.275126e-03, elapsed = 53540.5 sec
+Step =    865: nodes = 9584, dt = 3.138669e-09, strain = 2.278264e-03, elapsed = 53692.8 sec
+Step =    866: nodes = 9634, dt = 3.766403e-09, strain = 2.282031e-03, elapsed = 53844.1 sec
+Step =    867: nodes = 9688, dt = 4.519683e-09, strain = 2.286550e-03, elapsed = 54141.9 sec
+Step =    868: nodes = 9690, dt = 1.355905e-09, strain = 2.287906e-03, elapsed = 54190.7 sec
+Step =    869: nodes = 9694, dt = 1.355905e-09, strain = 2.289262e-03, elapsed = 54227.5 sec
+Step =    870: nodes = 9691, dt = 1.627086e-09, strain = 2.290889e-03, elapsed = 54273.5 sec
+Step =    871: nodes = 9691, dt = 1.952503e-09, strain = 2.292842e-03, elapsed = 54370.8 sec
+Step =    872: nodes = 9663, dt = 2.343004e-09, strain = 2.295185e-03, elapsed = 54478.7 sec
+Step =    873: nodes = 9650, dt = 1.405802e-09, strain = 2.296591e-03, elapsed = 54537.6 sec
+Step =    874: nodes = 9623, dt = 1.405802e-09, strain = 2.297996e-03, elapsed = 54602.3 sec
+Step =    875: nodes = 9591, dt = 8.434814e-10, strain = 2.298840e-03, elapsed = 54628.9 sec
+Step =    876: nodes = 9562, dt = 8.434814e-10, strain = 2.299683e-03, elapsed = 54654.1 sec
+Step =    877: nodes = 9542, dt = 1.012178e-09, strain = 2.300695e-03, elapsed = 54682.5 sec
+Step =    878: nodes = 9524, dt = 1.214613e-09, strain = 2.301910e-03, elapsed = 54712.7 sec
+Step =    879: nodes = 9487, dt = 1.457536e-09, strain = 2.303368e-03, elapsed = 54796.8 sec
+Step =    880: nodes = 9394, dt = 1.749043e-09, strain = 2.305117e-03, elapsed = 54881.3 sec
+Step =    881: nodes = 9321, dt = 2.098852e-09, strain = 2.307216e-03, elapsed = 55007.5 sec
+Error: MAX_CONN = 10 exceeded during merge_node()
+Step =    882: nodes = 9295, dt = 6.296555e-10, strain = 2.307845e-03, elapsed = 55021.9 sec
+Step =    883: nodes = 9267, dt = 6.296555e-10, strain = 2.308475e-03, elapsed = 55031.9 sec
+Step =    884: nodes = 9279, dt = 7.555866e-10, strain = 2.309230e-03, elapsed = 55034.1 sec
+Step =    885: nodes = 9274, dt = 9.067039e-10, strain = 2.310137e-03, elapsed = 55057.7 sec
+Step =    886: nodes = 9264, dt = 1.088045e-09, strain = 2.311225e-03, elapsed = 55071.1 sec
+Step =    887: nodes = 9260, dt = 1.305654e-09, strain = 2.312531e-03, elapsed = 55112.4 sec
+Step =    888: nodes = 9217, dt = 1.566784e-09, strain = 2.314098e-03, elapsed = 55175.3 sec
+Step =    889: nodes = 9196, dt = 1.880141e-09, strain = 2.315978e-03, elapsed = 55251.8 sec
+Step =    890: nodes = 9196, dt = 2.256169e-09, strain = 2.318234e-03, elapsed = 55351.1 sec
+Step =    891: nodes = 9177, dt = 2.707403e-09, strain = 2.320941e-03, elapsed = 55467.5 sec
+Error: MAX_CONN = 10 exceeded during merge_node()
+Error: MAX_CONN = 10 exceeded during merge_node()
+Step =    892: nodes = 9130, dt = 3.248884e-09, strain = 2.324190e-03, elapsed = 55677.0 sec
+Step =    893: nodes = 9086, dt = 3.898661e-09, strain = 2.328089e-03, elapsed = 56062.7 sec
+Step =    894: nodes = 9041, dt = 4.678393e-09, strain = 2.332767e-03, elapsed = 56495.0 sec
+Step =    895: nodes = 8981, dt = 1.403518e-09, strain = 2.334171e-03, elapsed = 56612.3 sec
+Error: MAX_CONN = 10 exceeded during merge_node()
+Error: MAX_CONN = 10 exceeded during merge_node()
+Error: MAX_CONN = 10 exceeded during merge_node()
+Error: MAX_CONN = 10 exceeded during merge_node()
+Error: MAX_CONN = 10 exceeded during merge_node()
+Step =    896: nodes = 8938, dt = 1.403518e-09, strain = 2.335574e-03, elapsed = 56650.4 sec
+Step =    897: nodes = 8937, dt = 1.684221e-09, strain = 2.337259e-03, elapsed = 56698.3 sec
+Step =    898: nodes = 8939, dt = 2.021066e-09, strain = 2.339280e-03, elapsed = 56743.4 sec
+Step =    899: nodes = 8946, dt = 2.425279e-09, strain = 2.341705e-03, elapsed = 56782.5 sec
+Step =    900: nodes = 8969, dt = 2.910335e-09, strain = 2.344615e-03, elapsed = 56858.3 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.900.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.900.exadis
+Step =    901: nodes = 8976, dt = 3.492402e-09, strain = 2.348108e-03, elapsed = 56928.0 sec
+Step =    902: nodes = 8980, dt = 4.190882e-09, strain = 2.352298e-03, elapsed = 57099.9 sec
+Step =    903: nodes = 9018, dt = 5.029058e-09, strain = 2.357328e-03, elapsed = 57271.4 sec
+Step =    904: nodes = 9051, dt = 3.017435e-09, strain = 2.360345e-03, elapsed = 57377.7 sec
+Step =    905: nodes = 9057, dt = 3.017435e-09, strain = 2.363362e-03, elapsed = 57487.3 sec
+Step =    906: nodes = 9081, dt = 3.620922e-09, strain = 2.366983e-03, elapsed = 57583.0 sec
+Step =    907: nodes = 9124, dt = 4.345106e-09, strain = 2.371328e-03, elapsed = 57639.3 sec
+Step =    908: nodes = 9137, dt = 2.607064e-09, strain = 2.373935e-03, elapsed = 57678.9 sec
+Step =    909: nodes = 9130, dt = 1.303532e-09, strain = 2.375239e-03, elapsed = 57695.2 sec
+Step =    910: nodes = 9142, dt = 1.303532e-09, strain = 2.376543e-03, elapsed = 57706.1 sec
+Step =    911: nodes = 9146, dt = 1.564238e-09, strain = 2.378107e-03, elapsed = 57717.9 sec
+Step =    912: nodes = 9174, dt = 1.877086e-09, strain = 2.379984e-03, elapsed = 57771.4 sec
+Step =    913: nodes = 9194, dt = 2.252503e-09, strain = 2.382236e-03, elapsed = 57847.2 sec
+Step =    914: nodes = 9206, dt = 2.703004e-09, strain = 2.384939e-03, elapsed = 57971.4 sec
+Step =    915: nodes = 9168, dt = 3.243605e-09, strain = 2.388183e-03, elapsed = 58203.4 sec
+Error: MAX_CONN = 10 exceeded during merge_node()
+Step =    916: nodes = 9139, dt = 1.946163e-09, strain = 2.390129e-03, elapsed = 58329.0 sec
+Step =    917: nodes = 9153, dt = 1.946163e-09, strain = 2.392075e-03, elapsed = 58367.7 sec
+Step =    918: nodes = 9161, dt = 2.335395e-09, strain = 2.394411e-03, elapsed = 58412.9 sec
+Step =    919: nodes = 9180, dt = 2.802474e-09, strain = 2.397213e-03, elapsed = 58452.5 sec
+Step =    920: nodes = 9174, dt = 3.362969e-09, strain = 2.400576e-03, elapsed = 58507.1 sec
+Step =    921: nodes = 9206, dt = 4.035563e-09, strain = 2.404612e-03, elapsed = 58721.8 sec
+Step =    922: nodes = 9195, dt = 2.421338e-09, strain = 2.407033e-03, elapsed = 58918.7 sec
+Step =    923: nodes = 9178, dt = 2.421338e-09, strain = 2.409454e-03, elapsed = 58993.1 sec
+Step =    924: nodes = 9193, dt = 2.905605e-09, strain = 2.412360e-03, elapsed = 59051.0 sec
+Step =    925: nodes = 9243, dt = 3.486726e-09, strain = 2.415847e-03, elapsed = 59130.2 sec
+Step =    926: nodes = 9259, dt = 4.184072e-09, strain = 2.420031e-03, elapsed = 59259.3 sec
+Step =    927: nodes = 9314, dt = 5.020886e-09, strain = 2.425052e-03, elapsed = 59556.1 sec
+Step =    928: nodes = 9293, dt = 1.506266e-09, strain = 2.426558e-03, elapsed = 59659.2 sec
+Step =    929: nodes = 9291, dt = 1.506266e-09, strain = 2.428064e-03, elapsed = 59686.4 sec
+Step =    930: nodes = 9292, dt = 1.807519e-09, strain = 2.429872e-03, elapsed = 59716.3 sec
+Step =    931: nodes = 9305, dt = 2.169023e-09, strain = 2.432041e-03, elapsed = 59751.4 sec
+Step =    932: nodes = 9291, dt = 2.602827e-09, strain = 2.434644e-03, elapsed = 59809.6 sec
+Step =    933: nodes = 9300, dt = 3.123393e-09, strain = 2.437767e-03, elapsed = 59906.3 sec
+Step =    934: nodes = 9330, dt = 3.748071e-09, strain = 2.441515e-03, elapsed = 59947.5 sec
+Step =    935: nodes = 9393, dt = 4.497686e-09, strain = 2.446013e-03, elapsed = 60068.7 sec
+Step =    936: nodes = 9404, dt = 2.698611e-09, strain = 2.448711e-03, elapsed = 60123.2 sec
+Step =    937: nodes = 9421, dt = 2.698611e-09, strain = 2.451410e-03, elapsed = 60183.5 sec
+Step =    938: nodes = 9451, dt = 3.238334e-09, strain = 2.454648e-03, elapsed = 60227.7 sec
+Step =    939: nodes = 9489, dt = 3.886000e-09, strain = 2.458534e-03, elapsed = 60477.4 sec
+Step =    940: nodes = 9485, dt = 1.165800e-09, strain = 2.459700e-03, elapsed = 60509.4 sec
+Step =    941: nodes = 9489, dt = 1.165800e-09, strain = 2.460866e-03, elapsed = 60538.8 sec
+Step =    942: nodes = 9500, dt = 1.398960e-09, strain = 2.462265e-03, elapsed = 60583.8 sec
+Step =    943: nodes = 9528, dt = 1.678752e-09, strain = 2.463944e-03, elapsed = 60622.4 sec
+Step =    944: nodes = 9533, dt = 2.014503e-09, strain = 2.465958e-03, elapsed = 60650.3 sec
+Step =    945: nodes = 9545, dt = 2.417403e-09, strain = 2.468376e-03, elapsed = 60698.2 sec
+Step =    946: nodes = 9557, dt = 2.900884e-09, strain = 2.471276e-03, elapsed = 60750.4 sec
+Step =    947: nodes = 9593, dt = 3.481061e-09, strain = 2.474757e-03, elapsed = 60886.6 sec
+Step =    948: nodes = 9627, dt = 4.177273e-09, strain = 2.478935e-03, elapsed = 61202.7 sec
+Step =    949: nodes = 9632, dt = 2.506364e-09, strain = 2.481441e-03, elapsed = 61315.0 sec
+Step =    950: nodes = 9641, dt = 2.506364e-09, strain = 2.483947e-03, elapsed = 61511.4 sec
+Step =    951: nodes = 9661, dt = 3.007636e-09, strain = 2.486955e-03, elapsed = 61630.2 sec
+Step =    952: nodes = 9707, dt = 3.609164e-09, strain = 2.490564e-03, elapsed = 61721.4 sec
+Step =    953: nodes = 9760, dt = 4.330996e-09, strain = 2.494895e-03, elapsed = 61953.7 sec
+Step =    954: nodes = 9747, dt = 2.598598e-09, strain = 2.497494e-03, elapsed = 62133.1 sec
+Step =    955: nodes = 9752, dt = 2.598598e-09, strain = 2.500092e-03, elapsed = 62237.7 sec
+Step =    956: nodes = 9780, dt = 1.559159e-09, strain = 2.501652e-03, elapsed = 62252.9 sec
+Step =    957: nodes = 9789, dt = 1.559159e-09, strain = 2.503211e-03, elapsed = 62262.6 sec
+Step =    958: nodes = 9819, dt = 1.870990e-09, strain = 2.505082e-03, elapsed = 62275.0 sec
+Step =    959: nodes = 9806, dt = 2.245188e-09, strain = 2.507327e-03, elapsed = 62376.7 sec
+Step =    960: nodes = 9789, dt = 1.347113e-09, strain = 2.508674e-03, elapsed = 62419.4 sec
+Step =    961: nodes = 9779, dt = 1.347113e-09, strain = 2.510021e-03, elapsed = 62449.1 sec
+Step =    962: nodes = 9767, dt = 1.616536e-09, strain = 2.511638e-03, elapsed = 62471.9 sec
+Step =    963: nodes = 9770, dt = 1.939843e-09, strain = 2.513578e-03, elapsed = 62503.0 sec
+Step =    964: nodes = 9766, dt = 2.327811e-09, strain = 2.515905e-03, elapsed = 62541.4 sec
+Step =    965: nodes = 9745, dt = 2.793374e-09, strain = 2.518699e-03, elapsed = 62625.5 sec
+Step =    966: nodes = 9737, dt = 3.352048e-09, strain = 2.522051e-03, elapsed = 62802.4 sec
+Step =    967: nodes = 9758, dt = 4.022458e-09, strain = 2.526073e-03, elapsed = 62915.5 sec
+Step =    968: nodes = 9735, dt = 2.413475e-09, strain = 2.528487e-03, elapsed = 63007.7 sec
+Step =    969: nodes = 9757, dt = 2.413475e-09, strain = 2.530900e-03, elapsed = 63072.7 sec
+Step =    970: nodes = 9773, dt = 2.896170e-09, strain = 2.533796e-03, elapsed = 63156.9 sec
+Step =    971: nodes = 9776, dt = 3.475404e-09, strain = 2.537272e-03, elapsed = 63213.8 sec
+Step =    972: nodes = 9807, dt = 4.170485e-09, strain = 2.541442e-03, elapsed = 63319.7 sec
+Step =    973: nodes = 9780, dt = 2.502291e-09, strain = 2.543945e-03, elapsed = 63409.6 sec
+Step =    974: nodes = 9774, dt = 2.502291e-09, strain = 2.546447e-03, elapsed = 63486.0 sec
+Step =    975: nodes = 9801, dt = 3.002749e-09, strain = 2.549450e-03, elapsed = 63578.1 sec
+Step =    976: nodes = 9812, dt = 3.603299e-09, strain = 2.553053e-03, elapsed = 63973.8 sec
+Step =    977: nodes = 9873, dt = 4.323958e-09, strain = 2.557377e-03, elapsed = 64124.0 sec
+Step =    978: nodes = 9895, dt = 2.594375e-09, strain = 2.559971e-03, elapsed = 64248.2 sec
+Step =    979: nodes = 9898, dt = 1.297188e-09, strain = 2.561268e-03, elapsed = 64290.1 sec
+Step =    980: nodes = 9904, dt = 1.297188e-09, strain = 2.562566e-03, elapsed = 64330.5 sec
+Step =    981: nodes = 9895, dt = 1.556625e-09, strain = 2.564122e-03, elapsed = 64382.4 sec
+Step =    982: nodes = 9917, dt = 1.867950e-09, strain = 2.565990e-03, elapsed = 64440.4 sec
+Step =    983: nodes = 9914, dt = 2.241540e-09, strain = 2.568232e-03, elapsed = 64515.5 sec
+Step =    984: nodes = 9899, dt = 1.344924e-09, strain = 2.569577e-03, elapsed = 64563.9 sec
+Step =    985: nodes = 9853, dt = 1.344924e-09, strain = 2.570922e-03, elapsed = 64627.5 sec
+Step =    986: nodes = 9848, dt = 1.613909e-09, strain = 2.572535e-03, elapsed = 64690.7 sec
+Step =    987: nodes = 9810, dt = 1.936691e-09, strain = 2.574472e-03, elapsed = 64789.9 sec
+slurmstepd-c2n009: error: *** JOB 194490 ON c2n009 CANCELLED AT 2026-04-15T14:23:55 DUE TO TIME LIMIT ***

@@ -49,7 +49,7 @@ def selfforcevec_LineTension(MU, NU, Ec, segs_data, eps_L=1e-6):
     R2 = segs_data["R2"]
     fs0 = np.zeros((Nseg, 3))
     fs1 = np.zeros((Nseg, 3))
-    omninv = 1.0/(1.0-NU)
+    omninv = 1.0/(1.0-NU)#位错能量公式中的常数因子，考虑各向同性弹性介质中位错弹性场的各向异性
     for i in range(Nseg):
         dR = R2[i,:] - R1[i,:]
         L = np.linalg.norm(dR)
@@ -60,13 +60,13 @@ def selfforcevec_LineTension(MU, NU, Ec, segs_data, eps_L=1e-6):
         bs2 = bs*bs
         bev = burg_vecs[i] - bs*t
         be2 = np.sum(bev*bev)
-        Score = 2.0*NU*omninv*Ec*bs
+        Score = 2.0*NU*omninv*Ec*bs#螺丝力系数，螺型位错分量的力系数
         LTcore = (bs2+be2*omninv)*Ec
         fs1[i,:] = Score*bev - LTcore*t
     fs0 = -fs1
     return fs0, fs1
 
-class CalForce(CalForce_Base):
+class CalForce(CalForce_Base):#力计算的类
     """CalForce_DisNet: class for calculating forces on dislocation network
     """
     def __init__(self, state: dict={}, Ec: float=None,
@@ -74,31 +74,31 @@ class CalForce(CalForce_Base):
         self.mu = state.get("mu", 1.0)
         self.nu = state.get("nu", 0.3)
         self.a =  state.get("a", 0.01)
-        self.Ec = self.mu/4.0/np.pi*np.log(self.a/0.1) if Ec is None else Ec
+        self.Ec = self.mu/4.0/np.pi*np.log(self.a/0.1) if Ec is None else Ec#Ec无则用该公式计算，否则就用用户提供的值
         self.force_mode = force_mode
 
-        self.NodeForce_Functions = {
-            'LineTension': self.NodeForce_LineTension,
-            'Elasticity_SBA': self.NodeForce_Elasticity_SBA,
-            'Elasticity_SBN1_SBA': self.NodeForce_Elasticity_SBN1_SBA }
-        self.OneNodeForce_Functions = {
+        self.NodeForce_Functions = {#节点力函数字典
+            'LineTension': self.NodeForce_LineTension,#线张力模型
+            'Elasticity_SBA': self.NodeForce_Elasticity_SBA,#弹性SBA模型
+            'Elasticity_SBN1_SBA': self.NodeForce_Elasticity_SBN1_SBA }#混合模型
+        self.OneNodeForce_Functions = {#单个节点力函数字典
             'LineTension': self.OneNodeForce_LineTension,
             'Elasticity_SBA': self.OneNodeForce_Elasticity_SBA,
             'Elasticity_SBN1_SBA': self.OneNodeForce_Elasticity_SBN1_SBA }
 
-    def NodeForce(self, DM: DisNetManager, state: dict, pre_compute: bool=True) -> dict:
+    def NodeForce(self, DM: DisNetManager, state: dict, pre_compute: bool=True) -> dict:#预计算标志
         """NodeForce: return nodal forces in a dictionary
 
         Using different force calculation functions depending on force_mode
-        """
+        """#返回字典形式的节点力，根据force_mode使用不同的力计算函数
         applied_stress = state["applied_stress"]
-        G = DM.get_disnet(DisNet)
+        G = DM.get_disnet(DisNet)#从管理器获取位错网络对象，
         nodeforce_dict, segforce_dict = self.NodeForce_Functions[self.force_mode](G, applied_stress)
-        state["nodeforce_dict"] = nodeforce_dict
-        state["segforce_dict"] = segforce_dict
+        state["nodeforce_dict"] = nodeforce_dict#将节点力字典存入状态字典
+        state["segforce_dict"] = segforce_dict#将线段力字典存入状态字典
 
-        # prepare nodeforces and nodeforce_tags arrays for compatibility with exadis
-        state = DisNet.convert_nodeforce_dict_to_array(state)
+        # prepare nodeforces and nodeforce_tags arrays for compatibility with exadis，为与 exadis 兼容而准备 nodeforces 和 nodeforce_tags 数组
+        state = DisNet.convert_nodeforce_dict_to_array(state)#将节点力字典转换为数组格式
 
         return state
 
@@ -115,25 +115,25 @@ class CalForce(CalForce_Base):
         """
         applied_stress = state["applied_stress"]
         G = DM.get_disnet(DisNet)
-        f = self.OneNodeForce_Functions[self.force_mode](G, applied_stress, tag)
+        f = self.OneNodeForce_Functions[self.force_mode](G, applied_stress, tag)#在不同力学模型下计算单个节点的力
         # update force dictionary if needed
         if update_state:
-            if "nodeforces" in state and "nodeforcetags" in state:
-                nodeforcetags = state["nodeforcetags"]
-                ind = np.where((nodeforcetags[:,0]==tag[0])&(nodeforcetags[:,1]==tag[1]))[0]
-                if ind.size == 1:
-                    state["nodeforces"][ind[0]] = f
+            if "nodeforces" in state and "nodeforcetags" in state:#检查状态字典中已有节点力数组和标签数组
+                nodeforcetags = state["nodeforcetags"]#获取节点力标签数组
+                ind = np.where((nodeforcetags[:,0]==tag[0])&(nodeforcetags[:,1]==tag[1]))[0]#找到对应标签的索引，返回元组，只有1维度
+                if ind.size == 1:#如果找到了对应的索引
+                    state["nodeforces"][ind[0]] = f#更新对应索引的节点力
                 else:
-                    state["nodeforces"] = np.vstack((state["nodeforces"], f))
-                    state["nodeforcetags"] = np.vstack((state["nodeforcetags"], tag))
+                    state["nodeforces"] = np.vstack((state["nodeforces"], f))#添加新的节点力到数组中
+                    state["nodeforcetags"] = np.vstack((state["nodeforcetags"], tag))#添加新的标签到标签数组中
             else:
-                state["nodeforces"] = np.array([f])
-                state["nodeforcetags"] = np.array([tag])
+                state["nodeforces"] = np.array([f])#创建新的节点力数组
+                state["nodeforcetags"] = np.array([tag])#创建新的标签数组
 
         return f
 
     def OneNodeForce_LineTension(self, G: DisNet, applied_stress: np.ndarray, tag) -> float:
-        """OneNodeForce_LineTension: return force on one node from line tension
+        """OneNodeForce_LineTension: return force on one node from line tension 
         """
         # To do: refactor this into a function
         Nseg = G.out_degree(tag) # This line is different
@@ -172,12 +172,12 @@ class CalForce(CalForce_Base):
         source_tags = segs_data_with_positions["tag1"]
         target_tags = segs_data_with_positions["tag2"]
 
-        sigext = voigt_vector_to_tensor(applied_stress)
+        sigext = voigt_vector_to_tensor(applied_stress)    
         fpk = pkforcevec(sigext, segs_data_with_positions)
         fs0, fs1 = selfforcevec_LineTension(self.mu, self.nu, self.Ec, segs_data_with_positions)
-        fseg = np.hstack((fpk*0.5 + fs0, fpk*0.5 + fs1))
+        fseg = np.hstack((fpk*0.5 + fs0, fpk*0.5 + fs1))#合并力分量
 
-        f = np.zeros(3)
+        f = np.zeros(3)#累加到当前节点的总力
 
         for i in range(Nseg):
             tag1 = tuple(source_tags[i])
