@@ -11,11 +11,11 @@ from pydis import CalForce, MobilityLaw, TimeIntegration, Topology
 from pydis import Collision, Remesh, VisualizeNetwork, SimulateNetwork
 
 def init_frank_read_src_loop(arm_length=1.0, box_length=8.0, burg_vec=np.array([1.0,0.0,0.0]), pbc=False):
-    '''Generate an initial Frank-Read source configuration
+    '''Generate an initial Frank-Read source configuration 
     '''
     print("init_frank_read_src_loop: length = %f" % (arm_length))
     cell = Cell(h=box_length*np.eye(3), is_periodic=[pbc,pbc,pbc])
-
+    
     rn    = np.array([[0.0, -arm_length/2.0, 0.0,         DisNode.Constraints.PINNED_NODE],
                       [0.0,  0.0,            0.0,         DisNode.Constraints.UNCONSTRAINED],
                       [0.0,  arm_length/2.0, 0.0,         DisNode.Constraints.PINNED_NODE],

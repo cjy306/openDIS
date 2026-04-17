@@ -1,0 +1,296 @@
+[33m9264dba[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m)[m Merge remote-tracking branch 'upstream/master'
+[33m10ff0e2[m[33m ([m[1;31mupstream/master[m[33m)[m Merge pull request #84 from mcrrobinson/master
+[33m6ce5cb8[m Apply suggestion from @leif81
+[33m103e99b[m perf: reusing identity matrix for performance, removed redundency
+[33m10db1e4[m Merge pull request #83 from JayshKhan/master
+[33m8bec291[m - Remove 'DeadReckoning' class wrapper to expose functions directly - Update type hints to accept generic Sequence inputs (lists/tuples) - Improve variable unpacking in matrix helper functions for readability
+[33ma3d5fd8[m Merge branch 'open-dis:master' into master
+[33mcf7250c[m Merge pull request #80 from ngjunsiang/master
+[33m7df2319[m feat: add Dead Reckoning module and examples
+[33md02411a[m feat: add Dead Reckoning module and examples
+[33mdf14e20[m Merge pull request #82 from khurrameycon/master
+[33mc73e43e[m Fix Python 3.12 compatibility for ctypes bitfield structures
+[33me75c424[m Merge pull request #2 from ngjunsiang/feat-record-class
+[33m2ae417b[m fix: typos, type checking
+[33mefdb502[m fix: typos
+[33m78385a8[m format: rename for consistency
+[33m828f15e[m fix: typos
+[33md422bfa[m refactor: use parseStandardVariableRecord helper to enforce consistent operations
+[33ma0c66b6[m refactor: migrate DataInputStream and DataOutputStream to stream
+[33m50b49e6[m feat: handle StandardVariable damage description records in EntityDamageStatusPdu
+[33m0e49cf4[m refactor: organise radio namespace by protocol family
+[33m46aaf1c[m fix: fix type annotation issues
+[33mde003fd[m chore: remove unused imports
+[33m2f659ef[m feat: handle DirectedEnergy fire flags in DirectedEnergyFirePdu
+[33mc7d3c36[m refactor: use common UnknownStandardVariableRecord for all unrecognised record types
+[33med93893[m fix: fix type annotations
+[33ma9b1604[m feat: handle Directed Energy records in DirectedEnergyFirePdu
+[33md1b708b[m refactor: rename SVClass getter function
+[33ma929ac9[m refactor: follow VariableRecord and StandardVariableRecord interfaces
+[33m7a1c41b[m refactor: distinguish VariableRecords and StandardVariableRecords
+[33m7b33978[m refactor: implement VariableRecord interface for Directed Energy records
+[33mc300159[m refactor: remove unused class EntityID
+[33m74166ce[m refactor: replace all use of EntityID with EntityIdentifier
+[33m6f6a01b[m fix: enforce Record interface for EntityIdentifier, implement marshalledSize() method
+[33m945d5e4[m refactor: remove unused class EntityID
+[33me3b95d1[m refactor: replace all use of EntityID with EntityIdentifier
+[33m0f6582b[m refactor: migrate EntityID and EntityIdentifier to record namespace
+[33m1a38e10[m refactor: clean up forward references
+[33m4ccd7bd[m refactor: migrate WorldCoordinates to record namespace; clean up forward references
+[33ma7b9bb5[m refactor: migrate DirectedEnergyRecords to record namespace
+[33m6c1e685[m refactor: migrate DirectedEnergyDamage to record namespace
+[33m998045b[m refactor: migrate SimulationAddress and EventIdentifier to record namespace
+[33mdd58862[m refactor: migrate SimulationAddress and EventIdentifier to record namespace
+[33m519ad47[m refactor: migrate Vector3Float to record namespace
+[33mb1682f5[m refactor: use getVariableRecordClass getter function to retrieve VariableRecord classes
+[33mb19715a[m feat: make Record and VariableRecord checkable with isinstance() and issubclass()
+[33m0f8785f[m fix: parse VTPs correctly by reading recordLength first
+[33m37b3f4a[m fix: handle variable-size record classes correctly by subclassing VariableRecord
+[33m5173b9d[m feat: add static method for validating bytelength parameter
+[33mc9ba0c9[m refactor: make all Record classes inherit from a Record base class interface
+[33maf61f14[m Merge pull request #79 from ngjunsiang/master
+[33m29e084a[m docs: update docstrings
+[33m2e44316[m Merge pull request #1 from ngjunsiang/feat-record-class
+[33m418f50e[m refactor: move bitfield under record namespace
+[33m97358b6[m fix: fix imports
+[33mf14ac0b[m fix: fix type annotation for variableTransmitterParameters
+[33m88b75f2[m feat: parse variable transmitter parameters for High Fidelity HAVE QUICK radios
+[33mc8e137b[m feat: parse modulation parameters for GenericRadio, SimpleIntercomRadio, HAVE QUICK radios, CCTT Sincgars radios
+[33m63c925d[m feat: add CCTTSincgarsMP record class
+[33m618bb78[m chore: update imports, replace VariableTransmitterParameters in dis7.py
+[33m748d65c[m docs: remove unnecessary docstrings
+[33mf62039e[m docs: update docstrings
+[33m4ff3217[m feat: handle BeamAntennaPattern parsing in TransmitterPdu
+[33m4308ab7[m refactor: migrate EulerAngles and BeamAntennaPattern classes to record namespace
+[33m1e7dad2[m docs: update docstrings
+[33mdb60ac0[m refactor: explicitly define ModulationParametersRecord and AntennaPatternRecord as abstract base classes
+[33mef3bd3b[m chore: remove unused ModulationParameters class
+[33m33517f2[m refactor: separate bitfield type into bitfield.py
+[33m2a70a4d[m refactor: separate bitfield type into bitfield.py
+[33m876748f[m Merge pull request #78 from ngjunsiang/feat-record-class
+[33mb13d41e[m chore: remove unused import
+[33ma25a460[m refactor: use ModulationParametersRecord directly instead of wrapping in ModulationParameters
+[33m61eec45[m fix: add default value for UnknownRadio
+[33m1722d61[m refactor: handle VariableTransmitterParameters in TransmitterPdu
+[33m12dad11[m refactor: add placeholder implementation for VariableTransmitterParameters
+[33m738cd3a[m feat: add AntennaPatternRecord type and UnknownAntennaPattern placeholder class
+[33m71d9a56[m refactor: use UnknownRadio.parse() for consistency
+[33maa0b8ac[m refactor: use ModulationParameters in TransmitterPdu
+[33m3da6a55[m feat: add UnknownRadio class
+[33m69f8e5e[m refactor: add ModulationParameters.marshalledSize(), replace existing class in dis7.py
+[33m42a3b11[m feat: Implement ModulationParameters as a wrapper class for MPRecords
+[33m0bb78cd[m feat: add MP classes for radios
+[33mbd644a9[m refactor: add type annotations, use clearer stream methods
+[33m56fef6c[m format: organize imports
+[33m914f51e[m refactor: replace ModulationType class in dis7.py
+[33m1e2ad06[m feat: add ModulationType class
+[33mac84222[m Merge pull request #77 from ngjunsiang/master
+[33m1451748[m refactor: remove bitfield factory bytesize parameter
+[33m399852f[m feat: verify bitfield struct size
+[33m9776c33[m feat: validate bitfield factory arguments
+[33md1bec6e[m fix: construct bitfields with the correct struct size
+[33mefe2e19[m refactor: simplify stream imports
+[33md147308[m feat: add field() helper function
+[33m8d1dd7e[m Merge pull request #73 from ngjunsiang/feat-bitfield-2025
+[33m90da461[m Merge branch 'master' into feat-bitfield-2025
+[33mcc3a4e0[m Merge pull request #74 from ngjunsiang/qol-stream-improvements
+[33md061f1b[m Merge pull request #76 from ngjunsiang/master
+[33mf904fd2[m fix: separate CI and test report workflows for automated testing and coverage reporting
+[33m091c88b[m refactor: centralize DataInputStream and DataOutputStream under the `stream` namespace
+[33m3264151[m feat: add convenience aliases
+[33m93d8e22[m fix: typo
+[33mf2740e8[m fix: use relative imports
+[33m2811861[m refactor: use SpreadSpectrum in ModulationType
+[33mbd2aad4[m refactor: Add default values to allow init without initial values
+[33m806e53b[m docs: clean up TransmitterPdu comments
+[33m9fd7c6e[m feat: bitfield factory function, NetId and SpreadSpectrum record classes
+[33mbd13dcb[m feat: add specific non-octet-size type aliases for bitfields
+[33m890786d[m feat: add read_bytes() and write_bytes() methods
+[33m59701bb[m Merge pull request #72 from quinn280/fix-serialization-issues
+[33m4fc2fd5[m Merge pull request #69 from robomarvin1501/aggregatestatepdu
+[33me704caf[m fix jamming mode issue
+[33m82467d1[m fix serialization issues
+[33mea1b723[m Merge branch 'fix-miscelleneous-serialization-issues' of https://github.com/quinn280/open-dis-python into fix-miscelleneous-serialization-issues
+[33m0244476[m fix serialization issues
+[33m9911bcf[m Marking AggregateStatePDU as complete, as verified in Wireshark
+[33mea6432f[m Handling the number of element x properties as @property, instead of values inside the class
+[33mde48cc5[m Parsing is correctly handled, but need to switch to @property for the numberOf elements
+[33mca3c2b9[m Serialisation should now be correctly handled, with regards to the different types of properties
+[33m84fb40a[m AggregateStatePDU ground work
+[33mfb4268b[m Merge pull request #68 from quinn280/add-beamstatus-emissionsystembeamrecord
+[33m831fc4a[m Merge pull request #67 from btweinstein/master
+[33md780523[m added beam status field to EmissionSystemBeamRecord
+[33m4245226[m chore: removed uneeded file
+[33m85f61e1[m chore: removed other unecessary gitlab files
+[33m7297377[m Merge pull request #1 from btweinstein/2025_07_30_updates
+[33m8c987fa[m ci: add github ci and remove gitlab ci (#2)
+[33m0622f41[m bump: 1.1.0a3 → 1.1.0a4
+[33meda612b[m Merge branch 'fix/examples' into 'master'
+[33mbb8fdf1[m fix: fixes broken examples (dis_receiver and dis_sender), corrects function arg types to `DataOutputStream`, fixes error where pduType and protocolFamily were always set to 0 for all message types, and made struct8->32 have the correct type
+[33m891471b[m bump: 1.1.0a2 → 1.1.0a3
+[33m8ee7a1a[m Merge branch 'test/pytest' into 'master'
+[33m0a854b0[m test: adds pytest and coverage support
+[33m2343227[m bump: 1.1.0a1 → 1.1.0a2
+[33m12aae79[m docs: add more info to changelog about changes
+[33mbf15825[m bump: 1.1.0a0 → 1.1.0a1
+[33mf9d5916[m build: made version consistent with commitizen naming
+[33m0804afe[m ci: fix major version error with cz bump
+[33mdb2faa3[m Merge branch 'feat/add_docker' into 'master'
+[33ma1126e2[m build: adding docker support for builds
+[33m1a0956f[m chore: pain
+[33m4beb632[m ci: fixed issue with entrypoint
+[33mb9935ce[m ci: fixed entrypoint issue
+[33me02b24d[m Merge branch 'feat/add_commitizen' into 'master'
+[33m33ca950[m ci: added cz autobump
+[33m42e1a6b[m Merge branch 'feat/rename_library' into 'master'
+[33mbb9de5f[m feat: alpha releases now indicate accel opendis releases
+[33m3f1cedc[m Merge branch 'feat/bump_numpy' into 'master'
+[33ma599034[m feat: allow a newer version of numpy
+[33mf262342[m Merge branch 'ci/build_library' into 'master'
+[33m2323fcc[m ci: publishes library to local registry
+[33mbf95104[m Merge pull request #61 from skrsta/signal_pdu_parse
+[33me6da285[m fix regression of parsing dataLenght in SignalPdu in 98b2834
+[33mde2b152[m Merge pull request #56 from ngjunsiang/refactoring
+[33m72be41a[m Merge branch 'master' into refactoring
+[33mbfe83a5[m Merge pull request #57 from ngjunsiang/bug-46
+[33m98b2834[m [fix] SignalPdu dataLength and samples read as uint16 instead of int16
+[33m60fc802[m [fix] read and write unsigned bytes in SignalPdu
+[33m820d8c1[m [docs] IntercomSignalPdu and SignalPdu documentation
+[33m473d63a[m [fix] read and write unsigned bytes in SignalPdu
+[33md7134f9[m [fix] bugfixes, revert change to SignalPdu.data
+[33me9b6788[m [refactor,fix] Refactor numberOf* and *Count attributes to properties
+[33m9312cb2[m Merge pull request #50 from scottrbrtsn/pyproject-poetry-init
+[33m5e67dfb[m Merge pull request #51 from ngjunsiang/introspection
+[33m0b66829[m [fix] add missing annotation, fix init typo
+[33m6091189[m Delete extraneous file
+[33m0f8307c[m Delete extraneous file
+[33m460b1e3[m Delete extraneous directory
+[33medd27bd[m Delete extraneous file
+[33m57e9827[m [fix] typo fix
+[33m0a15142[m [docs] Add float32 type comments
+[33m96f3cfb[m [refactor] Use context manager for File IO
+[33m055237d[m [fix] fix typo
+[33m38f71d8[m [refactor] Add type annotations for remaining opendis modules
+[33m5ed33d2[m [docs] fix typo in comment
+[33ma203b75[m [fix] fixed typos in type annotations
+[33m76dedb4[m [docs, fix] Type annotations, parsing fixes
+[33md73d359[m [fix] DataQueryDatumSpecification reads datumIDs as int instead of FixedDatum or VariableDatum
+[33ma1093d4[m [feat] type annotations for fixed/variable datums
+[33mf62b7e3[m [refactor] remove number of fixed/variable datums from init
+[33mfa6b689[m [refactor] use class attributes for fixed recordType and recordLength
+[33mcb8697b[m [style] remove object superclass from class declaration
+[33mb4ccb3d[m [refactor] determine number of fixed datums and variable datums dynamically
+[33mcc5566d[m [style] PEP8 style fixes
+[33m8d1df89[m [refactor] Use DatumSpecification and DataQueryDatumSpecification in PDUs
+[33m3a52c4f[m Merge pull request #49 from ngjunsiang/introspection
+[33mdd093c1[m [refactor] remove chunks
+[33m33b4eae[m Enable init for Record and PDU classes
+[33m7bf1413[m transfer project details from setup to pyproject and delete setup.py
+[33m861a27e[m update to correct email/name
+[33m603551c[m add numpy, bump min python version
+[33m875dbf6[m Revert "started from scratch, removed setup.py, verified the .venv is created and runs as expected" ++ I realize deleting setup.py might upset some folks
+[33m1a8cfa5[m started from scratch, removed setup.py, verified the .venv is created and runs as expected
+[33md5efc38[m init pyproject.toml and poetry.lock
+[33ma954955[m [typo] fix typos
+[33mc48830e[m [fix] Update test attribute names to match dis7
+[33m74dfbf0[m [feat] Implement init parameters for dis7 classes
+[33mfb8eb2d[m Update .gitignore
+[33ma2aa9f6[m Merge branch 'master' into introspection Merge upstream
+[33mbac0a38[m Merge pull request #48 from ngjunsiang/tests
+[33m71c34b0[m [feat] Enhancements for introspection and debugging
+[33m0819fd0[m [tests] Enable unittest run from project root directory
+[33mcff0c84[m [tests] enable unittest discovery
+[33m70a2c38[m Merge pull request #43 from marcdtheking/range_coordinate_updates
+[33md063347[m 2023 license update
+[33m450b2bd[m added ecef2llarpy and tests
+[33m3cd8bc7[m Merge pull request #41 from marcdtheking/body_to_ecef_conversion
+[33ma584426[m Added functions to convert from body coordinates to DIS ECEF coordinates
+[33m0fb9e9c[m Switch badge to Travis-ci.com
+[33mc331473[m Merge pull request #40 from PeteBlanchard/39-Typographical-Error-in-ReceiverPdu
+[33m9bdb33d[m fix typo in 'power'
+[33md8acd85[m Merge pull request #27 from igor3d/master
+[33ma2c51c5[m Merge origin/master
+[33m643387e[m license update 2022
+[33md651895[m Merge pull request #38 from ricklentz/master
+[33m49401b4[m Issue fix for #25
+[33m2a889f8[m Merge pull request #36 from jason-mckinney/35-fix-emissionsystembeamrecord-serialize
+[33m63fb11b[m Fix EmissionSystemBeamRecord.serialize incorrectly containing outputStream read calls instead of write calls
+[33mb640fa3[m Merge pull request #34 from zpshank/fix-signal-pdu
+[33m438763b[m Fixed Signal PDU serialization
+[33m5893a51[m Merge pull request #29 from igor3d/open-dis-python-28
+[33mf90241f[m Merge pull request #32 from setherith/fix-example
+[33m4e5b5ce[m Example sender now repeats message every 60 seconds
+[33m40e7548[m ElectronicEmmisionsPdu does not handle beams correctly #28
+[33m62b6242[m Merge branch 'master' of https://github.com/igor3d/open-dis-python
+[33m2d4a0ed[m Add euler2local to GPS RangeCoordinates.py
+[33m4a8c97c[m Update dis7.py
+[33m2a2c82a[m Update dis7.py
+[33ma844212[m Merge pull request #23 from SnowFlake8i8/SnowFlake8i8-VariableDatum
+[33m841261e[m VariableDatum class will now serialise padding
+[33mc124f07[m Remove duplicate fields; originatingID, receivingID
+[33m7ea0ff9[m Improved output messages in examples
+[33meb2698a[m refactor PduFactory.getPdu
+[33m1db2d33[m Change default IP and timeout in examples
+[33m572a6b0[m Fix warning about not closing files in unit tests
+[33m12ba6ee[m Delete misc.py
+[33m63bf144[m Fix nulls in TransmitterPdu
+[33m7aa604e[m Fix null and other issue with SignalPdu
+[33m20ab9a3[m Fix for multiple trackJamRecords in Electromagnetic Emission Pdu
+[33ma1228c9[m Update comments for Electromagnetic Emission Pdu change
+[33mcaaceb5[m Fix null() in ElectromagenticEmission PDU
+[33me60885a[m Add ESPDU marking unit test (#20)
+[33m23bba55[m Merge pull request #16 from open-dis/leif81-null
+[33mda20c8c[m Fix comment syntax
+[33m460d337[m Account for padding in IFFData
+[33m133ed41[m Fix null in IffDataSpecification
+[33m33b5f86[m Fix null in IFF Data
+[33m6eb14a0[m Fix null in record query spec class
+[33m928becd[m Improve the dis_reciever example
+[33m10f241e[m Replace more nulls for Fixed and Variable Datum
+[33m731ba21[m Move non spec code from dis7.py
+[33m99b7938[m Fix null parsing error with VariableParameter
+[33me305503[m Note about install for devs in readme
+[33m8c1b774[m Tweak readme install wording
+[33mffc5e21[m Fix parsing of variable datum
+[33m600d5e6[m refactor setup.py
+[33me3102a5[m Replace stale docs with instructions
+[33mae61c89[m Add pypi badge
+[33ma85dc4e[m Use author fullname in package descriptor
+[33m11fca13[m rename package opendis
+[33mb76d66d[m Update readme with install steps
+[33m7318d30[m Change shebang in examples
+[33m4d2c822[m Change way travis referenecs library in unit tests
+[33m731d536[m Add dependencies to setup.py
+[33mde64bb0[m Fix travis build error
+[33m35e782f[m Try to fix travis build error with unit tests
+[33m1cd5e51[m Parse fixed and variable datums
+[33m8c01fd9[m refactor PduFactory
+[33me29106c[m Remove unused imports
+[33mca85449[m Rename examples folder
+[33m66a9de1[m Tidy examples
+[33m1ebf2c4[m PduFactory isn't runnable by itself
+[33mac805e2[m Tidy header of RangeCoordinates
+[33m4a00df1[m Move DataInput/OutputStream files
+[33m05a3acb[m Remove submodule
+[33m913cd6b[m Merge pull request #7 from treybgreen/master
+[33mdbce3b3[m Fixed function parenthesis
+[33m3c14107[m Merge pull request #5 from open-dis/travisci
+[33m094030b[m Run syntax check with travisci
+[33m7a16b3a[m Add travis CI badge to readme
+[33m2d970e2[m Create .travis.yml
+[33mef52a3c[m Add note about stopping the example process
+[33m235fe3b[m remove base dir module
+[33m4e2c59c[m Document python dependencies
+[33m344a1a3[m Fixes #4
+[33m55089fb[m Move sources into root
+[33mb35e921[m Remove build.xml too
+[33m1825bd2[m Remove old xmlpg material
+[33m3d586ab[m Merge pull request #3 from savagesmc/cleanup
+[33md027cd4[m Merge pull request #1 from TheEpicPanic/cleanup
+[33m6a1244c[m Added auto-generated documentation to python module
+[33md2f54dc[m Minor updates to README.md
+[33m8e19fa1[m Cleanup open-dis-python.
+[33m01bc85d[m Update project url
+[33m32dfe8e[m Update README.md
+[33mfc0d88b[m Initial checkin
+[33m32a6b24[m Initial commit

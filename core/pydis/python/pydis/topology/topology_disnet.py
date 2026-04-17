@@ -46,7 +46,7 @@ class Topology:
         return selected_list
 
     @staticmethod
-    def init_topology_exemptions(G, state) -> None:
+    def init_topology_exemptions(G, state) -> None:#初始拓扑化豁免准则
         """init_topology_exemptions: initialize the topology exemptions
         """
         nodeflag_dict = {}

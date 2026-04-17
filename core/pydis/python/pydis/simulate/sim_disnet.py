@@ -34,6 +34,10 @@ class SimulateNetwork:
                  max_step: int=10,
                  loading_mode: str=None,
                  applied_stress: np.ndarray=np.zeros(6),
+                 # 新增应变速率相关参数
+                 erate: float=0.0,
+                 strain_direction: np.ndarray=np.array([0.0, 0.0, 1.0]),
+                 max_strain: float=0.01,
                  print_freq: int=None,
                  plot_freq: int=None,
                  plot_pause_seconds: float=None,
@@ -53,6 +57,14 @@ class SimulateNetwork:
         self.max_step = max_step
         self.loading_mode = loading_mode
         self.applied_stress = np.array(applied_stress)
+        
+        # 新增应变速率相关属性
+        self.erate = erate  # 应变速率 (s⁻¹)
+        self.strain_direction = np.array(strain_direction)  # 应变方向
+        self.max_strain = max_strain  # 最大应变
+        self.current_strain = 0.0  # 当前应变
+        self.initial_cell = None  # 初始单元尺寸
+        
         self.print_freq = print_freq
         self.plot_freq = plot_freq
         self.plot_pause_seconds = plot_pause_seconds
@@ -60,7 +72,18 @@ class SimulateNetwork:
         self.write_dir = write_dir
         self.save_state = save_state
 
-        state["applied_stress"] = np.array(applied_stress)
+        # 根据加载模式初始化状态
+        if self.loading_mode == 'stress':
+            state["applied_stress"] = np.array(applied_stress)
+        elif self.loading_mode == 'strain_rate':
+            state["erate"] = self.erate
+            state["strain"] = self.current_strain
+            state["applied_stress"] = np.zeros(6)  # 初始应力为零
+        elif self.loading_mode is None:
+            state["applied_stress"] = np.zeros(6)
+        else:
+            raise ValueError(f"Invalid loading_mode: {loading_mode}. "
+                           f"Supported modes: 'stress', 'strain_rate', or None")
 
     def step_begin(self, DM: DisNetManager, state: dict):
         """step_begin: invoked at the begining of each time step
@@ -100,9 +123,90 @@ class SimulateNetwork:
     def step_update_response(self, DM: DisNetManager, state: dict):
         """step_update_response: update applied stress and rotation if needed
         """
-        if self.loading_mode != 'stress':
-            raise ValueError("invalid loading_mode in PyDiS SimulateNetwork")
-
+        if self.loading_mode == 'stress':
+            # 现有的应力加载逻辑
+            # 这里可以根据需要添加应力更新逻辑
+            pass
+            
+        elif self.loading_mode == 'strain_rate':
+            # 新增的应变速率加载逻辑
+            istep = state.get('istep', 0)
+            
+            # 第一步：保存初始单元尺寸
+            if istep == 0:
+                self.initial_cell = DM.cell.h.copy()
+                if self.print_freq is not None:
+                    print(f"Strain rate loading initialized:")
+                    print(f"  Strain rate: {self.erate:.2e} s⁻¹")
+                    print(f"  Maximum strain: {self.max_strain}")
+            
+            # 更新应变
+            if self.erate > 0 and self.current_strain < self.max_strain:
+                # 计算应变增量
+                strain_increment = self.erate * self.timeint.dt
+                self.current_strain += strain_increment
+                
+                if self.current_strain > self.max_strain:
+                    self.current_strain = self.max_strain
+                    strain_increment = self.max_strain - (self.current_strain - strain_increment)
+                
+                # 更新单元尺寸 (仿射变形)
+                if self.initial_cell is not None:
+                    # 计算变形梯度 (假设小变形)
+                    deformation_gradient = np.eye(3)
+                    for i in range(3):
+                        deformation_gradient[i, i] = 1.0 + strain_increment * self.strain_direction[i]
+                    
+                    # 更新单元矩阵
+                    DM.cell.h = np.dot(deformation_gradient, self.initial_cell)
+                    
+                    # 更新位错节点位置 (仿射变换)
+                    G = DM.get_disnet()
+                    if hasattr(G, 'rn') and G.rn is not None:
+                        # 对每个节点应用仿射变换
+                        for i in range(G.rn.shape[0]):
+                            old_pos = G.rn[i, :3].copy()
+                            new_pos = np.dot(deformation_gradient, old_pos)
+                            G.rn[i, :3] = new_pos
+                
+                # 更新状态
+                state["strain"] = self.current_strain
+                state["erate"] = self.erate
+                
+                # 可选：根据应变计算应力 (使用胡克定律的简化版本)
+                # 这对于某些材料模型可能是有用的
+                mu = state.get('mu', 161e9)  # 剪切模量
+                nu = state.get('nu', 0.28)   # 泊松比
+                
+                # 计算体积应变
+                volumetric_strain = strain_increment * np.sum(self.strain_direction)
+                
+                # 简化的应力更新 (各向同性线性弹性)
+                # 注意：这是一个简化模型，实际应用可能需要更复杂的本构关系
+                youngs_modulus = 2 * mu * (1 + nu)
+                
+                # 更新应力张量 (Voigt记号: [11, 22, 33, 23, 13, 12])
+                for i in range(3):
+                    state["applied_stress"][i] += youngs_modulus * strain_increment * self.strain_direction[i]
+                
+                if self.print_freq is not None and istep % self.print_freq == 0:
+                    print(f"Step {istep}: Strain = {self.current_strain:.4e}, "
+                          f"Stress = {state['applied_stress'][:3]}")
+            
+            elif self.current_strain >= self.max_strain:
+                # 达到最大应变，停止加载
+                if self.print_freq is not None and istep % self.print_freq == 0:
+                    print(f"Reached maximum strain: {self.max_strain:.4f}")
+        
+        elif self.loading_mode is None:
+            # 无加载模式
+            pass
+        
+        else:
+            raise ValueError(f"invalid loading_mode in PyDiS SimulateNetwork. "
+                           f"Supported modes: 'stress', 'strain_rate', or None. "
+                           f"Got: '{self.loading_mode}'")
+        
         return state
 
     def step_write_files(self, DM: DisNetManager, state: dict):
@@ -118,13 +222,19 @@ class SimulateNetwork:
         if self.print_freq != None:
             istep = state['istep']
             if istep % self.print_freq == 0:
-                print("step = %d dt = %e"%(istep, self.timeint.dt))
+                if self.loading_mode == 'strain_rate':
+                    print("step = %d dt = %e strain = %e" % 
+                          (istep, self.timeint.dt, self.current_strain))
+                else:
+                    print("step = %d dt = %e" % (istep, self.timeint.dt))
 
     def step_visualize(self, DM: DisNetManager, state: dict):
         if self.vis != None and self.plot_freq != None:
             istep = state['istep']
             if istep % self.plot_freq == 0:
-                self.vis.plot_disnet(DM, fig=self.fig, ax=self.ax, trim=True, block=False, pause_seconds=self.plot_pause_seconds)
+                self.vis.plot_disnet(DM, fig=self.fig, ax=self.ax, 
+                                     trim=True, block=False, 
+                                     pause_seconds=self.plot_pause_seconds)
 
     def step_end(self, DM: DisNetManager, state: dict):
         """step_end: invoked at the end of each time step
@@ -166,14 +276,16 @@ class SimulateNetwork:
             try: 
                 self.fig = plt.figure(figsize=(8,8))
                 self.ax = plt.axes(projection='3d')
-            except NameError: print('plt not defined'); return
+            except NameError: 
+                print('plt not defined')
+                return
+            
             # plot initial configuration
             self.vis.plot_disnet(DM, fig=self.fig, ax=self.ax, trim=True, block=False)
 
         for istep in range(self.max_step):
             state['istep'] = istep
             self.step(DM, state)
-
 
         # plot final configuration
         if self.vis != None and self.plot_freq != None:
