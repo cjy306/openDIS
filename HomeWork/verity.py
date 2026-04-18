@@ -19,5 +19,5 @@ except ImportError as e:
     raise ImportError('Cannot import pyexadis') from e
 
 pyexadis.initialize()
-print(hasattr(pyexadis.ExaDisNet, 'load_obstacles'))
+e = pyexadis.ExaDisNet(); e.load_obstacles([[0,0,0]], [1.0]); print('OK')
 pyexadis.finalize()
