@@ -1,0 +1,15 @@
+Host Parallel Execution Space:
+  KOKKOS_ENABLE_OPENMP: yes
+
+OpenMP Runtime Configuration:
+Kokkos::OpenMP thread_pool_topology[ 1 x 48 x 1 ]
+Traceback (most recent call last):
+  File "/data/home/dg000246b/openDIS/HomeWork/test_Cu.py", line 315, in <module>
+    main()
+  File "/data/home/dg000246b/openDIS/HomeWork/test_Cu.py", line 309, in main
+    run_simulation(G, output_dir=output_dir, precipitates=precipitates)
+  File "/data/home/dg000246b/openDIS/HomeWork/test_Cu.py", line 243, in run_simulation
+    exadis_net.load_obstacles(centers_m, radii_m)
+  File "/data/home/dg000246b/openDIS/core/exadis/python/pyexadis_base.py", line 164, in load_obstacles
+    self.net.load_obstacles(centers_m, radii_m)
+AttributeError: 'pyexadis.ExaDisNet' object has no attribute 'load_obstacles'
