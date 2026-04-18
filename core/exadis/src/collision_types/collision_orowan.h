@@ -26,7 +26,8 @@
 #ifndef EXADIS_COLLISION_OROWAN_H
 #define EXADIS_COLLISION_OROWAN_H
 
-#include "collision_retroactive.h"
+// collision_retroactive.h is already included by collision.h before this file
+// Do not re-include it here to avoid circular dependency issues.
 
 namespace ExaDiS {
 
@@ -63,7 +64,7 @@ public:
                 if (dist2 < r2) {
                     // Node is inside the sphere: push to surface and constrain.
                     double dist   = sqrt(dist2);
-                    Vec3   normal = (dist > 1e-10) ? (d / dist)
+                    Vec3   normal = (dist > 1e-10) ? (1.0/dist) * d
                                                    : Vec3(0.0, 0.0, 1.0);
                     pos = obs.center + obs.radius * normal;
 
@@ -84,7 +85,7 @@ public:
                     } else {
                         // Still on surface: refresh outward normal.
                         net->nodes[i].sphere_normal =
-                            (dist > 1e-10) ? (d / dist) : Vec3(0.0, 0.0, 1.0);
+                            (dist > 1e-10) ? (1.0/dist) * d : Vec3(0.0, 0.0, 1.0);
                     }
                 }
             }

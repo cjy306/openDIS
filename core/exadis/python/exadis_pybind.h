@@ -239,7 +239,7 @@ struct ExaDisNet {
         std::vector<Vec3>   centers_b(n);
         std::vector<double> radii_b(n);
         for (int i = 0; i < n; i++) {
-            centers_b[i] = centers_m[i] * (1.0 / bm);
+            centers_b[i] = (1.0 / bm) * centers_m[i];
             radii_b[i]   = radii_m[i] / bm;
         }
         system->load_obstacles(centers_b, radii_b);
