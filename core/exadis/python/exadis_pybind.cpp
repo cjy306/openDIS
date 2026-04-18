@@ -1079,7 +1079,11 @@ PYBIND11_MODULE(pyexadis, m) {
         .def("_get_crystal", &ExaDisNet::get_crystal, "Get the Crystal object",
              py::return_value_policy::reference_internal)
         .def("_get_serial_network", &ExaDisNet::get_serial_network, "Get the SerialDisNet object",
-             py::return_value_policy::reference_internal);
+             py::return_value_policy::reference_internal)
+        .def("load_obstacles", &ExaDisNet::load_obstacles,
+             "Load spherical precipitate obstacles for Orowan bypass simulation. "
+             "centers_m: list of [x,y,z] positions in metres; radii_m: list of radii in metres.",
+             py::arg("centers_m"), py::arg("radii_m"));
         
     py::class_<SystemBind, ExaDisNet>(m, "System")
         .def(py::init<ExaDisNet, Params>())
