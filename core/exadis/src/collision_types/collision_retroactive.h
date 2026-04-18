@@ -11,7 +11,7 @@
 #ifndef EXADIS_COLLISION_RETROACTIVE_H
 #define EXADIS_COLLISION_RETROACTIVE_H
 
-#include "collision.h"
+#include "collision_base.h"
 #include "neighbor.h"
 
 namespace ExaDiS {
