@@ -962,6 +962,27 @@ def write_vtk(N: DisNetManager, vtkfile: str, segprops={}, pbc_wrap=True,
         for i in range(2 * nsegs):
             f.write("0\n")
     
+    # 写入节点 tag：domain 和 index（与超算日志输出的节点编号一致）
+    node_tags = nodes.get("tags")  # shape (N, 2)，每行为 [domain, index]
+
+    f.write("\nSCALARS NodeTag_Domain int 1\n")
+    f.write("LOOKUP_TABLE default\n")
+    for i in range(8):
+        f.write("-1\n")
+    for i in range(nsegs):
+        n1, n2 = segsnid[i]
+        f.write(f"{node_tags[n1][0]}\n")
+        f.write(f"{node_tags[n2][0]}\n")
+
+    f.write("\nSCALARS NodeTag_Index int 1\n")
+    f.write("LOOKUP_TABLE default\n")
+    for i in range(8):
+        f.write("-1\n")
+    for i in range(nsegs):
+        n1, n2 = segsnid[i]
+        f.write(f"{node_tags[n1][1]}\n")
+        f.write(f"{node_tags[n2][1]}\n")
+
     # 写入OutsideSphere字段（如果计算了）
     if outside_sphere is not None:
         f.write("\nSCALARS OutsideSphere int 1\n")
