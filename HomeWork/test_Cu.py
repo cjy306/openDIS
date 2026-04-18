@@ -236,13 +236,12 @@ def run_simulation(net, output_dir, restart_id=None, precipitates=None):
         )
 
     # 加载球形杂质到 C++ System，由 CollisionOrowan 在每步自动执行 Orowan 约束
-    if precipitates is not None and len(precipitates.centers_m) > 0:
+    # 直接传 Burgers 单位的值，无需依赖 system 内部的 burgmag
+    if precipitates is not None and len(precipitates.centers) > 0:
         exadis_net = net_manager.get_disnet(ExaDisNet)
-        # 先把参数设到 system 上，否则 burgmag=0 无法做单位转换
-        exadis_net.net.adjust_system(get_exadis_params(state))
-        centers_m = [list(c) for c in precipitates.centers_m]
-        radii_m   = list(precipitates.radii_m)
-        exadis_net.load_obstacles(centers_m, radii_m)
+        centers_b = [list(c) for c in precipitates.centers]
+        radii_b   = list(precipitates.radii)
+        exadis_net.load_obstacles(centers_b, radii_b)
 
     calforce  = CalForce(force_mode='SUBCYCLING_MODEL', state=state, Ngrid=64, cell=net_manager.cell)
     mobility  = MobilityLaw(mobility_law='FCC_0', state=state, Medge=10000.0, Mscrew=1000.0,

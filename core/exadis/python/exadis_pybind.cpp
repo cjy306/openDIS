@@ -1082,8 +1082,8 @@ PYBIND11_MODULE(pyexadis, m) {
              py::return_value_policy::reference_internal)
         .def("load_obstacles", &ExaDisNet::load_obstacles,
              "Load spherical precipitate obstacles for Orowan bypass simulation. "
-             "centers_m: list of [x,y,z] positions in metres; radii_m: list of radii in metres.",
-             py::arg("centers_m"), py::arg("radii_m"));
+             "centers_b: list of [x,y,z] in Burgers units; radii_b: list of radii in Burgers units.",
+             py::arg("centers_b"), py::arg("radii_b"));
         
     py::class_<SystemBind, ExaDisNet>(m, "System")
         .def(py::init<ExaDisNet, Params>())

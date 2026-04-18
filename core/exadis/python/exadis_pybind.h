@@ -223,25 +223,15 @@ struct ExaDisNet {
     void write_data(std::string filename) { system->get_serial_network()->write_data(filename); }
 
     /*
-     * load_obstacles(centers_m, radii_m)
-     *   centers_m : list of [x,y,z] positions in metres
-     *   radii_m   : list of radii in metres
-     * Converts to Burgers units and stores in system->obstacles so that
-     * CollisionOrowan enforces the sphere-surface constraint each step.
+     * load_obstacles(centers_b, radii_b)
+     *   centers_b : list of [x,y,z] positions in Burgers vector units
+     *   radii_b   : list of radii in Burgers vector units
+     * Stores in system->obstacles so that CollisionOrowan enforces
+     * the sphere-surface constraint each step.
      */
-    void load_obstacles(const std::vector<Vec3>& centers_m,
-                        const std::vector<double>& radii_m)
+    void load_obstacles(const std::vector<Vec3>& centers_b,
+                        const std::vector<double>& radii_b)
     {
-        double bm = system->params.burgmag;
-        if (bm <= 0.0)
-            ExaDiS_fatal("Error: load_obstacles called before burgmag is set\n");
-        int n = (int)centers_m.size();
-        std::vector<Vec3>   centers_b(n);
-        std::vector<double> radii_b(n);
-        for (int i = 0; i < n; i++) {
-            centers_b[i] = (1.0 / bm) * centers_m[i];
-            radii_b[i]   = radii_m[i] / bm;
-        }
         system->load_obstacles(centers_b, radii_b);
     }
 };
