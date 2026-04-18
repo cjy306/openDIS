@@ -159,7 +159,10 @@ class ExaDisNet(DisNet_Base):
         
     def set_positions(self, pos):
         self.net.set_positions(pos)
-    
+
+    def load_obstacles(self, centers_m, radii_m):
+        self.net.load_obstacles(centers_m, radii_m)
+
 
 def get_exadis_params(state):
     """get_exadis_params: helper function to get exadis global state object
