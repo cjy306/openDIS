@@ -163,6 +163,9 @@ class ExaDisNet(DisNet_Base):
     def load_obstacles(self, centers_b, radii_b):
         self.net.load_obstacles(centers_b, radii_b)
 
+    def load_twin_planes(self, points_b, normals_b):
+        self.net.load_twin_planes(points_b, normals_b)
+
 
 def get_exadis_params(state):
     """get_exadis_params: helper function to get exadis global state object

@@ -35,6 +35,21 @@ struct SphericalObstacle {
     int    id;
 };
 
+/*---------------------------------------------------------------------------
+ *
+ *    Struct:        PlanarObstacle
+ *                  Planar obstacle (e.g. twin boundary) that blocks
+ *                  dislocation motion.  Defined by one point on the plane
+ *                  and the outward unit normal.
+ *                  All units in Burgers vector magnitude.
+ *
+ *-------------------------------------------------------------------------*/
+struct PlanarObstacle {
+    Vec3   point;   // any point on the plane
+    Vec3   normal;  // unit normal
+    int    id;
+};
+
 class System {
 public:
     DisNetManager* net_mngr = nullptr;
@@ -98,6 +113,24 @@ public:
         for (int i = 0; i < n; i++)
             obstacles.push_back({centers_b[i], radii_b[i], i});
         ExaDiS_log("[System] %d spherical obstacles loaded\n", n);
+    }
+
+    // Planar obstacles (twin boundaries) (all units in Burgers vector)
+    std::vector<PlanarObstacle> planar_obstacles;
+
+    void load_planar_obstacles(const std::vector<Vec3>& points_b,
+                               const std::vector<Vec3>& normals_b)
+    {
+        planar_obstacles.clear();
+        int n = (int)points_b.size();
+        planar_obstacles.reserve(n);
+        for (int i = 0; i < n; i++) {
+            Vec3 nn = normals_b[i];
+            double len = sqrt(nn.norm2());
+            if (len > 1e-15) nn = (1.0/len) * nn;
+            planar_obstacles.push_back({points_b[i], nn, i});
+        }
+        ExaDiS_log("[System] %d planar obstacles (twin boundaries) loaded\n", n);
     }
 
     bool pyexadis = false;

@@ -68,6 +68,12 @@ public:
                 Vec3 n = nodes[i].sphere_normal;
                 nodes[i].v = nodes[i].v - dot(nodes[i].v, n) * n;
             }
+            // Twin-boundary constraint: remove normal velocity component
+            // so the node can only slide along the twin plane.
+            if (nodes[i].constraint == TWIN_SURFACE) {
+                Vec3 n = nodes[i].twin_normal;
+                nodes[i].v = nodes[i].v - dot(nodes[i].v, n) * n;
+            }
         }
     };
     

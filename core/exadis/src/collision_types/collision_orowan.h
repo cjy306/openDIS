@@ -3,7 +3,8 @@
  *    ExaDiS
  *
  *    CollisionOrowan
- *    Implements Orowan bypass for spherical precipitates.
+ *    Implements Orowan bypass for spherical precipitates and
+ *    twin-boundary blocking for planar obstacles.
  *
  *    Each simulation step, after the standard retroactive collision:
  *      1. Any node found inside a sphere is pushed back to the sphere
@@ -97,6 +98,60 @@ public:
     }
 
     /*-----------------------------------------------------------------------
+     *  handle_twin
+     *  Enforce twin-boundary plane constraints.
+     *  Any node that crosses a twin plane is pushed back onto the plane
+     *  and marked TWIN_SURFACE.  Nodes already constrained have their
+     *  normal refreshed or are released if they moved far away.
+     *---------------------------------------------------------------------*/
+    void handle_twin(System* system)
+    {
+        if (system->planar_obstacles.empty()) return;
+
+        SerialDisNet* net = system->get_serial_network();
+        int Nnodes = net->number_of_nodes();
+
+        // Thickness tolerance: nodes within this distance are "on" the plane
+        double tol = 1.0; // 1 Burgers vector
+
+        for (int i = 0; i < Nnodes; i++) {
+            Vec3& pos = net->nodes[i].pos;
+
+            for (const PlanarObstacle& plane : system->planar_obstacles) {
+
+                // Signed distance from node to plane
+                Vec3   d    = pos - plane.point;
+                double dist = dot(d, plane.normal);
+
+                if (fabs(dist) < tol) {
+                    // Node is within tolerance of the twin plane: snap to plane
+                    pos = pos - dist * plane.normal;
+
+                    net->nodes[i].constraint  = TWIN_SURFACE;
+                    net->nodes[i].twin_id     = plane.id;
+                    net->nodes[i].twin_normal = plane.normal;
+
+                } else if (net->nodes[i].constraint == TWIN_SURFACE &&
+                           net->nodes[i].twin_id    == plane.id) {
+                    // Node was on this twin plane
+                    if (fabs(dist) > tol * 3.0) {
+                        // Moved clearly away: release constraint
+                        net->nodes[i].constraint  = UNCONSTRAINED;
+                        net->nodes[i].twin_id     = -1;
+                        net->nodes[i].twin_normal = Vec3(0.0);
+                    } else {
+                        // Still near surface: snap back
+                        pos = pos - dist * plane.normal;
+                    }
+                }
+            }
+        }
+
+        net->update_ptr();
+        system->net_mngr->set_network(net);
+    }
+
+    /*-----------------------------------------------------------------------
      *  handle  (overrides CollisionRetroactive::handle)
      *---------------------------------------------------------------------*/
     void handle(System* system) override
@@ -104,10 +159,15 @@ public:
         // 1. Standard dislocation-dislocation retroactive collision first.
         CollisionRetroactive::handle(system);
 
-        // 2. Orowan sphere-surface enforcement.
         Kokkos::fence();
         system->timer[system->TIMER_COLLISION].start();
+
+        // 2. Orowan sphere-surface enforcement.
         handle_orowan(system);
+
+        // 3. Twin-boundary plane enforcement.
+        handle_twin(system);
+
         Kokkos::fence();
         system->timer[system->TIMER_COLLISION].stop();
     }

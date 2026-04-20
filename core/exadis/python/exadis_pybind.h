@@ -234,6 +234,19 @@ struct ExaDisNet {
     {
         system->load_obstacles(centers_b, radii_b);
     }
+
+    /*
+     * load_twin_planes(points_b, normals_b)
+     *   points_b  : list of [x,y,z] points on each twin plane (Burgers units)
+     *   normals_b : list of [nx,ny,nz] unit normals for each twin plane
+     * Stores in system->planar_obstacles so that CollisionOrowan enforces
+     * the twin-boundary constraint each step.
+     */
+    void load_twin_planes(const std::vector<Vec3>& points_b,
+                          const std::vector<Vec3>& normals_b)
+    {
+        system->load_planar_obstacles(points_b, normals_b);
+    }
 };
 
 struct SystemBind : ExaDisNet {
