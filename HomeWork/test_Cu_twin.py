@@ -81,6 +81,36 @@ def generate_twin_planes(Lbox_b, twin_z_fractions):
     return points_b, normals_b
 
 
+def save_twin_planes_data(filename, points_b, normals_b, Lbox_b, burgmag):
+    """保存孪晶面信息为 data 文件"""
+    with open(filename, 'w') as f:
+        f.write("# Twin Boundary Planes Data File\n")
+        f.write("#" + "="*68 + "\n")
+        f.write(f"# Burgers vector magnitude: {burgmag:.6e} m\n")
+        f.write(f"# Box size: {Lbox_b:.2f} b\n")
+        f.write(f"# Total planes: {len(points_b)}\n")
+        f.write("#" + "="*68 + "\n")
+        f.write("# All coordinates in Burgers vector units (b)\n")
+        f.write("#\n")
+        f.write("# Column format:\n")
+        f.write("#   1. ID\n")
+        f.write("#   2. Point_X(b)  - X coordinate of a point on the plane\n")
+        f.write("#   3. Point_Y(b)  - Y coordinate\n")
+        f.write("#   4. Point_Z(b)  - Z coordinate\n")
+        f.write("#   5. Normal_X    - X component of unit normal\n")
+        f.write("#   6. Normal_Y    - Y component\n")
+        f.write("#   7. Normal_Z    - Z component\n")
+        f.write("#" + "="*68 + "\n")
+        for i in range(len(points_b)):
+            p = points_b[i]
+            n = normals_b[i]
+            f.write(f"{i+1:6d} {p[0]:16.8e} {p[1]:16.8e} {p[2]:16.8e} "
+                    f"{n[0]:10.6f} {n[1]:10.6f} {n[2]:10.6f}\n")
+        f.write("#" + "="*68 + "\n")
+        f.write(f"# END OF DATA ({len(points_b)} planes)\n")
+    print(f"Saved twin planes data: {filename}")
+
+
 # ============================================================
 # 插入棱柱位错环
 # ============================================================
@@ -264,6 +294,11 @@ def main():
     twin_z_fractions = [0.5]
     twin_points_b, twin_normals_b = generate_twin_planes(Lbox_b, twin_z_fractions)
     print(f"Generated {len(twin_points_b)} twin boundary planes")
+
+    # 保存孪晶面 data 文件
+    save_twin_planes_data(
+        os.path.join(output_dir, 'twin_planes.data'),
+        twin_points_b, twin_normals_b, Lbox_b, burgmag)
 
     # 孪晶面 z 坐标（米制，用于位错网络生成时避开）
     twin_z_positions_m = [Lbox_m * f for f in twin_z_fractions]

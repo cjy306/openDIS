@@ -236,6 +236,83 @@ class SphericalPrecipitates:
         
         print(f"✅ 球形杂质几何体已保存: {os.path.basename(filename)}")
 
+def load_twin_planes_data(filename):
+    """从 twin_planes.data 文件加载孪晶面信息，返回 (points_b, normals_b) 列表"""
+    if not os.path.exists(filename):
+        print(f"  Twin planes data file not found: {filename}")
+        return [], []
+    points_b, normals_b = [], []
+    with open(filename, 'r') as f:
+        for line in f:
+            line = line.strip()
+            if not line or line.startswith('#'):
+                continue
+            parts = line.split()
+            if len(parts) >= 7:
+                points_b.append([float(parts[1]), float(parts[2]), float(parts[3])])
+                normals_b.append([float(parts[4]), float(parts[5]), float(parts[6])])
+    print(f"  Loaded {len(points_b)} twin planes from {os.path.basename(filename)}")
+    return points_b, normals_b
+
+
+def export_twin_planes_vtk_from_data(filename, Lbox_b, points_b, normals_b):
+    """
+    根据平面点+法向量导出孪晶面VTK文件。
+    每个平面生成一个覆盖整个盒子截面的矩形。
+    """
+    if not points_b:
+        return
+
+    nplanes = len(points_b)
+    npoints = nplanes * 4
+    ncells  = nplanes
+
+    with open(filename, 'w') as f:
+        f.write("# vtk DataFile Version 3.0\n")
+        f.write("Twin boundary planes\n")
+        f.write("ASCII\n")
+        f.write("DATASET POLYDATA\n")
+
+        f.write(f"\nPOINTS {npoints} float\n")
+        for i in range(nplanes):
+            p = np.array(points_b[i])
+            n = np.array(normals_b[i])
+            n = n / np.linalg.norm(n)
+
+            # 构造平面上的两个正交切向量
+            if abs(n[2]) > 0.9:
+                t1 = np.cross(n, [1, 0, 0])
+            else:
+                t1 = np.cross(n, [0, 0, 1])
+            t1 = t1 / np.linalg.norm(t1)
+            t2 = np.cross(n, t1)
+            t2 = t2 / np.linalg.norm(t2)
+
+            # 生成覆盖整个盒子的矩形（半对角线长度 = Lbox * sqrt(2)/2）
+            half = Lbox_b * 0.75
+            corners = [
+                p - half * t1 - half * t2,
+                p + half * t1 - half * t2,
+                p + half * t1 + half * t2,
+                p - half * t1 + half * t2,
+            ]
+            for c in corners:
+                f.write(f"{c[0]:.6e} {c[1]:.6e} {c[2]:.6e}\n")
+
+        f.write(f"\nPOLYGONS {ncells} {ncells * 5}\n")
+        for i in range(nplanes):
+            base = i * 4
+            f.write(f"4 {base} {base+1} {base+2} {base+3}\n")
+
+        f.write(f"\nCELL_DATA {ncells}\n")
+        f.write("SCALARS PlaneID int\n")
+        f.write("LOOKUP_TABLE default\n")
+        for i in range(nplanes):
+            f.write(f"{i}\n")
+
+    print(f"  Twin planes VTK saved: {os.path.basename(filename)} ({nplanes} planes)")
+
+
 def export_twin_planes_vtk(filename, Lbox_b, twin_z_fractions):
     """
     导出孪晶面为VTK文件，每个孪晶面是一个覆盖整个盒子的矩形。
@@ -359,12 +436,19 @@ def convert_paradis_to_vtk_with_precipitates(input_dir, output_dir):
     else:
         print(f"\n⚠️  未找到杂质信息文件: {precipitates_file}")
 
-    # 生成孪晶面VTK文件（如果有）
-    twin_z_fractions = TWIN_Z_FRACTIONS
-    if twin_z_fractions:
-        Lbox_b = 5e-6 / 0.2556e-9  # 盒子尺寸 Burgers 单位
+    # 生成孪晶面VTK文件
+    Lbox_b = 5e-6 / 0.2556e-9
+    twin_data_file = os.path.join(input_dir, 'twin_planes.data')
+    if os.path.exists(twin_data_file):
+        # 优先从 data 文件读取（支持任意方向的孪晶面）
+        tp, tn = load_twin_planes_data(twin_data_file)
+        if tp:
+            twin_vtk = os.path.join(output_dir, 'twin_planes.vtk')
+            export_twin_planes_vtk_from_data(twin_vtk, Lbox_b, tp, tn)
+    elif TWIN_Z_FRACTIONS:
+        # 回退：用配置里的 z 分数
         twin_vtk = os.path.join(output_dir, 'twin_planes.vtk')
-        export_twin_planes_vtk(twin_vtk, Lbox_b, twin_z_fractions)
+        export_twin_planes_vtk(twin_vtk, Lbox_b, TWIN_Z_FRACTIONS)
     
     # 查找所有config.*.data文件
     data_files = sorted(glob.glob(os.path.join(input_dir, 'config.*.data')))
