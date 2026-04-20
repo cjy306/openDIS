@@ -15,9 +15,12 @@ pyexadis_paths = ['../python', '../lib', '../core/pydis/python', '../core/exadis
 import pyexadis
 from pyexadis_utils import read_paradis, write_vtk
 from pyexadis_base import ExaDisNet
-# ========== 用户可修改的路径配置 ==========
+# ========== 用户可修改的配置 ==========
 INPUT_PATH = '/data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc'
 OUTPUT_PATH = '/data/home/dg000246b/openDIS/HomeWork/output_CU_vtk'
+# 孪晶面 z 方向分数位置（空列表 [] 表示无孪晶面）
+# 例如 [0.5] 表示在盒子中间放一个孪晶面
+TWIN_Z_FRACTIONS = []
 
 class SphericalPrecipitates:
     """球形杂质管理类"""
@@ -233,6 +236,50 @@ class SphericalPrecipitates:
         
         print(f"✅ 球形杂质几何体已保存: {os.path.basename(filename)}")
 
+def export_twin_planes_vtk(filename, Lbox_b, twin_z_fractions):
+    """
+    导出孪晶面为VTK文件，每个孪晶面是一个覆盖整个盒子的矩形。
+    Lbox_b: 盒子尺寸（Burgers 单位）
+    twin_z_fractions: z 方向分数位置列表，如 [0.5] 表示 z=Lbox_b/2
+    """
+    if not twin_z_fractions:
+        return
+
+    nplanes = len(twin_z_fractions)
+    npoints = nplanes * 4  # 每个平面4个角点
+    ncells  = nplanes      # 每个平面1个四边形
+
+    with open(filename, 'w') as f:
+        f.write("# vtk DataFile Version 3.0\n")
+        f.write("Twin boundary planes\n")
+        f.write("ASCII\n")
+        f.write("DATASET POLYDATA\n")
+
+        # 写入点：每个平面4个角
+        f.write(f"\nPOINTS {npoints} float\n")
+        for frac in twin_z_fractions:
+            z = Lbox_b * frac
+            f.write(f"0.0 0.0 {z:.6e}\n")
+            f.write(f"{Lbox_b:.6e} 0.0 {z:.6e}\n")
+            f.write(f"{Lbox_b:.6e} {Lbox_b:.6e} {z:.6e}\n")
+            f.write(f"0.0 {Lbox_b:.6e} {z:.6e}\n")
+
+        # 写入面片
+        f.write(f"\nPOLYGONS {ncells} {ncells * 5}\n")
+        for i in range(nplanes):
+            base = i * 4
+            f.write(f"4 {base} {base+1} {base+2} {base+3}\n")
+
+        # 写入单元数据
+        f.write(f"\nCELL_DATA {ncells}\n")
+        f.write("SCALARS TwinPlaneZ float\n")
+        f.write("LOOKUP_TABLE default\n")
+        for frac in twin_z_fractions:
+            f.write(f"{Lbox_b * frac:.6e}\n")
+
+    print(f"Twin planes VTK saved: {filename} ({nplanes} planes)")
+
+
 def compute_orowan_flags(net_manager, precipitates, dist_factor=1.5):
 
     G = net_manager.get_disnet(ExaDisNet)
@@ -311,6 +358,13 @@ def convert_paradis_to_vtk_with_precipitates(input_dir, output_dir):
             precipitates.export_vtk_geometry(precipitates_vtk, resolution=20)
     else:
         print(f"\n⚠️  未找到杂质信息文件: {precipitates_file}")
+
+    # 生成孪晶面VTK文件（如果有）
+    twin_z_fractions = TWIN_Z_FRACTIONS
+    if twin_z_fractions:
+        Lbox_b = 5e-6 / 0.2556e-9  # 盒子尺寸 Burgers 单位
+        twin_vtk = os.path.join(output_dir, 'twin_planes.vtk')
+        export_twin_planes_vtk(twin_vtk, Lbox_b, twin_z_fractions)
     
     # 查找所有config.*.data文件
     data_files = sorted(glob.glob(os.path.join(input_dir, 'config.*.data')))
