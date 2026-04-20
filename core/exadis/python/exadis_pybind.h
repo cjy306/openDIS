@@ -255,6 +255,9 @@ struct SystemBind : ExaDisNet {
         SerialDisNet* net = disnet.system->get_serial_network();
         system = make_system(net, Crystal(params.crystal), params);
         system->params.check_params();
+        // Copy obstacles from source network so the driver's System has them
+        system->obstacles         = disnet.system->obstacles;
+        system->planar_obstacles  = disnet.system->planar_obstacles;
     }
     void set_neighbor_cutoff(double cutoff) {
         system->neighbor_cutoff = cutoff;
