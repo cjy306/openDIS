@@ -20,7 +20,7 @@ namespace ExaDiS {
 class OpRec; // forward declaration
     
 enum {FREE_BOUND, PBC_BOUND};
-enum NodeConstraints {UNCONSTRAINED = 0, PINNED_NODE = 7, CORNER_NODE = 1, SPHERE_SURFACE = 8};
+enum NodeConstraints {UNCONSTRAINED = 0, PINNED_NODE = 7, CORNER_NODE = 1, SPHERE_SURFACE = 8, TWIN_SURFACE = 9};
 
 /*---------------------------------------------------------------------------
  *
@@ -65,6 +65,8 @@ struct DisNode
     Vec3 v;
     int  sphere_id;     // -1 = free; >=0 = index into System::obstacles
     Vec3 sphere_normal; // outward unit normal at node position on sphere surface
+    int  twin_id;       // -1 = free; >=0 = index into System::planar_obstacles
+    Vec3 twin_normal;   // unit normal of the twin boundary plane
 
     DisNode() = default;
 
@@ -77,6 +79,8 @@ struct DisNode
         f = v = Vec3(0.0);
         sphere_id = -1;
         sphere_normal = Vec3(0.0);
+        twin_id = -1;
+        twin_normal = Vec3(0.0);
     }
 
     KOKKOS_FORCEINLINE_FUNCTION
@@ -88,6 +92,8 @@ struct DisNode
         f = v = Vec3(0.0);
         sphere_id = -1;
         sphere_normal = Vec3(0.0);
+        twin_id = -1;
+        twin_normal = Vec3(0.0);
     }
 
     DisNode(const Vec3& _pos, int _constraint) {
@@ -97,6 +103,8 @@ struct DisNode
         f = v = Vec3(0.0);
         sphere_id = -1;
         sphere_normal = Vec3(0.0);
+        twin_id = -1;
+        twin_normal = Vec3(0.0);
     }
 };
 

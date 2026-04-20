@@ -1083,8 +1083,13 @@ PYBIND11_MODULE(pyexadis, m) {
         .def("load_obstacles", &ExaDisNet::load_obstacles,
              "Load spherical precipitate obstacles for Orowan bypass simulation. "
              "centers_b: list of [x,y,z] in Burgers units; radii_b: list of radii in Burgers units.",
-             py::arg("centers_b"), py::arg("radii_b"));
-        
+             py::arg("centers_b"), py::arg("radii_b"))
+        .def("load_twin_planes", &ExaDisNet::load_twin_planes,
+             "Load planar obstacles (twin boundaries) that block dislocation motion. "
+             "points_b: list of [x,y,z] on each plane in Burgers units; "
+             "normals_b: list of [nx,ny,nz] unit normals.",
+             py::arg("points_b"), py::arg("normals_b"));
+
     py::class_<SystemBind, ExaDisNet>(m, "System")
         .def(py::init<ExaDisNet, Params>())
         .def("set_neighbor_cutoff", &SystemBind::set_neighbor_cutoff, "Set set_neighbor cutoff of the system")
