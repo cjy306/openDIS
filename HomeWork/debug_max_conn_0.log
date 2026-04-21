@@ -1,0 +1,5 @@
+# Nodes that triggered MAX_CONN
+# n1: tag=(0,1185), pos=(9.307579e+01,1.741447e+04,9.727492e+03), conn=10
+# n2: tag=(0,4733), pos=(9.285099e+01,1.741452e+04,9.727668e+03), conn=5
+# max_conn_in_network=10
+# merged_conn_would_be=15
