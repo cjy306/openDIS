@@ -243,9 +243,6 @@ bool SerialDisNet::merge_nodes_position(int n1, int n2, const Vec3& pos, Mat33& 
     // The merge would create a node with too many connections.
     // Revert the merge by restoring the original nodes.
     if (error) {
-    restore_node(saved_node1);
-    restore_node(saved_node2);
-
     static int debug_count = 0;
     if (debug_count < 3) {
         int max_conn = 0;
@@ -253,7 +250,7 @@ bool SerialDisNet::merge_nodes_position(int n1, int n2, const Vec3& pos, Mat33& 
             max_conn = std::max(max_conn, conn[i].num);
 
         if (max_conn >= 7) {
-            // 写 debug 网络文件（回退后的正常状态）
+            // 写 debug 网络文件（在 restore 之前，保留 merge 后的状态）
             std::string debug_file = "debug_max_conn_" + std::to_string(debug_count) + ".data";
             write_data(debug_file);
 
