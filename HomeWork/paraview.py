@@ -16,11 +16,10 @@ import pyexadis
 from pyexadis_utils import read_paradis, write_vtk
 from pyexadis_base import ExaDisNet
 # ========== 用户可修改的配置 ==========
-INPUT_PATH = '/data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc'
-OUTPUT_PATH = '/data/home/dg000246b/openDIS/HomeWork/output_CU_vtk'
-# 孪晶面 z 方向分数位置（空列表 [] 表示无孪晶面）
-# 例如 [0.5] 表示在盒子中间放一个孪晶面
-TWIN_Z_FRACTIONS = []
+INPUT_PATH = '/data/home/dg000246b/openDIS/HomeWork/debug'
+OUTPUT_PATH = '/data/home/dg000246b/openDIS/HomeWork/debug_vtk'
+# 孪晶面 z 方向分数位置（空列表 [] 表示无孪晶面，仅在没有 twin_planes.data 时使用）
+TWIN_Z_FRACTIONS = [0.5]
 
 class SphericalPrecipitates:
     """球形杂质管理类"""
@@ -450,13 +449,15 @@ def convert_paradis_to_vtk_with_precipitates(input_dir, output_dir):
         twin_vtk = os.path.join(output_dir, 'twin_planes.vtk')
         export_twin_planes_vtk(twin_vtk, Lbox_b, TWIN_Z_FRACTIONS)
     
-    # 查找所有config.*.data文件
-    data_files = sorted(glob.glob(os.path.join(input_dir, 'config.*.data')))
-    
+    # 查找所有 .data 文件（排除 precipitates.data 和 twin_planes.data）
+    all_data = sorted(glob.glob(os.path.join(input_dir, '*.data')))
+    data_files = [f for f in all_data
+                  if os.path.basename(f) not in ('precipitates.data', 'twin_planes.data')]
+
     if len(data_files) == 0:
-        print(f"\n❌ 未找到config.*.data文件")
+        print(f"\n❌ 未找到.data文件")
         return
-    
+
     print(f"\n找到 {len(data_files)} 个data文件")
     print("="*60)
     
@@ -468,17 +469,15 @@ def convert_paradis_to_vtk_with_precipitates(input_dir, output_dir):
     # 处理所有data文件
     for idx, data_file in enumerate(data_files):
         try:
-            # 提取步骤编号
             basename = os.path.basename(data_file)
-            step = basename.replace('config.', '').replace('.data', '')
-            
+            name = basename.replace('.data', '')
+
             print(f"\n[{idx+1}/{len(data_files)}] 处理: {basename}")
-            
+
             # 读取ParaDiS数据
             net_manager = read_paradis(data_file)
             orowan_seg_flag = compute_orowan_flags(net_manager, precipitates)
-            # ✅ 一次调用write_vtk，直接生成包含OutsideSphere的VTK文件
-            vtk_file = os.path.join(output_dir, f'config.{step}.vtk')
+            vtk_file = os.path.join(output_dir, f'{name}.vtk')
             write_vtk(
                 net_manager, 
                 vtk_file,
