@@ -99,10 +99,20 @@ public:
 
     /*-----------------------------------------------------------------------
      *  handle_twin
-     *  Enforce twin-boundary plane constraints.
-     *  Any node that crosses a twin plane is pushed back onto the plane
-     *  and marked TWIN_SURFACE.  Nodes already constrained have their
-     *  normal refreshed or are released if they moved far away.
+     *  Enforce twin-boundary plane constraints using segment-crossing
+     *  detection.
+     *
+     *  Pass 1 (segment crossing): for each segment, if the two endpoint
+     *  nodes lie on opposite sides of a twin plane (signed distances have
+     *  opposite signs), the segment has crossed the plane this step.  Both
+     *  endpoints are snapped onto the plane and marked TWIN_SURFACE.
+     *  This catches fast-moving nodes that jump across the plane in one
+     *  timestep without ever being within the proximity tolerance.
+     *
+     *  Pass 2 (proximity snap): any node within snap_tol of the plane is
+     *  also snapped.  TWIN_SURFACE nodes that have moved clearly away
+     *  (|dist| > release_tol) are released - this happens naturally after
+     *  a topology operation (e.g. Orowan loop completion).
      *---------------------------------------------------------------------*/
     void handle_twin(System* system)
     {
@@ -110,37 +120,56 @@ public:
 
         SerialDisNet* net = system->get_serial_network();
         int Nnodes = net->number_of_nodes();
+        int Nsegs  = net->number_of_segs();
 
-        // Thickness tolerance: nodes within this distance are "on" the plane
-        double tol = 1.0; // 1 Burgers vector
+        const double snap_tol    = 2.0;  // snap if |dist| < this (Burgers)
+        const double release_tol = 8.0;  // release TWIN_SURFACE if |dist| > this
 
+        // --- Pass 1: segment-crossing detection ---
+        for (int s = 0; s < Nsegs; s++) {
+            int n1 = net->segs[s].n1;
+            int n2 = net->segs[s].n2;
+
+            for (const PlanarObstacle& plane : system->planar_obstacles) {
+                double d1 = dot(net->nodes[n1].pos - plane.point, plane.normal);
+                double d2 = dot(net->nodes[n2].pos - plane.point, plane.normal);
+
+                // Endpoints on opposite sides: segment crosses the plane
+                if (d1 * d2 < 0.0) {
+                    net->nodes[n1].pos = net->nodes[n1].pos - d1 * plane.normal;
+                    net->nodes[n2].pos = net->nodes[n2].pos - d2 * plane.normal;
+
+                    net->nodes[n1].constraint  = TWIN_SURFACE;
+                    net->nodes[n1].twin_id     = plane.id;
+                    net->nodes[n1].twin_normal = plane.normal;
+
+                    net->nodes[n2].constraint  = TWIN_SURFACE;
+                    net->nodes[n2].twin_id     = plane.id;
+                    net->nodes[n2].twin_normal = plane.normal;
+                }
+            }
+        }
+
+        // --- Pass 2: proximity snap + release ---
         for (int i = 0; i < Nnodes; i++) {
             Vec3& pos = net->nodes[i].pos;
 
             for (const PlanarObstacle& plane : system->planar_obstacles) {
+                double dist = dot(pos - plane.point, plane.normal);
 
-                // Signed distance from node to plane
-                Vec3   d    = pos - plane.point;
-                double dist = dot(d, plane.normal);
-
-                if (fabs(dist) < tol) {
-                    // Node is within tolerance of the twin plane: snap to plane
+                if (fabs(dist) < snap_tol) {
                     pos = pos - dist * plane.normal;
-
                     net->nodes[i].constraint  = TWIN_SURFACE;
                     net->nodes[i].twin_id     = plane.id;
                     net->nodes[i].twin_normal = plane.normal;
 
                 } else if (net->nodes[i].constraint == TWIN_SURFACE &&
                            net->nodes[i].twin_id    == plane.id) {
-                    // Node was on this twin plane
-                    if (fabs(dist) > tol * 3.0) {
-                        // Moved clearly away: release constraint
+                    if (fabs(dist) > release_tol) {
                         net->nodes[i].constraint  = UNCONSTRAINED;
                         net->nodes[i].twin_id     = -1;
                         net->nodes[i].twin_normal = Vec3(0.0);
                     } else {
-                        // Still near surface: snap back
                         pos = pos - dist * plane.normal;
                     }
                 }
