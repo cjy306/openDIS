@@ -30,7 +30,7 @@ def run_simulation(net, state, output_dir, restart=None,):
         burgmag=state["burgmag"],
         state=state,
         print_freq=1,
-        write_freq=100,
+        write_freq=1,
         write_dir=output_dir,
         restart=restart)
     sim.run(net, state)
