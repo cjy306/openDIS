@@ -243,37 +243,43 @@ bool SerialDisNet::merge_nodes_position(int n1, int n2, const Vec3& pos, Mat33& 
     // The merge would create a node with too many connections.
     // Revert the merge by restoring the original nodes.
     if (error) {
-    static int debug_count = 0;
-    if (debug_count < 3) {
-        int max_conn = 0;
-        for (int i = 0; i < (int)nodes.size(); i++)
-            max_conn = std::max(max_conn, conn[i].num);
+    // Debug output is controlled by the environment variable EXADIS_DEBUG_MAX_CONN.
+    // Set it to a non-empty string (e.g. a job name) to enable file output.
+    // Example:  EXADIS_DEBUG_MAX_CONN=job_twin python test_Cu_twin.py
+    // Files will be named:  <prefix>_debug_max_conn_0.data / .log
+    const char* debug_env = getenv("EXADIS_DEBUG_MAX_CONN");
+    if (debug_env && debug_env[0] != '\0') {
+        static int debug_count = 0;
+        if (debug_count < 3) {
+            int max_conn = 0;
+            for (int i = 0; i < (int)nodes.size(); i++)
+                max_conn = std::max(max_conn, conn[i].num);
 
-        if (max_conn >= 7) {
-            // 写 debug 网络文件（在 restore 之前，保留 merge 后的状态）
-            std::string debug_file = "debug_max_conn_" + std::to_string(debug_count) + ".data";
-            write_data(debug_file);
+            if (max_conn >= 7) {
+                std::string prefix    = std::string(debug_env);
+                std::string debug_file = prefix + "_debug_max_conn_" + std::to_string(debug_count) + ".data";
+                std::string log_file   = prefix + "_debug_max_conn_" + std::to_string(debug_count) + ".log";
+                write_data(debug_file);
 
-            // 额外写一个日志，记录触发合并的两个节点信息
-            std::string log_file = "debug_max_conn_" + std::to_string(debug_count) + ".log";
-            FILE* fp = fopen(log_file.c_str(), "w");
-            if (fp) {
-                fprintf(fp, "# Nodes that triggered MAX_CONN\n");
-                fprintf(fp, "# n1: tag=(%d,%d), pos=(%.6e,%.6e,%.6e), conn=%d\n",
-                        nodes[n1].tag.domain, nodes[n1].tag.index,
-                        nodes[n1].pos.x, nodes[n1].pos.y, nodes[n1].pos.z,
-                        conn[n1].num);
-                fprintf(fp, "# n2: tag=(%d,%d), pos=(%.6e,%.6e,%.6e), conn=%d\n",
-                        nodes[n2].tag.domain, nodes[n2].tag.index,
-                        nodes[n2].pos.x, nodes[n2].pos.y, nodes[n2].pos.z,
-                        conn[n2].num);
-                fprintf(fp, "# max_conn_in_network=%d\n", max_conn);
-                fprintf(fp, "# merged_conn_would_be=%d\n", conn[n1].num + conn[n2].num);
-                fclose(fp);
+                FILE* fp = fopen(log_file.c_str(), "w");
+                if (fp) {
+                    fprintf(fp, "# Nodes that triggered MAX_CONN\n");
+                    fprintf(fp, "# n1: tag=(%d,%d), pos=(%.6e,%.6e,%.6e), conn=%d\n",
+                            nodes[n1].tag.domain, nodes[n1].tag.index,
+                            nodes[n1].pos.x, nodes[n1].pos.y, nodes[n1].pos.z,
+                            conn[n1].num);
+                    fprintf(fp, "# n2: tag=(%d,%d), pos=(%.6e,%.6e,%.6e), conn=%d\n",
+                            nodes[n2].tag.domain, nodes[n2].tag.index,
+                            nodes[n2].pos.x, nodes[n2].pos.y, nodes[n2].pos.z,
+                            conn[n2].num);
+                    fprintf(fp, "# max_conn_in_network=%d\n", max_conn);
+                    fprintf(fp, "# merged_conn_would_be=%d\n", conn[n1].num + conn[n2].num);
+                    fclose(fp);
+                }
+                debug_count++;
             }
-            debug_count++;
         }
-                        }
+    }
     ExaDiS_log("Error: MAX_CONN = %d exceeded during merge_node()\n", MAX_CONN);
     }else {
         // Update merged node position
