@@ -8,7 +8,9 @@
 export OMP_NUM_THREADS=48
 export OMP_PROC_BIND=spread
 export OMP_PLACES=threads
+# 取消注释下面这行以开启 MAX_CONN debug 输出，前缀即为文件名前缀
+# export EXADIS_DEBUG_MAX_CONN=job_twin
 module purge
 module load miniforge/25.3.1
 source activate opendis_cpu
-python /data/home/dg000246b/openDIS/HomeWork/test_Cu_twin.py
+python /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN.py
