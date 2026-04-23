@@ -281,6 +281,9 @@ bool SerialDisNet::merge_nodes_position(int n1, int n2, const Vec3& pos, Mat33& 
         }
     }
     ExaDiS_log("Error: MAX_CONN = %d exceeded during merge_node()\n", MAX_CONN);
+    // Revert the partial merge to restore consistent network state
+    restore_node(saved_node1);
+    restore_node(saved_node2);
     }else {
         // Update merged node position
         nodes[n1].pos = cell.pbc_fold(pos);
