@@ -26,7 +26,10 @@ def load_data(filepath):
     strain  = data[:, 1]           # 应变（无量纲）
     stress  = data[:, 2] / 1e6    # 应力 Pa → MPa
     density = data[:, 3]           # 位错密度 m^-2
-    return strain, stress, density
+
+    # 只保留应变单调递增的部分（防止 restart 导致应变倒退）
+    mask = np.concatenate(([True], np.diff(strain) > 0))
+    return strain[mask], stress[mask], density[mask]
 
 
 def smooth(y, window):
