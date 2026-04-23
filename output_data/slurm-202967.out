@@ -1,0 +1,852 @@
+Host Parallel Execution Space:
+  KOKKOS_ENABLE_OPENMP: yes
+
+OpenMP Runtime Configuration:
+Kokkos::OpenMP thread_pool_topology[ 1 x 48 x 1 ]
+Reading ParaDiS configuration
+ Input file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc/config.0.data
+ nodes: 1908, segments: 1908
+ Burgers vector is conserved for all nodes
+Step =      0: nodes = 1908, dt = 0.000000e+00, strain = 0.000000e+00, elapsed = 0.0 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.0.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.0.exadis
+Run until reaching strain = 0.010000
+Step =      1: nodes = 1908, dt = 1.000000e-09, strain = 1.000000e-06, elapsed = 0.4 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.1.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.1.exadis
+Step =      2: nodes = 1908, dt = 1.200000e-09, strain = 2.200000e-06, elapsed = 0.6 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.2.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.2.exadis
+Step =      3: nodes = 1908, dt = 1.440000e-09, strain = 3.640000e-06, elapsed = 0.7 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.3.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.3.exadis
+Step =      4: nodes = 1908, dt = 1.728000e-09, strain = 5.368000e-06, elapsed = 0.9 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.4.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.4.exadis
+Step =      5: nodes = 1908, dt = 2.073600e-09, strain = 7.441600e-06, elapsed = 1.0 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.5.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.5.exadis
+Step =      6: nodes = 1908, dt = 2.488320e-09, strain = 9.929920e-06, elapsed = 1.2 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.6.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.6.exadis
+Step =      7: nodes = 1908, dt = 2.985984e-09, strain = 1.291590e-05, elapsed = 1.4 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.7.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.7.exadis
+Step =      8: nodes = 1908, dt = 3.583181e-09, strain = 1.649908e-05, elapsed = 1.6 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.8.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.8.exadis
+Step =      9: nodes = 1908, dt = 4.299817e-09, strain = 2.079890e-05, elapsed = 1.9 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.9.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.9.exadis
+Step =     10: nodes = 1908, dt = 5.159780e-09, strain = 2.595868e-05, elapsed = 2.2 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.10.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.10.exadis
+Step =     11: nodes = 1919, dt = 6.191736e-09, strain = 3.215042e-05, elapsed = 2.6 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.11.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.11.exadis
+Step =     12: nodes = 1931, dt = 7.430084e-09, strain = 3.958050e-05, elapsed = 3.3 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.12.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.12.exadis
+Step =     13: nodes = 1944, dt = 8.916100e-09, strain = 4.849660e-05, elapsed = 5.1 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.13.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.13.exadis
+Step =     14: nodes = 1949, dt = 5.349660e-09, strain = 5.384626e-05, elapsed = 6.3 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.14.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.14.exadis
+Step =     15: nodes = 1950, dt = 5.349660e-09, strain = 5.919592e-05, elapsed = 7.1 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.15.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.15.exadis
+Step =     16: nodes = 1970, dt = 6.419592e-09, strain = 6.561552e-05, elapsed = 8.2 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.16.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.16.exadis
+Step =     17: nodes = 1977, dt = 7.703511e-09, strain = 7.331903e-05, elapsed = 9.6 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.17.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.17.exadis
+Step =     18: nodes = 1957, dt = 4.622106e-09, strain = 7.794113e-05, elapsed = 10.4 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.18.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.18.exadis
+Step =     19: nodes = 1941, dt = 4.622106e-09, strain = 8.256324e-05, elapsed = 11.0 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.19.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.19.exadis
+Step =     20: nodes = 1925, dt = 5.546528e-09, strain = 8.810977e-05, elapsed = 11.8 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.20.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.20.exadis
+Step =     21: nodes = 1905, dt = 6.655833e-09, strain = 9.476560e-05, elapsed = 12.6 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.21.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.21.exadis
+Step =     22: nodes = 1927, dt = 7.987000e-09, strain = 1.027526e-04, elapsed = 13.6 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.22.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.22.exadis
+Step =     23: nodes = 1934, dt = 4.792200e-09, strain = 1.075448e-04, elapsed = 14.4 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.23.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.23.exadis
+Step =     24: nodes = 1950, dt = 4.792200e-09, strain = 1.123370e-04, elapsed = 15.0 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.24.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.24.exadis
+Step =     25: nodes = 1943, dt = 5.750640e-09, strain = 1.180876e-04, elapsed = 15.8 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.25.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.25.exadis
+Step =     26: nodes = 1944, dt = 6.900768e-09, strain = 1.249884e-04, elapsed = 16.7 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.26.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.26.exadis
+Step =     27: nodes = 1962, dt = 8.280922e-09, strain = 1.332693e-04, elapsed = 17.9 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.27.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.27.exadis
+Step =     28: nodes = 1974, dt = 4.968553e-09, strain = 1.382379e-04, elapsed = 19.0 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.28.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.28.exadis
+Step =     29: nodes = 1980, dt = 4.968553e-09, strain = 1.432064e-04, elapsed = 19.8 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.29.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.29.exadis
+Step =     30: nodes = 1976, dt = 5.962264e-09, strain = 1.491687e-04, elapsed = 20.8 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.30.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.30.exadis
+Step =     31: nodes = 1967, dt = 7.154716e-09, strain = 1.563234e-04, elapsed = 22.1 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.31.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.31.exadis
+Step =     32: nodes = 1969, dt = 4.292830e-09, strain = 1.606162e-04, elapsed = 23.1 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.32.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.32.exadis
+Step =     33: nodes = 1962, dt = 4.292830e-09, strain = 1.649091e-04, elapsed = 23.7 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.33.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.33.exadis
+Step =     34: nodes = 1958, dt = 5.151396e-09, strain = 1.700605e-04, elapsed = 24.6 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.34.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.34.exadis
+Step =     35: nodes = 1964, dt = 6.181675e-09, strain = 1.762421e-04, elapsed = 25.5 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.35.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.35.exadis
+Step =     36: nodes = 1997, dt = 7.418010e-09, strain = 1.836602e-04, elapsed = 26.4 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.36.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.36.exadis
+Step =     37: nodes = 1993, dt = 4.450806e-09, strain = 1.881110e-04, elapsed = 27.4 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.37.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.37.exadis
+Step =     38: nodes = 1993, dt = 4.450806e-09, strain = 1.925618e-04, elapsed = 28.0 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.38.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.38.exadis
+Step =     39: nodes = 1998, dt = 5.340967e-09, strain = 1.979027e-04, elapsed = 28.7 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.39.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.39.exadis
+Step =     40: nodes = 1995, dt = 6.409160e-09, strain = 2.043119e-04, elapsed = 29.6 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.40.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.40.exadis
+Step =     41: nodes = 1997, dt = 7.690993e-09, strain = 2.120029e-04, elapsed = 31.2 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.41.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.41.exadis
+Step =     42: nodes = 1992, dt = 4.614596e-09, strain = 2.166175e-04, elapsed = 32.1 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.42.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.42.exadis
+Step =     43: nodes = 1980, dt = 4.614596e-09, strain = 2.212321e-04, elapsed = 32.8 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.43.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.43.exadis
+Step =     44: nodes = 1973, dt = 5.537515e-09, strain = 2.267696e-04, elapsed = 33.5 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.44.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.44.exadis
+Step =     45: nodes = 1983, dt = 6.645018e-09, strain = 2.334146e-04, elapsed = 34.4 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.45.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.45.exadis
+Step =     46: nodes = 1992, dt = 7.974021e-09, strain = 2.413886e-04, elapsed = 35.7 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.46.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.46.exadis
+Step =     47: nodes = 1985, dt = 4.784413e-09, strain = 2.461730e-04, elapsed = 36.5 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.47.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.47.exadis
+Step =     48: nodes = 1980, dt = 4.784413e-09, strain = 2.509575e-04, elapsed = 37.3 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.48.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.48.exadis
+Step =     49: nodes = 1982, dt = 5.741295e-09, strain = 2.566988e-04, elapsed = 38.2 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.49.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.49.exadis
+Step =     50: nodes = 1987, dt = 6.889554e-09, strain = 2.635883e-04, elapsed = 39.1 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.50.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.50.exadis
+Step =     51: nodes = 1992, dt = 8.267465e-09, strain = 2.718558e-04, elapsed = 41.2 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.51.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.51.exadis
+Step =     52: nodes = 1991, dt = 2.480240e-09, strain = 2.743360e-04, elapsed = 41.7 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.52.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.52.exadis
+Step =     53: nodes = 1990, dt = 2.480240e-09, strain = 2.768163e-04, elapsed = 42.1 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.53.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.53.exadis
+Step =     54: nodes = 1995, dt = 2.976287e-09, strain = 2.797925e-04, elapsed = 42.3 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.54.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.54.exadis
+Step =     55: nodes = 1991, dt = 3.571545e-09, strain = 2.833641e-04, elapsed = 43.0 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.55.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.55.exadis
+Step =     56: nodes = 1987, dt = 4.285854e-09, strain = 2.876499e-04, elapsed = 43.7 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.56.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.56.exadis
+Step =     57: nodes = 1986, dt = 5.143025e-09, strain = 2.927930e-04, elapsed = 44.3 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.57.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.57.exadis
+Step =     58: nodes = 1982, dt = 6.171630e-09, strain = 2.989646e-04, elapsed = 45.1 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.58.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.58.exadis
+Step =     59: nodes = 1984, dt = 7.405956e-09, strain = 3.063705e-04, elapsed = 45.9 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.59.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.59.exadis
+Step =     60: nodes = 1989, dt = 4.443573e-09, strain = 3.108141e-04, elapsed = 46.6 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.60.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.60.exadis
+Step =     61: nodes = 1981, dt = 4.443573e-09, strain = 3.152577e-04, elapsed = 47.2 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.61.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.61.exadis
+Step =     62: nodes = 1982, dt = 5.332288e-09, strain = 3.205900e-04, elapsed = 47.9 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.62.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.62.exadis
+Step =     63: nodes = 1994, dt = 6.398746e-09, strain = 3.269887e-04, elapsed = 49.1 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.63.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.63.exadis
+Step =     64: nodes = 2017, dt = 7.678495e-09, strain = 3.346672e-04, elapsed = 50.2 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.64.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.64.exadis
+Step =     65: nodes = 2012, dt = 2.303548e-09, strain = 3.369708e-04, elapsed = 50.7 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.65.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.65.exadis
+Step =     66: nodes = 2002, dt = 2.303548e-09, strain = 3.392743e-04, elapsed = 50.9 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.66.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.66.exadis
+Step =     67: nodes = 2012, dt = 2.764258e-09, strain = 3.420386e-04, elapsed = 51.3 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.67.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.67.exadis
+Step =     68: nodes = 1999, dt = 3.317110e-09, strain = 3.453557e-04, elapsed = 51.7 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.68.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.68.exadis
+Step =     69: nodes = 1999, dt = 3.980532e-09, strain = 3.493362e-04, elapsed = 52.1 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.69.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.69.exadis
+Step =     70: nodes = 2001, dt = 4.776638e-09, strain = 3.541129e-04, elapsed = 52.7 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.70.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.70.exadis
+Step =     71: nodes = 2010, dt = 5.731966e-09, strain = 3.598448e-04, elapsed = 53.3 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.71.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.71.exadis
+Step =     72: nodes = 2015, dt = 6.878359e-09, strain = 3.667232e-04, elapsed = 54.2 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.72.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.72.exadis
+Step =     73: nodes = 2010, dt = 8.254030e-09, strain = 3.749772e-04, elapsed = 55.4 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.73.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.73.exadis
+Step =     74: nodes = 2021, dt = 4.952418e-09, strain = 3.799296e-04, elapsed = 56.1 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.74.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.74.exadis
+Step =     75: nodes = 2011, dt = 4.952418e-09, strain = 3.848820e-04, elapsed = 56.7 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.75.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.75.exadis
+Step =     76: nodes = 2023, dt = 5.942902e-09, strain = 3.908249e-04, elapsed = 57.4 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.76.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.76.exadis
+Step =     77: nodes = 2034, dt = 7.131482e-09, strain = 3.979564e-04, elapsed = 58.4 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.77.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.77.exadis
+Step =     78: nodes = 2054, dt = 8.557779e-09, strain = 4.065142e-04, elapsed = 59.8 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.78.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.78.exadis
+Step =     79: nodes = 2053, dt = 5.134667e-09, strain = 4.116489e-04, elapsed = 61.4 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.79.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.79.exadis
+Step =     80: nodes = 2044, dt = 5.134667e-09, strain = 4.167835e-04, elapsed = 62.2 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.80.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.80.exadis
+Step =     81: nodes = 2058, dt = 6.161601e-09, strain = 4.229451e-04, elapsed = 63.0 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.81.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.81.exadis
+Step =     82: nodes = 2065, dt = 7.393921e-09, strain = 4.303391e-04, elapsed = 64.4 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.82.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.82.exadis
+Step =     83: nodes = 2061, dt = 2.218176e-09, strain = 4.325572e-04, elapsed = 64.8 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.83.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.83.exadis
+Step =     84: nodes = 2059, dt = 2.218176e-09, strain = 4.347754e-04, elapsed = 65.1 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.84.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.84.exadis
+Step =     85: nodes = 2074, dt = 2.661812e-09, strain = 4.374372e-04, elapsed = 65.4 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.85.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.85.exadis
+Step =     86: nodes = 2074, dt = 3.194174e-09, strain = 4.406314e-04, elapsed = 65.8 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.86.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.86.exadis
+Step =     87: nodes = 2077, dt = 3.833009e-09, strain = 4.444644e-04, elapsed = 66.5 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.87.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.87.exadis
+Step =     88: nodes = 2073, dt = 4.599610e-09, strain = 4.490640e-04, elapsed = 67.2 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.88.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.88.exadis
+Step =     89: nodes = 2083, dt = 5.519532e-09, strain = 4.545836e-04, elapsed = 68.0 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.89.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.89.exadis
+Step =     90: nodes = 2098, dt = 6.623439e-09, strain = 4.612070e-04, elapsed = 69.0 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.90.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.90.exadis
+Step =     91: nodes = 2109, dt = 7.948127e-09, strain = 4.691551e-04, elapsed = 70.3 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.91.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.91.exadis
+Step =     92: nodes = 2109, dt = 4.768876e-09, strain = 4.739240e-04, elapsed = 71.6 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.92.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.92.exadis
+Step =     93: nodes = 2120, dt = 4.768876e-09, strain = 4.786929e-04, elapsed = 72.4 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.93.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.93.exadis
+Step =     94: nodes = 2113, dt = 5.722651e-09, strain = 4.844155e-04, elapsed = 73.3 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.94.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.94.exadis
+Step =     95: nodes = 2120, dt = 6.867181e-09, strain = 4.912827e-04, elapsed = 74.4 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.95.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.95.exadis
+Step =     96: nodes = 2125, dt = 4.120309e-09, strain = 4.954030e-04, elapsed = 75.1 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.96.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.96.exadis
+Step =     97: nodes = 2141, dt = 4.120309e-09, strain = 4.995233e-04, elapsed = 75.8 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.97.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.97.exadis
+Step =     98: nodes = 2156, dt = 4.944371e-09, strain = 5.044677e-04, elapsed = 76.2 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.98.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.98.exadis
+Step =     99: nodes = 2166, dt = 5.933245e-09, strain = 5.104009e-04, elapsed = 76.8 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.99.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.99.exadis
+Step =    100: nodes = 2194, dt = 7.119894e-09, strain = 5.175208e-04, elapsed = 77.5 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.100.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.100.exadis
+Step =    101: nodes = 2196, dt = 4.271936e-09, strain = 5.217928e-04, elapsed = 77.9 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.101.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.101.exadis
+Step =    102: nodes = 2199, dt = 4.271936e-09, strain = 5.260647e-04, elapsed = 78.5 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.102.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.102.exadis
+Step =    103: nodes = 2214, dt = 5.126323e-09, strain = 5.311910e-04, elapsed = 79.2 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.103.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.103.exadis
+Step =    104: nodes = 2227, dt = 6.151588e-09, strain = 5.373426e-04, elapsed = 80.2 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.104.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.104.exadis
+Step =    105: nodes = 2251, dt = 7.381906e-09, strain = 5.447245e-04, elapsed = 81.7 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.105.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.105.exadis
+Step =    106: nodes = 2270, dt = 4.429143e-09, strain = 5.491537e-04, elapsed = 82.9 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.106.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.106.exadis
+Step =    107: nodes = 2292, dt = 4.429143e-09, strain = 5.535828e-04, elapsed = 83.6 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.107.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.107.exadis
+Step =    108: nodes = 2310, dt = 5.314972e-09, strain = 5.588978e-04, elapsed = 84.5 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.108.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.108.exadis
+Step =    109: nodes = 2345, dt = 6.377967e-09, strain = 5.652757e-04, elapsed = 85.9 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.109.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.109.exadis
+Step =    110: nodes = 2377, dt = 7.653560e-09, strain = 5.729293e-04, elapsed = 87.8 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.110.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.110.exadis
+Step =    111: nodes = 2390, dt = 4.592136e-09, strain = 5.775214e-04, elapsed = 89.0 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.111.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.111.exadis
+Step =    112: nodes = 2406, dt = 4.592136e-09, strain = 5.821136e-04, elapsed = 89.8 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.112.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.112.exadis
+Step =    113: nodes = 2419, dt = 5.510563e-09, strain = 5.876241e-04, elapsed = 94.4 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.113.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.113.exadis
+Step =    114: nodes = 2485, dt = 6.612676e-09, strain = 5.942368e-04, elapsed = 98.1 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.114.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.114.exadis
+Step =    115: nodes = 2546, dt = 7.935211e-09, strain = 6.021720e-04, elapsed = 105.2 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.115.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.115.exadis
+Step =    116: nodes = 2576, dt = 4.761126e-09, strain = 6.069332e-04, elapsed = 109.8 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.116.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.116.exadis
+Step =    117: nodes = 2608, dt = 4.761126e-09, strain = 6.116943e-04, elapsed = 114.8 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.117.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.117.exadis
+Step =    118: nodes = 2650, dt = 5.713352e-09, strain = 6.174076e-04, elapsed = 119.9 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.118.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.118.exadis
+Step =    119: nodes = 2717, dt = 6.856022e-09, strain = 6.242637e-04, elapsed = 129.0 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.119.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.119.exadis
+Step =    120: nodes = 2758, dt = 4.113613e-09, strain = 6.283773e-04, elapsed = 136.7 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.120.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.120.exadis
+Step =    121: nodes = 2790, dt = 4.113613e-09, strain = 6.324909e-04, elapsed = 140.4 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.121.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.121.exadis
+Step =    122: nodes = 2839, dt = 4.936336e-09, strain = 6.374272e-04, elapsed = 147.4 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.122.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.122.exadis
+Step =    123: nodes = 2899, dt = 5.923603e-09, strain = 6.433508e-04, elapsed = 165.1 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.123.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.123.exadis
+Step =    124: nodes = 2978, dt = 7.108324e-09, strain = 6.504591e-04, elapsed = 196.5 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.124.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.124.exadis
+Step =    125: nodes = 2996, dt = 2.132497e-09, strain = 6.525916e-04, elapsed = 202.4 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.125.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.125.exadis
+Step =    126: nodes = 3013, dt = 2.132497e-09, strain = 6.547241e-04, elapsed = 205.0 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.126.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.126.exadis
+Step =    127: nodes = 3038, dt = 2.558997e-09, strain = 6.572831e-04, elapsed = 210.0 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.127.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.127.exadis
+Step =    128: nodes = 3069, dt = 3.070796e-09, strain = 6.603539e-04, elapsed = 217.3 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.128.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.128.exadis
+Step =    129: nodes = 3123, dt = 3.684955e-09, strain = 6.640389e-04, elapsed = 221.8 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.129.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.129.exadis
+Step =    130: nodes = 3165, dt = 4.421946e-09, strain = 6.684608e-04, elapsed = 229.2 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.130.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.130.exadis
+Step =    131: nodes = 3247, dt = 5.306335e-09, strain = 6.737672e-04, elapsed = 240.0 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.131.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.131.exadis
+Step =    132: nodes = 3342, dt = 6.367602e-09, strain = 6.801348e-04, elapsed = 255.4 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.132.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.132.exadis
+Step =    133: nodes = 3469, dt = 7.641123e-09, strain = 6.877759e-04, elapsed = 284.1 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.133.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.133.exadis
+Step =    134: nodes = 3512, dt = 2.292337e-09, strain = 6.900682e-04, elapsed = 291.9 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.134.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.134.exadis
+Step =    135: nodes = 3552, dt = 2.292337e-09, strain = 6.923606e-04, elapsed = 298.7 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.135.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.135.exadis
+Step =    136: nodes = 3596, dt = 2.750804e-09, strain = 6.951114e-04, elapsed = 308.6 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.136.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.136.exadis
+Step =    137: nodes = 3629, dt = 1.650483e-09, strain = 6.967619e-04, elapsed = 316.4 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.137.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.137.exadis
+Step =    138: nodes = 3652, dt = 1.650483e-09, strain = 6.984123e-04, elapsed = 326.9 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.138.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.138.exadis
+Step =    139: nodes = 3676, dt = 1.980579e-09, strain = 7.003929e-04, elapsed = 333.5 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.139.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.139.exadis
+Step =    140: nodes = 3714, dt = 2.376695e-09, strain = 7.027696e-04, elapsed = 335.0 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.140.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.140.exadis
+Step =    141: nodes = 3756, dt = 2.852034e-09, strain = 7.056216e-04, elapsed = 336.3 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.141.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.141.exadis
+Step =    142: nodes = 3811, dt = 3.422441e-09, strain = 7.090441e-04, elapsed = 344.3 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.142.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.142.exadis
+Step =    143: nodes = 3878, dt = 4.106929e-09, strain = 7.131510e-04, elapsed = 354.5 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.143.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.143.exadis
+Step =    144: nodes = 3934, dt = 2.464157e-09, strain = 7.156152e-04, elapsed = 356.2 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.144.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.144.exadis
+Step =    145: nodes = 3977, dt = 2.464157e-09, strain = 7.180793e-04, elapsed = 358.3 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.145.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.145.exadis
+Step =    146: nodes = 4032, dt = 2.956989e-09, strain = 7.210363e-04, elapsed = 365.1 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.146.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.146.exadis
+Step =    147: nodes = 4090, dt = 3.548386e-09, strain = 7.245847e-04, elapsed = 377.6 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.147.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.147.exadis
+Step =    148: nodes = 4209, dt = 4.258064e-09, strain = 7.288428e-04, elapsed = 385.3 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.148.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.148.exadis
+Step =    149: nodes = 4258, dt = 2.554838e-09, strain = 7.313976e-04, elapsed = 405.4 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.149.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.149.exadis
+Step =    150: nodes = 4301, dt = 2.554838e-09, strain = 7.339524e-04, elapsed = 423.8 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.150.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.150.exadis
+Step =    151: nodes = 4363, dt = 3.065806e-09, strain = 7.370182e-04, elapsed = 428.7 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.151.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.151.exadis
+Step =    152: nodes = 4453, dt = 3.678967e-09, strain = 7.406972e-04, elapsed = 440.4 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.152.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.152.exadis
+Step =    153: nodes = 4558, dt = 4.414760e-09, strain = 7.451120e-04, elapsed = 483.4 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.153.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.153.exadis
+Step =    154: nodes = 4696, dt = 5.297712e-09, strain = 7.504097e-04, elapsed = 560.8 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.154.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.154.exadis
+Step =    155: nodes = 4761, dt = 3.178627e-09, strain = 7.535883e-04, elapsed = 611.9 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.155.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.155.exadis
+Step =    156: nodes = 4861, dt = 3.178627e-09, strain = 7.567669e-04, elapsed = 677.3 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.156.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.156.exadis
+Step =    157: nodes = 4982, dt = 3.814353e-09, strain = 7.605813e-04, elapsed = 721.7 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.157.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.157.exadis
+Step =    158: nodes = 5016, dt = 4.577224e-09, strain = 7.651585e-04, elapsed = 924.1 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.158.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.158.exadis
+Writing configuration in legacy data format
+ Output file: job_twin_debug_max_conn_0.data
+Error: MAX_CONN = 10 exceeded during merge_node()
+Step =    159: nodes = 5023, dt = 2.746334e-09, strain = 7.679049e-04, elapsed = 1034.6 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.159.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.159.exadis
+Step =    160: nodes = 4973, dt = 1.373167e-09, strain = 7.692780e-04, elapsed = 1080.3 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.160.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.160.exadis
+Step =    161: nodes = 4963, dt = 1.373167e-09, strain = 7.706512e-04, elapsed = 1103.3 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.161.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.161.exadis
+Step =    162: nodes = 5009, dt = 1.647800e-09, strain = 7.722990e-04, elapsed = 1111.0 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.162.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.162.exadis
+Step =    163: nodes = 5013, dt = 1.977361e-09, strain = 7.742763e-04, elapsed = 1183.8 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.163.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.163.exadis
+Step =    164: nodes = 5031, dt = 2.372833e-09, strain = 7.766492e-04, elapsed = 1221.7 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.164.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.164.exadis
+Step =    165: nodes = 5086, dt = 2.847399e-09, strain = 7.794966e-04, elapsed = 1255.1 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.165.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.165.exadis
+Step =    166: nodes = 5118, dt = 3.416879e-09, strain = 7.829135e-04, elapsed = 1332.1 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/config.166.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN/restart.166.exadis
+Writing configuration in legacy data format
+ Output file: job_twin_debug_max_conn_1.data
+Error: MAX_CONN = 10 exceeded during merge_node()
+/var/spool/slurmd/job202967/slurm_script: line 16: 3678275 Segmentation fault      (core dumped) python /data/home/dg000246b/openDIS/HomeWork/debug_MAX_CONN.py
