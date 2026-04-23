@@ -1,0 +1,34 @@
+Host Parallel Execution Space:
+  KOKKOS_ENABLE_OPENMP: yes
+
+OpenMP Runtime Configuration:
+Kokkos::OpenMP thread_pool_topology[ 1 x 48 x 1 ]
+Reading restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc/restart.2500.exadis
+Warning: skipped resetting the time-integrator
+ version = 1
+ nodes = 28928
+ segments = 29681
+[System] 100 spherical obstacles loaded
+Reading restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc/restart.2500.exadis
+ version = 1
+ nodes = 28928
+ segments = 29681
+Warning: directory /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc already exists
+Step =   2500: nodes = 28928, dt = 9.757182e-10, strain = 3.107215e-03, elapsed = 0.1 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc/config.2500.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc/restart.2500.exadis
+Run until reaching strain = 0.010000
+Step =   2501: nodes = 28922, dt = 5.854309e-10, strain = 3.107800e-03, elapsed = 59.8 sec
+Step =   2502: nodes = 28930, dt = 5.854309e-10, strain = 3.108385e-03, elapsed = 106.5 sec
+Step =   2503: nodes = 28937, dt = 7.025171e-10, strain = 3.109088e-03, elapsed = 194.9 sec
+Step =   2504: nodes = 28943, dt = 8.430205e-10, strain = 3.109931e-03, elapsed = 305.6 sec
+Step =   2505: nodes = 28968, dt = 1.011625e-09, strain = 3.110943e-03, elapsed = 427.6 sec
+Step =   2506: nodes = 28969, dt = 1.213950e-09, strain = 3.112157e-03, elapsed = 629.3 sec
+Step =   2507: nodes = 28959, dt = 1.456739e-09, strain = 3.113613e-03, elapsed = 861.1 sec
+Step =   2508: nodes = 28942, dt = 8.740437e-10, strain = 3.114487e-03, elapsed = 963.6 sec
+Step =   2509: nodes = 28992, dt = 8.740437e-10, strain = 3.115361e-03, elapsed = 1059.2 sec
+Step =   2510: nodes = 29016, dt = 1.048852e-09, strain = 3.116410e-03, elapsed = 1149.7 sec
