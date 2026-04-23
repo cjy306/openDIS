@@ -188,3 +188,6 @@ Step =   2658: nodes = 29941, dt = 1.076890e-09, strain = 3.259454e-03, elapsed 
 Step =   2659: nodes = 29960, dt = 1.292269e-09, strain = 3.260747e-03, elapsed = 20705.9 sec
 Step =   2660: nodes = 29948, dt = 1.550722e-09, strain = 3.262297e-03, elapsed = 20897.8 sec
 Step =   2661: nodes = 29950, dt = 1.860867e-09, strain = 3.264158e-03, elapsed = 21497.9 sec
+Step =   2662: nodes = 29925, dt = 1.116520e-09, strain = 3.265275e-03, elapsed = 21612.0 sec
+Step =   2663: nodes = 29939, dt = 1.116520e-09, strain = 3.266391e-03, elapsed = 22071.9 sec
+Step =   2664: nodes = 29935, dt = 1.339824e-09, strain = 3.267731e-03, elapsed = 22282.7 sec
