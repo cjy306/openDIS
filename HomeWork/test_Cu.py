@@ -171,10 +171,9 @@ def run_simulation(net, output_dir, restart_id=None, centers_b=None, radii_b=Non
         exadis_net = net_manager.get_disnet(ExaDisNet)
         exadis_net.load_obstacles([list(c) for c in centers_b], list(radii_b))
 
-    calforce  = CalForce(force_mode='SUBCYCLING_MODEL', state=state, Ngrid=64, cell=net_manager.cell)
-    mobility  = MobilityLaw(mobility_law='FCC_0', state=state, Medge=10000.0, Mscrew=10000.0,vmax=20000.0)
-    timeint   = TimeIntegration(integrator='Subcycling', rgroups=[0.0, 50.0, 300.0, 800.0],
-                                state=state, force=calforce, mobility=mobility)
+    calforce  = CalForce(force_mode='SUBCYCLING_MODEL', state=state, Ngrid=64, cell=net.cell)
+    mobility  = MobilityLaw(mobility_law='FCC_0', state=state, Medge=64103.0, Mscrew=64103.0, vmax=4000.0)
+    timeint   = TimeIntegration(integrator='Subcycling', rgroups=[0.0, 100.0, 600.0, 1600.0], state=state, force=calforce, mobility=mobility)
     collision = Collision(collision_mode='Orowan', state=state)
     topology  = Topology(topology_mode='TopologyParallel', state=state,
                          force=calforce, mobility=mobility)
