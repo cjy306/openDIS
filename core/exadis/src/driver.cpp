@@ -657,7 +657,10 @@ void ExaDiSApp::step(Control& ctrl)
     
     // Remesh
     remesh->remesh(system);
-    
+
+    // Post-remesh twin enforcement
+    collision->post_remesh(system);
+
     // Update stress
     update_mechanics(ctrl);
     

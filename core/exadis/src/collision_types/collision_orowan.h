@@ -251,6 +251,16 @@ public:
         system->timer[system->TIMER_COLLISION].stop();
     }
 
+    /*-----------------------------------------------------------------------
+     *  post_remesh  (called after Remesh in driver.cpp)
+     *  Re-run twin enforcement to catch new crossings created by
+     *  Topology and Remesh operations.
+     *---------------------------------------------------------------------*/
+    void post_remesh(System* system) override
+    {
+        handle_twin(system);
+    }
+
     const char* name() { return "CollisionOrowan"; }
 };
 
