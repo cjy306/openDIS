@@ -44,13 +44,13 @@ def main():
         "burgmag":   0.2556e-9,
         "mu":        48e9,
         "nu":        0.324,
-        "a":         2.0,
-        "maxseg":    200,
-        "minseg":    50,
-        "rtol":      0.5,
-        "rann":      1.0,
-        "nextdt":    1e-9,
-        "maxdt":     1e-6,
+        "a":         3.0,
+        "maxseg":    700,
+        "minseg":    100,
+        "rtol":      0.75,
+        "rann":      1.5,
+        "nextdt":    1e-10,
+        "maxdt":     1e-9,
     }
 
     output_dir   = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'output_Cu_fcc_pure')
