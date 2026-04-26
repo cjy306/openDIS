@@ -145,6 +145,13 @@ public:
         Kokkos::parallel_for("TwinDetect", Nsegs, KOKKOS_LAMBDA(const int s) {
             int  n1 = segs[s].n1;
             int  n2 = segs[s].n2;
+
+            // Skip segments where either endpoint is already a twin pivot.
+            // Without this check, numerical drift of pivot nodes causes
+            // cascading re-splits that explode the node count.
+            if (nodes[n1].constraint == TWIN_SURFACE ||
+                nodes[n2].constraint == TWIN_SURFACE) return;
+
             Vec3 p1 = nodes[n1].pos;
             Vec3 p2 = nodes[n2].pos;
 
