@@ -12,19 +12,19 @@ except ImportError as e:
     raise ImportError('Cannot import pyexadis') from e
 
 
-# 模拟参数 (按 15μm example 缩放到 5μm: ×1/3)
+# 模拟参数
 state = {
     "crystal": 'fcc',
     "burgmag": 0.2556e-9,
     "mu":      48e9,
     "nu":      0.324,
-    "a":       3.0,
-    "maxseg":  700,
-    "minseg":  100,
-    "rtol":    0.75,
-    "rann":    1.5,
-    "nextdt":  1e-10,
-    "maxdt":   1e-9,
+    "a":       2.0,
+    "maxseg":  200,
+    "minseg":  50,
+    "rtol":    0.5,
+    "rann":    1.0,
+    "nextdt":  1e-9,
+    "maxdt":   1e-6,
 }
 
 
@@ -114,7 +114,7 @@ def generate_dislocation_network(Lbox_m, burgmag, target_density, seed=12345,
 
     attempt, loop_count = 0, 0
     while accumulated < total_length * 0.85 and attempt < 15000:
-        r_m = rng.uniform(0.3e-6, 1.0e-6)
+        r_m = rng.uniform(0.15e-6, 0.5e-6)
         r_b = r_m / burgmag
         margin = r_m * 1.3
         low, high = margin, Lbox_m - margin
@@ -137,7 +137,7 @@ def generate_dislocation_network(Lbox_m, burgmag, target_density, seed=12345,
 
         burg = bset[loop_count % len(bset)]
         circ = 2 * np.pi * r_m
-        nseg = max(4, min(30, int(np.ceil(circ / (burgmag * state["maxseg"])))))
+        nseg = max(8, min(150, int(np.ceil(circ / (burgmag * 20)))))
 
         try:
             nodes, segs = insert_prismatic_loop(
@@ -172,7 +172,7 @@ def run_simulation(net, output_dir, restart_id=None, centers_b=None, radii_b=Non
         exadis_net.load_obstacles([list(c) for c in centers_b], list(radii_b))
 
     calforce  = CalForce(force_mode='SUBCYCLING_MODEL', state=state, Ngrid=64, cell=net.cell)
-    mobility  = MobilityLaw(mobility_law='FCC_0', state=state, Medge=64103.0, Mscrew=64103.0, vmax=4000.0)
+    mobility  = MobilityLaw(mobility_law='FCC_0', state=state, Medge=10000.0, Mscrew=1000.0, vmax=20000.0)
     timeint   = TimeIntegration(integrator='Subcycling', rgroups=[0.0, 100.0, 600.0, 1600.0], state=state, force=calforce, mobility=mobility)
     collision = Collision(collision_mode='Orowan', state=state)
     topology  = Topology(topology_mode='TopologyParallel', state=state,
