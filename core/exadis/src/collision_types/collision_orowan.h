@@ -141,6 +141,7 @@ public:
 
         auto nodes = net->get_nodes();
         auto segs  = net->get_segs();
+        auto cell  = net->cell;
 
         Kokkos::parallel_for("TwinDetect", Nsegs, KOKKOS_LAMBDA(const int s) {
             int  n1 = segs[s].n1;
@@ -153,7 +154,9 @@ public:
                 nodes[n2].constraint == TWIN_SURFACE) return;
 
             Vec3 p1 = nodes[n1].pos;
-            Vec3 p2 = nodes[n2].pos;
+            // Use minimum-image position to avoid false crossings from
+            // segments that wrap around the periodic box boundary.
+            Vec3 p2 = cell.pbc_position(p1, nodes[n2].pos);
 
             for (int j = 0; j < Nplanes; j++) {
                 double d1 = dot(p1 - d_planes(j).point, d_planes(j).normal);
