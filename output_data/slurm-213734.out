@@ -98,3 +98,1101 @@ Writing configuration in legacy data format
  Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.17.data
 Writing restart file
  Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.17.exadis
+Step =     18: nodes = 2355, dt = 4.622106e-09, strain = 6.441838e-05, elapsed = 1721.0 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.18.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.18.exadis
+Step =     19: nodes = 2365, dt = 4.622106e-09, strain = 6.904049e-05, elapsed = 1788.8 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.19.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.19.exadis
+Step =     20: nodes = 2370, dt = 1.386632e-09, strain = 7.042712e-05, elapsed = 1800.8 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.20.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.20.exadis
+Step =     21: nodes = 2361, dt = 1.386632e-09, strain = 7.181375e-05, elapsed = 1811.5 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.21.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.21.exadis
+Step =     22: nodes = 2363, dt = 1.663958e-09, strain = 7.347771e-05, elapsed = 1823.1 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.22.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.22.exadis
+Step =     23: nodes = 2360, dt = 1.996750e-09, strain = 7.547446e-05, elapsed = 1859.5 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.23.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.23.exadis
+Step =     24: nodes = 2364, dt = 2.396100e-09, strain = 7.787056e-05, elapsed = 2001.4 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.24.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.24.exadis
+Step =     25: nodes = 2384, dt = 2.875320e-09, strain = 8.074588e-05, elapsed = 2067.9 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.25.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.25.exadis
+Step =     26: nodes = 2362, dt = 3.450384e-09, strain = 8.419626e-05, elapsed = 2121.1 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.26.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.26.exadis
+Step =     27: nodes = 2360, dt = 4.140461e-09, strain = 8.833672e-05, elapsed = 2200.6 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.27.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.27.exadis
+Step =     28: nodes = 2361, dt = 4.968553e-09, strain = 9.330528e-05, elapsed = 2938.1 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.28.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.28.exadis
+Step =     29: nodes = 2354, dt = 1.490566e-09, strain = 9.479584e-05, elapsed = 3039.5 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.29.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.29.exadis
+Step =     30: nodes = 2344, dt = 1.490566e-09, strain = 9.628641e-05, elapsed = 3308.6 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.30.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.30.exadis
+Step =     31: nodes = 2329, dt = 8.943395e-10, strain = 9.718075e-05, elapsed = 3337.9 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.31.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.31.exadis
+Step =     32: nodes = 2327, dt = 8.943395e-10, strain = 9.807509e-05, elapsed = 3347.2 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.32.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.32.exadis
+Step =     33: nodes = 2311, dt = 1.073207e-09, strain = 9.914830e-05, elapsed = 3361.2 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.33.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.33.exadis
+Step =     34: nodes = 2300, dt = 1.287849e-09, strain = 1.004361e-04, elapsed = 3375.6 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.34.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.34.exadis
+Step =     35: nodes = 2309, dt = 1.545419e-09, strain = 1.019816e-04, elapsed = 3389.3 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.35.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.35.exadis
+Step =     36: nodes = 2308, dt = 1.854502e-09, strain = 1.038361e-04, elapsed = 3404.5 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.36.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.36.exadis
+Step =     37: nodes = 2311, dt = 2.225403e-09, strain = 1.060615e-04, elapsed = 3429.9 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.37.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.37.exadis
+Step =     38: nodes = 2328, dt = 2.670484e-09, strain = 1.087320e-04, elapsed = 3457.0 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.38.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.38.exadis
+Step =     39: nodes = 2355, dt = 3.204580e-09, strain = 1.119365e-04, elapsed = 3491.9 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.39.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.39.exadis
+Step =     40: nodes = 2363, dt = 3.845496e-09, strain = 1.157820e-04, elapsed = 3552.7 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.40.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.40.exadis
+Step =     41: nodes = 2372, dt = 1.153649e-09, strain = 1.169357e-04, elapsed = 3567.2 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.41.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.41.exadis
+Step =     42: nodes = 2348, dt = 1.153649e-09, strain = 1.180893e-04, elapsed = 3579.2 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.42.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.42.exadis
+Step =     43: nodes = 2351, dt = 1.384379e-09, strain = 1.194737e-04, elapsed = 3594.0 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.43.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.43.exadis
+Step =     44: nodes = 2347, dt = 1.661254e-09, strain = 1.211350e-04, elapsed = 3608.5 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.44.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.44.exadis
+Step =     45: nodes = 2362, dt = 1.993505e-09, strain = 1.231285e-04, elapsed = 3629.4 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.45.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.45.exadis
+Step =     46: nodes = 2391, dt = 2.392206e-09, strain = 1.255207e-04, elapsed = 3669.6 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.46.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.46.exadis
+Step =     47: nodes = 2388, dt = 2.870648e-09, strain = 1.283913e-04, elapsed = 3708.7 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.47.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.47.exadis
+Step =     48: nodes = 2389, dt = 3.444777e-09, strain = 1.318361e-04, elapsed = 3762.3 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.48.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.48.exadis
+Step =     49: nodes = 2383, dt = 4.133733e-09, strain = 1.359698e-04, elapsed = 3867.1 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.49.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.49.exadis
+Step =     50: nodes = 2368, dt = 1.240120e-09, strain = 1.372099e-04, elapsed = 3884.3 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.50.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.50.exadis
+Step =     51: nodes = 2367, dt = 1.240120e-09, strain = 1.384501e-04, elapsed = 3896.1 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.51.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.51.exadis
+Step =     52: nodes = 2368, dt = 1.488144e-09, strain = 1.399382e-04, elapsed = 3907.1 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.52.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.52.exadis
+Step =     53: nodes = 2362, dt = 1.785772e-09, strain = 1.417240e-04, elapsed = 3920.5 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.53.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.53.exadis
+Step =     54: nodes = 2366, dt = 2.142927e-09, strain = 1.438669e-04, elapsed = 3936.9 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.54.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.54.exadis
+Step =     55: nodes = 2387, dt = 2.571512e-09, strain = 1.464384e-04, elapsed = 3959.3 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.55.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.55.exadis
+Step =     56: nodes = 2380, dt = 3.085815e-09, strain = 1.495242e-04, elapsed = 4004.0 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.56.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.56.exadis
+Step =     57: nodes = 2398, dt = 3.702978e-09, strain = 1.532272e-04, elapsed = 4052.9 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.57.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.57.exadis
+Step =     58: nodes = 2402, dt = 2.221787e-09, strain = 1.554490e-04, elapsed = 4091.6 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.58.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.58.exadis
+Step =     59: nodes = 2392, dt = 2.221787e-09, strain = 1.576708e-04, elapsed = 4113.3 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.59.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.59.exadis
+Step =     60: nodes = 2396, dt = 2.666144e-09, strain = 1.603369e-04, elapsed = 4153.3 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.60.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.60.exadis
+Step =     61: nodes = 2402, dt = 3.199373e-09, strain = 1.635363e-04, elapsed = 4195.2 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.61.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.61.exadis
+Step =     62: nodes = 2384, dt = 1.919624e-09, strain = 1.654559e-04, elapsed = 4235.0 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.62.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.62.exadis
+Step =     63: nodes = 2389, dt = 1.919624e-09, strain = 1.673756e-04, elapsed = 4266.2 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.63.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.63.exadis
+Step =     64: nodes = 2381, dt = 2.303548e-09, strain = 1.696791e-04, elapsed = 4296.6 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.64.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.64.exadis
+Step =     65: nodes = 2394, dt = 2.764258e-09, strain = 1.724434e-04, elapsed = 4588.0 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.65.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.65.exadis
+Step =     66: nodes = 2389, dt = 1.658555e-09, strain = 1.741019e-04, elapsed = 4707.1 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.66.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.66.exadis
+Step =     67: nodes = 2377, dt = 1.658555e-09, strain = 1.757605e-04, elapsed = 4834.8 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.67.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.67.exadis
+Step =     68: nodes = 2377, dt = 1.990266e-09, strain = 1.777507e-04, elapsed = 4858.8 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.68.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.68.exadis
+Step =     69: nodes = 2381, dt = 2.388319e-09, strain = 1.801391e-04, elapsed = 4876.4 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.69.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.69.exadis
+Step =     70: nodes = 2377, dt = 2.865983e-09, strain = 1.830050e-04, elapsed = 4910.9 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.70.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.70.exadis
+Step =     71: nodes = 2370, dt = 3.439179e-09, strain = 1.864442e-04, elapsed = 4957.2 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.71.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.71.exadis
+Step =     72: nodes = 2357, dt = 2.063508e-09, strain = 1.885077e-04, elapsed = 5004.9 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.72.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.72.exadis
+Step =     73: nodes = 2349, dt = 2.063508e-09, strain = 1.905712e-04, elapsed = 5032.3 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.73.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.73.exadis
+Step =     74: nodes = 2361, dt = 2.476209e-09, strain = 1.930474e-04, elapsed = 5060.1 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.74.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.74.exadis
+Step =     75: nodes = 2370, dt = 2.971451e-09, strain = 1.960189e-04, elapsed = 5096.6 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.75.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.75.exadis
+Step =     76: nodes = 2362, dt = 1.782871e-09, strain = 1.978018e-04, elapsed = 5120.7 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.76.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.76.exadis
+Step =     77: nodes = 2362, dt = 1.782871e-09, strain = 1.995846e-04, elapsed = 5137.5 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.77.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.77.exadis
+Step =     78: nodes = 2366, dt = 2.139445e-09, strain = 2.017241e-04, elapsed = 5160.2 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.78.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.78.exadis
+Step =     79: nodes = 2365, dt = 2.567334e-09, strain = 2.042914e-04, elapsed = 5194.4 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.79.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.79.exadis
+Step =     80: nodes = 2342, dt = 3.080800e-09, strain = 2.073722e-04, elapsed = 5324.2 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.80.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.80.exadis
+Step =     81: nodes = 2337, dt = 3.696960e-09, strain = 2.110692e-04, elapsed = 5414.7 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.81.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.81.exadis
+Step =     82: nodes = 2328, dt = 1.109088e-09, strain = 2.121783e-04, elapsed = 5737.2 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.82.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.82.exadis
+Step =     83: nodes = 2316, dt = 5.545441e-10, strain = 2.127328e-04, elapsed = 5828.6 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.83.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.83.exadis
+Step =     84: nodes = 2301, dt = 2.772720e-10, strain = 2.130101e-04, elapsed = 5845.0 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.84.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.84.exadis
+Step =     85: nodes = 2282, dt = 1.386360e-10, strain = 2.131487e-04, elapsed = 5849.7 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.85.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.85.exadis
+Step =     86: nodes = 2276, dt = 1.386360e-10, strain = 2.132873e-04, elapsed = 5850.3 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.86.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.86.exadis
+Step =     87: nodes = 2271, dt = 1.663632e-10, strain = 2.134537e-04, elapsed = 5851.0 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.87.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.87.exadis
+Step =     88: nodes = 2270, dt = 1.996359e-10, strain = 2.136533e-04, elapsed = 5851.7 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.88.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.88.exadis
+Step =     89: nodes = 2266, dt = 2.395630e-10, strain = 2.138929e-04, elapsed = 5852.5 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.89.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.89.exadis
+Step =     90: nodes = 2269, dt = 2.874756e-10, strain = 2.141804e-04, elapsed = 5853.5 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.90.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.90.exadis
+Step =     91: nodes = 2269, dt = 3.449708e-10, strain = 2.145254e-04, elapsed = 5854.5 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.91.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.91.exadis
+Step =     92: nodes = 2268, dt = 4.139649e-10, strain = 2.149393e-04, elapsed = 5856.1 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.92.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.92.exadis
+Step =     93: nodes = 2260, dt = 4.967579e-10, strain = 2.154361e-04, elapsed = 5858.0 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.93.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.93.exadis
+Step =     94: nodes = 2253, dt = 5.961095e-10, strain = 2.160322e-04, elapsed = 5859.8 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.94.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.94.exadis
+Step =     95: nodes = 2248, dt = 7.153314e-10, strain = 2.167475e-04, elapsed = 5862.0 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.95.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.95.exadis
+Step =     96: nodes = 2250, dt = 8.583977e-10, strain = 2.176059e-04, elapsed = 5864.4 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.96.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.96.exadis
+Step =     97: nodes = 2263, dt = 1.030077e-09, strain = 2.186360e-04, elapsed = 5867.4 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.97.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.97.exadis
+Step =     98: nodes = 2263, dt = 1.236093e-09, strain = 2.198721e-04, elapsed = 5874.8 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.98.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.98.exadis
+Step =     99: nodes = 2279, dt = 1.483311e-09, strain = 2.213554e-04, elapsed = 5881.9 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.99.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.99.exadis
+Step =    100: nodes = 2294, dt = 1.779973e-09, strain = 2.231354e-04, elapsed = 5890.7 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.100.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.100.exadis
+Step =    101: nodes = 2279, dt = 2.135968e-09, strain = 2.252713e-04, elapsed = 5902.6 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.101.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.101.exadis
+Step =    102: nodes = 2289, dt = 2.563162e-09, strain = 2.278345e-04, elapsed = 5914.3 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.102.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.102.exadis
+Step =    103: nodes = 2288, dt = 3.075794e-09, strain = 2.309103e-04, elapsed = 5935.3 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.103.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.103.exadis
+Step =    104: nodes = 2298, dt = 3.690953e-09, strain = 2.346012e-04, elapsed = 6002.1 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.104.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.104.exadis
+Step =    105: nodes = 2298, dt = 4.429143e-09, strain = 2.390304e-04, elapsed = 6144.5 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.105.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.105.exadis
+Step =    106: nodes = 2298, dt = 1.328743e-09, strain = 2.403591e-04, elapsed = 6156.1 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.106.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.106.exadis
+Step =    107: nodes = 2301, dt = 1.328743e-09, strain = 2.416879e-04, elapsed = 6165.7 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.107.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.107.exadis
+Step =    108: nodes = 2311, dt = 1.594492e-09, strain = 2.432824e-04, elapsed = 6179.4 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.108.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.108.exadis
+Step =    109: nodes = 2300, dt = 1.913390e-09, strain = 2.451958e-04, elapsed = 6195.3 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.109.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.109.exadis
+Step =    110: nodes = 2308, dt = 2.296068e-09, strain = 2.474918e-04, elapsed = 6381.5 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.110.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.110.exadis
+Step =    111: nodes = 2310, dt = 2.755282e-09, strain = 2.502471e-04, elapsed = 6572.5 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.111.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.111.exadis
+Step =    112: nodes = 2305, dt = 1.653169e-09, strain = 2.519003e-04, elapsed = 6638.5 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.112.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.112.exadis
+Step =    113: nodes = 2301, dt = 1.653169e-09, strain = 2.535534e-04, elapsed = 6705.0 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.113.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.113.exadis
+Step =    114: nodes = 2322, dt = 1.983803e-09, strain = 2.555372e-04, elapsed = 6898.8 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.114.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.114.exadis
+Step =    115: nodes = 2325, dt = 2.380563e-09, strain = 2.579178e-04, elapsed = 6959.3 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.115.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.115.exadis
+Step =    116: nodes = 2332, dt = 2.856676e-09, strain = 2.607745e-04, elapsed = 7197.0 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.116.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.116.exadis
+Step =    117: nodes = 2322, dt = 3.428011e-09, strain = 2.642025e-04, elapsed = 7657.8 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.117.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.117.exadis
+Step =    118: nodes = 2366, dt = 4.113613e-09, strain = 2.683161e-04, elapsed = 7816.3 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.118.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.118.exadis
+Step =    119: nodes = 2363, dt = 1.234084e-09, strain = 2.695502e-04, elapsed = 7836.6 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.119.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.119.exadis
+Step =    120: nodes = 2359, dt = 1.234084e-09, strain = 2.707843e-04, elapsed = 7854.9 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.120.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.120.exadis
+Step =    121: nodes = 2359, dt = 1.480901e-09, strain = 2.722652e-04, elapsed = 7877.6 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.121.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.121.exadis
+Step =    122: nodes = 2352, dt = 1.777081e-09, strain = 2.740423e-04, elapsed = 7894.3 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.122.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.122.exadis
+Step =    123: nodes = 2366, dt = 2.132497e-09, strain = 2.761748e-04, elapsed = 7914.3 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.123.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.123.exadis
+Step =    124: nodes = 2352, dt = 2.558997e-09, strain = 2.787338e-04, elapsed = 7939.7 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.124.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.124.exadis
+Step =    125: nodes = 2366, dt = 3.070796e-09, strain = 2.818046e-04, elapsed = 7983.9 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.125.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.125.exadis
+Step =    126: nodes = 2360, dt = 3.684955e-09, strain = 2.854895e-04, elapsed = 8056.1 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.126.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.126.exadis
+Step =    127: nodes = 2345, dt = 1.105487e-09, strain = 2.865950e-04, elapsed = 8068.4 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.127.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.127.exadis
+Step =    128: nodes = 2341, dt = 1.105487e-09, strain = 2.877005e-04, elapsed = 8076.2 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.128.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.128.exadis
+Step =    129: nodes = 2347, dt = 1.326584e-09, strain = 2.890271e-04, elapsed = 8089.5 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.129.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.129.exadis
+Step =    130: nodes = 2352, dt = 1.591901e-09, strain = 2.906190e-04, elapsed = 8366.8 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.130.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.130.exadis
+Step =    131: nodes = 2354, dt = 1.910281e-09, strain = 2.925292e-04, elapsed = 8719.0 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.131.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.131.exadis
+Step =    132: nodes = 2368, dt = 2.292337e-09, strain = 2.948216e-04, elapsed = 8780.4 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.132.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.132.exadis
+Step =    133: nodes = 2375, dt = 2.750804e-09, strain = 2.975724e-04, elapsed = 8795.4 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.133.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.133.exadis
+Step =    134: nodes = 2370, dt = 3.300965e-09, strain = 3.008734e-04, elapsed = 8817.6 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.134.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.134.exadis
+Step =    135: nodes = 2402, dt = 3.961158e-09, strain = 3.048345e-04, elapsed = 9307.1 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.135.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.135.exadis
+Step =    136: nodes = 2395, dt = 1.188347e-09, strain = 3.060229e-04, elapsed = 9320.3 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.136.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.136.exadis
+Step =    137: nodes = 2400, dt = 1.188347e-09, strain = 3.072112e-04, elapsed = 9327.0 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.137.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.137.exadis
+Step =    138: nodes = 2408, dt = 1.426017e-09, strain = 3.086372e-04, elapsed = 9335.8 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.138.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.138.exadis
+Step =    139: nodes = 2404, dt = 1.711220e-09, strain = 3.103484e-04, elapsed = 9344.9 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.139.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.139.exadis
+Step =    140: nodes = 2410, dt = 2.053464e-09, strain = 3.124019e-04, elapsed = 9356.4 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.140.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.140.exadis
+Step =    141: nodes = 2414, dt = 2.464157e-09, strain = 3.148661e-04, elapsed = 9810.9 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.141.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.141.exadis
+Step =    142: nodes = 2409, dt = 2.956989e-09, strain = 3.178231e-04, elapsed = 9842.4 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.142.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.142.exadis
+Step =    143: nodes = 2432, dt = 3.548386e-09, strain = 3.213714e-04, elapsed = 9931.1 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.143.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.143.exadis
+Step =    144: nodes = 2433, dt = 4.258064e-09, strain = 3.256295e-04, elapsed = 10090.4 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.144.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.144.exadis
+Step =    145: nodes = 2416, dt = 1.277419e-09, strain = 3.269069e-04, elapsed = 10350.2 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.145.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.145.exadis
+Step =    146: nodes = 2406, dt = 1.277419e-09, strain = 3.281843e-04, elapsed = 10359.1 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.146.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.146.exadis
+Step =    147: nodes = 2404, dt = 1.532903e-09, strain = 3.297172e-04, elapsed = 10368.3 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.147.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.147.exadis
+Step =    148: nodes = 2422, dt = 1.839483e-09, strain = 3.315567e-04, elapsed = 10660.6 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.148.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.148.exadis
+Step =    149: nodes = 2434, dt = 2.207380e-09, strain = 3.337641e-04, elapsed = 10741.0 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.149.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.149.exadis
+Step =    150: nodes = 2434, dt = 2.648856e-09, strain = 3.364130e-04, elapsed = 10770.6 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.150.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.150.exadis
+Step =    151: nodes = 2449, dt = 3.178627e-09, strain = 3.395916e-04, elapsed = 11392.8 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.151.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.151.exadis
+Step =    152: nodes = 2427, dt = 1.907176e-09, strain = 3.414988e-04, elapsed = 11454.4 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.152.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.152.exadis
+Step =    153: nodes = 2438, dt = 1.907176e-09, strain = 3.434059e-04, elapsed = 11466.5 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.153.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.153.exadis
+Step =    154: nodes = 2443, dt = 2.288612e-09, strain = 3.456946e-04, elapsed = 11516.4 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.154.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.154.exadis
+Step =    155: nodes = 2478, dt = 2.746334e-09, strain = 3.484409e-04, elapsed = 11586.4 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.155.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.155.exadis
+Step =    156: nodes = 2494, dt = 3.295601e-09, strain = 3.517365e-04, elapsed = 11647.8 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.156.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.156.exadis
+Step =    157: nodes = 2531, dt = 3.954721e-09, strain = 3.556912e-04, elapsed = 11792.0 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.157.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.157.exadis
+Step =    158: nodes = 2536, dt = 4.745665e-09, strain = 3.604369e-04, elapsed = 12350.1 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.158.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.158.exadis
+Step =    159: nodes = 2511, dt = 1.423700e-09, strain = 3.618606e-04, elapsed = 12391.5 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.159.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.159.exadis
+Step =    160: nodes = 2497, dt = 1.423700e-09, strain = 3.632843e-04, elapsed = 12400.6 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.160.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.160.exadis
+Step =    161: nodes = 2514, dt = 1.708440e-09, strain = 3.649927e-04, elapsed = 12409.4 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.161.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.161.exadis
+Step =    162: nodes = 2508, dt = 2.050127e-09, strain = 3.670428e-04, elapsed = 12421.6 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.162.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.162.exadis
+Step =    163: nodes = 2524, dt = 2.460153e-09, strain = 3.695030e-04, elapsed = 12461.4 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.163.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.163.exadis
+Step =    164: nodes = 2524, dt = 2.952184e-09, strain = 3.724552e-04, elapsed = 12635.3 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.164.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.164.exadis
+Step =    165: nodes = 2531, dt = 1.771310e-09, strain = 3.742265e-04, elapsed = 12676.3 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.165.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.165.exadis
+Step =    166: nodes = 2528, dt = 1.771310e-09, strain = 3.759978e-04, elapsed = 12702.5 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.166.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.166.exadis
+Step =    167: nodes = 2533, dt = 2.125572e-09, strain = 3.781234e-04, elapsed = 12722.7 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.167.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.167.exadis
+Step =    168: nodes = 2528, dt = 2.550687e-09, strain = 3.806741e-04, elapsed = 12789.6 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.168.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.168.exadis
+Step =    169: nodes = 2586, dt = 3.060824e-09, strain = 3.837349e-04, elapsed = 12897.2 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.169.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.169.exadis
+Step =    170: nodes = 2574, dt = 9.182472e-10, strain = 3.846531e-04, elapsed = 12913.4 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.170.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.170.exadis
+Step =    171: nodes = 2566, dt = 9.182472e-10, strain = 3.855714e-04, elapsed = 12918.7 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.171.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.171.exadis
+Step =    172: nodes = 2540, dt = 1.101897e-09, strain = 3.866733e-04, elapsed = 12924.5 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.172.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.172.exadis
+Step =    173: nodes = 2546, dt = 1.322276e-09, strain = 3.879955e-04, elapsed = 12932.1 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.173.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.173.exadis
+Step =    174: nodes = 2554, dt = 1.586731e-09, strain = 3.895823e-04, elapsed = 12942.2 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.174.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.174.exadis
+Step =    175: nodes = 2552, dt = 1.904077e-09, strain = 3.914864e-04, elapsed = 12959.0 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.175.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.175.exadis
+Step =    176: nodes = 2554, dt = 2.284893e-09, strain = 3.937713e-04, elapsed = 12973.1 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.176.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.176.exadis
+Step =    177: nodes = 2579, dt = 2.741871e-09, strain = 3.965131e-04, elapsed = 12997.5 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.177.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.177.exadis
+Step =    178: nodes = 2600, dt = 3.290246e-09, strain = 3.998034e-04, elapsed = 13679.9 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.178.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.178.exadis
+Step =    179: nodes = 2648, dt = 3.948295e-09, strain = 4.037517e-04, elapsed = 13802.8 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.179.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.179.exadis
+Step =    180: nodes = 2599, dt = 2.368977e-09, strain = 4.061206e-04, elapsed = 13862.6 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.180.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.180.exadis
+Step =    181: nodes = 2601, dt = 2.368977e-09, strain = 4.084896e-04, elapsed = 13908.6 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.181.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.181.exadis
+Step =    182: nodes = 2612, dt = 2.842772e-09, strain = 4.113324e-04, elapsed = 14207.3 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.182.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.182.exadis
+Step =    183: nodes = 2672, dt = 3.411327e-09, strain = 4.147437e-04, elapsed = 14364.0 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.183.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.183.exadis
+Step =    184: nodes = 2655, dt = 2.046796e-09, strain = 4.167905e-04, elapsed = 14601.2 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.184.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.184.exadis
+Step =    185: nodes = 2664, dt = 2.046796e-09, strain = 4.188373e-04, elapsed = 14792.1 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.185.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.185.exadis
+Step =    186: nodes = 2662, dt = 2.456155e-09, strain = 4.212935e-04, elapsed = 15172.9 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.186.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.186.exadis
+Step =    187: nodes = 2684, dt = 2.947386e-09, strain = 4.242408e-04, elapsed = 15291.4 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.187.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.187.exadis
+Step =    188: nodes = 2673, dt = 1.768432e-09, strain = 4.260093e-04, elapsed = 15360.9 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.188.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.188.exadis
+Step =    189: nodes = 2670, dt = 1.768432e-09, strain = 4.277777e-04, elapsed = 15384.3 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.189.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.189.exadis
+Step =    190: nodes = 2685, dt = 2.122118e-09, strain = 4.298998e-04, elapsed = 15404.7 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.190.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.190.exadis
+Step =    191: nodes = 2666, dt = 2.546542e-09, strain = 4.324464e-04, elapsed = 15429.4 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.191.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.191.exadis
+Step =    192: nodes = 2699, dt = 3.055850e-09, strain = 4.355022e-04, elapsed = 15497.3 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.192.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.192.exadis
+Step =    193: nodes = 2737, dt = 3.667020e-09, strain = 4.391692e-04, elapsed = 15626.5 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.193.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.193.exadis
+Step =    194: nodes = 2724, dt = 1.100106e-09, strain = 4.402693e-04, elapsed = 15918.7 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.194.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.194.exadis
+Step =    195: nodes = 2722, dt = 1.100106e-09, strain = 4.413695e-04, elapsed = 15957.0 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.195.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.195.exadis
+Step =    196: nodes = 2742, dt = 1.320127e-09, strain = 4.426896e-04, elapsed = 15998.9 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.196.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.196.exadis
+Step =    197: nodes = 2769, dt = 1.584153e-09, strain = 4.442737e-04, elapsed = 16321.0 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.197.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.197.exadis
+Step =    198: nodes = 2855, dt = 1.900983e-09, strain = 4.461747e-04, elapsed = 16400.8 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.198.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.198.exadis
+Step =    199: nodes = 2972, dt = 2.281180e-09, strain = 4.484559e-04, elapsed = 16497.2 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.199.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.199.exadis
+Step =    200: nodes = 3145, dt = 2.737416e-09, strain = 4.511933e-04, elapsed = 16714.2 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.200.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.200.exadis
+Step =    201: nodes = 3408, dt = 3.284899e-09, strain = 4.544782e-04, elapsed = 18171.3 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.201.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.201.exadis
+Step =    202: nodes = 3589, dt = 1.970939e-09, strain = 4.564492e-04, elapsed = 18347.7 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.202.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.202.exadis
+Step =    203: nodes = 3763, dt = 9.854697e-10, strain = 4.574346e-04, elapsed = 18705.3 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.203.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.203.exadis
+Step =    204: nodes = 3938, dt = 9.854697e-10, strain = 4.584201e-04, elapsed = 19275.5 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.204.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.204.exadis
+Step =    205: nodes = 4099, dt = 1.182564e-09, strain = 4.596027e-04, elapsed = 20097.2 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.205.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.205.exadis
+Step =    206: nodes = 4213, dt = 7.095382e-10, strain = 4.603122e-04, elapsed = 20365.3 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.206.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.206.exadis
+Step =    207: nodes = 4296, dt = 7.095382e-10, strain = 4.610217e-04, elapsed = 21066.5 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.207.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.207.exadis
+Warning: max collisions have been reached. Some collisions have been ignored
+Step =    208: nodes = 4173, dt = 8.514458e-10, strain = 4.618732e-04, elapsed = 22272.3 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.208.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.208.exadis
+Step =    209: nodes = 4046, dt = 5.108675e-10, strain = 4.623840e-04, elapsed = 22816.1 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.209.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.209.exadis
+Step =    210: nodes = 3989, dt = 5.108675e-10, strain = 4.628949e-04, elapsed = 22979.9 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.210.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.210.exadis
+Step =    211: nodes = 3971, dt = 6.130410e-10, strain = 4.635080e-04, elapsed = 23434.5 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.211.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.211.exadis
+Step =    212: nodes = 3898, dt = 7.356492e-10, strain = 4.642436e-04, elapsed = 24370.7 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.212.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.212.exadis
+Step =    213: nodes = 3885, dt = 4.413895e-10, strain = 4.646850e-04, elapsed = 24488.2 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.213.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.213.exadis
+Step =    214: nodes = 3867, dt = 4.413895e-10, strain = 4.651264e-04, elapsed = 24931.5 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.214.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.214.exadis
+Step =    215: nodes = 3871, dt = 5.296674e-10, strain = 4.656560e-04, elapsed = 25322.5 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.215.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.215.exadis
+Step =    216: nodes = 3863, dt = 6.356009e-10, strain = 4.662916e-04, elapsed = 25666.6 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.216.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.216.exadis
+Step =    217: nodes = 3904, dt = 7.627211e-10, strain = 4.670544e-04, elapsed = 25891.7 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.217.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.217.exadis
+Step =    218: nodes = 3999, dt = 9.152653e-10, strain = 4.679696e-04, elapsed = 26408.3 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.218.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.218.exadis
+Step =    219: nodes = 4132, dt = 1.098318e-09, strain = 4.690680e-04, elapsed = 27089.4 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.219.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.219.exadis
+Step =    220: nodes = 4167, dt = 6.589910e-10, strain = 4.697269e-04, elapsed = 27512.6 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.220.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.220.exadis
+Step =    221: nodes = 4145, dt = 3.294955e-10, strain = 4.700564e-04, elapsed = 27776.1 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.221.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.221.exadis
+Step =    222: nodes = 4122, dt = 3.294955e-10, strain = 4.703859e-04, elapsed = 28034.3 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.222.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.222.exadis
+Step =    223: nodes = 4100, dt = 3.953946e-10, strain = 4.707813e-04, elapsed = 28209.4 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.223.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.223.exadis
+Step =    224: nodes = 4086, dt = 4.744735e-10, strain = 4.712558e-04, elapsed = 28304.3 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.224.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.224.exadis
+Step =    225: nodes = 4053, dt = 5.693682e-10, strain = 4.718252e-04, elapsed = 28934.0 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.225.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.225.exadis
+Warning: max collisions have been reached. Some collisions have been ignored
+Step =    226: nodes = 3833, dt = 6.832419e-10, strain = 4.725084e-04, elapsed = 29762.7 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.226.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.226.exadis
+Step =    227: nodes = 3777, dt = 8.198902e-10, strain = 4.733283e-04, elapsed = 30907.8 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.227.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.227.exadis
+Error: MAX_CONN = 15 exceeded during merge_node()
+Error: MAX_CONN = 15 exceeded during merge_node()
+Error: MAX_CONN = 15 exceeded during merge_node()
+Error: MAX_CONN = 15 exceeded during merge_node()
+Error: MAX_CONN = 15 exceeded during merge_node()
+Error: MAX_CONN = 15 exceeded during merge_node()
+Step =    228: nodes = 3643, dt = 4.919341e-10, strain = 4.738202e-04, elapsed = 31436.4 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.228.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.228.exadis
+Step =    229: nodes = 3559, dt = 4.919341e-10, strain = 4.743122e-04, elapsed = 31589.0 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.229.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.229.exadis
+Step =    230: nodes = 3535, dt = 5.903210e-10, strain = 4.749025e-04, elapsed = 31656.4 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.230.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.230.exadis
+Step =    231: nodes = 3529, dt = 7.083852e-10, strain = 4.756109e-04, elapsed = 31936.4 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.231.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.231.exadis
+Step =    232: nodes = 3544, dt = 8.500622e-10, strain = 4.764609e-04, elapsed = 32234.3 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.232.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.232.exadis
+Step =    233: nodes = 3597, dt = 1.020075e-09, strain = 4.774810e-04, elapsed = 32551.9 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.233.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.233.exadis
+Step =    234: nodes = 3646, dt = 1.224090e-09, strain = 4.787051e-04, elapsed = 33252.0 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.234.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.234.exadis
+Step =    235: nodes = 3681, dt = 1.468907e-09, strain = 4.801740e-04, elapsed = 34484.3 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/config.235.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/restart.235.exadis
