@@ -46,3 +46,86 @@ Writing configuration in legacy data format
  Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/config.7.data
 Writing restart file
  Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/restart.7.exadis
+Step =      8: nodes = 6563, dt = 3.110400e-10, strain = 9.618880e-06, elapsed = 1778.4 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/config.8.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/restart.8.exadis
+Step =      9: nodes = 10774, dt = 3.110400e-10, strain = 9.929920e-06, elapsed = 3090.0 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/config.9.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/restart.9.exadis
+Step =     10: nodes = 16945, dt = 5.832000e-12, strain = 9.935752e-06, elapsed = 3168.3 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/config.10.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/restart.10.exadis
+Step =     11: nodes = 26671, dt = 5.832000e-12, strain = 9.941584e-06, elapsed = 3387.4 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/config.11.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/restart.11.exadis
+Error: MAX_CONN = 15 exceeded during merge_node()
+Error: MAX_CONN = 15 exceeded during merge_node()
+Error: MAX_CONN = 15 exceeded during merge_node()
+Step =     12: nodes = 41279, dt = 8.748000e-13, strain = 9.942459e-06, elapsed = 3544.2 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/config.12.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/restart.12.exadis
+Error: MAX_CONN = 15 exceeded during merge_node()
+Error: MAX_CONN = 15 exceeded during merge_node()
+Error: MAX_CONN = 15 exceeded during merge_node()
+Error: MAX_CONN = 15 exceeded during merge_node()
+Error: MAX_CONN = 15 exceeded during merge_node()
+Error: MAX_CONN = 15 exceeded during merge_node()
+Error: MAX_CONN = 15 exceeded during merge_node()
+Error: MAX_CONN = 15 exceeded during merge_node()
+Error: MAX_CONN = 15 exceeded during merge_node()
+Error: MAX_CONN = 15 exceeded during merge_node()
+Error: MAX_CONN = 15 exceeded during merge_node()
+Error: MAX_CONN = 15 exceeded during merge_node()
+Error: MAX_CONN = 15 exceeded during merge_node()
+Error: MAX_CONN = 15 exceeded during merge_node()
+Error: MAX_CONN = 15 exceeded during merge_node()
+Error: MAX_CONN = 15 exceeded during merge_node()
+Error: MAX_CONN = 15 exceeded during merge_node()
+Step =     13: nodes = 59952, dt = 2.187000e-13, strain = 9.942678e-06, elapsed = 3717.6 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/config.13.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/restart.13.exadis
+Warning: max collisions have been reached. Some collisions have been ignored
+Error: MAX_CONN = 15 exceeded during merge_node()
+Error: MAX_CONN = 15 exceeded during merge_node()
+Error: MAX_CONN = 15 exceeded during merge_node()
+Error: MAX_CONN = 15 exceeded during merge_node()
+Error: MAX_CONN = 15 exceeded during merge_node()
+Error: MAX_CONN = 15 exceeded during merge_node()
+Error: MAX_CONN = 15 exceeded during merge_node()
+Error: MAX_CONN = 15 exceeded during merge_node()
+Error: MAX_CONN = 15 exceeded during merge_node()
+Error: MAX_CONN = 15 exceeded during merge_node()
+Error: MAX_CONN = 15 exceeded during merge_node()
+Error: MAX_CONN = 15 exceeded during merge_node()
+Error: MAX_CONN = 15 exceeded during merge_node()
+Error: MAX_CONN = 15 exceeded during merge_node()
+Error: MAX_CONN = 15 exceeded during merge_node()
+Error: MAX_CONN = 15 exceeded during merge_node()
+Error: MAX_CONN = 15 exceeded during merge_node()
+Error: MAX_CONN = 15 exceeded during merge_node()
+Error: MAX_CONN = 15 exceeded during merge_node()
+Error: MAX_CONN = 15 exceeded during merge_node()
+Error: MAX_CONN = 15 exceeded during merge_node()
+Error: MAX_CONN = 15 exceeded during merge_node()
+Error: MAX_CONN = 15 exceeded during merge_node()
+Error: MAX_CONN = 15 exceeded during merge_node()
+Error: MAX_CONN = 15 exceeded during merge_node()
+Error: MAX_CONN = 15 exceeded during merge_node()
+Step =     14: nodes = 90279, dt = 5.467500e-14, strain = 9.942732e-06, elapsed = 3916.9 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/config.14.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/restart.14.exadis
+/var/spool/slurmd/job213733/slurm_script: line 16:  8487 Segmentation fault      (core dumped) python /data/home/dg000246b/openDIS/HomeWork/test_Cu_twin.py
