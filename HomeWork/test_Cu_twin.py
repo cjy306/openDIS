@@ -241,7 +241,7 @@ def run_simulation(net, output_dir, restart_id=None,
         exadis_net.load_twin_planes(twin_points_b, twin_normals_b)
 
     calforce  = CalForce(force_mode='SUBCYCLING_MODEL', state=state, Ngrid=64, cell=net.cell)
-    mobility  = MobilityLaw(mobility_law='FCC_0', state=state, Medge=64103.0, Mscrew=64103.0, vmax=4000.0)
+    mobility  = MobilityLaw(mobility_law='FCC_0', state=state, Medge=64103.0, Mscrew=64103.0, vmax=20000.0)
     timeint   = TimeIntegration(integrator='Subcycling', rgroups=[0.0, 100.0, 600.0, 1600.0], state=state, force=calforce, mobility=mobility)
     collision = Collision(collision_mode='Orowan', state=state)
     topology  = Topology(topology_mode='TopologyParallel', state=state,
@@ -258,7 +258,7 @@ def run_simulation(net, output_dir, restart_id=None,
         burgmag=state["burgmag"],
         state=state,
         print_freq=1,
-        write_freq=100,
+        write_freq=1,
         write_dir=output_dir,
         restart=restart,
     )
