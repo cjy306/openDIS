@@ -1,0 +1,31 @@
+Host Parallel Execution Space:
+  KOKKOS_ENABLE_OPENMP: yes
+
+OpenMP Runtime Configuration:
+Kokkos::OpenMP thread_pool_topology[ 1 x 48 x 1 ]
+[System] 100 spherical obstacles loaded
+Step =      0: nodes = 1908, dt = 0.000000e+00, strain = 0.000000e+00, elapsed = 0.0 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc/config.0.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc/restart.0.exadis
+Run until reaching strain = 0.010000
+Step =      1: nodes = 1908, dt = 1.000000e-09, strain = 1.000000e-06, elapsed = 0.8 sec
+Step =      2: nodes = 1908, dt = 1.200000e-09, strain = 2.200000e-06, elapsed = 1.5 sec
+Step =      3: nodes = 1908, dt = 1.440000e-09, strain = 3.640000e-06, elapsed = 2.6 sec
+Step =      4: nodes = 1911, dt = 1.728000e-09, strain = 5.368000e-06, elapsed = 4.0 sec
+Step =      5: nodes = 1911, dt = 2.073600e-09, strain = 7.441600e-06, elapsed = 5.6 sec
+Step =      6: nodes = 1971, dt = 2.488320e-09, strain = 9.929920e-06, elapsed = 7.8 sec
+Step =      7: nodes = 2061, dt = 2.985984e-09, strain = 1.291590e-05, elapsed = 15.8 sec
+Step =      8: nodes = 2091, dt = 3.583181e-09, strain = 1.649908e-05, elapsed = 34.5 sec
+Step =      9: nodes = 2083, dt = 4.299817e-09, strain = 2.079890e-05, elapsed = 59.1 sec
+Step =     10: nodes = 2123, dt = 5.159780e-09, strain = 2.595868e-05, elapsed = 103.8 sec
+Step =     11: nodes = 2183, dt = 3.095868e-09, strain = 2.905455e-05, elapsed = 143.3 sec
+Step =     12: nodes = 2238, dt = 3.095868e-09, strain = 3.215042e-05, elapsed = 187.1 sec
+Step =     13: nodes = 2250, dt = 3.715042e-09, strain = 3.586546e-05, elapsed = 300.5 sec
+Step =     14: nodes = 2257, dt = 4.458050e-09, strain = 4.032351e-05, elapsed = 357.7 sec
+Step =     15: nodes = 2254, dt = 5.349660e-09, strain = 4.567317e-05, elapsed = 849.8 sec
+Step =     16: nodes = 2242, dt = 6.419592e-09, strain = 5.209276e-05, elapsed = 1195.9 sec
+Step =     17: nodes = 2296, dt = 3.851755e-09, strain = 5.594452e-05, elapsed = 1528.1 sec
+Step =     18: nodes = 2325, dt = 1.925878e-09, strain = 5.787040e-05, elapsed = 1836.9 sec
+Step =     19: nodes = 2329, dt = 1.925878e-09, strain = 5.979627e-05, elapsed = 1939.0 sec
