@@ -16,8 +16,8 @@ import pyexadis
 from pyexadis_utils import read_paradis, write_vtk
 from pyexadis_base import ExaDisNet
 # ========== 用户可修改的配置 ==========
-INPUT_PATH = '/data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc'
-OUTPUT_PATH = '/data/home/dg000246b/openDIS/HomeWork/output_CU_vtk'
+INPUT_PATH = '/data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure'
+OUTPUT_PATH = '/data/home/dg000246b/openDIS/HomeWork/output_CU_pure_vtk'
 # 孪晶面 z 方向分数位置（空列表 [] 表示无孪晶面，仅在没有 twin_planes.data 时使用）
 TWIN_Z_FRACTIONS = []
 
