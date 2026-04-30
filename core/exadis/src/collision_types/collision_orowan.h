@@ -130,9 +130,11 @@ public:
             int i1 = segs[s].n1;
             int i2 = segs[s].n2;
 
-            // Skip segments where either endpoint is already a twin pivot
-            if (nodes[i1].constraint == TWIN_SURFACE ||
-                nodes[i2].constraint == TWIN_SURFACE) return;
+            bool tw1 = (nodes[i1].constraint == TWIN_SURFACE);
+            bool tw2 = (nodes[i2].constraint == TWIN_SURFACE);
+
+            // Skip segments where BOTH endpoints are already twin pivots
+            if (tw1 && tw2) return;
 
             Vec3 pos1 = nodes[i1].pos;
             Vec3 pos2 = cell.pbc_position(pos1, nodes[i2].pos);
@@ -143,31 +145,140 @@ public:
                 double d1 = dot(pos1 - point, normal);
                 double d2 = dot(pos2 - point, normal);
 
-                if (d1 * d2 < 0.0) {
-                    // Segment straddles the plane.
-                    // Project the closer endpoint (smaller |d|).
-                    double abs_d1 = fabs(d1);
-                    double abs_d2 = fabs(d2);
-
-                    if (abs_d1 <= abs_d2) {
-                        if (abs_d1 < maxseg) {
-                            nodes[i1].pos        = pos1 - d1 * normal;
-                            nodes[i1].constraint = TWIN_SURFACE;
-                            nodes[i1].twin_id    = d_planes(j).id;
-                            nodes[i1].twin_normal = normal;
+                // Case 1: Neither endpoint is TWIN_SURFACE — standard straddling check
+                if (!tw1 && !tw2) {
+                    if (d1 * d2 < 0.0) {
+                        double abs_d1 = fabs(d1);
+                        double abs_d2 = fabs(d2);
+                        if (abs_d1 <= abs_d2) {
+                            if (abs_d1 < maxseg) {
+                                nodes[i1].pos        = pos1 - d1 * normal;
+                                nodes[i1].constraint = TWIN_SURFACE;
+                                nodes[i1].twin_id    = d_planes(j).id;
+                                nodes[i1].twin_normal = normal;
+                            }
+                        } else {
+                            if (abs_d2 < maxseg) {
+                                Vec3 shift = pos2 - nodes[i2].pos;
+                                Vec3 projected = pos2 - d2 * normal;
+                                nodes[i2].pos        = projected - shift;
+                                nodes[i2].constraint = TWIN_SURFACE;
+                                nodes[i2].twin_id    = d_planes(j).id;
+                                nodes[i2].twin_normal = normal;
+                            }
                         }
-                    } else {
-                        if (abs_d2 < maxseg) {
-                            // Undo PBC shift when writing back
-                            Vec3 shift = pos2 - nodes[i2].pos;
-                            Vec3 projected = pos2 - d2 * normal;
-                            nodes[i2].pos        = projected - shift;
-                            nodes[i2].constraint = TWIN_SURFACE;
-                            nodes[i2].twin_id    = d_planes(j).id;
-                            nodes[i2].twin_normal = normal;
-                        }
+                        return;
                     }
-                    return;  // One crossing per segment per step
+                }
+
+                // Case 2: One endpoint is TWIN_SURFACE, the other is free.
+                // The twin node is on the plane (d ≈ 0). If the free node
+                // has crossed to the opposite side, project it back onto
+                // the plane and mark it TWIN_SURFACE.
+                if (tw1 && !tw2 && nodes[i1].twin_id == d_planes(j).id) {
+                    // i1 is on the plane; check if i2 crossed
+                    // d1 ≈ 0, so use sign of d2 vs sign of original side.
+                    // Since i1 is on the plane, any |d2| very small means
+                    // i2 is near the plane — project it.
+                    if (fabs(d2) < maxseg && d1 * d2 < 0.0) {
+                        Vec3 shift = pos2 - nodes[i2].pos;
+                        Vec3 projected = pos2 - d2 * normal;
+                        nodes[i2].pos        = projected - shift;
+                        nodes[i2].constraint = TWIN_SURFACE;
+                        nodes[i2].twin_id    = d_planes(j).id;
+                        nodes[i2].twin_normal = normal;
+                        return;
+                    }
+                    // Also catch: d1 ≈ 0 so d1*d2 ≈ 0 (not < 0).
+                    // Use a small threshold: if i2 has crossed past the plane
+                    // (d2 on opposite side from where the segment "came from"),
+                    // we detect this by checking that |d2| is small but nonzero
+                    // and on the opposite side of the plane normal from the
+                    // segment interior direction.
+                    double seg_dot = dot(pos2 - pos1, normal);
+                    if (fabs(d2) < maxseg * 0.5 && seg_dot * d2 > 0.0) {
+                        // i2 has drifted past the plane
+                        Vec3 shift = pos2 - nodes[i2].pos;
+                        Vec3 projected = pos2 - d2 * normal;
+                        nodes[i2].pos        = projected - shift;
+                        nodes[i2].constraint = TWIN_SURFACE;
+                        nodes[i2].twin_id    = d_planes(j).id;
+                        nodes[i2].twin_normal = normal;
+                        return;
+                    }
+                }
+
+                if (tw2 && !tw1 && nodes[i2].twin_id == d_planes(j).id) {
+                    // i2 is on the plane; check if i1 crossed
+                    if (fabs(d1) < maxseg && d1 * d2 < 0.0) {
+                        nodes[i1].pos        = pos1 - d1 * normal;
+                        nodes[i1].constraint = TWIN_SURFACE;
+                        nodes[i1].twin_id    = d_planes(j).id;
+                        nodes[i1].twin_normal = normal;
+                        return;
+                    }
+                    double seg_dot = dot(pos1 - pos2, normal);
+                    if (fabs(d1) < maxseg * 0.5 && seg_dot * d1 > 0.0) {
+                        nodes[i1].pos        = pos1 - d1 * normal;
+                        nodes[i1].constraint = TWIN_SURFACE;
+                        nodes[i1].twin_id    = d_planes(j).id;
+                        nodes[i1].twin_normal = normal;
+                        return;
+                    }
+                }
+            }
+        });
+        Kokkos::fence();
+    }
+
+    /*-----------------------------------------------------------------------
+     *  handle_twin_wall  (Kokkos parallel over nodes)
+     *
+     *  Per-node crossing detection using xold.  For each free node,
+     *  check if it has crossed any twin plane between its old position
+     *  (xold) and its current position.  If so, project it back onto
+     *  the plane and mark it TWIN_SURFACE.
+     *
+     *  MUST be called while system->xold is still valid (i.e. after
+     *  integration but before topology/remesh which invalidate xold).
+     *---------------------------------------------------------------------*/
+    void handle_twin_wall(System* system)
+    {
+        if (system->planar_obstacles.empty()) return;
+
+        DeviceDisNet* net = system->get_device_network();
+        int Nnodes  = net->Nnodes_local;
+        int Nplanes = (int)system->planar_obstacles.size();
+
+        Kokkos::View<PlanarObstacle*, T_memory_space> d_planes("d_planes_wall", Nplanes);
+        auto h_planes = Kokkos::create_mirror_view(d_planes);
+        for (int j = 0; j < Nplanes; j++) h_planes(j) = system->planar_obstacles[j];
+        Kokkos::deep_copy(d_planes, h_planes);
+
+        auto nodes = net->get_nodes();
+        auto xold  = system->xold;
+        auto cell  = net->cell;
+
+        Kokkos::parallel_for("TwinWall", Nnodes, KOKKOS_LAMBDA(const int i) {
+            // Skip nodes already constrained (twin, sphere, pinned)
+            if (nodes[i].constraint != UNCONSTRAINED) return;
+
+            Vec3 pos_new = nodes[i].pos;
+            Vec3 pos_old = cell.pbc_position(pos_new, xold(i));
+
+            for (int j = 0; j < Nplanes; j++) {
+                Vec3   normal = d_planes(j).normal;
+                Vec3   point  = d_planes(j).point;
+                double d_old = dot(pos_old - point, normal);
+                double d_new = dot(pos_new - point, normal);
+
+                if (d_old * d_new < 0.0) {
+                    // Node crossed the plane: project back onto the plane
+                    nodes[i].pos         = pos_new - d_new * normal;
+                    nodes[i].constraint  = TWIN_SURFACE;
+                    nodes[i].twin_id     = d_planes(j).id;
+                    nodes[i].twin_normal = normal;
+                    return;  // one crossing per node per step
                 }
             }
         });
@@ -225,7 +336,15 @@ public:
         // 2. Orowan sphere-surface enforcement (parallel on device).
         handle_orowan(system);
 
-        // 3. Twin-boundary crossing detection + projection (parallel on device).
+        // 3. Per-node wall detection using xold (most reliable — catches
+        //    any free node that crossed a twin plane during integration).
+        //    Must be called while xold is still valid.
+        handle_twin_wall(system);
+
+        // 4. Per-segment straddling detection (catches any remaining
+        //    crossings not caught by wall detection, e.g. segments
+        //    where both nodes were on the same side but one has now
+        //    been projected onto the plane by handle_twin_wall).
         handle_twin_detect(system);
 
         Kokkos::fence();

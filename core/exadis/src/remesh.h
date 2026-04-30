@@ -74,13 +74,39 @@ public:
                 // Do not refine segments between pinned nodes
                 if (network->nodes[n1].constraint == PINNED_NODE &&
                     network->nodes[n2].constraint == PINNED_NODE) continue;
-                
+
                 // Bisect the segment (refine)
                 int nnew = network->split_seg(i, network->cell.pbc_fold(rmid));
+
+                // If both endpoints are on the same twin plane, the new
+                // midpoint node should also be on that plane.
+                if (network->nodes[n1].constraint == TWIN_SURFACE &&
+                    network->nodes[n2].constraint == TWIN_SURFACE &&
+                    network->nodes[n1].twin_id == network->nodes[n2].twin_id) {
+                    int tid = network->nodes[n1].twin_id;
+                    network->nodes[nnew].constraint  = TWIN_SURFACE;
+                    network->nodes[nnew].twin_id     = tid;
+                    network->nodes[nnew].twin_normal  = network->nodes[n1].twin_normal;
+                    // Snap to the plane
+                    for (auto& obs : system->planar_obstacles) {
+                        if (obs.id == tid) {
+                            double d = dot(network->nodes[nnew].pos - obs.point, obs.normal);
+                            network->nodes[nnew].pos = network->nodes[nnew].pos - d * obs.normal;
+                            break;
+                        }
+                    }
+                }
                 nadd++;
                 //check_node_plane_violation(network, conn, nnew, "after remesh split_link");
                 
             } else if (length < minseg && params.coarsen_mode == 0) {
+                // Do not coarsen a TWIN_SURFACE node into a free node
+                // (or vice versa) unless the segment is extremely short.
+                // This prevents destroying twin-boundary pivot points.
+                bool tw1 = (network->nodes[n1].constraint == TWIN_SURFACE);
+                bool tw2 = (network->nodes[n2].constraint == TWIN_SURFACE);
+                if (tw1 != tw2 && length > rann) continue;
+
                 // Merge segment nodes (coarsen)
                 if (system->crystal.enforce_glide_planes) {
                     // Do not remesh if node arms are on different planes
@@ -135,7 +161,8 @@ public:
             for (int i = 0; i < nnodes; i++) {
                 if (network->conn[i].num != 2) continue;
                 if (network->nodes[i].constraint == PINNED_NODE ||
-                    network->nodes[i].constraint == CORNER_NODE) continue;
+                    network->nodes[i].constraint == CORNER_NODE ||
+                    network->nodes[i].constraint == TWIN_SURFACE) continue;
                 
                 Vec3 ri = network->nodes[i].pos;
                 

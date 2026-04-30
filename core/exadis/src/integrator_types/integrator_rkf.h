@@ -36,6 +36,10 @@ protected:
     double errmax[2];
     int incrDelta, iTry;
     int step;
+
+    // Device copy of planar obstacles for twin-plane clamping during integration
+    Kokkos::View<PlanarObstacle*, T_memory_space> d_twin_planes;
+    int n_twin_planes = 0;
     
     // Coefficients for error calculation
     const double er[6] = {
@@ -93,13 +97,27 @@ public:
     void operator() (TagRKFStep, const int &i) const {
         auto nodes = network->get_nodes();
         auto cell = network->cell;
-        
+
         if (step < 5) rkf[step](i) = nodes[i].v;
         Vec3 pos(0.0);
         for (int j = 0; j < step+1; j++)
             pos += f[step][j] * rkf[j](i);
         pos = s->xold(i) + newdt*pos;
         nodes[i].pos = cell.pbc_fold(pos);
+
+        // Clamp TWIN_SURFACE nodes back onto their twin plane
+        // to prevent numerical drift during RKF sub-steps
+        if (nodes[i].constraint == TWIN_SURFACE && n_twin_planes > 0) {
+            int tid = nodes[i].twin_id;
+            for (int p = 0; p < n_twin_planes; p++) {
+                if (d_twin_planes(p).id == tid) {
+                    double d = dot(nodes[i].pos - d_twin_planes(p).point,
+                                   d_twin_planes(p).normal);
+                    nodes[i].pos = nodes[i].pos - d * d_twin_planes(p).normal;
+                    break;
+                }
+            }
+        }
     }
     
     KOKKOS_INLINE_FUNCTION
@@ -195,7 +213,17 @@ public:
         
         for (int i = 0; i < 6; i++)
             Kokkos::resize(rkf[i], network->Nnodes_local);
-        
+
+        // Copy twin planes to device for position clamping
+        n_twin_planes = (int)system->planar_obstacles.size();
+        if (n_twin_planes > 0) {
+            Kokkos::resize(d_twin_planes, n_twin_planes);
+            auto h_planes = Kokkos::create_mirror_view(d_twin_planes);
+            for (int i = 0; i < n_twin_planes; i++)
+                h_planes(i) = system->planar_obstacles[i];
+            Kokkos::deep_copy(d_twin_planes, h_planes);
+        }
+
         // Save nodal data
         Kokkos::resize(system->xold, network->Nnodes_local);
         Kokkos::resize(vcurr, network->Nnodes_local);
