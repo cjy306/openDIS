@@ -793,6 +793,12 @@ public:
         Kokkos::resize(xold, network->Nnodes_local);
         Kokkos::parallel_for(network->Nnodes_local, SavePositions(network, xold));
         Kokkos::fence();
+
+        // Also save to system->xold so that post-integration twin-wall
+        // detection can compare against the true start-of-step positions.
+        Kokkos::resize(system->xold, network->Nnodes_local);
+        Kokkos::deep_copy(system->xold, xold);
+        Kokkos::fence();
         
         // Build subcycling groups. These groups contain segment
         // and segment pair lists used for force calculations.

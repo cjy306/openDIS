@@ -34,6 +34,10 @@ protected:
     T_v vcurr;
     double errmax;
     int incrDelta, iTry;
+
+    // Device copy of planar obstacles for twin-plane clamping
+    Kokkos::View<PlanarObstacle*, T_memory_space> d_twin_planes;
+    int n_twin_planes = 0;
     
 public:
     struct Params {};
@@ -70,9 +74,22 @@ public:
     void operator() (TagAdvanceNodes, const int &i) const {
         auto nodes = network->get_nodes();
         auto cell = network->cell;
-        
+
         Vec3 pos = s->xold(i) + 0.5 * currdt * (vcurr(i) + vcurr(i));
         nodes[i].pos = cell.pbc_fold(pos);
+
+        // Clamp TWIN_SURFACE nodes back onto their twin plane
+        if (nodes[i].constraint == TWIN_SURFACE && n_twin_planes > 0) {
+            int tid = nodes[i].twin_id;
+            for (int p = 0; p < n_twin_planes; p++) {
+                if (d_twin_planes(p).id == tid) {
+                    double d = dot(nodes[i].pos - d_twin_planes(p).point,
+                                   d_twin_planes(p).normal);
+                    nodes[i].pos = nodes[i].pos - d * d_twin_planes(p).normal;
+                    break;
+                }
+            }
+        }
     }
     
     KOKKOS_INLINE_FUNCTION
@@ -137,7 +154,17 @@ public:
         
         s = system;
         network = system->get_device_network();
-        
+
+        // Copy twin planes to device for position clamping
+        n_twin_planes = (int)system->planar_obstacles.size();
+        if (n_twin_planes > 0) {
+            Kokkos::resize(d_twin_planes, n_twin_planes);
+            auto h_planes = Kokkos::create_mirror_view(d_twin_planes);
+            for (int i = 0; i < n_twin_planes; i++)
+                h_planes(i) = system->planar_obstacles[i];
+            Kokkos::deep_copy(d_twin_planes, h_planes);
+        }
+
         // Save nodal data
         Kokkos::resize(system->xold, network->Nnodes_local);
         Kokkos::resize(vcurr, network->Nnodes_local);
