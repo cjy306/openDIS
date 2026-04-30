@@ -171,33 +171,14 @@ public:
                     }
                 }
 
-                // Case 2: One endpoint is TWIN_SURFACE, the other is free.
-                // The twin node is on the plane (d ≈ 0). If the free node
-                // has crossed to the opposite side, project it back onto
-                // the plane and mark it TWIN_SURFACE.
+                // Case 2: One endpoint is TWIN_SURFACE on this plane,
+                // the other is free. Check strict straddling (d1*d2 < 0).
+                // Since the twin node is snapped to the plane (d ≈ 0),
+                // d1*d2 < 0 can only trigger if the free node has clearly
+                // crossed to the opposite side.  This is a conservative
+                // fallback — handle_twin_wall catches most crossings.
                 if (tw1 && !tw2 && nodes[i1].twin_id == d_planes(j).id) {
-                    // i1 is on the plane; check if i2 crossed
-                    // d1 ≈ 0, so use sign of d2 vs sign of original side.
-                    // Since i1 is on the plane, any |d2| very small means
-                    // i2 is near the plane — project it.
-                    if (fabs(d2) < maxseg && d1 * d2 < 0.0) {
-                        Vec3 shift = pos2 - nodes[i2].pos;
-                        Vec3 projected = pos2 - d2 * normal;
-                        nodes[i2].pos        = projected - shift;
-                        nodes[i2].constraint = TWIN_SURFACE;
-                        nodes[i2].twin_id    = d_planes(j).id;
-                        nodes[i2].twin_normal = normal;
-                        return;
-                    }
-                    // Also catch: d1 ≈ 0 so d1*d2 ≈ 0 (not < 0).
-                    // Use a small threshold: if i2 has crossed past the plane
-                    // (d2 on opposite side from where the segment "came from"),
-                    // we detect this by checking that |d2| is small but nonzero
-                    // and on the opposite side of the plane normal from the
-                    // segment interior direction.
-                    double seg_dot = dot(pos2 - pos1, normal);
-                    if (fabs(d2) < maxseg * 0.5 && seg_dot * d2 > 0.0) {
-                        // i2 has drifted past the plane
+                    if (d1 * d2 < 0.0 && fabs(d2) < maxseg) {
                         Vec3 shift = pos2 - nodes[i2].pos;
                         Vec3 projected = pos2 - d2 * normal;
                         nodes[i2].pos        = projected - shift;
@@ -209,16 +190,7 @@ public:
                 }
 
                 if (tw2 && !tw1 && nodes[i2].twin_id == d_planes(j).id) {
-                    // i2 is on the plane; check if i1 crossed
-                    if (fabs(d1) < maxseg && d1 * d2 < 0.0) {
-                        nodes[i1].pos        = pos1 - d1 * normal;
-                        nodes[i1].constraint = TWIN_SURFACE;
-                        nodes[i1].twin_id    = d_planes(j).id;
-                        nodes[i1].twin_normal = normal;
-                        return;
-                    }
-                    double seg_dot = dot(pos1 - pos2, normal);
-                    if (fabs(d1) < maxseg * 0.5 && seg_dot * d1 > 0.0) {
+                    if (d1 * d2 < 0.0 && fabs(d1) < maxseg) {
                         nodes[i1].pos        = pos1 - d1 * normal;
                         nodes[i1].constraint = TWIN_SURFACE;
                         nodes[i1].twin_id    = d_planes(j).id;
@@ -288,9 +260,13 @@ public:
     /*-----------------------------------------------------------------------
      *  handle_twin_snap  (Kokkos parallel over nodes)
      *
-     *  Drift correction only: snap existing TWIN_SURFACE nodes back onto
-     *  their plane.  No new crossing detection — safe to call after
-     *  Topology/Remesh when xold is invalid.
+     *  For existing TWIN_SURFACE nodes:
+     *  1. Check release condition: if all neighbor nodes are on the SAME
+     *     side of the twin plane, the dislocation has bypassed/retracted
+     *     and the node can be released to UNCONSTRAINED.
+     *  2. Otherwise, snap the node back onto its plane (drift correction).
+     *
+     *  Safe to call after Topology/Remesh (no xold dependency).
      *---------------------------------------------------------------------*/
     void handle_twin_snap(System* system)
     {
@@ -306,18 +282,61 @@ public:
         Kokkos::deep_copy(d_planes, h_planes);
 
         auto nodes = net->get_nodes();
+        auto conn  = net->get_conn();
+        auto cell  = net->cell;
 
         Kokkos::parallel_for("TwinSnap", Nnodes, KOKKOS_LAMBDA(const int i) {
             if (nodes[i].constraint != TWIN_SURFACE) return;
 
             int tid = nodes[i].twin_id;
+            int plane_idx = -1;
             for (int j = 0; j < Nplanes; j++) {
-                if (d_planes(j).id == tid) {
-                    double d = dot(nodes[i].pos - d_planes(j).point, d_planes(j).normal);
-                    nodes[i].pos = nodes[i].pos - d * d_planes(j).normal;
+                if (d_planes(j).id == tid) { plane_idx = j; break; }
+            }
+            if (plane_idx < 0) {
+                // Orphaned twin node (plane removed?): release it
+                nodes[i].constraint = UNCONSTRAINED;
+                nodes[i].twin_id = -1;
+                return;
+            }
+
+            Vec3 normal = d_planes(plane_idx).normal;
+            Vec3 point  = d_planes(plane_idx).point;
+
+            // Release check: if this is a 2-arm node and all neighbors
+            // are on the same side of the plane, the dislocation is no
+            // longer straddling → release the node.
+            int nconn = conn[i].num;
+            if (nconn == 2) {
+                bool all_same_side = true;
+                double first_sign = 0.0;
+                for (int k = 0; k < nconn; k++) {
+                    int nbr = conn[i].node[k];
+                    // Skip neighbors that are also TWIN_SURFACE on same plane
+                    if (nodes[nbr].constraint == TWIN_SURFACE &&
+                        nodes[nbr].twin_id == tid) continue;
+                    Vec3 nbr_pos = cell.pbc_position(nodes[i].pos, nodes[nbr].pos);
+                    double dn = dot(nbr_pos - point, normal);
+                    if (fabs(dn) < 1e-10) continue;  // on the plane
+                    if (first_sign == 0.0) {
+                        first_sign = dn;
+                    } else if (first_sign * dn < 0.0) {
+                        all_same_side = false;
+                        break;
+                    }
+                }
+                // Only release if we actually checked at least one
+                // neighbor off the plane and they were all on the same side
+                if (all_same_side && first_sign != 0.0) {
+                    nodes[i].constraint = UNCONSTRAINED;
+                    nodes[i].twin_id = -1;
                     return;
                 }
             }
+
+            // Snap to plane (drift correction)
+            double d = dot(nodes[i].pos - point, normal);
+            nodes[i].pos = nodes[i].pos - d * normal;
         });
         Kokkos::fence();
     }
