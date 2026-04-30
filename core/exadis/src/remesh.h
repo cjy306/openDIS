@@ -100,12 +100,13 @@ public:
                 //check_node_plane_violation(network, conn, nnew, "after remesh split_link");
                 
             } else if (length < minseg && params.coarsen_mode == 0) {
-                // Do not coarsen a TWIN_SURFACE node into a free node
-                // (or vice versa) unless the segment is extremely short.
-                // This prevents destroying twin-boundary pivot points.
+                // Twin-surface coarsening rules:
+                // - Two TWIN_SURFACE nodes on the SAME plane: allow merge (keep twin constraint)
+                // - Mixed TWIN/free: only if segment is very short (< rann)
                 bool tw1 = (network->nodes[n1].constraint == TWIN_SURFACE);
                 bool tw2 = (network->nodes[n2].constraint == TWIN_SURFACE);
                 if (tw1 != tw2 && length > rann) continue;
+                if (tw1 && tw2 && network->nodes[n1].twin_id != network->nodes[n2].twin_id) continue;
 
                 // Merge segment nodes (coarsen)
                 if (system->crystal.enforce_glide_planes) {
@@ -161,8 +162,7 @@ public:
             for (int i = 0; i < nnodes; i++) {
                 if (network->conn[i].num != 2) continue;
                 if (network->nodes[i].constraint == PINNED_NODE ||
-                    network->nodes[i].constraint == CORNER_NODE ||
-                    network->nodes[i].constraint == TWIN_SURFACE) continue;
+                    network->nodes[i].constraint == CORNER_NODE) continue;
                 
                 Vec3 ri = network->nodes[i].pos;
                 
