@@ -14,7 +14,7 @@ except ImportError:
 
 
 def run_simulation(net, state, output_dir, restart=None,):
-    calforce  = CalForce(force_mode='SUBCYCLING_MODEL', state=state, Ngrid=32, cell=net.cell)
+    calforce  = CalForce(force_mode='SUBCYCLING_MODEL', state=state, Ngrid=64, cell=net.cell)
     mobility  = MobilityLaw(mobility_law='FCC_0', state=state, Medge=64103.0, Mscrew=64103.0, vmax=20000.0)
     timeint   = TimeIntegration(integrator='Subcycling', rgroups=[0.0, 50.0, 300.0, 800.0], state=state, force=calforce, mobility=mobility)
     collision = Collision(collision_mode='Retroactive', state=state)
