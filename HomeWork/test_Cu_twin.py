@@ -26,7 +26,7 @@ state = {
     "minseg":  50,
     "rtol":    0.25,
     "rann":    0.5,
-    "nextdt":  1e-9,
+    "nextdt":  1e-8,
     "maxdt":   1e-6,
 }
 
@@ -258,7 +258,7 @@ def run_simulation(net, output_dir, restart_id=None,
         burgmag=state["burgmag"],
         state=state,
         print_freq=1,
-        write_freq=1,
+        write_freq=100,
         write_dir=output_dir,
         restart=restart,
     )
