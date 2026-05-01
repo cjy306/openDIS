@@ -43,7 +43,9 @@ for _p in _fcc_planes:
 # ============================================================
 # 生成球形杂质
 # ============================================================
-def generate_precipitates(Lbox_m, burgmag, count, diameter_m, seed=12345):
+def generate_precipitates(Lbox_m, burgmag, count, diameter_m, seed=12345,
+                          z_range_m=None):
+    """z_range_m: (z_min, z_max) 米制，限制杂质 z 坐标范围。None 则不限制。"""
     rng = np.random.RandomState(seed)
     radius_m = diameter_m / 2.0
     radius_b = radius_m / burgmag
@@ -54,7 +56,13 @@ def generate_precipitates(Lbox_m, burgmag, count, diameter_m, seed=12345):
 
     for _ in range(count):
         for _ in range(800):
-            c_m = np.array([rng.uniform(margin_m, Lbox_m - margin_m) for _ in range(3)])
+            cx = rng.uniform(margin_m, Lbox_m - margin_m)
+            cy = rng.uniform(margin_m, Lbox_m - margin_m)
+            if z_range_m is not None:
+                cz = rng.uniform(z_range_m[0] + margin_m, z_range_m[1] - margin_m)
+            else:
+                cz = rng.uniform(margin_m, Lbox_m - margin_m)
+            c_m = np.array([cx, cy, cz])
             overlap = any(np.linalg.norm(c_m - centers_m[i]) < (radius_m + radii_m[i]) * 1.4
                           for i in range(len(centers_m)))
             if not overlap:
@@ -88,7 +96,8 @@ def generate_twin_planes(Lbox_b, twin_z_fractions):
 # ============================================================
 def generate_dislocation_network(Lbox_m, burgmag, target_density, seed=12345,
                                   precip_centers_m=None, precip_radii_m=None,
-                                  twin_z_positions_m=None):
+                                  z_range_m=None):
+    """z_range_m: (z_min, z_max) 米制，FR 源严格限制在此区间内。None 则全盒子。"""
     Lbox = int(round(Lbox_m / burgmag))
     total_length = target_density * Lbox_m**3
 
@@ -100,16 +109,34 @@ def generate_dislocation_network(Lbox_m, burgmag, target_density, seed=12345,
 
     nsys = len(FCC_SLIP_SYSTEMS)
 
+    # x,y 方向范围
+    xy_margin_frac = 0.05  # 距盒子边缘的安全距离
+
     attempt, src_count = 0, 0
     while accumulated < total_length * 0.85 and attempt < 15000:
         length_m = rng.uniform(0.3e-6, 1.0e-6)
         length_b = length_m / burgmag
         margin = length_m * 0.8
-        low, high = margin, Lbox_m - margin
-        if high <= low:
+
+        # x, y: 全盒子范围
+        xy_low  = margin
+        xy_high = Lbox_m - margin
+
+        # z: 严格限制在两孪晶面之间
+        if z_range_m is not None:
+            z_low  = z_range_m[0] + margin
+            z_high = z_range_m[1] - margin
+        else:
+            z_low  = margin
+            z_high = Lbox_m - margin
+
+        if xy_high <= xy_low or z_high <= z_low:
             attempt += 1; continue
 
-        c_m = np.array([rng.uniform(low, high) for _ in range(3)])
+        cx = rng.uniform(xy_low, xy_high)
+        cy = rng.uniform(xy_low, xy_high)
+        cz = rng.uniform(z_low, z_high)
+        c_m = np.array([cx, cy, cz])
 
         # 检查与已有 FR 源重叠
         overlap = any(np.linalg.norm(c_m - src_centers_m[i]) < (length_m + src_lengths_m[i]) * 0.6
@@ -119,14 +146,6 @@ def generate_dislocation_network(Lbox_m, burgmag, target_density, seed=12345,
         if not overlap and precip_centers_m is not None and len(precip_centers_m) > 0:
             overlap = any(np.linalg.norm(c_m - precip_centers_m[i]) < (length_m * 0.5 + precip_radii_m[i]) * 1.5
                           for i in range(len(precip_centers_m)))
-
-        # 检查与孪晶面重叠
-        if not overlap and twin_z_positions_m is not None:
-            twin_margin = length_m * 0.8
-            for tz in twin_z_positions_m:
-                if abs(c_m[2] - tz) < twin_margin:
-                    overlap = True
-                    break
 
         if overlap:
             attempt += 1; continue
@@ -162,13 +181,22 @@ def generate_one(mode, target_density, sphere_count, twin_z_fracs):
     use_precip = mode in ('precip', 'twin')
     use_twin   = mode == 'twin'
 
+    # ---- 计算 z 范围（twin 模式下限制在两孪晶面之间）----
+    z_range_m = None
+    if use_twin and len(twin_z_fracs) >= 2:
+        z_min_m = LBOX_M * min(twin_z_fracs)
+        z_max_m = LBOX_M * max(twin_z_fracs)
+        z_range_m = (z_min_m, z_max_m)
+        print(f"  [{mode}] Active zone: z = [{z_min_m*1e6:.1f}, {z_max_m*1e6:.1f}] um")
+        print(f"  [{mode}] Vacuum buffer: {z_min_m*1e6:.1f} um (bottom) + {(LBOX_M-z_max_m)*1e6:.1f} um (top)")
+
     # ---- 球形杂质 ----
     centers_m, radii_m = None, None
     if use_precip:
         centers_b, radii_b, centers_m, radii_m = generate_precipitates(
-            LBOX_M, BURGMAG, count=sphere_count, diameter_m=200e-9)
+            LBOX_M, BURGMAG, count=sphere_count, diameter_m=200e-9,
+            z_range_m=z_range_m)
         print(f"  [{mode}] Generated {len(centers_b)} precipitates")
-        # 保存为 data 文件：每行 center_x center_y center_z radius
         obs_file = os.path.join(output_dir, 'obstacles.data')
         with open(obs_file, 'w') as f:
             f.write(f"# Spherical obstacles ({len(centers_b)} total)\n")
@@ -178,11 +206,9 @@ def generate_one(mode, target_density, sphere_count, twin_z_fracs):
                 f.write(f"{c[0]:.8e}  {c[1]:.8e}  {c[2]:.8e}  {radii_b[i]:.8e}\n")
 
     # ---- 孪晶面 ----
-    twin_z_positions_m = None
     if use_twin:
         twin_points_b, twin_normals_b = generate_twin_planes(Lbox_b, twin_z_fracs)
         print(f"  [{mode}] Generated {len(twin_points_b)} twin planes")
-        # 保存为 data 文件：每行 point_x point_y point_z normal_x normal_y normal_z
         tp_file = os.path.join(output_dir, 'twin_planes.data')
         with open(tp_file, 'w') as f:
             f.write(f"# Twin boundary planes ({len(twin_points_b)} total)\n")
@@ -191,13 +217,12 @@ def generate_one(mode, target_density, sphere_count, twin_z_fracs):
                 p = twin_points_b[i]
                 n = twin_normals_b[i]
                 f.write(f"{p[0]:.8e}  {p[1]:.8e}  {p[2]:.8e}  {n[0]:.8f}  {n[1]:.8f}  {n[2]:.8f}\n")
-        twin_z_positions_m = [LBOX_M * f for f in twin_z_fracs]
 
     # ---- FR 源位错网络 ----
     G = generate_dislocation_network(
         LBOX_M, BURGMAG, target_density, seed=12345,
         precip_centers_m=centers_m, precip_radii_m=radii_m,
-        twin_z_positions_m=twin_z_positions_m)
+        z_range_m=z_range_m)
 
     data_file = os.path.join(output_dir, 'init_config.data')
     G.write_data(data_file)
@@ -218,7 +243,7 @@ def main():
 
     target_density = float(os.environ.get('RHO_TARGET', '1e12'))
     sphere_count   = int(os.environ.get('SPHERE_COUNT', '100'))
-    twin_z_fracs   = [0.5]
+    twin_z_fracs   = [0.2, 0.8]  # 上下两个孪晶面，中间为位错活动区，外侧为真空缓冲
 
     modes = ['pure', 'precip', 'twin'] if args.mode == 'all' else [args.mode]
 
