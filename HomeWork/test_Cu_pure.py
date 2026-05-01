@@ -24,8 +24,8 @@ state = {
     "a":         2.0,
     "maxseg":    200,
     "minseg":    50,
-    "rtol":      0.25,
-    "rann":      0.5,
+    "rtol":      0.5,
+    "rann":      1.0,
     "nextdt":    1e-9,
     "maxdt":     1e-6,
 }
