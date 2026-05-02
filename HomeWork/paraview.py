@@ -19,7 +19,7 @@ from pyexadis_base import ExaDisNet
 INPUT_PATH = '/data/home/dg000246b/openDIS/HomeWork/output_Cu_twin'
 OUTPUT_PATH = '/data/home/dg000246b/openDIS/HomeWork/output_CU_twin_vtk'
 # 孪晶面 z 方向分数位置（空列表 [] 表示无孪晶面，仅在没有 twin_planes.data 时使用）
-TWIN_Z_FRACTIONS = [0.5]
+TWIN_Z_FRACTIONS = [0.2, 0.8]
 
 class SphericalPrecipitates:
     """球形杂质管理类"""
@@ -420,7 +420,7 @@ def convert_paradis_to_vtk_with_precipitates(input_dir, output_dir):
         print(f"✅ 创建输出目录: {output_dir}")
     
     # 加载球形杂质信息
-    precipitates_file = os.path.join(input_dir, 'precipitates.data')
+    precipitates_file = os.path.join(input_dir, 'obstacles.data')
     precipitates = None
     
     if os.path.exists(precipitates_file):
