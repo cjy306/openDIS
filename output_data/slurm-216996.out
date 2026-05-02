@@ -94,3 +94,11 @@ Writing configuration in legacy data format
  Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/config.15.data
 Writing restart file
  Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/restart.15.exadis
+Warning: max collisions have been reached. Some collisions have been ignored
+Error: MAX_CONN = 15 exceeded during merge_node()
+Step =     16: nodes = 16399, dt = 4.837294e-10, strain = 5.939280e-05, elapsed = 85439.5 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/config.16.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/restart.16.exadis
+slurmstepd-c2n165: error: *** JOB 216996 ON c2n165 CANCELLED AT 2026-05-02T10:20:17 ***
