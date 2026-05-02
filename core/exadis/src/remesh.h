@@ -75,27 +75,17 @@ public:
                 if (network->nodes[n1].constraint == PINNED_NODE &&
                     network->nodes[n2].constraint == PINNED_NODE) continue;
 
-                // Bisect the segment (refine)
-                int nnew = network->split_seg(i, network->cell.pbc_fold(rmid));
-
-                // If both endpoints are on the same twin plane, the new
-                // midpoint node should also be on that plane.
+                // Do not refine segments between two TWIN_SURFACE nodes
+                // on the same plane. Physically, the dislocation segment
+                // lying on the twin plane is a straight constrained line
+                // connecting two intersection points — it does not need
+                // further discretization.
                 if (network->nodes[n1].constraint == TWIN_SURFACE &&
                     network->nodes[n2].constraint == TWIN_SURFACE &&
-                    network->nodes[n1].twin_id == network->nodes[n2].twin_id) {
-                    int tid = network->nodes[n1].twin_id;
-                    network->nodes[nnew].constraint  = TWIN_SURFACE;
-                    network->nodes[nnew].twin_id     = tid;
-                    network->nodes[nnew].twin_normal  = network->nodes[n1].twin_normal;
-                    // Snap to the plane
-                    for (auto& obs : system->planar_obstacles) {
-                        if (obs.id == tid) {
-                            double d = dot(network->nodes[nnew].pos - obs.point, obs.normal);
-                            network->nodes[nnew].pos = network->nodes[nnew].pos - d * obs.normal;
-                            break;
-                        }
-                    }
-                }
+                    network->nodes[n1].twin_id == network->nodes[n2].twin_id) continue;
+
+                // Bisect the segment (refine)
+                int nnew = network->split_seg(i, network->cell.pbc_fold(rmid));
                 nadd++;
                 //check_node_plane_violation(network, conn, nnew, "after remesh split_link");
                 
