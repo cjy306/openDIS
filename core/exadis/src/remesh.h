@@ -153,6 +153,9 @@ public:
                 if (network->conn[i].num != 2) continue;
                 if (network->nodes[i].constraint == PINNED_NODE ||
                     network->nodes[i].constraint == CORNER_NODE) continue;
+                // Do not coarsen TWIN_SURFACE nodes — they anchor the
+                // dislocation-plane intersection and must stay put.
+                if (network->nodes[i].constraint == TWIN_SURFACE) continue;
                 
                 Vec3 ri = network->nodes[i].pos;
                 
