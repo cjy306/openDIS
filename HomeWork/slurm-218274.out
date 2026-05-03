@@ -15,46 +15,45 @@ Writing configuration in legacy data format
 Writing restart file
  Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/restart.0.exadis
 Run until reaching strain = 0.010000
-Step =      1: nodes = 4175, dt = 1.000000e-08, strain = 1.000000e-05, elapsed = 36.9 sec
+Step =      1: nodes = 4175, dt = 1.000000e-08, strain = 1.000000e-05, elapsed = 37.9 sec
 Writing configuration in legacy data format
  Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/config.1.data
 Writing restart file
  Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/restart.1.exadis
-Step =      2: nodes = 4211, dt = 1.200000e-08, strain = 2.200000e-05, elapsed = 167.3 sec
+Step =      2: nodes = 4194, dt = 1.200000e-08, strain = 2.200000e-05, elapsed = 169.9 sec
 Writing configuration in legacy data format
  Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/config.2.data
 Writing restart file
  Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/restart.2.exadis
-Step =      3: nodes = 4296, dt = 3.600000e-09, strain = 2.560000e-05, elapsed = 1400.7 sec
+Step =      3: nodes = 4219, dt = 3.600000e-09, strain = 2.560000e-05, elapsed = 1219.6 sec
 Writing configuration in legacy data format
  Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/config.3.data
 Writing restart file
  Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/restart.3.exadis
-Step =      4: nodes = 4645, dt = 1.800000e-09, strain = 2.740000e-05, elapsed = 1998.8 sec
+Step =      4: nodes = 4312, dt = 1.800000e-09, strain = 2.740000e-05, elapsed = 1469.3 sec
 Writing configuration in legacy data format
  Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/config.4.data
 Writing restart file
  Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/restart.4.exadis
-Step =      5: nodes = 5522, dt = 9.000000e-10, strain = 2.830000e-05, elapsed = 2447.7 sec
+Step =      5: nodes = 4533, dt = 9.000000e-10, strain = 2.830000e-05, elapsed = 1717.7 sec
 Writing configuration in legacy data format
  Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/config.5.data
 Writing restart file
  Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/restart.5.exadis
-Step =      6: nodes = 8407, dt = 9.000000e-10, strain = 2.920000e-05, elapsed = 4606.3 sec
+Step =      6: nodes = 5089, dt = 4.500000e-10, strain = 2.875000e-05, elapsed = 1853.7 sec
 Writing configuration in legacy data format
  Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/config.6.data
 Writing restart file
  Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/restart.6.exadis
-Warning: max collisions have been reached. Some collisions have been ignored
-Step =      7: nodes = 15117, dt = 2.700000e-10, strain = 2.947000e-05, elapsed = 8031.0 sec
+Step =      7: nodes = 6680, dt = 4.500000e-10, strain = 2.920000e-05, elapsed = 2309.3 sec
 Writing configuration in legacy data format
  Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/config.7.data
 Writing restart file
  Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/restart.7.exadis
 Warning: max collisions have been reached. Some collisions have been ignored
-Step =      8: nodes = 24008, dt = 2.700000e-10, strain = 2.974000e-05, elapsed = 26272.9 sec
+Step =      8: nodes = 10822, dt = 5.400000e-10, strain = 2.974000e-05, elapsed = 6161.6 sec
 Writing configuration in legacy data format
  Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/config.8.data
 Writing restart file
  Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/restart.8.exadis
-slurmstepd-c2n063: error: *** JOB 217566 ON c2n063 CANCELLED AT 2026-05-02T23:04:37 ***
+slurmstepd-c2n021: error: *** JOB 218274 ON c2n021 CANCELLED AT 2026-05-03T22:34:43 ***
