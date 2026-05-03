@@ -57,3 +57,4 @@ Writing configuration in legacy data format
  Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/config.8.data
 Writing restart file
  Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/restart.8.exadis
+slurmstepd-c2n063: error: *** JOB 217566 ON c2n063 CANCELLED AT 2026-05-02T23:04:37 ***
