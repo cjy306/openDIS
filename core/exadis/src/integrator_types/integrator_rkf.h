@@ -131,6 +131,22 @@ public:
         for (int j = 0; j < 6; j++)
             err += er[j] * rkf[j](i);
         err = newdt * err;
+
+        // For TWIN_SURFACE nodes, remove the normal component from the
+        // error vector.  The RKF sub-steps clamp these nodes back onto
+        // the twin plane, so any velocity component along the plane
+        // normal produces a spurious error signal that would collapse dt.
+        if (nodes[i].constraint == TWIN_SURFACE && n_twin_planes > 0) {
+            int tid = nodes[i].twin_id;
+            for (int p = 0; p < n_twin_planes; p++) {
+                if (d_twin_planes(p).id == tid) {
+                    Vec3 n = d_twin_planes(p).normal;
+                    err = err - dot(err, n) * n;
+                    break;
+                }
+            }
+        }
+
         double errnet = err.norm();
         if (errnet > emax0) emax0 = errnet;
         

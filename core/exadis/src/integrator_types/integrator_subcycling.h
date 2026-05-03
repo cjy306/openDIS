@@ -520,6 +520,20 @@ public:
             for (int j = 0; j < 6; j++)
                 err += itgr->er[j] * itgr->rkf[j](i);
             err = itgr->newdt * err;
+
+            // For TWIN_SURFACE nodes, remove the normal component from the
+            // error vector (same fix as IntegratorRKF::TagErrorNodes).
+            if (nodes[i].constraint == TWIN_SURFACE && itgr->n_twin_planes > 0) {
+                int tid = nodes[i].twin_id;
+                for (int p = 0; p < itgr->n_twin_planes; p++) {
+                    if (itgr->d_twin_planes(p).id == tid) {
+                        Vec3 n = itgr->d_twin_planes(p).normal;
+                        err = err - dot(err, n) * n;
+                        break;
+                    }
+                }
+            }
+
             double errnet = err.norm();
             if (errnet > emax0) emax0 = errnet;
             
