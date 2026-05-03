@@ -75,14 +75,16 @@ public:
                 if (network->nodes[n1].constraint == PINNED_NODE &&
                     network->nodes[n2].constraint == PINNED_NODE) continue;
 
-                // Do not refine segments between two TWIN_SURFACE nodes
-                // on the same plane. Physically, the dislocation segment
-                // lying on the twin plane is a straight constrained line
-                // connecting two intersection points — it does not need
-                // further discretization.
-                if (network->nodes[n1].constraint == TWIN_SURFACE &&
-                    network->nodes[n2].constraint == TWIN_SURFACE &&
-                    network->nodes[n1].twin_id == network->nodes[n2].twin_id) continue;
+                // Do not refine any segment with a TWIN_SURFACE endpoint.
+                // TWIN-TWIN on same plane: constrained line, no discretization needed.
+                // TWIN-FREE: the segment from the intersection point to the
+                // first free node.  Splitting it places new nodes close to
+                // the twin plane, which triggers cascading collisions and
+                // exponential node growth.  The physics near a rigid planar
+                // boundary is governed by the boundary condition, not local
+                // curvature, so extra midpoints don't improve accuracy.
+                if (network->nodes[n1].constraint == TWIN_SURFACE ||
+                    network->nodes[n2].constraint == TWIN_SURFACE) continue;
 
                 // Bisect the segment (refine)
                 int nnew = network->split_seg(i, network->cell.pbc_fold(rmid));
@@ -153,9 +155,20 @@ public:
                 if (network->conn[i].num != 2) continue;
                 if (network->nodes[i].constraint == PINNED_NODE ||
                     network->nodes[i].constraint == CORNER_NODE) continue;
-                // Do not coarsen TWIN_SURFACE nodes — they anchor the
-                // dislocation-plane intersection and must stay put.
-                if (network->nodes[i].constraint == TWIN_SURFACE) continue;
+                // TWIN_SURFACE nodes: allow coarsen only when BOTH
+                // neighbors are TWIN on the same plane (just reducing
+                // in-plane discretization).  Otherwise the merge would
+                // lose the constraint or mix different planes.
+                if (network->nodes[i].constraint == TWIN_SURFACE) {
+                    int nn0 = network->conn[i].node[0];
+                    int nn1 = network->conn[i].node[1];
+                    int tid = network->nodes[i].twin_id;
+                    if (!(network->nodes[nn0].constraint == TWIN_SURFACE &&
+                          network->nodes[nn0].twin_id == tid &&
+                          network->nodes[nn1].constraint == TWIN_SURFACE &&
+                          network->nodes[nn1].twin_id == tid))
+                        continue;
+                }
                 
                 Vec3 ri = network->nodes[i].pos;
                 
