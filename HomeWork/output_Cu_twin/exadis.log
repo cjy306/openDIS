@@ -1,0 +1,134 @@
+Step =      0: nodes = 4170, dt = 0.000000e+00, strain = 0.000000e+00, elapsed = 0.0 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/config.0.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/restart.0.exadis
+Run until reaching strain = 0.010000
+Step =      1: nodes = 4169, dt = 1.000000e-08, strain = 1.000000e-05, elapsed = 70.1 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/config.1.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/restart.1.exadis
+Step =      2: nodes = 4166, dt = 1.200000e-08, strain = 2.200000e-05, elapsed = 204.0 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/config.2.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/restart.2.exadis
+Step =      3: nodes = 4162, dt = 1.440000e-08, strain = 3.640000e-05, elapsed = 389.7 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/config.3.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/restart.3.exadis
+Step =      4: nodes = 4172, dt = 1.728000e-08, strain = 5.368000e-05, elapsed = 2801.4 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/config.4.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/restart.4.exadis
+Step =      5: nodes = 4223, dt = 1.036800e-08, strain = 6.404800e-05, elapsed = 4879.1 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/config.5.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/restart.5.exadis
+Step =      6: nodes = 4361, dt = 5.184000e-09, strain = 6.923200e-05, elapsed = 6602.7 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/config.6.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/restart.6.exadis
+Step =      7: nodes = 4563, dt = 2.592000e-09, strain = 7.182400e-05, elapsed = 7428.7 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/config.7.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/restart.7.exadis
+Step =      8: nodes = 4950, dt = 1.620000e-10, strain = 7.198600e-05, elapsed = 7479.9 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/config.8.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/restart.8.exadis
+Step =      9: nodes = 5601, dt = 1.620000e-10, strain = 7.214800e-05, elapsed = 7546.7 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/config.9.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/restart.9.exadis
+Step =     10: nodes = 6460, dt = 1.944000e-10, strain = 7.234240e-05, elapsed = 7696.9 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/config.10.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/restart.10.exadis
+Step =     11: nodes = 7567, dt = 2.332800e-10, strain = 7.257568e-05, elapsed = 7915.2 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/config.11.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/restart.11.exadis
+Step =     12: nodes = 8957, dt = 2.799360e-10, strain = 7.285562e-05, elapsed = 8328.5 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/config.12.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/restart.12.exadis
+Step =     13: nodes = 10923, dt = 3.359232e-10, strain = 7.319154e-05, elapsed = 9185.7 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/config.13.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/restart.13.exadis
+Step =     14: nodes = 13923, dt = 4.031078e-10, strain = 7.359465e-05, elapsed = 11815.0 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/config.14.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/restart.14.exadis
+Step =     15: nodes = 18358, dt = 4.837294e-10, strain = 7.407838e-05, elapsed = 20061.0 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/config.15.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/restart.15.exadis
+Error: MAX_CONN = 15 exceeded during merge_node()
+Step =     16: nodes = 25287, dt = 1.451188e-10, strain = 7.422350e-05, elapsed = 26786.0 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/config.16.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/restart.16.exadis
+Error: MAX_CONN = 15 exceeded during merge_node()
+Step =     17: nodes = 33503, dt = 2.267482e-12, strain = 7.422576e-05, elapsed = 27160.9 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/config.17.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/restart.17.exadis
+Error: MAX_CONN = 15 exceeded during merge_node()
+Error: MAX_CONN = 15 exceeded during merge_node()
+Error: MAX_CONN = 15 exceeded during merge_node()
+Error: MAX_CONN = 15 exceeded during merge_node()
+Error: MAX_CONN = 15 exceeded during merge_node()
+Error: MAX_CONN = 15 exceeded during merge_node()
+Error: MAX_CONN = 15 exceeded during merge_node()
+Error: MAX_CONN = 15 exceeded during merge_node()
+Step =     18: nodes = 44846, dt = 2.267482e-12, strain = 7.422803e-05, elapsed = 27790.9 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/config.18.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/restart.18.exadis
+Error: MAX_CONN = 15 exceeded during merge_node()
+Error: MAX_CONN = 15 exceeded during merge_node()
+Error: MAX_CONN = 15 exceeded during merge_node()
+Error: MAX_CONN = 15 exceeded during merge_node()
+Error: MAX_CONN = 15 exceeded during merge_node()
+Error: MAX_CONN = 15 exceeded during merge_node()
+Error: MAX_CONN = 15 exceeded during merge_node()
+Error: MAX_CONN = 15 exceeded during merge_node()
+Error: MAX_CONN = 15 exceeded during merge_node()
+Error: MAX_CONN = 15 exceeded during merge_node()
+Error: MAX_CONN = 15 exceeded during merge_node()
+Step =     19: nodes = 58730, dt = 1.360489e-12, strain = 7.422939e-05, elapsed = 29196.1 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/config.19.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/restart.19.exadis
+Warning: max collisions have been reached. Some collisions have been ignored
+Error: MAX_CONN = 15 exceeded during merge_node()
+Error: MAX_CONN = 15 exceeded during merge_node()
+Error: MAX_CONN = 15 exceeded during merge_node()
+Error: MAX_CONN = 15 exceeded during merge_node()
+Error: MAX_CONN = 15 exceeded during merge_node()
+Error: MAX_CONN = 15 exceeded during merge_node()
+Error: MAX_CONN = 15 exceeded during merge_node()
+Error: MAX_CONN = 15 exceeded during merge_node()
+Error: MAX_CONN = 15 exceeded during merge_node()
+Error: MAX_CONN = 15 exceeded during merge_node()
+Error: MAX_CONN = 15 exceeded during merge
