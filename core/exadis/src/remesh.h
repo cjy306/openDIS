@@ -75,11 +75,16 @@ public:
                 if (network->nodes[n1].constraint == PINNED_NODE &&
                     network->nodes[n2].constraint == PINNED_NODE) continue;
 
-                // Do not refine segments between two TWIN_SURFACE nodes
-                // on the same plane — constrained line, no discretization needed.
-                if (network->nodes[n1].constraint == TWIN_SURFACE &&
-                    network->nodes[n2].constraint == TWIN_SURFACE &&
-                    network->nodes[n1].twin_id == network->nodes[n2].twin_id) continue;
+                // Do not refine any segment with a TWIN_SURFACE endpoint.
+                // TWIN-TWIN on same plane: constrained line, no discretization needed.
+                // TWIN-FREE: splitting creates new FREE nodes near the plane,
+                // which spawn dense FREE-FREE segments that collide and trigger
+                // exponential growth.  The dislocation shape between a constrained
+                // boundary point and the first free node is determined by the
+                // boundary condition, not local curvature — extra midpoints add
+                // no physical accuracy.
+                if (network->nodes[n1].constraint == TWIN_SURFACE ||
+                    network->nodes[n2].constraint == TWIN_SURFACE) continue;
 
                 // Bisect the segment (refine)
                 int nnew = network->split_seg(i, network->cell.pbc_fold(rmid));
