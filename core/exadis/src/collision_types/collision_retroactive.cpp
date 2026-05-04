@@ -1450,33 +1450,42 @@ void CollisionRetroactive::retroactive_collision(System* system)
     // Look for collisions between segments
     for (int i = 0; i < nsegs; i++) {
         if (skipseg[i]) continue;
-        
+
         DisSeg *seg = &network->segs[i];
-        
+
         int n1 = seg->n1;
         int n2 = seg->n2;
         if (n1 >= nnodes || n2 >= nnodes) continue;
+
+        // Skip segments with a TWIN_SURFACE endpoint
+        if (network->nodes[n1].constraint == TWIN_SURFACE ||
+            network->nodes[n2].constraint == TWIN_SURFACE) continue;
+
         Vec3 p1 = network->nodes[n1].pos;
         Vec3 p2 = network->cell.pbc_position(p1, network->nodes[n2].pos);
-        
+
         Vec3 l12 = p1-p2;
         if (l12.norm2() < 1e-20) continue;
-        
+
         Vec3 pold1 = network->cell.pbc_position(p1, xold(n1));
         Vec3 pold2 = network->cell.pbc_position(p2, xold(n2));
-        
+
         Vec3 pseg = 0.5*(p1+p2);
         auto neilist = neighbor->query(pseg);
-    
+
         for (int j = 0; j < neilist.size(); j++) {
             int k = neilist[j];
             if (i <= k) continue; // collision with segments k>i
             if (skipseg[k]) continue;
-            
+
             int n3 = network->segs[k].n1;
             int n4 = network->segs[k].n2;
             if (n3 >= nnodes || n4 >= nnodes) continue;
-            
+
+            // Also skip if the neighbor segment has a TWIN endpoint
+            if (network->nodes[n3].constraint == TWIN_SURFACE ||
+                network->nodes[n4].constraint == TWIN_SURFACE) continue;
+
             // Hinges
             if (n3 == n1 || n3 == n2 || n4 == n1 || n4 == n2) continue;
             
@@ -1876,26 +1885,38 @@ void CollisionRetroactive::retroactive_collision_parallel(System* system)
     Kokkos::parallel_for(net->Nsegs_local, KOKKOS_LAMBDA(const int& i) {
         int n1 = segs[i].n1;
         int n2 = segs[i].n2;
+
+        // Skip segments with a TWIN_SURFACE endpoint — their topology
+        // is managed by twin detection, not the general collision handler.
+        // Allowing collisions on these segments creates a cascade of
+        // split_seg calls in the pile-up zone near twin planes.
+        if (nodes[n1].constraint == TWIN_SURFACE ||
+            nodes[n2].constraint == TWIN_SURFACE) return;
+
         Vec3 p1 = nodes[n1].pos;
         Vec3 p2 = cell.pbc_position(p1, nodes[n2].pos);
-        
+
         Vec3 l12 = p1-p2;
         if (l12.norm2() < 1e-20) return;
-        
+
         Vec3 pold1 = cell.pbc_position(p1, xold(n1));
         Vec3 pold2 = cell.pbc_position(p2, xold(n2));
-        
+
         auto count = d_neilist->get_count();
         auto nei = d_neilist->get_nei();
-        
+
         int Nnei = count[i];
         for (int j = 0; j < Nnei; j++) {
             int k = nei(i,j); // neighbor seg
             if (i <= k) continue; // collision with segments k>i
-            
+
             int n3 = segs[k].n1;
             int n4 = segs[k].n2;
-            
+
+            // Also skip if the neighbor segment has a TWIN endpoint
+            if (nodes[n3].constraint == TWIN_SURFACE ||
+                nodes[n4].constraint == TWIN_SURFACE) continue;
+
             // Hinges
             if (n3 == n1 || n3 == n2 || n4 == n1 || n4 == n2) continue;
             
@@ -1967,19 +1988,25 @@ void CollisionRetroactive::retroactive_collision_parallel(System* system)
         int n1 = network->segs[i].n1;
         int n2 = network->segs[i].n2;
         if (n1 >= nnodes || n2 >= nnodes) continue;
-        
+
         int n3 = network->segs[k].n1;
         int n4 = network->segs[k].n2;
         if (n3 >= nnodes || n4 >= nnodes) continue;
-        
+
+        // Double-check TWIN skip (topology may have changed since detection)
+        if (network->nodes[n1].constraint == TWIN_SURFACE ||
+            network->nodes[n2].constraint == TWIN_SURFACE ||
+            network->nodes[n3].constraint == TWIN_SURFACE ||
+            network->nodes[n4].constraint == TWIN_SURFACE) continue;
+
         Vec3 p1 = network->nodes[n1].pos;
         Vec3 p2 = network->cell.pbc_position(p1, network->nodes[n2].pos);
         Vec3 l12 = p1-p2;
-            
+
         Vec3 p3 = network->cell.pbc_position(p1, network->nodes[n3].pos);
         Vec3 p4 = network->cell.pbc_position(p3, network->nodes[n4].pos);
         Vec3 l34 = p3-p4;
-        
+
         double L1 = Lcollisions(c,0);
         double L2 = Lcollisions(c,1);
         
