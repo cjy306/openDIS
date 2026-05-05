@@ -128,6 +128,41 @@ def export_twin_planes_vtk(filename, Lbox_b, points_b, normals_b):
 # ============================================================
 # 主转换
 # ============================================================
+def wrap_vtk_pbc(vtk_file, Lbox):
+    """Fold VTK segment endpoint coordinates back into [0, Lbox).
+    write_vtk uses closest_image() for segment continuity, which can place
+    endpoints outside the primary cell.  This function wraps those coordinates
+    so ParaView shows everything inside the simulation box."""
+    with open(vtk_file, 'r') as f:
+        lines = f.readlines()
+
+    in_points = False
+    total_points = 0
+    points_written = 0
+    for idx, line in enumerate(lines):
+        if line.strip().startswith('POINTS'):
+            in_points = True
+            total_points = int(line.strip().split()[1])
+            points_written = 0
+            continue
+        if not in_points:
+            continue
+        parts = line.strip().split()
+        if len(parts) != 3:
+            continue
+        if points_written >= 8:
+            x = float(parts[0]) % Lbox
+            y = float(parts[1]) % Lbox
+            z = float(parts[2]) % Lbox
+            lines[idx] = f"{x:.8e} {y:.8e} {z:.8e}\n"
+        points_written += 1
+        if points_written >= total_points:
+            break
+
+    with open(vtk_file, 'w') as f:
+        f.writelines(lines)
+
+
 def convert(sim_dir, out_dir, init_dir=None):
     os.makedirs(out_dir, exist_ok=True)
     Lbox_b = LBOX_M / BURGMAG
@@ -171,6 +206,7 @@ def convert(sim_dir, out_dir, init_dir=None):
             net = read_paradis(data_file)
             vtk_file = os.path.join(out_dir, f'{name}.vtk')
             write_vtk(net, vtk_file, precipitates=precipitates, verbose=False)
+            wrap_vtk_pbc(vtk_file, Lbox_b)
         except Exception as e:
             print(f"    Failed: {e}")
 
