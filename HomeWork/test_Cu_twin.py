@@ -26,9 +26,9 @@ state = {
     "a":       4.0,
     "maxseg":  200,
     "minseg":  50,
-    "rtol":    0.25,
+    "rtol":    1.0,
     "rann":    2.0,
-    "nextdt":  1e-12,
+    "nextdt":  1e-9,
     "maxdt":   1e-7,
 }
 
@@ -98,7 +98,7 @@ def main():
         burgmag=state["burgmag"],
         state=state,
         print_freq=1,
-        write_freq=1,
+        write_freq=10,
         write_dir=output_dir,
         restart=restart,
     )
