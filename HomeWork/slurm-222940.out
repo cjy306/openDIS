@@ -1,0 +1,62 @@
+Host Parallel Execution Space:
+  KOKKOS_ENABLE_OPENMP: yes
+
+OpenMP Runtime Configuration:
+Kokkos::OpenMP thread_pool_topology[ 1 x 48 x 1 ]
+Reading ParaDiS configuration
+ Input file: /data/home/dg000246b/openDIS/HomeWork/init_data_twin/init_config.data
+ nodes: 4170, segments: 3880
+ Warning: Burgers vector is not conserved for 580 node(s)
+[System] 100 spherical obstacles loaded
+[System] 2 planar obstacles (twin boundaries) loaded
+Step =      0: nodes = 4170, dt = 0.000000e+00, strain = 0.000000e+00, elapsed = 0.3 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/config.0.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/restart.0.exadis
+Run until reaching strain = 0.010000
+Step =      1: nodes = 4170, dt = 1.000000e-09, strain = 1.000000e-06, elapsed = 0.5 sec
+Step =      2: nodes = 4170, dt = 1.200000e-09, strain = 2.200000e-06, elapsed = 0.8 sec
+Step =      3: nodes = 4512, dt = 1.440000e-09, strain = 3.640000e-06, elapsed = 1.0 sec
+Step =      4: nodes = 5074, dt = 4.320000e-10, strain = 4.072000e-06, elapsed = 1.3 sec
+Step =      5: nodes = 6260, dt = 2.160000e-10, strain = 4.288000e-06, elapsed = 1.5 sec
+Step =      6: nodes = 8318, dt = 1.080000e-10, strain = 4.396000e-06, elapsed = 1.9 sec
+Step =      7: nodes = 11125, dt = 1.080000e-10, strain = 4.504000e-06, elapsed = 2.5 sec
+Step =      8: nodes = 13547, dt = 6.480000e-11, strain = 4.568800e-06, elapsed = 4.0 sec
+Step =      9: nodes = 16614, dt = 3.240000e-11, strain = 4.601200e-06, elapsed = 8.3 sec
+Step =     10: nodes = 21370, dt = 3.240000e-11, strain = 4.633600e-06, elapsed = 20.8 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/config.10.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/restart.10.exadis
+Error: MAX_CONN = 15 exceeded during merge_node()
+Step =     11: nodes = 29107, dt = 3.888000e-11, strain = 4.672480e-06, elapsed = 43.3 sec
+Step =     12: nodes = 42409, dt = 2.332800e-11, strain = 4.695808e-06, elapsed = 123.9 sec
+Warning: max collisions have been reached. Some collisions have been ignored
+Error: MAX_CONN = 15 exceeded during merge_node()
+Error: MAX_CONN = 15 exceeded during merge_node()
+Step =     13: nodes = 65265, dt = 2.332800e-11, strain = 4.719136e-06, elapsed = 302.6 sec
+Warning: max collisions have been reached. Some collisions have been ignored
+Error: MAX_CONN = 15 exceeded during merge_node()
+Error: MAX_CONN = 15 exceeded during merge_node()
+Step =     14: nodes = 103797, dt = 2.799360e-11, strain = 4.747130e-06, elapsed = 772.8 sec
+Warning: max collisions have been reached. Some collisions have been ignored
+Error: MAX_CONN = 15 exceeded during merge_node()
+Error: MAX_CONN = 15 exceeded during merge_node()
+Error: MAX_CONN = 15 exceeded during merge_node()
+Error: MAX_CONN = 15 exceeded during merge_node()
+Error: MAX_CONN = 15 exceeded during merge_node()
+Error: MAX_CONN = 15 exceeded during merge_node()
+Error: MAX_CONN = 15 exceeded during merge_node()
+Error: MAX_CONN = 15 exceeded during merge_node()
+Error: MAX_CONN = 15 exceeded during merge_node()
+Error: MAX_CONN = 15 exceeded during merge_node()
+Error: MAX_CONN = 15 exceeded during merge_node()
+Error: MAX_CONN = 15 exceeded during merge_node()
+Error: MAX_CONN = 15 exceeded during merge_node()
+Error: MAX_CONN = 15 exceeded during merge_node()
+Error: MAX_CONN = 15 exceeded during merge_node()
+Error: MAX_CONN = 15 exceeded during merge_node()
+Error: MAX_CONN = 15 exceeded during merge_node()
+Step =     15: nodes = 167915, dt = 3.359232e-11, strain = 4.780722e-06, elapsed = 1875.2 sec
+/var/spool/slurmd/job222940/slurm_script: line 16: 31971 Segmentation fault      (core dumped) python /data/home/dg000246b/openDIS/HomeWork/test_Cu_twin.py
