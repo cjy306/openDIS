@@ -154,19 +154,36 @@ public:
                 if (network->conn[i].num != 2) continue;
                 if (network->nodes[i].constraint == PINNED_NODE ||
                     network->nodes[i].constraint == CORNER_NODE) continue;
-                // TWIN_SURFACE nodes: allow coarsen only when BOTH
-                // neighbors are TWIN on the same plane (just reducing
-                // in-plane discretization).  Otherwise the merge would
-                // lose the constraint or mix different planes.
+                // TWIN_SURFACE nodes: allow coarsen when both neighbors are
+                // TWIN on the same plane (reducing in-plane discretization).
+                // For mixed neighbors (one TWIN, one FREE): merge toward
+                // TWIN neighbor with normal minseg threshold, or toward
+                // FREE neighbor only when arm is extremely short (< rann).
                 if (network->nodes[i].constraint == TWIN_SURFACE) {
                     int nn0 = network->conn[i].node[0];
                     int nn1 = network->conn[i].node[1];
                     int tid = network->nodes[i].twin_id;
-                    if (!(network->nodes[nn0].constraint == TWIN_SURFACE &&
-                          network->nodes[nn0].twin_id == tid &&
-                          network->nodes[nn1].constraint == TWIN_SURFACE &&
-                          network->nodes[nn1].twin_id == tid))
-                        continue;
+                    bool n0_twin = (network->nodes[nn0].constraint == TWIN_SURFACE &&
+                                    network->nodes[nn0].twin_id == tid);
+                    bool n1_twin = (network->nodes[nn1].constraint == TWIN_SURFACE &&
+                                    network->nodes[nn1].twin_id == tid);
+
+                    if (!n0_twin && !n1_twin) continue;
+
+                    if (!n0_twin || !n1_twin) {
+                        // Mixed neighbors: adjust thresholds.
+                        // Toward TWIN neighbor: normal minseg threshold.
+                        // Toward FREE neighbor: only merge if extremely short (< rann).
+                        Vec3 ri = network->nodes[i].pos;
+                        Vec3 r0 = network->cell.pbc_position(ri, network->nodes[nn0].pos);
+                        double l0 = (r0 - ri).norm();
+                        Vec3 r1 = network->cell.pbc_position(ri, network->nodes[nn1].pos);
+                        double l1 = (r1 - ri).norm();
+
+                        double thr0 = n0_twin ? minseg : rann;
+                        double thr1 = n1_twin ? minseg : rann;
+                        if (l0 > thr0 && l1 > thr1) continue;
+                    }
                 }
                 
                 Vec3 ri = network->nodes[i].pos;
