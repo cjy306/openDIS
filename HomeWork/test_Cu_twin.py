@@ -67,7 +67,7 @@ def main():
             restart_file=os.path.join(output_dir, f'restart.{args.restart}.exadis'))
     else:
         G = ExaDisNet()
-        G.read_paradis(os.path.join(init_dir, 'init_config.data'), pbc=[1, 1, 0])
+        G.read_paradis(os.path.join(init_dir, 'init_config.data'))
         net = DisNetManager(G)
         restart = None
 

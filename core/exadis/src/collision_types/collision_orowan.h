@@ -39,6 +39,73 @@ public:
     CollisionOrowan(System* system) : CollisionRetroactive(system) {}
 
     /*-----------------------------------------------------------------------
+     *  pre_integrate  (velocity projection for twin boundaries)
+     *
+     *  Called BEFORE time-integration.  For each node near a twin plane
+     *  on the active-zone side, zero the velocity component normal to
+     *  the plane if it points toward the vacuum.  This prevents nodes
+     *  from ever crossing the plane, eliminating the need for geometric
+     *  snap-back (handle_twin_wall / handle_twin_detect) and the
+     *  TWIN_SURFACE constraint that blocks coarsening.
+     *
+     *  Nodes on the vacuum side are NOT blocked — they can return freely.
+     *---------------------------------------------------------------------*/
+    void pre_integrate(System* system) override
+    {
+        if (system->planar_obstacles.empty()) return;
+
+        DeviceDisNet* net = system->get_device_network();
+        int Nnodes  = net->Nnodes_local;
+        int Nplanes = (int)system->planar_obstacles.size();
+
+        Kokkos::View<PlanarObstacle*, T_memory_space> d_planes("d_planes_vel", Nplanes);
+        auto h_planes = Kokkos::create_mirror_view(d_planes);
+        for (int j = 0; j < Nplanes; j++) h_planes(j) = system->planar_obstacles[j];
+        Kokkos::deep_copy(d_planes, h_planes);
+
+        auto nodes = net->get_nodes();
+        auto cell  = net->cell;
+        Vec3 box_center = cell.center();
+        double threshold = 2.0 * system->params.rann;
+
+        Kokkos::parallel_for("TwinVelProject", Nnodes, KOKKOS_LAMBDA(const int i) {
+            // Skip pinned and corner nodes
+            if (nodes[i].constraint == PINNED_NODE ||
+                nodes[i].constraint == CORNER_NODE) return;
+
+            Vec3 pos = nodes[i].pos;
+            Vec3 vel = nodes[i].v;
+
+            for (int j = 0; j < Nplanes; j++) {
+                Vec3   normal = d_planes(j).normal;
+                Vec3   point  = d_planes(j).point;
+                double d = dot(pos - point, normal);  // signed distance
+
+                if (fabs(d) > threshold) continue;
+
+                double vn = dot(vel, normal);
+
+                // Determine which side is the active zone:
+                // The active zone is toward box_center from the plane.
+                // active_sign = +1 if active zone is in +normal direction
+                // active_sign = -1 if active zone is in -normal direction
+                double center_d = dot(box_center - point, normal);
+                int active_sign = (center_d > 0.0) ? 1 : -1;
+
+                // Block normal velocity if node is on the active side
+                // AND velocity points toward the vacuum (away from active zone):
+                //   d * active_sign > 0  →  node is on active side
+                //   vn * active_sign < 0 →  velocity pushes toward vacuum
+                if (d * active_sign >= 0.0 && vn * active_sign < 0.0) {
+                    nodes[i].v = vel - vn * normal;  // zero normal component
+                    return;  // one plane per node per step
+                }
+            }
+        });
+        Kokkos::fence();
+    }
+
+    /*-----------------------------------------------------------------------
      *  handle_orowan  (Kokkos parallel)
      *  Runs entirely on the device network.  No topology changes.
      *---------------------------------------------------------------------*/
