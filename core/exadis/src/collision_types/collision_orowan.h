@@ -107,7 +107,11 @@ public:
 
     /*-----------------------------------------------------------------------
      *  handle_orowan  (Kokkos parallel)
-     *  Runs entirely on the device network.  No topology changes.
+     *
+     *  For each non-pinned node, check if it has entered any spherical
+     *  obstacle.  If inside, push it back onto the obstacle surface.
+     *  No constraint marking — nodes remain UNCONSTRAINED so remesh
+     *  coarsening can merge them freely.
      *---------------------------------------------------------------------*/
     void handle_orowan(System* system)
     {
@@ -126,6 +130,9 @@ public:
         auto nodes = net->get_nodes();
 
         Kokkos::parallel_for("OrowanNodes", Nnodes, KOKKOS_LAMBDA(const int i) {
+            if (nodes[i].constraint == PINNED_NODE ||
+                nodes[i].constraint == CORNER_NODE) return;
+
             Vec3 pos = nodes[i].pos;
 
             for (int j = 0; j < Nobs; j++) {
@@ -134,28 +141,12 @@ public:
                 double r2    = d_obs(j).radius * d_obs(j).radius;
 
                 if (dist2 < r2) {
-                    // Node inside sphere: push to surface.
+                    // Node inside sphere: push to surface, no marking.
                     double dist   = sqrt(dist2);
                     Vec3   normal = (dist > 1e-10) ? (1.0/dist) * d
                                                    : Vec3(0.0, 0.0, 1.0);
-                    nodes[i].pos            = d_obs(j).center + d_obs(j).radius * normal;
-                    nodes[i].constraint     = SPHERE_SURFACE;
-                    nodes[i].sphere_id      = d_obs(j).id;
-                    nodes[i].sphere_normal  = normal;
-
-                } else if (nodes[i].constraint == SPHERE_SURFACE &&
-                           nodes[i].sphere_id  == d_obs(j).id) {
-                    double dist = sqrt(dist2);
-                    if (dist > d_obs(j).radius * 1.05) {
-                        // Released (topology handled bypass).
-                        nodes[i].constraint     = UNCONSTRAINED;
-                        nodes[i].sphere_id      = -1;
-                        nodes[i].sphere_normal  = Vec3(0.0);
-                    } else {
-                        // Refresh outward normal.
-                        nodes[i].sphere_normal =
-                            (dist > 1e-10) ? (1.0/dist) * d : Vec3(0.0, 0.0, 1.0);
-                    }
+                    nodes[i].pos = d_obs(j).center + d_obs(j).radius * normal;
+                    return;  // one sphere per node per step
                 }
             }
         });
