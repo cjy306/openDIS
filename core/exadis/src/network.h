@@ -213,7 +213,13 @@ struct Cell
         origin = Vec3(bmin.x, bmin.y, bmin.z);
         set_H(Mat33().diag(bmax.x-bmin.x, bmax.y-bmin.y, bmax.z-bmin.z));
     }
-    
+
+    Cell(const Vec3& bmin, const Vec3& bmax, std::vector<int> pbc) {
+        xpbc = pbc[0]; ypbc = pbc[1]; zpbc = pbc[2];
+        origin = Vec3(bmin.x, bmin.y, bmin.z);
+        set_H(Mat33().diag(bmax.x-bmin.x, bmax.y-bmin.y, bmax.z-bmin.z));
+    }
+
     Cell(const Mat33& _H, const Vec3& _origin, std::vector<int> pbc) {
         xpbc = pbc[0]; ypbc = pbc[1]; zpbc = pbc[2];
         origin = _origin;

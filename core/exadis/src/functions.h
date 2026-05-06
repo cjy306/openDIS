@@ -42,6 +42,7 @@ SerialDisNet* generate_prismatic_config(Crystal crystal, Cell cell, int numsourc
 SerialDisNet* generate_prismatic_config(Crystal crystal, double Lbox, int numsources, double radius,
                                         double maxseg=-1, int seed=1234, bool uniform=0);
 SerialDisNet* read_paradis(const char* file, bool verbose=true);
+SerialDisNet* read_paradis(const char* file, bool verbose, std::vector<int> pbc);
 
 
 /*------------------------------------------------------------------------

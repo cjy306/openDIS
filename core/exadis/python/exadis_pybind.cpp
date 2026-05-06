@@ -368,6 +368,13 @@ ExaDisNet read_paradis_system(const char* file, bool verbose)
     return ExaDisNet(system);
 }
 
+ExaDisNet read_paradis_system(const char* file, bool verbose, std::vector<int> pbc)
+{
+    SerialDisNet* config = read_paradis(file, verbose, pbc);
+    System* system = make_system(config, Crystal(), Params());
+    return ExaDisNet(system);
+}
+
 
 /*---------------------------------------------------------------------------
  *
@@ -1143,7 +1150,8 @@ PYBIND11_MODULE(pyexadis, m) {
     m.def("finalize", &finalize, "Finalize the python binding module");
     
     // Read / Generate
-    m.def("read_paradis", &read_paradis_system, "Read ParaDiS data file", py::arg("file"), py::arg("verbose")=true);
+    m.def("read_paradis", py::overload_cast<const char*, bool>(&read_paradis_system), "Read ParaDiS data file", py::arg("file"), py::arg("verbose")=true);
+    m.def("read_paradis", py::overload_cast<const char*, bool, std::vector<int>>(&read_paradis_system), "Read ParaDiS data file", py::arg("file"), py::arg("verbose")=true, py::arg("pbc")=std::vector<int>{PBC_BOUND, PBC_BOUND, PBC_BOUND});
     m.def("generate_prismatic_config", (ExaDisNet (*)(Crystal, double, int, double, double, int, bool)) &generate_prismatic_config_system,
           "Generate a configuration made of prismatic loops",
           py::arg("crystal"), py::arg("Lbox"), py::arg("numsources"), py::arg("radius"), py::arg("maxseg")=-1, py::arg("seed")=1234, py::arg("uniform")=false);
