@@ -22,9 +22,9 @@ state = {
     "mu":        48e9,
     "nu":        0.324,
     "a":         4.0,
-    "maxseg":    200,
-    "minseg":    50,
-    "rtol":      1.0,
+    "maxseg":    2000,
+    "minseg":    400,
+    "rtol":      0.25,
     "rann":      2.0,
     "nextdt":    1e-9,
     "maxdt":     1e-6,
@@ -55,7 +55,7 @@ def main():
 
     calforce  = CalForce(force_mode='SUBCYCLING_MODEL', state=state, Ngrid=64, cell=net.get_disnet(ExaDisNet).cell)
     mobility  = MobilityLaw(mobility_law='FCC_0', state=state, Medge=64103.0, Mscrew=64103.0, vmax=20000.0)
-    timeint   = TimeIntegration(integrator='Subcycling', rgroups=[0.0, 50.0, 150.0, 400.0], state=state, force=calforce, mobility=mobility)
+    timeint   = TimeIntegration(integrator='Subcycling', rgroups=[0.0, 300.0, 1000.0, 2000.0], state=state, force=calforce, mobility=mobility)
     collision = Collision(collision_mode='Retroactive', state=state)
     topology  = Topology(topology_mode='TopologyParallel', state=state, force=calforce, mobility=mobility)
     remesh    = Remesh(remesh_rule='LengthBased', state=state)
