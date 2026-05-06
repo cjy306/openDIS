@@ -22,11 +22,11 @@ state = {
     "mu":        48e9,
     "nu":        0.324,
     "a":         4.0,
-    "maxseg":    2000,
-    "minseg":    400,
-    "rtol":      0.25,
+    "maxseg":    200,
+    "minseg":    50,
+    "rtol":      1.0,
     "rann":      2.0,
-    "nextdt":    1e-12,
+    "nextdt":    1e-9,
     "maxdt":     1e-7,
 }
 
