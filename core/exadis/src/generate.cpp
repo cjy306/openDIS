@@ -370,22 +370,28 @@ struct ParaDisSeg {
 
 SerialDisNet* read_paradis(const char* file, bool verbose)
 {
+    std::vector<int> pbc = {PBC_BOUND, PBC_BOUND, PBC_BOUND};
+    return read_paradis(file, verbose, pbc);
+}
+
+SerialDisNet* read_paradis(const char* file, bool verbose, std::vector<int> pbc)
+{
     if (verbose) printf("Reading ParaDiS configuration\n");
-    
+
     FILE *fp = fopen(file, "r");
     if (fp == NULL)
         ExaDiS_fatal("Error: cannot open ParaDiS file %s\n", file);
     else
         if (verbose) printf(" Input file: %s\n", file);
-    
+
     char *line = NULL;
     size_t len = 0;
-    
+
     // Read general information
     bool found_min = 0, found_max = 0, found_data = 0;
     Vec3 minBounds, maxBounds;
     int nodeCount = -1;
-    
+
     while (getline(&line, &len, fp) != -1) {
         if (strncmp(line, "minCoordinates = [", 18) == 0) {
             found_min = 1;
@@ -406,11 +412,11 @@ SerialDisNet* read_paradis(const char* file, bool verbose)
             break;
         }
     }
-    
+
     if (!found_min || !found_max || !found_data || nodeCount < 0)
         ExaDiS_fatal("Error: invalid ParaDiS file %s\n", file);
-    
-    Cell cell(minBounds, maxBounds);
+
+    Cell cell(minBounds, maxBounds, pbc);
     SerialDisNet *network = new SerialDisNet(cell);
     
     // Read nodal data
