@@ -1877,7 +1877,7 @@ void CollisionRetroactive::retroactive_collision_parallel(System* system)
     NeighborList* d_neilist = neilist;
     
     // Look for collisions between segments
-    int max_collisions = 2 * net->Nsegs_local;
+    int max_collisions = 5 * net->Nsegs_local;
     Kokkos::View<int, T_memory_shared> ncollisions("ncollisions");
     Kokkos::View<int**, T_memory_shared> collisions("collisions", max_collisions, 2);
     Kokkos::View<double**, T_memory_shared> Lcollisions("Lcollisions", max_collisions, 2);
