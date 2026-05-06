@@ -68,21 +68,21 @@ def main():
     else:
         G = ExaDisNet()
         G.read_paradis(os.path.join(init_dir, 'init_config.data'))
+        # ---- 临时测试：关掉 z 方向 PBC ----
+        nodes_arr = G.get_nodes_array()
+        segs_arr = G.get_segs_array()
+        old_cell = G.get_cell()
+        pbc_flags = old_cell.is_periodic()
+        print(f"[PBC test] 原始 PBC: x={pbc_flags[0]}, y={pbc_flags[1]}, z={pbc_flags[2]}")
+        new_cell = pyexadis.Cell(old_cell.h, old_cell.origin, is_periodic=[1, 1, 0])
+        G.import_data(cell=new_cell, nodes=nodes_arr, segs=segs_arr)
+        pbc_flags_new = G.get_cell().is_periodic()
+        print(f"[PBC test] 修改后 PBC: x={pbc_flags_new[0]}, y={pbc_flags_new[1]}, z={pbc_flags_new[2]}")
+        # ------------------------------------
         net = DisNetManager(G)
         restart = None
 
     exadis_net = net.get_disnet(ExaDisNet)
-
-    # ---- 临时测试：关掉 z 方向 PBC ----
-    serial_net = exadis_net._get_serial_network()
-    old_cell = serial_net.cell
-    pbc_flags = old_cell.is_periodic()
-    print(f"[PBC test] 原始 PBC: x={pbc_flags[0]}, y={pbc_flags[1]}, z={pbc_flags[2]}")
-    new_cell = pyexadis.Cell(old_cell.h, old_cell.origin, is_periodic=[1, 1, 0])
-    serial_net.cell = new_cell
-    pbc_flags_new = serial_net.cell.is_periodic()
-    print(f"[PBC test] 修改后 PBC: x={pbc_flags_new[0]}, y={pbc_flags_new[1]}, z={pbc_flags_new[2]}")
-    # ------------------------------------
 
     # 加载球形杂质
     if len(centers_b) > 0:
