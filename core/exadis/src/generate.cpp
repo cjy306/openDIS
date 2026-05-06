@@ -368,12 +368,6 @@ struct ParaDisSeg {
     }
 };
 
-SerialDisNet* read_paradis(const char* file, bool verbose)
-{
-    std::vector<int> pbc = {PBC_BOUND, PBC_BOUND, PBC_BOUND};
-    return read_paradis(file, verbose, pbc);
-}
-
 SerialDisNet* read_paradis(const char* file, bool verbose, std::vector<int> pbc)
 {
     if (verbose) printf("Reading ParaDiS configuration\n");
@@ -493,6 +487,12 @@ SerialDisNet* read_paradis(const char* file, bool verbose, std::vector<int> pbc)
     else if (verbose) printf(" Burgers vector is conserved for all nodes\n");
     
     return network;
+}
+
+SerialDisNet* read_paradis(const char* file, bool verbose)
+{
+    std::vector<int> pbc = {PBC_BOUND, PBC_BOUND, PBC_BOUND};
+    return read_paradis(file, verbose, pbc);
 }
 
 } // namespace ExaDiS
