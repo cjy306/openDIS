@@ -24,12 +24,12 @@ state = {
     "mu":      48e9,
     "nu":      0.324,
     "a":       4.0,
-    "maxseg":  200,
-    "minseg":  50,
-    "rtol":    1.0,
+    "maxseg":  2000,
+    "minseg":  4000,
+    "rtol":    0.25,
     "rann":    2.0,
-    "nextdt":  1e-8,
-    "maxdt":   1e-6,
+    "nextdt":  1e-12,
+    "maxdt":   1e-7,
 }
 
 
@@ -81,8 +81,8 @@ def main():
     if len(twin_points_b) > 0:
         exadis_net.load_twin_planes(twin_points_b, twin_normals_b)
 
-    calforce  = CalForce(force_mode='SUBCYCLING_MODEL', state=state, Ngrid=64, cell=exadis_net.cell)
-    mobility  = MobilityLaw(mobility_law='FCC_0', state=state, Medge=64103.0, Mscrew=64103.0, vmax=20000.0)
+    calforce  = CalForce(force_mode='SUBCYCLING_MODEL', state=state, Ngrid=32, cell=exadis_net.cell)
+    mobility  = MobilityLaw(mobility_law='FCC_0', state=state, Medge=64103.0, Mscrew=64103.0, vmax=50.0)
     timeint   = TimeIntegration(integrator='Subcycling', rgroups=[0.0, 50.0, 150.0, 400.0], state=state, force=calforce, mobility=mobility)
     collision = Collision(collision_mode='Orowan', state=state)
     topology  = Topology(topology_mode='TopologyParallel', state=state, force=calforce, mobility=mobility)
