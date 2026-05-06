@@ -454,6 +454,7 @@ struct CollisionBind {
     CollisionBind(Collision* _collision, Params _params) : 
     collision(_collision), params(_params) {}
     void handle(SystemBind& sysbind) { collision->handle(sysbind.system); }
+    void pre_integrate(SystemBind& sysbind) { collision->pre_integrate(sysbind.system); }
 };
 
 

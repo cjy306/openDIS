@@ -634,7 +634,10 @@ void ExaDiSApp::step(Control& ctrl)
     
     // Mobility calculation
     mobility->compute(system);
-    
+
+    // Pre-integration velocity projection (e.g. twin boundary)
+    collision->pre_integrate(system);
+
     // Time-integration
     integrator->integrate(system);
     oprec_save_integration(ctrl);

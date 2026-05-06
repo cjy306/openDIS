@@ -26,6 +26,7 @@ public:
     Collision() {}
     Collision(System *system) {}
     virtual void handle(System *system) {}
+    virtual void pre_integrate(System *system) {}
     virtual void post_remesh(System *system) {}
     virtual const char* name() { return "CollisionNone"; }
 };
