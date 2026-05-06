@@ -68,6 +68,10 @@ public:
         Vec3 box_center = cell.center();
         double threshold = 2.0 * system->params.rann;
 
+        // Debug: count blocked nodes (use Kokkos::View for atomic reduction)
+        Kokkos::View<int, T_memory_space> d_count("d_count");
+        Kokkos::deep_copy(d_count, 0);
+
         Kokkos::parallel_for("TwinVelProject", Nnodes, KOKKOS_LAMBDA(const int i) {
             // Skip pinned and corner nodes
             if (nodes[i].constraint == PINNED_NODE ||
@@ -85,24 +89,25 @@ public:
 
                 double vn = dot(vel, normal);
 
-                // Determine which side is the active zone:
-                // The active zone is toward box_center from the plane.
-                // active_sign = +1 if active zone is in +normal direction
-                // active_sign = -1 if active zone is in -normal direction
+                // Determine which side is the active zone
                 double center_d = dot(box_center - point, normal);
                 int active_sign = (center_d > 0.0) ? 1 : -1;
 
                 // Block normal velocity if node is on the active side
-                // AND velocity points toward the vacuum (away from active zone):
-                //   d * active_sign > 0  →  node is on active side
-                //   vn * active_sign < 0 →  velocity pushes toward vacuum
+                // AND velocity points toward the vacuum
                 if (d * active_sign >= 0.0 && vn * active_sign < 0.0) {
                     nodes[i].v = vel - vn * normal;  // zero normal component
+                    Kokkos::atomic_inc(&d_count());
                     return;  // one plane per node per step
                 }
             }
         });
         Kokkos::fence();
+
+        auto h_count = Kokkos::create_mirror_view(d_count);
+        Kokkos::deep_copy(h_count, d_count);
+        if (h_count() > 0)
+            printf("[TwinVelProj] step blocked %d node(s)\n", h_count());
     }
 
     /*-----------------------------------------------------------------------
