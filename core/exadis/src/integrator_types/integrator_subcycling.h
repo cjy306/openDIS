@@ -686,16 +686,27 @@ private:
             for (int j = 0; j < Nplanes; j++) {
                 Vec3   normal = d_planes(j).normal;
                 Vec3   point  = d_planes(j).point;
-                double d = dot(pos - point, normal);
+                double d = dot(pos - point, normal);  // signed distance
 
                 double center_d = dot(box_center - point, normal);
                 double active_sign = (center_d > 0.0) ? 1.0 : -1.0;
 
-                double d_active = d * active_sign;
-                if (d_active > 0.0 && d_active < 5.0 * lambda) {
-                    double F_mag = F0 * exp(-d_active / lambda);
-                    Vec3 F_repel = F_mag * active_sign * normal;
-                    Kokkos::atomic_add(&nodes[i].f, F_repel);
+                double d_active = d * active_sign;  // positive on active side
+                double abs_d = fabs(d);
+
+                if (abs_d < 5.0 * lambda) {
+                    if (d_active > 0.0) {
+                        // Active side: exponential repulsion toward plane
+                        double F_mag = F0 * exp(-d_active / lambda);
+                        Vec3 F_repel = F_mag * active_sign * normal;
+                        Kokkos::atomic_add(&nodes[i].f, F_repel);
+                    } else {
+                        // Crossed to wrong side: strong restoring force
+                        // pushing node back toward the active side
+                        double F_mag = F0 * (1.0 + fabs(d_active) / lambda);
+                        Vec3 F_restore = F_mag * active_sign * normal;
+                        Kokkos::atomic_add(&nodes[i].f, F_restore);
+                    }
                 }
             }
         });
@@ -942,6 +953,7 @@ public:
                 set_group(group);
                 if (force->drift && group > 0) {
                     force->compute(system);
+                    add_twin_repulsive_force(system);
                     force->save_subforce(network, group);
                 }
             }

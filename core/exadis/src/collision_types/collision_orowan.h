@@ -87,12 +87,21 @@ public:
                 double center_d = dot(box_center - point, normal);
                 double active_sign = (center_d > 0.0) ? 1.0 : -1.0;
 
-                // Only apply to active-side nodes within ~5*lambda
                 double d_active = d * active_sign;  // positive on active side
-                if (d_active > 0.0 && d_active < 5.0 * lambda) {
-                    double F_mag = F0 * exp(-d_active / lambda);
-                    Vec3 F_repel = F_mag * active_sign * normal;
-                    Kokkos::atomic_add(&nodes[i].f, F_repel);
+                double abs_d = fabs(d);
+
+                if (abs_d < 5.0 * lambda) {
+                    if (d_active > 0.0) {
+                        // Active side: exponential repulsion
+                        double F_mag = F0 * exp(-d_active / lambda);
+                        Vec3 F_repel = F_mag * active_sign * normal;
+                        Kokkos::atomic_add(&nodes[i].f, F_repel);
+                    } else {
+                        // Crossed to wrong side: strong restoring force
+                        double F_mag = F0 * (1.0 + fabs(d_active) / lambda);
+                        Vec3 F_restore = F_mag * active_sign * normal;
+                        Kokkos::atomic_add(&nodes[i].f, F_restore);
+                    }
                 }
             }
         });
@@ -213,6 +222,9 @@ public:
 
         // 2. Orowan sphere-surface enforcement.
         handle_orowan(system);
+
+        // 3. Twin-wall safety net (project back nodes that crossed).
+        handle_twin_wall(system);
 
         Kokkos::fence();
         system->timer[system->TIMER_COLLISION].stop();
