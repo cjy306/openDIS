@@ -214,9 +214,6 @@ public:
         // 2. Orowan sphere-surface enforcement.
         handle_orowan(system);
 
-        // 3. Safety-net wall detection (should rarely fire).
-        handle_twin_wall(system);
-
         Kokkos::fence();
         system->timer[system->TIMER_COLLISION].stop();
     }
