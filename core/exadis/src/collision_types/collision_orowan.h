@@ -70,7 +70,7 @@ public:
         double mu      = system->params.MU;
         double burgmag = system->params.burgmag;
         double lambda  = system->params.minseg;  // decay length (50b)
-        double F0      = mu * burgmag * burgmag / lambda;  // peak force
+        double F0      = 10.0 * mu * burgmag * burgmag / lambda;  // peak force
 
         Kokkos::parallel_for("TwinRepulsion", Nnodes, KOKKOS_LAMBDA(const int i) {
             if (nodes[i].constraint == PINNED_NODE ||
@@ -222,9 +222,6 @@ public:
 
         // 2. Orowan sphere-surface enforcement.
         handle_orowan(system);
-
-        // 3. Twin-wall safety net (project back nodes that crossed).
-        handle_twin_wall(system);
 
         Kokkos::fence();
         system->timer[system->TIMER_COLLISION].stop();

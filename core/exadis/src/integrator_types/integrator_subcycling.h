@@ -676,7 +676,7 @@ private:
         double mu      = system->params.MU;
         double burgmag = system->params.burgmag;
         double lambda  = system->params.minseg;
-        double F0      = mu * burgmag * burgmag / lambda;
+        double F0      = 10.0 * mu * burgmag * burgmag / lambda;
 
         Kokkos::parallel_for("TwinRepulsionSub", Nnodes, KOKKOS_LAMBDA(const int i) {
             if (nodes[i].constraint == PINNED_NODE ||
