@@ -61,7 +61,7 @@ public:
         auto nodes = net->get_nodes();
         auto cell  = net->cell;
         Vec3 box_center = cell.center();
-        double threshold = 2.0 * system->params.rann;
+        double threshold = system->params.maxseg;
 
         // Debug: count blocked nodes (use Kokkos::View for atomic reduction)
         Kokkos::View<int, T_memory_space> d_count("d_count");
@@ -295,7 +295,7 @@ public:
         auto nodes = net->get_nodes();
         auto cell  = net->cell;
         Vec3 box_center = cell.center();
-        double threshold = 2.0 * system->params.rann;
+        double threshold = system->params.maxseg;
 
         Kokkos::parallel_for("TwinSnap", Nnodes, KOKKOS_LAMBDA(const int i) {
             if (nodes[i].constraint == PINNED_NODE ||
@@ -361,7 +361,6 @@ public:
     void post_remesh(System* system) override
     {
         handle_twin_snap(system);
-        handle_twin_detect(system);
     }
 
     const char* name() { return "CollisionOrowan"; }
