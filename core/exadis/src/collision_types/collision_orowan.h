@@ -6,12 +6,16 @@
  *    Implements Orowan bypass for spherical precipitates and
  *    twin-boundary blocking for planar obstacles.
  *
- *    Twin boundary strategy:
- *    - pre_integrate: velocity-based blocking prevents crossing
- *    - handle_twin_wall: safety-net projection to d=0 for crossers
- *    - Projected nodes marked TWIN_SURFACE so CollisionRetroactive
- *      skips them (prevents coplanar collision pile-up / MAX_CONN)
- *    - Nodes that move away from the plane are unmarked automatically
+ *    Twin boundary strategy: FORCE-BASED repulsion.
+ *    An exponential repulsive force is added to nodes approaching
+ *    a twin plane from the active side.  The force is purely normal
+ *    to the plane, so tangential motion (gliding along the boundary)
+ *    is unrestricted.  This works within the standard DDD force →
+ *    mobility → integration pipeline without any position or velocity
+ *    manipulation.
+ *
+ *    handle_twin_wall is kept as a lightweight safety net in case
+ *    a node still overshoots the plane.
  *
  *-------------------------------------------------------------------------*/
 
@@ -35,16 +39,17 @@ public:
     CollisionOrowan(System* system) : CollisionRetroactive(system) {}
 
     /*-----------------------------------------------------------------------
-     *  pre_integrate  (velocity projection for twin boundaries)
+     *  add_obstacle_force  (called between force->compute and mobility)
      *
-     *  Called BEFORE time-integration.  For each node on the active side
-     *  whose normal velocity would carry it past the twin plane within
-     *  safety * dt, zero the normal velocity component.
+     *  Adds an exponential repulsive force for each node near a twin plane
+     *  on the active side.  Force acts purely in the plane-normal direction:
      *
-     *  Also unmarks TWIN_SURFACE nodes that have drifted away from the
-     *  plane (d > rann), restoring them to UNCONSTRAINED.
+     *      F_repel = F0 * exp(-d / lambda) * n_active
+     *
+     *  where d is the distance to the plane, lambda is the decay length,
+     *  and F0 = mu * b^2 / lambda provides a physically-scaled magnitude.
      *---------------------------------------------------------------------*/
-    void pre_integrate(System* system) override
+    void add_obstacle_force(System* system) override
     {
         if (system->planar_obstacles.empty()) return;
 
@@ -52,7 +57,7 @@ public:
         int Nnodes  = net->Nnodes_local;
         int Nplanes = (int)system->planar_obstacles.size();
 
-        Kokkos::View<PlanarObstacle*, T_memory_space> d_planes("d_planes_vel", Nplanes);
+        Kokkos::View<PlanarObstacle*, T_memory_space> d_planes("d_planes_force", Nplanes);
         auto h_planes = Kokkos::create_mirror_view(d_planes);
         for (int j = 0; j < Nplanes; j++) h_planes(j) = system->planar_obstacles[j];
         Kokkos::deep_copy(d_planes, h_planes);
@@ -60,51 +65,34 @@ public:
         auto nodes = net->get_nodes();
         auto cell  = net->cell;
         Vec3 box_center = cell.center();
-        double dt = system->realdt;
-        if (dt <= 0.0) dt = system->params.nextdt;
-        double safety = 2.0;
-        double rann = system->params.rann;
 
-        Kokkos::parallel_for("TwinVelProject", Nnodes, KOKKOS_LAMBDA(const int i) {
+        // Force parameters
+        double mu      = system->params.mu;
+        double burgmag = system->params.burgmag;
+        double lambda  = system->params.minseg;  // decay length (50b)
+        double F0      = mu * burgmag * burgmag / lambda;  // peak force
+
+        Kokkos::parallel_for("TwinRepulsion", Nnodes, KOKKOS_LAMBDA(const int i) {
             if (nodes[i].constraint == PINNED_NODE ||
                 nodes[i].constraint == CORNER_NODE) return;
 
             Vec3 pos = nodes[i].pos;
-            Vec3 vel = nodes[i].v;
 
             for (int j = 0; j < Nplanes; j++) {
                 Vec3   normal = d_planes(j).normal;
                 Vec3   point  = d_planes(j).point;
-                double d = dot(pos - point, normal);
+                double d = dot(pos - point, normal);  // signed distance
 
+                // Determine active side
                 double center_d = dot(box_center - point, normal);
-                int active_sign = (center_d > 0.0) ? 1 : -1;
+                double active_sign = (center_d > 0.0) ? 1.0 : -1.0;
 
-                // Unmark TWIN_SURFACE nodes that moved away from the plane
-                if (nodes[i].constraint == TWIN_SURFACE &&
-                    nodes[i].twin_id == j) {
-                    if (fabs(d) > rann) {
-                        nodes[i].constraint = UNCONSTRAINED;
-                        nodes[i].twin_id = -1;
-                    }
-                }
-
-                // Gradual velocity damping: linearly reduce normal velocity
-                // based on distance to the plane, eliminating the sharp
-                // velocity discontinuity that causes segment stretching.
-                double vn = dot(vel, normal);
-                if (d * active_sign >= 0.0 && vn * active_sign < 0.0) {
-                    double abs_d = fabs(d);
-                    double displacement = fabs(vn) * dt * safety;
-                    if (abs_d < displacement) {
-                        // damping: 0 at plane → 1 at blocking distance
-                        double damping = (displacement > 0.0) ?
-                                         abs_d / displacement : 0.0;
-                        // Reduce normal velocity gradually instead of zeroing
-                        double blocked_vn = vn * damping;
-                        nodes[i].v = vel - (vn - blocked_vn) * normal;
-                        return;
-                    }
+                // Only apply to active-side nodes within ~5*lambda
+                double d_active = d * active_sign;  // positive on active side
+                if (d_active > 0.0 && d_active < 5.0 * lambda) {
+                    double F_mag = F0 * exp(-d_active / lambda);
+                    Vec3 F_repel = F_mag * active_sign * normal;
+                    Kokkos::atomic_add(&nodes[i].f, F_repel);
                 }
             }
         });
@@ -153,13 +141,11 @@ public:
     }
 
     /*-----------------------------------------------------------------------
-     *  handle_twin_wall  (Kokkos parallel over nodes)
+     *  handle_twin_wall  (safety net — Kokkos parallel over nodes)
      *
-     *  Per-node crossing detection using xold.  If a node crossed a twin
-     *  plane, project it back to d=0 and mark it TWIN_SURFACE.
-     *  The TWIN_SURFACE constraint causes CollisionRetroactive to skip
-     *  collision detection for segments involving this node, preventing
-     *  coplanar collision pile-up and MAX_CONN overflow.
+     *  Lightweight fallback: if a node still crosses a twin plane despite
+     *  the repulsive force (e.g. very large dt), project it back to d=0.
+     *  Should rarely fire with properly tuned force parameters.
      *---------------------------------------------------------------------*/
     void handle_twin_wall(System* system)
     {
@@ -178,6 +164,9 @@ public:
         auto xold  = system->xold;
         auto cell  = net->cell;
 
+        Kokkos::View<int, T_memory_space> d_count("d_count_wall");
+        Kokkos::deep_copy(d_count, 0);
+
         Kokkos::parallel_for("TwinWall", Nnodes, KOKKOS_LAMBDA(const int i) {
             if (nodes[i].constraint == PINNED_NODE ||
                 nodes[i].constraint == CORNER_NODE) return;
@@ -192,70 +181,24 @@ public:
                 double d_new = dot(pos_new - point, normal);
 
                 if (d_old * d_new < 0.0) {
-                    // Project to d=0 and mark TWIN_SURFACE
                     nodes[i].pos = pos_new - d_new * normal;
-                    nodes[i].constraint = TWIN_SURFACE;
-                    nodes[i].twin_id = j;
-                    nodes[i].twin_normal = normal;
+                    Kokkos::atomic_inc(&d_count());
                     return;
                 }
             }
         });
         Kokkos::fence();
+
+        auto h_count = Kokkos::create_mirror_view(d_count);
+        Kokkos::deep_copy(h_count, d_count);
+        if (h_count() > 0)
+            printf("[TwinWall] safety-net projected %d node(s)\n", h_count());
     }
 
     /*-----------------------------------------------------------------------
-     *  handle_twin_snap  (Kokkos parallel over nodes)
-     *
-     *  Safety-net: for any node on the vacuum side within threshold,
-     *  project to d=0 and mark TWIN_SURFACE.
-     *  Safe to call after Topology/Remesh (no xold dependency).
+     *  pre_integrate  (no-op — force-based approach handles everything)
      *---------------------------------------------------------------------*/
-    void handle_twin_snap(System* system)
-    {
-        if (system->planar_obstacles.empty()) return;
-
-        DeviceDisNet* net = system->get_device_network();
-        int Nnodes  = net->Nnodes_local;
-        int Nplanes = (int)system->planar_obstacles.size();
-
-        Kokkos::View<PlanarObstacle*, T_memory_space> d_planes("d_planes", Nplanes);
-        auto h_planes = Kokkos::create_mirror_view(d_planes);
-        for (int j = 0; j < Nplanes; j++) h_planes(j) = system->planar_obstacles[j];
-        Kokkos::deep_copy(d_planes, h_planes);
-
-        auto nodes = net->get_nodes();
-        auto cell  = net->cell;
-        Vec3 box_center = cell.center();
-        double threshold = system->params.minseg;
-
-        Kokkos::parallel_for("TwinSnap", Nnodes, KOKKOS_LAMBDA(const int i) {
-            if (nodes[i].constraint == PINNED_NODE ||
-                nodes[i].constraint == CORNER_NODE) return;
-
-            Vec3 pos = nodes[i].pos;
-            for (int j = 0; j < Nplanes; j++) {
-                Vec3   normal = d_planes(j).normal;
-                Vec3   point  = d_planes(j).point;
-                double d = dot(pos - point, normal);
-
-                if (fabs(d) > threshold) continue;
-
-                double center_d = dot(box_center - point, normal);
-                double sign = (center_d > 0.0) ? 1.0 : -1.0;
-
-                // Snap vacuum-side node to d=0 and mark TWIN_SURFACE
-                if (d * sign < 0.0) {
-                    nodes[i].pos = pos - d * normal;
-                    nodes[i].constraint = TWIN_SURFACE;
-                    nodes[i].twin_id = j;
-                    nodes[i].twin_normal = normal;
-                    return;
-                }
-            }
-        });
-        Kokkos::fence();
-    }
+    void pre_integrate(System* system) override {}
 
     /*-----------------------------------------------------------------------
      *  handle  (overrides CollisionRetroactive::handle)
@@ -263,7 +206,6 @@ public:
     void handle(System* system) override
     {
         // 1. Standard dislocation-dislocation retroactive collision.
-        //    CollisionRetroactive skips TWIN_SURFACE nodes automatically.
         CollisionRetroactive::handle(system);
 
         Kokkos::fence();
@@ -272,8 +214,7 @@ public:
         // 2. Orowan sphere-surface enforcement.
         handle_orowan(system);
 
-        // 3. Per-node wall detection using xold.
-        //    Projects crossers to d=0 and marks them TWIN_SURFACE.
+        // 3. Safety-net wall detection (should rarely fire).
         handle_twin_wall(system);
 
         Kokkos::fence();
@@ -281,12 +222,9 @@ public:
     }
 
     /*-----------------------------------------------------------------------
-     *  post_remesh  (called after Remesh in driver.cpp)
+     *  post_remesh  (no-op — force-based approach needs no post-remesh fix)
      *---------------------------------------------------------------------*/
-    void post_remesh(System* system) override
-    {
-        handle_twin_snap(system);
-    }
+    void post_remesh(System* system) override {}
 
     const char* name() { return "CollisionOrowan"; }
 };

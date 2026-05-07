@@ -631,7 +631,10 @@ void ExaDiSApp::step(Control& ctrl)
     
     // Nodal force calculation
     force->compute(system);
-    
+
+    // Add obstacle forces (e.g. twin boundary repulsion)
+    collision->add_obstacle_force(system);
+
     // Mobility calculation
     mobility->compute(system);
 
