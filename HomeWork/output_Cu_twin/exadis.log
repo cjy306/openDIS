@@ -1,0 +1,203 @@
+Step =      0: nodes = 4164, dt = 0.000000e+00, strain = 0.000000e+00, elapsed = 0.0 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/config.0.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/restart.0.exadis
+Run until reaching strain = 0.010000
+Step =      1: nodes = 4164, dt = 1.000000e-09, strain = 1.000000e-06, elapsed = 0.3 sec
+Step =      2: nodes = 4164, dt = 1.200000e-09, strain = 2.200000e-06, elapsed = 0.6 sec
+Step =      3: nodes = 4164, dt = 1.440000e-09, strain = 3.640000e-06, elapsed = 0.8 sec
+Step =      4: nodes = 4163, dt = 1.728000e-09, strain = 5.368000e-06, elapsed = 1.2 sec
+Step =      5: nodes = 4164, dt = 2.073600e-09, strain = 7.441600e-06, elapsed = 1.5 sec
+Step =      6: nodes = 4158, dt = 2.488320e-09, strain = 9.929920e-06, elapsed = 1.9 sec
+Step =      7: nodes = 4158, dt = 2.985984e-09, strain = 1.291590e-05, elapsed = 2.3 sec
+Step =      8: nodes = 4152, dt = 3.583181e-09, strain = 1.649908e-05, elapsed = 2.8 sec
+Step =      9: nodes = 4119, dt = 4.299817e-09, strain = 2.079890e-05, elapsed = 3.5 sec
+Step =     10: nodes = 4093, dt = 5.159780e-09, strain = 2.595868e-05, elapsed = 4.2 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/config.10.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/restart.10.exadis
+Step =     11: nodes = 4060, dt = 6.191736e-09, strain = 3.215042e-05, elapsed = 5.2 sec
+Step =     12: nodes = 4050, dt = 7.430084e-09, strain = 3.958050e-05, elapsed = 6.2 sec
+Step =     13: nodes = 4024, dt = 8.916100e-09, strain = 4.849660e-05, elapsed = 7.5 sec
+Step =     14: nodes = 4289, dt = 1.069932e-08, strain = 5.919592e-05, elapsed = 9.2 sec
+Step =     15: nodes = 4247, dt = 1.283918e-08, strain = 7.203511e-05, elapsed = 11.2 sec
+Step =     16: nodes = 4422, dt = 1.540702e-08, strain = 8.744213e-05, elapsed = 13.5 sec
+Step =     17: nodes = 4644, dt = 1.848843e-08, strain = 1.059306e-04, elapsed = 16.5 sec
+Step =     18: nodes = 4827, dt = 2.218611e-08, strain = 1.281167e-04, elapsed = 22.8 sec
+Step =     19: nodes = 4774, dt = 2.662333e-08, strain = 1.547400e-04, elapsed = 34.3 sec
+Step =     20: nodes = 4673, dt = 3.194800e-08, strain = 1.866880e-04, elapsed = 41.7 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/config.20.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/restart.20.exadis
+Step =     21: nodes = 4873, dt = 3.833760e-08, strain = 2.250256e-04, elapsed = 54.5 sec
+Step =     22: nodes = 4870, dt = 4.600512e-08, strain = 2.710307e-04, elapsed = 79.8 sec
+Step =     23: nodes = 4940, dt = 5.520614e-08, strain = 3.262369e-04, elapsed = 108.9 sec
+Step =     24: nodes = 4846, dt = 3.312369e-08, strain = 3.593605e-04, elapsed = 124.8 sec
+Step =     25: nodes = 4716, dt = 1.656184e-08, strain = 3.759224e-04, elapsed = 132.2 sec
+Step =     26: nodes = 4641, dt = 1.656184e-08, strain = 3.924842e-04, elapsed = 138.1 sec
+Step =     27: nodes = 4550, dt = 1.987421e-08, strain = 4.123584e-04, elapsed = 144.4 sec
+Step =     28: nodes = 4444, dt = 1.192453e-08, strain = 4.242830e-04, elapsed = 148.5 sec
+Step =     29: nodes = 4418, dt = 1.192453e-08, strain = 4.362075e-04, elapsed = 151.5 sec
+Step =     30: nodes = 4426, dt = 1.430943e-08, strain = 4.505169e-04, elapsed = 154.9 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/config.30.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/restart.30.exadis
+Step =     31: nodes = 4392, dt = 1.717132e-08, strain = 4.676883e-04, elapsed = 159.1 sec
+Step =     32: nodes = 4389, dt = 2.060558e-08, strain = 4.882938e-04, elapsed = 164.3 sec
+Step =     33: nodes = 4375, dt = 2.472670e-08, strain = 5.130205e-04, elapsed = 172.5 sec
+Step =     34: nodes = 4338, dt = 2.967204e-08, strain = 5.426926e-04, elapsed = 182.3 sec
+Step =     35: nodes = 4397, dt = 3.560645e-08, strain = 5.782990e-04, elapsed = 194.5 sec
+Step =     36: nodes = 4330, dt = 4.272774e-08, strain = 6.210268e-04, elapsed = 212.2 sec
+Step =     37: nodes = 4341, dt = 5.127328e-08, strain = 6.723000e-04, elapsed = 224.7 sec
+Step =     38: nodes = 4345, dt = 6.152794e-08, strain = 7.338280e-04, elapsed = 251.0 sec
+Step =     39: nodes = 4292, dt = 7.383353e-08, strain = 8.076615e-04, elapsed = 306.2 sec
+Step =     40: nodes = 4281, dt = 4.430012e-08, strain = 8.519616e-04, elapsed = 325.4 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/config.40.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/restart.40.exadis
+Step =     41: nodes = 4251, dt = 2.215006e-08, strain = 8.741117e-04, elapsed = 334.0 sec
+Step =     42: nodes = 4218, dt = 2.215006e-08, strain = 8.962617e-04, elapsed = 340.8 sec
+Step =     43: nodes = 4170, dt = 2.658007e-08, strain = 9.228418e-04, elapsed = 349.7 sec
+Step =     44: nodes = 4193, dt = 3.189608e-08, strain = 9.547379e-04, elapsed = 359.9 sec
+Step =     45: nodes = 4114, dt = 3.827530e-08, strain = 9.930132e-04, elapsed = 374.9 sec
+Step =     46: nodes = 4043, dt = 2.296518e-08, strain = 1.015978e-03, elapsed = 382.2 sec
+Step =     47: nodes = 4069, dt = 2.296518e-08, strain = 1.038944e-03, elapsed = 387.2 sec
+Step =     48: nodes = 4074, dt = 2.755822e-08, strain = 1.066502e-03, elapsed = 393.2 sec
+Step =     49: nodes = 4087, dt = 3.306986e-08, strain = 1.099572e-03, elapsed = 403.8 sec
+Step =     50: nodes = 4023, dt = 3.968383e-08, strain = 1.139255e-03, elapsed = 416.7 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/config.50.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/restart.50.exadis
+Step =     51: nodes = 4050, dt = 4.762060e-08, strain = 1.186876e-03, elapsed = 426.5 sec
+Step =     52: nodes = 4078, dt = 5.714472e-08, strain = 1.244021e-03, elapsed = 445.4 sec
+Step =     53: nodes = 4019, dt = 3.428683e-08, strain = 1.278308e-03, elapsed = 466.7 sec
+Step =     54: nodes = 4041, dt = 3.428683e-08, strain = 1.312594e-03, elapsed = 474.0 sec
+Step =     55: nodes = 4019, dt = 4.114420e-08, strain = 1.353739e-03, elapsed = 488.8 sec
+Step =     56: nodes = 3987, dt = 4.937304e-08, strain = 1.403112e-03, elapsed = 504.2 sec
+Step =     57: nodes = 3988, dt = 5.924764e-08, strain = 1.462359e-03, elapsed = 539.0 sec
+Step =     58: nodes = 3933, dt = 7.109717e-08, strain = 1.533457e-03, elapsed = 570.0 sec
+Step =     59: nodes = 3900, dt = 2.132915e-08, strain = 1.554786e-03, elapsed = 574.8 sec
+Step =     60: nodes = 3913, dt = 2.132915e-08, strain = 1.576115e-03, elapsed = 579.0 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/config.60.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/restart.60.exadis
+Step =     61: nodes = 3892, dt = 2.559498e-08, strain = 1.601710e-03, elapsed = 586.1 sec
+Step =     62: nodes = 3856, dt = 3.071398e-08, strain = 1.632424e-03, elapsed = 592.2 sec
+Step =     63: nodes = 3911, dt = 3.685677e-08, strain = 1.669281e-03, elapsed = 599.4 sec
+Step =     64: nodes = 3930, dt = 4.422813e-08, strain = 1.713509e-03, elapsed = 615.1 sec
+Step =     65: nodes = 3959, dt = 5.307376e-08, strain = 1.766582e-03, elapsed = 634.2 sec
+Step =     66: nodes = 3961, dt = 3.184425e-08, strain = 1.798427e-03, elapsed = 645.0 sec
+Step =     67: nodes = 3905, dt = 1.592213e-08, strain = 1.814349e-03, elapsed = 650.3 sec
+Step =     68: nodes = 3870, dt = 1.592213e-08, strain = 1.830271e-03, elapsed = 653.6 sec
+Step =     69: nodes = 3879, dt = 1.910655e-08, strain = 1.849377e-03, elapsed = 657.6 sec
+Step =     70: nodes = 3922, dt = 2.292786e-08, strain = 1.872305e-03, elapsed = 662.2 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/config.70.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/restart.70.exadis
+Step =     71: nodes = 3894, dt = 2.751343e-08, strain = 1.899819e-03, elapsed = 670.1 sec
+Step =     72: nodes = 3858, dt = 3.301612e-08, strain = 1.932835e-03, elapsed = 685.2 sec
+Step =     73: nodes = 3935, dt = 3.961935e-08, strain = 1.972454e-03, elapsed = 695.4 sec
+Step =     74: nodes = 4002, dt = 4.754322e-08, strain = 2.019997e-03, elapsed = 713.7 sec
+Step =     75: nodes = 3966, dt = 1.426296e-08, strain = 2.034260e-03, elapsed = 719.3 sec
+Step =     76: nodes = 3880, dt = 1.426296e-08, strain = 2.048523e-03, elapsed = 724.4 sec
+Step =     77: nodes = 3880, dt = 1.711556e-08, strain = 2.065639e-03, elapsed = 728.4 sec
+Step =     78: nodes = 3851, dt = 2.053867e-08, strain = 2.086178e-03, elapsed = 734.2 sec
+Step =     79: nodes = 3892, dt = 2.464640e-08, strain = 2.110824e-03, elapsed = 739.1 sec
+Step =     80: nodes = 3902, dt = 2.957568e-08, strain = 2.140400e-03, elapsed = 745.9 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/config.80.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/restart.80.exadis
+Step =     81: nodes = 3900, dt = 3.549082e-08, strain = 2.175891e-03, elapsed = 756.6 sec
+Step =     82: nodes = 3942, dt = 4.258898e-08, strain = 2.218480e-03, elapsed = 771.1 sec
+Step =     83: nodes = 3921, dt = 1.277670e-08, strain = 2.231256e-03, elapsed = 776.5 sec
+Step =     84: nodes = 3965, dt = 1.277670e-08, strain = 2.244033e-03, elapsed = 781.4 sec
+Step =     85: nodes = 3905, dt = 1.533203e-08, strain = 2.259365e-03, elapsed = 788.8 sec
+Step =     86: nodes = 3904, dt = 1.839844e-08, strain = 2.277763e-03, elapsed = 797.2 sec
+Step =     87: nodes = 3881, dt = 2.207813e-08, strain = 2.299842e-03, elapsed = 807.9 sec
+Step =     88: nodes = 3802, dt = 2.649376e-08, strain = 2.326335e-03, elapsed = 818.7 sec
+Step =     89: nodes = 3774, dt = 1.589625e-08, strain = 2.342232e-03, elapsed = 823.2 sec
+Step =     90: nodes = 3732, dt = 1.589625e-08, strain = 2.358128e-03, elapsed = 826.7 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/config.90.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/restart.90.exadis
+Step =     91: nodes = 3691, dt = 1.907550e-08, strain = 2.377203e-03, elapsed = 830.6 sec
+Step =     92: nodes = 3679, dt = 2.289060e-08, strain = 2.400094e-03, elapsed = 835.2 sec
+Step =     93: nodes = 3727, dt = 2.746873e-08, strain = 2.427563e-03, elapsed = 840.3 sec
+Step =     94: nodes = 3696, dt = 3.296247e-08, strain = 2.460525e-03, elapsed = 847.2 sec
+Step =     95: nodes = 3717, dt = 3.955496e-08, strain = 2.500080e-03, elapsed = 855.2 sec
+Step =     96: nodes = 3756, dt = 4.746596e-08, strain = 2.547546e-03, elapsed = 864.7 sec
+Step =     97: nodes = 3887, dt = 5.695915e-08, strain = 2.604505e-03, elapsed = 890.0 sec
+Step =     98: nodes = 3936, dt = 1.708774e-08, strain = 2.621593e-03, elapsed = 896.4 sec
+Step =     99: nodes = 3860, dt = 4.271936e-09, strain = 2.625865e-03, elapsed = 897.9 sec
+Step =    100: nodes = 3819, dt = 4.271936e-09, strain = 2.630137e-03, elapsed = 899.4 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/config.100.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/restart.100.exadis
+Step =    101: nodes = 3814, dt = 5.126323e-09, strain = 2.635263e-03, elapsed = 900.6 sec
+Step =    102: nodes = 3778, dt = 6.151588e-09, strain = 2.641415e-03, elapsed = 902.0 sec
+Step =    103: nodes = 3778, dt = 7.381906e-09, strain = 2.648797e-03, elapsed = 903.5 sec
+Step =    104: nodes = 3814, dt = 8.858287e-09, strain = 2.657655e-03, elapsed = 905.5 sec
+Step =    105: nodes = 3829, dt = 1.062994e-08, strain = 2.668285e-03, elapsed = 909.0 sec
+Step =    106: nodes = 3842, dt = 1.275593e-08, strain = 2.681041e-03, elapsed = 914.1 sec
+Step =    107: nodes = 3912, dt = 1.530712e-08, strain = 2.696348e-03, elapsed = 921.3 sec
+Step =    108: nodes = 4046, dt = 1.836854e-08, strain = 2.714716e-03, elapsed = 930.4 sec
+Step =    109: nodes = 4122, dt = 1.102113e-08, strain = 2.725738e-03, elapsed = 935.8 sec
+Step =    110: nodes = 4224, dt = 1.102113e-08, strain = 2.736759e-03, elapsed = 941.3 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/config.110.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/restart.110.exadis
+Step =    111: nodes = 4390, dt = 1.322535e-08, strain = 2.749984e-03, elapsed = 948.4 sec
+Step =    112: nodes = 4532, dt = 7.935211e-09, strain = 2.757919e-03, elapsed = 952.7 sec
+Step =    113: nodes = 4617, dt = 7.935211e-09, strain = 2.765854e-03, elapsed = 958.0 sec
+Step =    114: nodes = 4703, dt = 9.522253e-09, strain = 2.775377e-03, elapsed = 964.6 sec
+Step =    115: nodes = 4758, dt = 5.713352e-09, strain = 2.781090e-03, elapsed = 968.8 sec
+Step =    116: nodes = 4926, dt = 5.713352e-09, strain = 2.786803e-03, elapsed = 973.2 sec
+Step =    117: nodes = 4937, dt = 3.428011e-09, strain = 2.790231e-03, elapsed = 975.6 sec
+Step =    118: nodes = 4961, dt = 3.428011e-09, strain = 2.793659e-03, elapsed = 977.5 sec
+Step =    119: nodes = 5008, dt = 4.113613e-09, strain = 2.797773e-03, elapsed = 981.0 sec
+Step =    120: nodes = 5067, dt = 4.936336e-09, strain = 2.802709e-03, elapsed = 985.2 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/config.120.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/restart.120.exadis
+Step =    121: nodes = 4998, dt = 5.923603e-09, strain = 2.808633e-03, elapsed = 990.6 sec
+Step =    122: nodes = 5075, dt = 7.108324e-09, strain = 2.815741e-03, elapsed = 998.1 sec
+Step =    123: nodes = 5291, dt = 8.529989e-09, strain = 2.824271e-03, elapsed = 1007.8 sec
+Step =    124: nodes = 5392, dt = 2.558997e-09, strain = 2.826830e-03, elapsed = 1010.0 sec
+Step =    125: nodes = 5335, dt = 2.558997e-09, strain = 2.829389e-03, elapsed = 1012.3 sec
+Step =    126: nodes = 5268, dt = 1.535398e-09, strain = 2.830925e-03, elapsed = 1013.4 sec
+Step =    127: nodes = 5212, dt = 1.535398e-09, strain = 2.832460e-03, elapsed = 1014.3 sec
+Step =    128: nodes = 5214, dt = 1.842478e-09, strain = 2.834303e-03, elapsed = 1015.3 sec
+Step =    129: nodes = 5227, dt = 2.210973e-09, strain = 2.836514e-03, elapsed = 1016.4 sec
+Step =    130: nodes = 5266, dt = 2.653168e-09, strain = 2.839167e-03, elapsed = 1017.8 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/config.130.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/restart.130.exadis
+Step =    131: nodes = 5334, dt = 3.183801e-09, strain = 2.842350e-03, elapsed = 1019.6 sec
+Step =    132: nodes = 5338, dt = 3.820561e-09, strain = 2.846171e-03, elapsed = 1021.8 sec
+Step =    133: nodes = 5420, dt = 4.584674e-09, strain = 2.850756e-03, elapsed = 1024.4 sec
+Step =    134: nodes = 5580, dt = 5.501608e-09, strain = 2.856257e-03, elapsed = 1028.5 sec
+Step =    135: nodes = 5903, dt = 6.601930e-09, strain = 2.862859e-03, elapsed = 1035.7 sec
+Step =    136: nodes = 6079, dt = 3.961158e-09, strain = 2.866820e-03, elapsed = 1040.9 sec
+Step =    137: nodes = 6074, dt = 1.980579e-09, strain = 2.868801e-03, elapsed = 1042.9 sec
+Step =    138: nodes = 5976, dt = 1.980579e-09, strain = 2.870782e-03, elapsed = 1044.9 sec
+Step =    139: nodes = 5892, dt = 2.376695e-09, strain = 2.873158e-03, elapsed = 1047.5 sec
+Step =    140: nodes = 5842, dt = 2.852034e-09, strain = 2.876010e-03, elapsed = 1050.2 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/config.140.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/restart.140.exadis
+Step =    141: nodes = 5912, dt =
