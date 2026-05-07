@@ -89,14 +89,20 @@ public:
                     }
                 }
 
-                // Block velocity if on active side, moving toward vacuum,
-                // and would reach the plane within safety * dt
+                // Gradual velocity damping: linearly reduce normal velocity
+                // based on distance to the plane, eliminating the sharp
+                // velocity discontinuity that causes segment stretching.
                 double vn = dot(vel, normal);
                 if (d * active_sign >= 0.0 && vn * active_sign < 0.0) {
                     double abs_d = fabs(d);
                     double displacement = fabs(vn) * dt * safety;
                     if (abs_d < displacement) {
-                        nodes[i].v = vel - vn * normal;
+                        // damping: 0 at plane → 1 at blocking distance
+                        double damping = (displacement > 0.0) ?
+                                         abs_d / displacement : 0.0;
+                        // Reduce normal velocity gradually instead of zeroing
+                        double blocked_vn = vn * damping;
+                        nodes[i].v = vel - (vn - blocked_vn) * normal;
                         return;
                     }
                 }
