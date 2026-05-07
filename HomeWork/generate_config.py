@@ -242,7 +242,7 @@ def main():
     args = parser.parse_args()
 
     target_density = float(os.environ.get('RHO_TARGET', '1e12'))
-    sphere_count   = int(os.environ.get('SPHERE_COUNT', '10'))
+    sphere_count   = int(os.environ.get('SPHERE_COUNT', '50'))
     twin_z_fracs   = [0.2, 0.8]  # 上下两个孪晶面，中间为位错活动区，外侧为真空缓冲
 
     modes = ['pure', 'precip', 'twin'] if args.mode == 'all' else [args.mode]
