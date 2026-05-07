@@ -67,7 +67,7 @@ public:
         Vec3 box_center = cell.center();
 
         // Force parameters
-        double mu      = system->params.mu;
+        double mu      = system->params.MU;
         double burgmag = system->params.burgmag;
         double lambda  = system->params.minseg;  // decay length (50b)
         double F0      = mu * burgmag * burgmag / lambda;  // peak force
