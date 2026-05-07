@@ -251,6 +251,8 @@ public:
         auto nodes = net->get_nodes();
         auto xold  = system->xold;
         auto cell  = net->cell;
+        Vec3 box_center = cell.center();
+        double rann = system->params.rann;
 
         Kokkos::parallel_for("TwinWall", Nnodes, KOKKOS_LAMBDA(const int i) {
             // Skip nodes already constrained (twin, sphere, pinned)
@@ -267,8 +269,12 @@ public:
                 double d_new = dot(pos_new - point, normal);
 
                 if (d_old * d_new < 0.0) {
-                    // Node crossed the plane: project back onto the plane
-                    nodes[i].pos = pos_new - d_new * normal;
+                    // Node crossed the plane: project to standoff distance
+                    // on the active side (not d=0) to avoid coplanar
+                    // segment pile-up that triggers excessive collisions.
+                    double center_d = dot(box_center - point, normal);
+                    double sign = (center_d > 0.0) ? 1.0 : -1.0;
+                    nodes[i].pos = pos_new - d_new * normal + sign * rann * normal;
                     return;  // one crossing per node per step
                 }
             }
@@ -303,6 +309,7 @@ public:
         auto cell  = net->cell;
         Vec3 box_center = cell.center();
         double threshold = system->params.minseg;
+        double rann = system->params.rann;
 
         Kokkos::parallel_for("TwinSnap", Nnodes, KOKKOS_LAMBDA(const int i) {
             if (nodes[i].constraint == PINNED_NODE ||
@@ -318,11 +325,12 @@ public:
 
                 // Determine active/vacuum side
                 double center_d = dot(box_center - point, normal);
-                int active_sign = (center_d > 0.0) ? 1 : -1;
+                double sign = (center_d > 0.0) ? 1.0 : -1.0;
 
-                // Snap node if on vacuum side (safety net projection)
-                if (d * active_sign < 0.0) {
-                    nodes[i].pos = pos - d * normal;
+                // Snap node if on vacuum side: project to standoff (d=rann)
+                // on active side, not d=0, to avoid coplanar pile-up
+                if (d * sign < 0.0) {
+                    nodes[i].pos = pos - d * normal + sign * rann * normal;
                     return;
                 }
             }
