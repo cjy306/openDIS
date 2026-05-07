@@ -61,7 +61,12 @@ public:
         auto nodes = net->get_nodes();
         auto cell  = net->cell;
         Vec3 box_center = cell.center();
-        double threshold = system->params.minseg;
+        // Velocity-based blocking: use upcoming timestep to determine
+        // whether each node would cross the plane in this step.
+        // Only blocks nodes that would actually cross — no fixed distance threshold.
+        double dt = system->realdt;
+        if (dt <= 0.0) dt = system->params.nextdt;
+        double safety = 2.0;  // safety factor
 
         // Debug: count blocked nodes (use Kokkos::View for atomic reduction)
         Kokkos::View<int, T_memory_space> d_count("d_count");
@@ -80,20 +85,22 @@ public:
                 Vec3   point  = d_planes(j).point;
                 double d = dot(pos - point, normal);  // signed distance
 
-                if (fabs(d) > threshold) continue;
-
                 double vn = dot(vel, normal);
 
                 // Determine which side is the active zone
                 double center_d = dot(box_center - point, normal);
                 int active_sign = (center_d > 0.0) ? 1 : -1;
 
-                // Block normal velocity if node is on the active side
-                // AND velocity points toward the vacuum
+                // Block if: node on active side, velocity toward vacuum,
+                // AND would reach the plane within safety * dt
                 if (d * active_sign >= 0.0 && vn * active_sign < 0.0) {
-                    nodes[i].v = vel - vn * normal;  // zero normal component
-                    Kokkos::atomic_inc(&d_count());
-                    return;  // one plane per node per step
+                    double abs_d = fabs(d);
+                    double displacement = fabs(vn) * dt * safety;
+                    if (abs_d < displacement) {
+                        nodes[i].v = vel - vn * normal;
+                        Kokkos::atomic_inc(&d_count());
+                        return;  // one plane per node per step
+                    }
                 }
             }
         });
@@ -342,11 +349,9 @@ public:
         //    Must be called while xold is still valid.
         handle_twin_wall(system);
 
-        // 4. Per-segment straddling detection (catches any remaining
-        //    crossings not caught by wall detection, e.g. segments
-        //    where both nodes were on the same side but one has now
-        //    been projected onto the plane by handle_twin_wall).
-        handle_twin_detect(system);
+        // handle_twin_detect removed: it caused excessive projections
+        // and collision pile-ups at the twin plane. handle_twin_wall
+        // catches actual crossings; pre_integrate prevents most of them.
 
         Kokkos::fence();
         system->timer[system->TIMER_COLLISION].stop();
