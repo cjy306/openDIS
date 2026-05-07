@@ -206,7 +206,6 @@ def convert(sim_dir, out_dir, init_dir=None):
             net = read_paradis(data_file)
             vtk_file = os.path.join(out_dir, f'{name}.vtk')
             write_vtk(net, vtk_file, precipitates=precipitates, verbose=False)
-            wrap_vtk_pbc(vtk_file, Lbox_b)
         except Exception as e:
             print(f"    Failed: {e}")
 
