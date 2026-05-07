@@ -83,8 +83,8 @@ public:
                     Vec3 point  = system->planar_obstacles[j].point;
                     double d1 = dot(r1 - point, normal);
                     double d2 = dot(r2 - point, normal);
-                    // Skip if endpoint near plane OR segment straddles plane
-                    if (fabs(d1) < minseg || fabs(d2) < minseg || d1 * d2 < 0.0) {
+                    // Skip if endpoint within maxseg of plane OR segment straddles plane
+                    if (fabs(d1) < maxseg || fabs(d2) < maxseg || d1 * d2 < 0.0) {
                         near_twin = true;
                         break;
                     }
