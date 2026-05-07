@@ -649,7 +649,59 @@ private:
     
     bool stats = false;
     std::string* fstats;
-    
+
+    /*-----------------------------------------------------------------------
+     *  add_twin_repulsive_force
+     *  Adds exponential repulsive force from twin planes to nodes[i].f.
+     *  Called after force->compute() and before mobility->compute() in
+     *  every subcycling step to ensure the repulsive force is included.
+     *---------------------------------------------------------------------*/
+    void add_twin_repulsive_force(System* system)
+    {
+        if (system->planar_obstacles.empty()) return;
+
+        DeviceDisNet* net = system->get_device_network();
+        int Nnodes  = net->Nnodes_local;
+        int Nplanes = (int)system->planar_obstacles.size();
+
+        Kokkos::View<PlanarObstacle*, T_memory_space> d_planes("d_planes_sub", Nplanes);
+        auto h_planes = Kokkos::create_mirror_view(d_planes);
+        for (int j = 0; j < Nplanes; j++) h_planes(j) = system->planar_obstacles[j];
+        Kokkos::deep_copy(d_planes, h_planes);
+
+        auto nodes = net->get_nodes();
+        auto cell  = net->cell;
+        Vec3 box_center = cell.center();
+
+        double mu      = system->params.MU;
+        double burgmag = system->params.burgmag;
+        double lambda  = system->params.minseg;
+        double F0      = mu * burgmag * burgmag / lambda;
+
+        Kokkos::parallel_for("TwinRepulsionSub", Nnodes, KOKKOS_LAMBDA(const int i) {
+            if (nodes[i].constraint == PINNED_NODE ||
+                nodes[i].constraint == CORNER_NODE) return;
+
+            Vec3 pos = nodes[i].pos;
+            for (int j = 0; j < Nplanes; j++) {
+                Vec3   normal = d_planes(j).normal;
+                Vec3   point  = d_planes(j).point;
+                double d = dot(pos - point, normal);
+
+                double center_d = dot(box_center - point, normal);
+                double active_sign = (center_d > 0.0) ? 1.0 : -1.0;
+
+                double d_active = d * active_sign;
+                if (d_active > 0.0 && d_active < 5.0 * lambda) {
+                    double F_mag = F0 * exp(-d_active / lambda);
+                    Vec3 F_repel = F_mag * active_sign * normal;
+                    Kokkos::atomic_add(&nodes[i].f, F_repel);
+                }
+            }
+        });
+        Kokkos::fence();
+    }
+
 public:
     struct Params {
         typedef typename I::Params IP;
@@ -833,6 +885,7 @@ public:
         int group = subgroups->Ngroups-1;
         set_group(group);
         force->compute(system);
+        add_twin_repulsive_force(system);
         if (force->drift) {
             // Save group forces
             force->save_subforce(network, group);
@@ -907,6 +960,7 @@ public:
             // Time integrate the chosen group for one subcycle
             if (!force->drift || group == 0)
                 force->compute(system);
+            add_twin_repulsive_force(system);
             mobility->compute(system);
             integrator->integrate(system);
             if (force->drift && group > 0) {
