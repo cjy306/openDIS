@@ -75,15 +75,16 @@ public:
                 if (network->nodes[n1].constraint == PINNED_NODE &&
                     network->nodes[n2].constraint == PINNED_NODE) continue;
 
-                // Do not refine segments with an endpoint near a twin plane
+                // Do not refine segments near or straddling a twin plane
                 // to prevent the projection-refinement feedback loop
                 bool near_twin = false;
                 for (int j = 0; j < (int)system->planar_obstacles.size(); j++) {
                     Vec3 normal = system->planar_obstacles[j].normal;
                     Vec3 point  = system->planar_obstacles[j].point;
-                    double d1 = fabs(dot(r1 - point, normal));
-                    double d2 = fabs(dot(r2 - point, normal));
-                    if (d1 < minseg || d2 < minseg) {
+                    double d1 = dot(r1 - point, normal);
+                    double d2 = dot(r2 - point, normal);
+                    // Skip if endpoint near plane OR segment straddles plane
+                    if (fabs(d1) < minseg || fabs(d2) < minseg || d1 * d2 < 0.0) {
                         near_twin = true;
                         break;
                     }
