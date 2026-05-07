@@ -1,0 +1,29 @@
+Host Parallel Execution Space:
+  KOKKOS_ENABLE_OPENMP: yes
+
+OpenMP Runtime Configuration:
+Kokkos::OpenMP thread_pool_topology[ 1 x 48 x 1 ]
+Reading ParaDiS configuration
+ Input file: /data/home/dg000246b/openDIS/HomeWork/init_data_twin/init_config.data
+ nodes: 4164, segments: 3885
+ Warning: Burgers vector is not conserved for 558 node(s)
+[System] 50 spherical obstacles loaded
+[System] 2 planar obstacles (twin boundaries) loaded
+Step =      0: nodes = 4164, dt = 0.000000e+00, strain = 0.000000e+00, elapsed = 0.1 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/config.0.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/restart.0.exadis
+Run until reaching strain = 0.010000
+Step =      1: nodes = 4164, dt = 1.000000e-09, strain = 1.000000e-06, elapsed = 0.4 sec
+[TwinWall] safety-net projected 475 node(s)
+Step =      2: nodes = 5589, dt = 1.200000e-09, strain = 2.200000e-06, elapsed = 0.6 sec
+[TwinWall] safety-net projected 550 node(s)
+Step =      3: nodes = 8355, dt = 7.200000e-10, strain = 2.920000e-06, elapsed = 1.2 sec
+[TwinWall] safety-net projected 785 node(s)
+Step =      4: nodes = 14375, dt = 7.200000e-10, strain = 3.640000e-06, elapsed = 2.3 sec
+[TwinWall] safety-net projected 2387 node(s)
+Step =      5: nodes = 26437, dt = 8.640000e-10, strain = 4.504000e-06, elapsed = 7.6 sec
+[TwinWall] safety-net projected 6949 node(s)
+Step =      6: nodes = 51656, dt = 1.036800e-09, strain = 5.540800e-06, elapsed = 42.8 sec
+slurmstepd-c2n185: error: *** JOB 224603 ON c2n185 CANCELLED AT 2026-05-07T17:04:27 ***
