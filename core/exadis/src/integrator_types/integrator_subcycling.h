@@ -520,20 +520,6 @@ public:
             for (int j = 0; j < 6; j++)
                 err += itgr->er[j] * itgr->rkf[j](i);
             err = itgr->newdt * err;
-
-            // For TWIN_SURFACE nodes, remove the normal component from the
-            // error vector (same fix as IntegratorRKF::TagErrorNodes).
-            if (nodes[i].constraint == TWIN_SURFACE && itgr->n_twin_planes > 0) {
-                int tid = nodes[i].twin_id;
-                for (int p = 0; p < itgr->n_twin_planes; p++) {
-                    if (itgr->d_twin_planes(p).id == tid) {
-                        Vec3 n = itgr->d_twin_planes(p).normal;
-                        err = err - dot(err, n) * n;
-                        break;
-                    }
-                }
-            }
-
             double errnet = err.norm();
             if (errnet > emax0) emax0 = errnet;
             
@@ -649,69 +635,6 @@ private:
     
     bool stats = false;
     std::string* fstats;
-
-    /*-----------------------------------------------------------------------
-     *  add_twin_repulsive_force
-     *  Adds exponential repulsive force from twin planes to nodes[i].f.
-     *  Called after force->compute() and before mobility->compute() in
-     *  every subcycling step to ensure the repulsive force is included.
-     *---------------------------------------------------------------------*/
-    void add_twin_repulsive_force(System* system)
-    {
-        if (system->planar_obstacles.empty()) return;
-
-        DeviceDisNet* net = system->get_device_network();
-        int Nnodes  = net->Nnodes_local;
-        int Nplanes = (int)system->planar_obstacles.size();
-
-        Kokkos::View<PlanarObstacle*, T_memory_space> d_planes("d_planes_sub", Nplanes);
-        auto h_planes = Kokkos::create_mirror_view(d_planes);
-        for (int j = 0; j < Nplanes; j++) h_planes(j) = system->planar_obstacles[j];
-        Kokkos::deep_copy(d_planes, h_planes);
-
-        auto nodes = net->get_nodes();
-        auto cell  = net->cell;
-        Vec3 box_center = cell.center();
-
-        double mu      = system->params.MU;
-        double burgmag = system->params.burgmag;
-        double lambda  = system->params.minseg;
-        double F0      = 10.0 * mu * burgmag * burgmag / lambda;
-
-        Kokkos::parallel_for("TwinRepulsionSub", Nnodes, KOKKOS_LAMBDA(const int i) {
-            if (nodes[i].constraint == PINNED_NODE ||
-                nodes[i].constraint == CORNER_NODE) return;
-
-            Vec3 pos = nodes[i].pos;
-            for (int j = 0; j < Nplanes; j++) {
-                Vec3   normal = d_planes(j).normal;
-                Vec3   point  = d_planes(j).point;
-                double d = dot(pos - point, normal);  // signed distance
-
-                double center_d = dot(box_center - point, normal);
-                double active_sign = (center_d > 0.0) ? 1.0 : -1.0;
-
-                double d_active = d * active_sign;  // positive on active side
-                double abs_d = fabs(d);
-
-                if (abs_d < 5.0 * lambda) {
-                    if (d_active > 0.0) {
-                        // Active side: exponential repulsion toward plane
-                        double F_mag = F0 * exp(-d_active / lambda);
-                        Vec3 F_repel = F_mag * active_sign * normal;
-                        Kokkos::atomic_add(&nodes[i].f, F_repel);
-                    } else {
-                        // Crossed to wrong side: strong restoring force
-                        // pushing node back toward the active side
-                        double F_mag = F0 * (1.0 + fabs(d_active) / lambda);
-                        Vec3 F_restore = F_mag * active_sign * normal;
-                        Kokkos::atomic_add(&nodes[i].f, F_restore);
-                    }
-                }
-            }
-        });
-        Kokkos::fence();
-    }
 
 public:
     struct Params {
@@ -896,7 +819,6 @@ public:
         int group = subgroups->Ngroups-1;
         set_group(group);
         force->compute(system);
-        add_twin_repulsive_force(system);
         if (force->drift) {
             // Save group forces
             force->save_subforce(network, group);
@@ -953,7 +875,6 @@ public:
                 set_group(group);
                 if (force->drift && group > 0) {
                     force->compute(system);
-                    add_twin_repulsive_force(system);
                     force->save_subforce(network, group);
                 }
             }
@@ -972,7 +893,6 @@ public:
             // Time integrate the chosen group for one subcycle
             if (!force->drift || group == 0)
                 force->compute(system);
-            add_twin_repulsive_force(system);
             mobility->compute(system);
             integrator->integrate(system);
             if (force->drift && group > 0) {

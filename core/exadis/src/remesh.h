@@ -81,14 +81,6 @@ public:
                 //check_node_plane_violation(network, conn, nnew, "after remesh split_link");
                 
             } else if (length < minseg && params.coarsen_mode == 0) {
-                // Twin-surface coarsening rules:
-                // - Two TWIN_SURFACE nodes on the SAME plane: allow merge (keep twin constraint)
-                // - Mixed TWIN/free: only if segment is very short (< rann)
-                bool tw1 = (network->nodes[n1].constraint == TWIN_SURFACE);
-                bool tw2 = (network->nodes[n2].constraint == TWIN_SURFACE);
-                if (tw1 != tw2 && length > rann) continue;
-                if (tw1 && tw2 && network->nodes[n1].twin_id != network->nodes[n2].twin_id) continue;
-
                 // Merge segment nodes (coarsen)
                 if (system->crystal.enforce_glide_planes) {
                     // Do not remesh if node arms are on different planes
@@ -144,16 +136,6 @@ public:
                 if (network->conn[i].num != 2) continue;
                 if (network->nodes[i].constraint == PINNED_NODE ||
                     network->nodes[i].constraint == CORNER_NODE) continue;
-                if (network->nodes[i].constraint == TWIN_SURFACE) {
-                    int nn0 = network->conn[i].node[0];
-                    int nn1 = network->conn[i].node[1];
-                    int tid = network->nodes[i].twin_id;
-                    if (!(network->nodes[nn0].constraint == TWIN_SURFACE &&
-                          network->nodes[nn0].twin_id == tid &&
-                          network->nodes[nn1].constraint == TWIN_SURFACE &&
-                          network->nodes[nn1].twin_id == tid))
-                        continue;
-                }
                 
                 Vec3 ri = network->nodes[i].pos;
                 

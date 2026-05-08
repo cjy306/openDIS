@@ -61,16 +61,6 @@ public:
 
         Kokkos::resize(system->xold, net->Nnodes_local);
 
-        // Copy twin planes to device for position clamping
-        int n_twin = (int)system->planar_obstacles.size();
-        Kokkos::View<PlanarObstacle*, T_memory_space> d_planes("d_planes_euler", n_twin);
-        if (n_twin > 0) {
-            auto h_planes = Kokkos::create_mirror_view(d_planes);
-            for (int j = 0; j < n_twin; j++)
-                h_planes(j) = system->planar_obstacles[j];
-            Kokkos::deep_copy(d_planes, h_planes);
-        }
-
         Kokkos::parallel_for(net->Nnodes_local, KOKKOS_LAMBDA(const int i) {
             auto nodes = net->get_nodes();
             auto cell = net->cell;
@@ -78,19 +68,6 @@ public:
             system->xold(i) = nodes[i].pos;
             Vec3 rnew = nodes[i].pos + dt*nodes[i].v;
             nodes[i].pos = cell.pbc_fold(rnew);
-
-            // Clamp TWIN_SURFACE nodes back onto their twin plane
-            if (nodes[i].constraint == TWIN_SURFACE && n_twin > 0) {
-                int tid = nodes[i].twin_id;
-                for (int p = 0; p < n_twin; p++) {
-                    if (d_planes(p).id == tid) {
-                        double d = dot(nodes[i].pos - d_planes(p).point,
-                                       d_planes(p).normal);
-                        nodes[i].pos = nodes[i].pos - d * d_planes(p).normal;
-                        break;
-                    }
-                }
-            }
         });
 
         system->realdt = dt;
