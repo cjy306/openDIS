@@ -1,0 +1,48 @@
+Host Parallel Execution Space:
+  KOKKOS_ENABLE_OPENMP: yes
+
+OpenMP Runtime Configuration:
+Kokkos::OpenMP thread_pool_topology[ 1 x 48 x 1 ]
+Reading ParaDiS configuration
+ Input file: /data/home/dg000246b/openDIS/HomeWork/init_data_twin/init_config.data
+ nodes: 4164, segments: 3885
+ Warning: Burgers vector is not conserved for 558 node(s)
+[System] 50 spherical obstacles loaded
+[System] 2 planar obstacles (twin boundaries) loaded
+Step =      0: nodes = 4164, dt = 0.000000e+00, strain = 0.000000e+00, elapsed = 0.0 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/config.0.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/restart.0.exadis
+Run until reaching strain = 0.010000
+[TwinWall] projected 958 node(s)
+Step =      1: nodes = 7038, dt = 1.000000e-09, strain = 1.000000e-06, elapsed = 0.3 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/config.1.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/restart.1.exadis
+[TwinWall] projected 1368 node(s)
+Step =      2: nodes = 13391, dt = 1.200000e-09, strain = 2.200000e-06, elapsed = 1.9 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/config.2.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/restart.2.exadis
+[TwinWall] projected 1972 node(s)
+Step =      3: nodes = 26584, dt = 7.200000e-10, strain = 2.920000e-06, elapsed = 5.5 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/config.3.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/restart.3.exadis
+[TwinWall] projected 4167 node(s)
+Step =      4: nodes = 51806, dt = 7.200000e-10, strain = 3.640000e-06, elapsed = 25.6 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/config.4.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/restart.4.exadis
+[TwinWall] projected 11252 node(s)
+Step =      5: nodes = 98420, dt = 8.640000e-10, strain = 4.504000e-06, elapsed = 109.6 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/config.5.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/restart.5.exadis
+slurmstepd-c2n028: error: *** JOB 225115 ON c2n028 CANCELLED AT 2026-05-08T10:15:13 ***
