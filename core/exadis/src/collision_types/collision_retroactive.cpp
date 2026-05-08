@@ -1878,13 +1878,6 @@ void CollisionRetroactive::retroactive_collision_parallel(System* system)
         int n1 = segs[i].n1;
         int n2 = segs[i].n2;
 
-        // Skip segments with a TWIN_SURFACE endpoint — their topology
-        // is managed by twin detection, not the general collision handler.
-        // Allowing collisions on these segments creates a cascade of
-        // split_seg calls in the pile-up zone near twin planes.
-        if (nodes[n1].constraint == TWIN_SURFACE ||
-            nodes[n2].constraint == TWIN_SURFACE) return;
-
         Vec3 p1 = nodes[n1].pos;
         Vec3 p2 = cell.pbc_position(p1, nodes[n2].pos);
 
@@ -1904,10 +1897,6 @@ void CollisionRetroactive::retroactive_collision_parallel(System* system)
 
             int n3 = segs[k].n1;
             int n4 = segs[k].n2;
-
-            // Also skip if the neighbor segment has a TWIN endpoint
-            if (nodes[n3].constraint == TWIN_SURFACE ||
-                nodes[n4].constraint == TWIN_SURFACE) continue;
 
             // Hinges
             if (n3 == n1 || n3 == n2 || n4 == n1 || n4 == n2) continue;
@@ -1984,12 +1973,6 @@ void CollisionRetroactive::retroactive_collision_parallel(System* system)
         int n3 = network->segs[k].n1;
         int n4 = network->segs[k].n2;
         if (n3 >= nnodes || n4 >= nnodes) continue;
-
-        // Double-check TWIN skip (topology may have changed since detection)
-        if (network->nodes[n1].constraint == TWIN_SURFACE ||
-            network->nodes[n2].constraint == TWIN_SURFACE ||
-            network->nodes[n3].constraint == TWIN_SURFACE ||
-            network->nodes[n4].constraint == TWIN_SURFACE) continue;
 
         Vec3 p1 = network->nodes[n1].pos;
         Vec3 p2 = network->cell.pbc_position(p1, network->nodes[n2].pos);
