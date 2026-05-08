@@ -1328,8 +1328,7 @@ PYBIND11_MODULE(pyexadis, m) {
     // Collision
     py::class_<CollisionBind>(m, "Collision")
         .def(py::init<>())
-        .def("handle", &CollisionBind::handle, "Handle collision of the system")
-        .def("pre_integrate", &CollisionBind::pre_integrate, "Pre-integration velocity projection (e.g. twin boundaries)");
+        .def("handle", &CollisionBind::handle, "Handle collision of the system");
     m.def("make_collision", &make_collision, "Instantiate a collision class", py::arg("collision_mode"), py::arg("params"));
     m.def("handle_collision", &handle_collision, "Wrapper to handle collisions",
           py::arg("net"), py::arg("collision"), py::arg("xold")=std::vector<Vec3>(), py::arg("dt")=0.0);
