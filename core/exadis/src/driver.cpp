@@ -632,14 +632,8 @@ void ExaDiSApp::step(Control& ctrl)
     // Nodal force calculation
     force->compute(system);
 
-    // Add obstacle forces (e.g. twin boundary repulsion)
-    collision->add_obstacle_force(system);
-
     // Mobility calculation
     mobility->compute(system);
-
-    // Pre-integration velocity projection (e.g. twin boundary)
-    collision->pre_integrate(system);
 
     // Time-integration
     integrator->integrate(system);
@@ -663,9 +657,6 @@ void ExaDiSApp::step(Control& ctrl)
     
     // Remesh
     remesh->remesh(system);
-
-    // Post-remesh twin enforcement
-    collision->post_remesh(system);
 
     // Update stress
     update_mechanics(ctrl);

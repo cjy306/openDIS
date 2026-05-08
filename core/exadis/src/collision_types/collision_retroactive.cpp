@@ -1457,10 +1457,6 @@ void CollisionRetroactive::retroactive_collision(System* system)
         int n2 = seg->n2;
         if (n1 >= nnodes || n2 >= nnodes) continue;
 
-        // Skip segments with a TWIN_SURFACE endpoint
-        if (network->nodes[n1].constraint == TWIN_SURFACE ||
-            network->nodes[n2].constraint == TWIN_SURFACE) continue;
-
         Vec3 p1 = network->nodes[n1].pos;
         Vec3 p2 = network->cell.pbc_position(p1, network->nodes[n2].pos);
 
@@ -1481,10 +1477,6 @@ void CollisionRetroactive::retroactive_collision(System* system)
             int n3 = network->segs[k].n1;
             int n4 = network->segs[k].n2;
             if (n3 >= nnodes || n4 >= nnodes) continue;
-
-            // Also skip if the neighbor segment has a TWIN endpoint
-            if (network->nodes[n3].constraint == TWIN_SURFACE ||
-                network->nodes[n4].constraint == TWIN_SURFACE) continue;
 
             // Hinges
             if (n3 == n1 || n3 == n2 || n4 == n1 || n4 == n2) continue;
