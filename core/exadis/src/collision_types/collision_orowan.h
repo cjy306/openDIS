@@ -71,10 +71,10 @@ public:
     /*-----------------------------------------------------------------------
      *  handle_twin_wall  (Kokkos parallel over nodes)
      *
-     *  After integration, check every node for twin-plane crossing.
-     *  If a node crossed (sign change of signed distance between xold
-     *  and current pos), project it back onto the plane.
-     *  No constraint marking — purely geometric, applied every step.
+     *  Region-based twin-plane enforcement.  For each planar obstacle,
+     *  the "active side" is the side that contains the box center.
+     *  Any node found on the opposite side is projected back onto the
+     *  plane.  No xold needed — purely based on current position.
      *---------------------------------------------------------------------*/
     void handle_twin_wall(System* system)
     {
@@ -90,8 +90,8 @@ public:
         Kokkos::deep_copy(d_planes, h_planes);
 
         auto nodes = net->get_nodes();
-        auto xold  = system->xold;
         auto cell  = net->cell;
+        Vec3 box_center = cell.center();
 
         Kokkos::View<int, T_memory_space> d_count("d_count_wall");
         Kokkos::deep_copy(d_count, 0);
@@ -100,17 +100,17 @@ public:
             if (nodes[i].constraint == PINNED_NODE ||
                 nodes[i].constraint == CORNER_NODE) return;
 
-            Vec3 pos_new = nodes[i].pos;
-            Vec3 pos_old = cell.pbc_position(pos_new, xold(i));
+            Vec3 pos = nodes[i].pos;
 
             for (int j = 0; j < Nplanes; j++) {
                 Vec3   normal = d_planes(j).normal;
                 Vec3   point  = d_planes(j).point;
-                double d_old = dot(pos_old - point, normal);
-                double d_new = dot(pos_new - point, normal);
+                double d = dot(pos - point, normal);
+                double center_d = dot(box_center - point, normal);
 
-                if (d_old * d_new < 0.0) {
-                    nodes[i].pos = pos_new - d_new * normal;
+                // Node is on the opposite side of center → project back
+                if (d * center_d < 0.0) {
+                    nodes[i].pos = pos - d * normal;
                     Kokkos::atomic_inc(&d_count());
                     return;
                 }
