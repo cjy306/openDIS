@@ -1,5 +1,5 @@
 """
-生成初始位错配置（Frank-Read 源）+ 球形杂质 + 孪晶面
+生成初始位错配置(Frank-Read 源）+ 球形杂质 + 孪晶面
 按 mode 生成 3 份独立配置：
   python generate_config.py --mode pure    → init_data_pure/
   python generate_config.py --mode precip  → init_data_precip/

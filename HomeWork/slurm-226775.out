@@ -1,0 +1,159 @@
+Host Parallel Execution Space:
+  KOKKOS_ENABLE_OPENMP: yes
+
+OpenMP Runtime Configuration:
+Kokkos::OpenMP thread_pool_topology[ 1 x 48 x 1 ]
+Reading ParaDiS configuration
+ Input file: /data/home/dg000246b/openDIS/HomeWork/init_data_twin/init_config.data
+ nodes: 4164, segments: 3885
+ Warning: Burgers vector is not conserved for 558 node(s)
+[System] 50 spherical obstacles loaded
+[System] 2 planar obstacles (twin boundaries) loaded
+Step =      0: nodes = 4164, dt = 0.000000e+00, strain = 0.000000e+00, elapsed = 0.1 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/config.0.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/restart.0.exadis
+Run until reaching strain = 0.010000
+Step =      1: nodes = 4164, dt = 1.000000e-09, strain = 1.000000e-06, elapsed = 0.3 sec
+Step =      2: nodes = 4164, dt = 1.200000e-09, strain = 2.200000e-06, elapsed = 0.4 sec
+Step =      3: nodes = 4164, dt = 1.440000e-09, strain = 3.640000e-06, elapsed = 0.5 sec
+Step =      4: nodes = 4164, dt = 1.728000e-09, strain = 5.368000e-06, elapsed = 0.6 sec
+Step =      5: nodes = 4164, dt = 2.073600e-09, strain = 7.441600e-06, elapsed = 0.7 sec
+Step =      6: nodes = 4164, dt = 2.488320e-09, strain = 9.929920e-06, elapsed = 0.8 sec
+Step =      7: nodes = 4164, dt = 2.985984e-09, strain = 1.291590e-05, elapsed = 0.9 sec
+Step =      8: nodes = 4164, dt = 3.583181e-09, strain = 1.649908e-05, elapsed = 1.0 sec
+Step =      9: nodes = 4164, dt = 4.299817e-09, strain = 2.079890e-05, elapsed = 1.1 sec
+Step =     10: nodes = 4164, dt = 5.159780e-09, strain = 2.595868e-05, elapsed = 1.2 sec
+Step =     11: nodes = 4164, dt = 6.191736e-09, strain = 3.215042e-05, elapsed = 1.3 sec
+Step =     12: nodes = 4164, dt = 7.430084e-09, strain = 3.958050e-05, elapsed = 1.4 sec
+Step =     13: nodes = 4164, dt = 8.916100e-09, strain = 4.849660e-05, elapsed = 1.5 sec
+Step =     14: nodes = 4164, dt = 1.069932e-08, strain = 5.919592e-05, elapsed = 1.6 sec
+Step =     15: nodes = 4164, dt = 1.283918e-08, strain = 7.203511e-05, elapsed = 1.8 sec
+Step =     16: nodes = 4164, dt = 1.540702e-08, strain = 8.744213e-05, elapsed = 1.9 sec
+Step =     17: nodes = 4164, dt = 1.848843e-08, strain = 1.059306e-04, elapsed = 2.0 sec
+Step =     18: nodes = 4164, dt = 2.218611e-08, strain = 1.281167e-04, elapsed = 2.1 sec
+Step =     19: nodes = 4164, dt = 2.662333e-08, strain = 1.547400e-04, elapsed = 2.2 sec
+Step =     20: nodes = 4164, dt = 3.194800e-08, strain = 1.866880e-04, elapsed = 2.3 sec
+Step =     21: nodes = 4164, dt = 3.833760e-08, strain = 2.250256e-04, elapsed = 2.4 sec
+Step =     22: nodes = 4164, dt = 4.600512e-08, strain = 2.710307e-04, elapsed = 2.5 sec
+Step =     23: nodes = 4164, dt = 5.520614e-08, strain = 3.262369e-04, elapsed = 2.6 sec
+Step =     24: nodes = 4164, dt = 6.624737e-08, strain = 3.924842e-04, elapsed = 2.7 sec
+Step =     25: nodes = 4164, dt = 7.949685e-08, strain = 4.719811e-04, elapsed = 2.8 sec
+Step =     26: nodes = 4164, dt = 9.539622e-08, strain = 5.673773e-04, elapsed = 2.9 sec
+Step =     27: nodes = 4164, dt = 1.000000e-07, strain = 6.673773e-04, elapsed = 3.0 sec
+Step =     28: nodes = 4164, dt = 1.000000e-07, strain = 7.673773e-04, elapsed = 3.1 sec
+Step =     29: nodes = 4164, dt = 1.000000e-07, strain = 8.673773e-04, elapsed = 3.2 sec
+Step =     30: nodes = 4164, dt = 1.000000e-07, strain = 9.673773e-04, elapsed = 3.3 sec
+Step =     31: nodes = 4164, dt = 1.000000e-07, strain = 1.067377e-03, elapsed = 3.4 sec
+Step =     32: nodes = 4164, dt = 1.000000e-07, strain = 1.167377e-03, elapsed = 3.5 sec
+Step =     33: nodes = 4164, dt = 1.000000e-07, strain = 1.267377e-03, elapsed = 3.6 sec
+Step =     34: nodes = 4164, dt = 1.000000e-07, strain = 1.367377e-03, elapsed = 3.7 sec
+Step =     35: nodes = 4164, dt = 1.000000e-07, strain = 1.467377e-03, elapsed = 3.8 sec
+Step =     36: nodes = 4164, dt = 1.000000e-07, strain = 1.567377e-03, elapsed = 3.9 sec
+Step =     37: nodes = 4164, dt = 1.000000e-07, strain = 1.667377e-03, elapsed = 4.0 sec
+Step =     38: nodes = 4164, dt = 1.000000e-07, strain = 1.767377e-03, elapsed = 4.1 sec
+Step =     39: nodes = 4164, dt = 1.000000e-07, strain = 1.867377e-03, elapsed = 4.2 sec
+Step =     40: nodes = 4164, dt = 1.000000e-07, strain = 1.967377e-03, elapsed = 4.3 sec
+Step =     41: nodes = 4164, dt = 1.000000e-07, strain = 2.067377e-03, elapsed = 4.4 sec
+Step =     42: nodes = 4164, dt = 1.000000e-07, strain = 2.167377e-03, elapsed = 4.5 sec
+Step =     43: nodes = 4164, dt = 1.000000e-07, strain = 2.267377e-03, elapsed = 4.6 sec
+Step =     44: nodes = 4164, dt = 1.000000e-07, strain = 2.367377e-03, elapsed = 4.8 sec
+Step =     45: nodes = 4164, dt = 1.000000e-07, strain = 2.467377e-03, elapsed = 4.9 sec
+Step =     46: nodes = 4164, dt = 1.000000e-07, strain = 2.567377e-03, elapsed = 5.0 sec
+Step =     47: nodes = 4164, dt = 1.000000e-07, strain = 2.667377e-03, elapsed = 5.1 sec
+Step =     48: nodes = 4164, dt = 1.000000e-07, strain = 2.767377e-03, elapsed = 5.2 sec
+Step =     49: nodes = 4164, dt = 1.000000e-07, strain = 2.867377e-03, elapsed = 5.3 sec
+Step =     50: nodes = 4164, dt = 1.000000e-07, strain = 2.967377e-03, elapsed = 5.4 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/config.50.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/restart.50.exadis
+Step =     51: nodes = 4164, dt = 1.000000e-07, strain = 3.067377e-03, elapsed = 5.5 sec
+Step =     52: nodes = 4164, dt = 1.000000e-07, strain = 3.167377e-03, elapsed = 5.6 sec
+Step =     53: nodes = 4164, dt = 1.000000e-07, strain = 3.267377e-03, elapsed = 5.7 sec
+Step =     54: nodes = 4164, dt = 1.000000e-07, strain = 3.367377e-03, elapsed = 5.8 sec
+Step =     55: nodes = 4164, dt = 1.000000e-07, strain = 3.467377e-03, elapsed = 5.9 sec
+Step =     56: nodes = 4164, dt = 1.000000e-07, strain = 3.567377e-03, elapsed = 6.0 sec
+Step =     57: nodes = 4164, dt = 1.000000e-07, strain = 3.667377e-03, elapsed = 6.1 sec
+Step =     58: nodes = 4164, dt = 1.000000e-07, strain = 3.767377e-03, elapsed = 6.2 sec
+Step =     59: nodes = 4164, dt = 1.000000e-07, strain = 3.867377e-03, elapsed = 6.3 sec
+Step =     60: nodes = 4164, dt = 1.000000e-07, strain = 3.967377e-03, elapsed = 6.4 sec
+Step =     61: nodes = 4164, dt = 1.000000e-07, strain = 4.067377e-03, elapsed = 6.5 sec
+Step =     62: nodes = 4164, dt = 1.000000e-07, strain = 4.167377e-03, elapsed = 6.6 sec
+Step =     63: nodes = 4164, dt = 1.000000e-07, strain = 4.267377e-03, elapsed = 6.8 sec
+Step =     64: nodes = 4164, dt = 1.000000e-07, strain = 4.367377e-03, elapsed = 6.9 sec
+Step =     65: nodes = 4164, dt = 1.000000e-07, strain = 4.467377e-03, elapsed = 7.0 sec
+Step =     66: nodes = 4164, dt = 1.000000e-07, strain = 4.567377e-03, elapsed = 7.1 sec
+Step =     67: nodes = 4164, dt = 1.000000e-07, strain = 4.667377e-03, elapsed = 7.2 sec
+Step =     68: nodes = 4164, dt = 1.000000e-07, strain = 4.767377e-03, elapsed = 7.3 sec
+Step =     69: nodes = 4164, dt = 1.000000e-07, strain = 4.867377e-03, elapsed = 7.4 sec
+Step =     70: nodes = 4164, dt = 1.000000e-07, strain = 4.967377e-03, elapsed = 7.5 sec
+Step =     71: nodes = 4164, dt = 1.000000e-07, strain = 5.067377e-03, elapsed = 7.6 sec
+Step =     72: nodes = 4164, dt = 1.000000e-07, strain = 5.167377e-03, elapsed = 7.7 sec
+Step =     73: nodes = 4164, dt = 1.000000e-07, strain = 5.267377e-03, elapsed = 7.8 sec
+Step =     74: nodes = 4164, dt = 1.000000e-07, strain = 5.367377e-03, elapsed = 7.9 sec
+Step =     75: nodes = 4164, dt = 1.000000e-07, strain = 5.467377e-03, elapsed = 8.0 sec
+Step =     76: nodes = 4164, dt = 1.000000e-07, strain = 5.567377e-03, elapsed = 8.1 sec
+Step =     77: nodes = 4164, dt = 1.000000e-07, strain = 5.667377e-03, elapsed = 8.2 sec
+Step =     78: nodes = 4164, dt = 1.000000e-07, strain = 5.767377e-03, elapsed = 8.3 sec
+Step =     79: nodes = 4164, dt = 1.000000e-07, strain = 5.867377e-03, elapsed = 8.4 sec
+Step =     80: nodes = 4164, dt = 1.000000e-07, strain = 5.967377e-03, elapsed = 8.5 sec
+Step =     81: nodes = 4164, dt = 1.000000e-07, strain = 6.067377e-03, elapsed = 8.6 sec
+Step =     82: nodes = 4164, dt = 1.000000e-07, strain = 6.167377e-03, elapsed = 8.7 sec
+Step =     83: nodes = 4164, dt = 1.000000e-07, strain = 6.267377e-03, elapsed = 8.8 sec
+Step =     84: nodes = 4164, dt = 1.000000e-07, strain = 6.367377e-03, elapsed = 8.9 sec
+Step =     85: nodes = 4164, dt = 1.000000e-07, strain = 6.467377e-03, elapsed = 9.0 sec
+Step =     86: nodes = 4164, dt = 1.000000e-07, strain = 6.567377e-03, elapsed = 9.1 sec
+Step =     87: nodes = 4164, dt = 1.000000e-07, strain = 6.667377e-03, elapsed = 9.2 sec
+Step =     88: nodes = 4164, dt = 1.000000e-07, strain = 6.767377e-03, elapsed = 9.3 sec
+Step =     89: nodes = 4164, dt = 1.000000e-07, strain = 6.867377e-03, elapsed = 9.4 sec
+Step =     90: nodes = 4164, dt = 1.000000e-07, strain = 6.967377e-03, elapsed = 9.5 sec
+Step =     91: nodes = 4164, dt = 1.000000e-07, strain = 7.067377e-03, elapsed = 9.6 sec
+Step =     92: nodes = 4164, dt = 1.000000e-07, strain = 7.167377e-03, elapsed = 9.7 sec
+Step =     93: nodes = 4164, dt = 1.000000e-07, strain = 7.267377e-03, elapsed = 9.8 sec
+Step =     94: nodes = 4164, dt = 1.000000e-07, strain = 7.367377e-03, elapsed = 9.9 sec
+Step =     95: nodes = 4164, dt = 1.000000e-07, strain = 7.467377e-03, elapsed = 10.1 sec
+Step =     96: nodes = 4164, dt = 1.000000e-07, strain = 7.567377e-03, elapsed = 10.2 sec
+Step =     97: nodes = 4164, dt = 1.000000e-07, strain = 7.667377e-03, elapsed = 10.3 sec
+Step =     98: nodes = 4164, dt = 1.000000e-07, strain = 7.767377e-03, elapsed = 10.4 sec
+Step =     99: nodes = 4164, dt = 1.000000e-07, strain = 7.867377e-03, elapsed = 10.5 sec
+Step =    100: nodes = 4164, dt = 1.000000e-07, strain = 7.967377e-03, elapsed = 10.6 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/config.100.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/restart.100.exadis
+Step =    101: nodes = 4164, dt = 1.000000e-07, strain = 8.067377e-03, elapsed = 10.7 sec
+Step =    102: nodes = 4164, dt = 1.000000e-07, strain = 8.167377e-03, elapsed = 10.8 sec
+Step =    103: nodes = 4164, dt = 1.000000e-07, strain = 8.267377e-03, elapsed = 10.9 sec
+Step =    104: nodes = 4164, dt = 1.000000e-07, strain = 8.367377e-03, elapsed = 11.0 sec
+Step =    105: nodes = 4164, dt = 1.000000e-07, strain = 8.467377e-03, elapsed = 11.1 sec
+Step =    106: nodes = 4164, dt = 1.000000e-07, strain = 8.567377e-03, elapsed = 11.2 sec
+Step =    107: nodes = 4164, dt = 1.000000e-07, strain = 8.667377e-03, elapsed = 11.3 sec
+Step =    108: nodes = 4164, dt = 1.000000e-07, strain = 8.767377e-03, elapsed = 11.4 sec
+Step =    109: nodes = 4164, dt = 1.000000e-07, strain = 8.867377e-03, elapsed = 11.5 sec
+Step =    110: nodes = 4164, dt = 1.000000e-07, strain = 8.967377e-03, elapsed = 11.6 sec
+Step =    111: nodes = 4164, dt = 1.000000e-07, strain = 9.067377e-03, elapsed = 11.7 sec
+Step =    112: nodes = 4164, dt = 1.000000e-07, strain = 9.167377e-03, elapsed = 11.8 sec
+Step =    113: nodes = 4164, dt = 1.000000e-07, strain = 9.267377e-03, elapsed = 11.9 sec
+Step =    114: nodes = 4164, dt = 1.000000e-07, strain = 9.367377e-03, elapsed = 12.0 sec
+Step =    115: nodes = 4164, dt = 1.000000e-07, strain = 9.467377e-03, elapsed = 12.1 sec
+Step =    116: nodes = 4164, dt = 1.000000e-07, strain = 9.567377e-03, elapsed = 12.2 sec
+Step =    117: nodes = 4164, dt = 1.000000e-07, strain = 9.667377e-03, elapsed = 12.3 sec
+Step =    118: nodes = 4164, dt = 1.000000e-07, strain = 9.767377e-03, elapsed = 12.4 sec
+Step =    119: nodes = 4164, dt = 1.000000e-07, strain = 9.867377e-03, elapsed = 12.5 sec
+Step =    120: nodes = 4164, dt = 1.000000e-07, strain = 9.967377e-03, elapsed = 12.6 sec
+Step =    121: nodes = 4164, dt = 1.000000e-07, strain = 1.006738e-02, elapsed = 12.7 sec
+----------------------------------------------
+Force time:                9.052 sec (71.02%)
+Mobility time:             0.101 sec (0.79%)
+Integration time:          3.187 sec (25.00%)
+Cross-slip time:           0.000 sec (0.00%)
+Collision time:            0.330 sec (2.59%)
+Topology time:             0.093 sec (0.73%)
+Remesh time:               0.020 sec (0.16%)
+Output time:               0.084 sec (0.66%)
+----------------------------------------------
+Loaded 50 precipitates
+Loaded 2 twin boundary planes
+RUN TIME: 12.745836 sec
