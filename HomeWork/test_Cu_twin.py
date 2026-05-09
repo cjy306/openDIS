@@ -18,8 +18,17 @@ except ImportError as e:
     raise ImportError('Cannot import pyexadis') from e
 
 
+# 坐标系旋转矩阵：[100]/[010]/[001] → [1-10]/[11-2]/[111]
+# 使孪晶面 (111) 在新坐标系中为 z=const，兼容 PBC
+Rorient = [
+    [ 1/np.sqrt(2), -1/np.sqrt(2),  0           ],
+    [ 1/np.sqrt(6),  1/np.sqrt(6), -2/np.sqrt(6)],
+    [ 1/np.sqrt(3),  1/np.sqrt(3),  1/np.sqrt(3)],
+]
+
 state = {
     "crystal": 'fcc',
+    "Rorient": Rorient,
     "burgmag": 0.2556e-9,
     "mu":      48e9,
     "nu":      0.324,
