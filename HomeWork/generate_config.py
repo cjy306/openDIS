@@ -48,10 +48,9 @@ for _p in _fcc_planes:
     _pn = _p / np.linalg.norm(_p)
     for _b in _fcc_burgers:
         if abs(np.dot(_b, _pn)) < 1e-5:
-            # 旋转到新坐标系
             _b_rot = _R @ _b
             _pn_rot = _R @ _pn
-            _pn_rot /= np.linalg.norm(_pn_rot)  # 确保归一化
+            _pn_rot /= np.linalg.norm(_pn_rot)
             FCC_SLIP_SYSTEMS.append((_b_rot.copy(), _pn_rot.copy()))
 
 
