@@ -1,0 +1,753 @@
+Host Parallel Execution Space:
+  KOKKOS_ENABLE_OPENMP: yes
+
+OpenMP Runtime Configuration:
+Kokkos::OpenMP thread_pool_topology[ 1 x 48 x 1 ]
+Reading ParaDiS configuration
+ Input file: /data/home/dg000246b/openDIS/HomeWork/init_data_twin/init_config.data
+ nodes: 4164, segments: 3885
+ Warning: Burgers vector is not conserved for 558 node(s)
+[System] 50 spherical obstacles loaded
+[System] 2 planar obstacles (twin boundaries) loaded
+Step =      0: nodes = 4164, dt = 0.000000e+00, strain = 0.000000e+00, elapsed = 0.0 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/config.0.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/restart.0.exadis
+Run until reaching strain = 0.010000
+Step =      1: nodes = 4164, dt = 1.000000e-09, strain = 1.000000e-06, elapsed = 0.3 sec
+Step =      2: nodes = 4164, dt = 1.200000e-09, strain = 2.200000e-06, elapsed = 0.6 sec
+Step =      3: nodes = 4162, dt = 1.440000e-09, strain = 3.640000e-06, elapsed = 0.8 sec
+Step =      4: nodes = 4158, dt = 1.728000e-09, strain = 5.368000e-06, elapsed = 1.1 sec
+Step =      5: nodes = 4158, dt = 2.073600e-09, strain = 7.441600e-06, elapsed = 1.5 sec
+Step =      6: nodes = 4159, dt = 2.488320e-09, strain = 9.929920e-06, elapsed = 1.8 sec
+Step =      7: nodes = 4188, dt = 2.985984e-09, strain = 1.291590e-05, elapsed = 2.3 sec
+Step =      8: nodes = 4195, dt = 3.583181e-09, strain = 1.649908e-05, elapsed = 2.8 sec
+Step =      9: nodes = 4137, dt = 4.299817e-09, strain = 2.079890e-05, elapsed = 3.5 sec
+Step =     10: nodes = 4355, dt = 5.159780e-09, strain = 2.595868e-05, elapsed = 4.2 sec
+Step =     11: nodes = 4467, dt = 6.191736e-09, strain = 3.215042e-05, elapsed = 5.2 sec
+Step =     12: nodes = 4450, dt = 7.430084e-09, strain = 3.958050e-05, elapsed = 6.4 sec
+Step =     13: nodes = 4407, dt = 8.916100e-09, strain = 4.849660e-05, elapsed = 7.7 sec
+Step =     14: nodes = 4582, dt = 1.069932e-08, strain = 5.919592e-05, elapsed = 9.4 sec
+Step =     15: nodes = 4476, dt = 1.283918e-08, strain = 7.203511e-05, elapsed = 12.3 sec
+Step =     16: nodes = 4731, dt = 1.540702e-08, strain = 8.744213e-05, elapsed = 15.7 sec
+Step =     17: nodes = 4871, dt = 1.848843e-08, strain = 1.059306e-04, elapsed = 22.2 sec
+Step =     18: nodes = 4944, dt = 2.218611e-08, strain = 1.281167e-04, elapsed = 31.0 sec
+Step =     19: nodes = 4759, dt = 2.662333e-08, strain = 1.547400e-04, elapsed = 43.7 sec
+Step =     20: nodes = 4759, dt = 3.194800e-08, strain = 1.866880e-04, elapsed = 56.1 sec
+Step =     21: nodes = 4795, dt = 3.833760e-08, strain = 2.250256e-04, elapsed = 70.6 sec
+Step =     22: nodes = 4611, dt = 4.600512e-08, strain = 2.710307e-04, elapsed = 87.7 sec
+Step =     23: nodes = 4793, dt = 5.520614e-08, strain = 3.262369e-04, elapsed = 106.2 sec
+Step =     24: nodes = 4893, dt = 6.624737e-08, strain = 3.924842e-04, elapsed = 146.7 sec
+Step =     25: nodes = 4877, dt = 3.974842e-08, strain = 4.322327e-04, elapsed = 166.3 sec
+Step =     26: nodes = 4777, dt = 3.974842e-08, strain = 4.719811e-04, elapsed = 200.5 sec
+Step =     27: nodes = 4733, dt = 4.769811e-08, strain = 5.196792e-04, elapsed = 225.1 sec
+Step =     28: nodes = 4726, dt = 5.723773e-08, strain = 5.769169e-04, elapsed = 256.8 sec
+Step =     29: nodes = 4555, dt = 6.868528e-08, strain = 6.456022e-04, elapsed = 296.5 sec
+Step =     30: nodes = 4428, dt = 4.121117e-08, strain = 6.868134e-04, elapsed = 313.6 sec
+Step =     31: nodes = 4345, dt = 4.121117e-08, strain = 7.280245e-04, elapsed = 328.8 sec
+Step =     32: nodes = 4456, dt = 4.945340e-08, strain = 7.774779e-04, elapsed = 348.1 sec
+Step =     33: nodes = 4401, dt = 5.934408e-08, strain = 8.368220e-04, elapsed = 379.3 sec
+Step =     34: nodes = 4295, dt = 3.560645e-08, strain = 8.724285e-04, elapsed = 404.6 sec
+Step =     35: nodes = 4259, dt = 3.560645e-08, strain = 9.080349e-04, elapsed = 413.1 sec
+Step =     36: nodes = 4197, dt = 4.272774e-08, strain = 9.507626e-04, elapsed = 428.8 sec
+Step =     37: nodes = 4165, dt = 5.127328e-08, strain = 1.002036e-03, elapsed = 440.4 sec
+Step =     38: nodes = 4107, dt = 6.152794e-08, strain = 1.063564e-03, elapsed = 453.7 sec
+Step =     39: nodes = 4173, dt = 7.383353e-08, strain = 1.137397e-03, elapsed = 487.9 sec
+Step =     40: nodes = 4086, dt = 4.430012e-08, strain = 1.181698e-03, elapsed = 506.1 sec
+Step =     41: nodes = 4171, dt = 4.430012e-08, strain = 1.225998e-03, elapsed = 522.7 sec
+Step =     42: nodes = 4080, dt = 5.316014e-08, strain = 1.279158e-03, elapsed = 542.6 sec
+Step =     43: nodes = 4139, dt = 6.379217e-08, strain = 1.342950e-03, elapsed = 568.9 sec
+Step =     44: nodes = 4061, dt = 7.655060e-08, strain = 1.419501e-03, elapsed = 605.9 sec
+Step =     45: nodes = 4075, dt = 2.296518e-08, strain = 1.442466e-03, elapsed = 611.1 sec
+Step =     46: nodes = 4016, dt = 2.296518e-08, strain = 1.465431e-03, elapsed = 617.9 sec
+Step =     47: nodes = 3946, dt = 2.755822e-08, strain = 1.492989e-03, elapsed = 623.6 sec
+Step =     48: nodes = 3907, dt = 3.306986e-08, strain = 1.526059e-03, elapsed = 630.1 sec
+Step =     49: nodes = 3931, dt = 3.968383e-08, strain = 1.565743e-03, elapsed = 637.9 sec
+Step =     50: nodes = 4023, dt = 4.762060e-08, strain = 1.613363e-03, elapsed = 647.6 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/config.50.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/restart.50.exadis
+Step =     51: nodes = 4043, dt = 5.714472e-08, strain = 1.670508e-03, elapsed = 670.1 sec
+Step =     52: nodes = 4074, dt = 3.428683e-08, strain = 1.704795e-03, elapsed = 687.3 sec
+Step =     53: nodes = 4045, dt = 3.428683e-08, strain = 1.739082e-03, elapsed = 701.0 sec
+Step =     54: nodes = 4039, dt = 4.114420e-08, strain = 1.780226e-03, elapsed = 715.3 sec
+Step =     55: nodes = 4041, dt = 4.937304e-08, strain = 1.829599e-03, elapsed = 735.6 sec
+Step =     56: nodes = 3880, dt = 5.924764e-08, strain = 1.888847e-03, elapsed = 777.0 sec
+Step =     57: nodes = 3837, dt = 7.109717e-08, strain = 1.959944e-03, elapsed = 800.0 sec
+Step =     58: nodes = 3776, dt = 2.132915e-08, strain = 1.981273e-03, elapsed = 806.0 sec
+Step =     59: nodes = 3803, dt = 2.132915e-08, strain = 2.002602e-03, elapsed = 810.0 sec
+Step =     60: nodes = 3806, dt = 2.559498e-08, strain = 2.028197e-03, elapsed = 817.4 sec
+Step =     61: nodes = 3689, dt = 3.071398e-08, strain = 2.058911e-03, elapsed = 827.6 sec
+Step =     62: nodes = 3635, dt = 3.685677e-08, strain = 2.095768e-03, elapsed = 834.4 sec
+Step =     63: nodes = 3631, dt = 4.422813e-08, strain = 2.139996e-03, elapsed = 842.3 sec
+Step =     64: nodes = 3676, dt = 5.307376e-08, strain = 2.193070e-03, elapsed = 851.7 sec
+Step =     65: nodes = 3602, dt = 6.368851e-08, strain = 2.256758e-03, elapsed = 874.8 sec
+Step =     66: nodes = 3529, dt = 7.642621e-08, strain = 2.333184e-03, elapsed = 896.4 sec
+Step =     67: nodes = 3485, dt = 4.585572e-08, strain = 2.379040e-03, elapsed = 904.2 sec
+Step =     68: nodes = 3559, dt = 4.585572e-08, strain = 2.424896e-03, elapsed = 912.1 sec
+Step =     69: nodes = 3572, dt = 5.502687e-08, strain = 2.479923e-03, elapsed = 921.9 sec
+Step =     70: nodes = 3675, dt = 6.603224e-08, strain = 2.545955e-03, elapsed = 944.3 sec
+Step =     71: nodes = 3685, dt = 7.923869e-08, strain = 2.625194e-03, elapsed = 976.9 sec
+Step =     72: nodes = 3568, dt = 9.508643e-08, strain = 2.720280e-03, elapsed = 1024.3 sec
+Step =     73: nodes = 3493, dt = 5.000000e-08, strain = 2.770280e-03, elapsed = 1034.3 sec
+Step =     74: nodes = 3576, dt = 5.000000e-08, strain = 2.820280e-03, elapsed = 1043.3 sec
+Step =     75: nodes = 3517, dt = 6.000000e-08, strain = 2.880280e-03, elapsed = 1061.6 sec
+Step =     76: nodes = 3556, dt = 3.600000e-08, strain = 2.916280e-03, elapsed = 1068.4 sec
+Step =     77: nodes = 3567, dt = 3.600000e-08, strain = 2.952280e-03, elapsed = 1078.4 sec
+Step =     78: nodes = 3577, dt = 4.320000e-08, strain = 2.995480e-03, elapsed = 1097.3 sec
+Step =     79: nodes = 3519, dt = 2.592000e-08, strain = 3.021400e-03, elapsed = 1105.8 sec
+Step =     80: nodes = 3527, dt = 2.592000e-08, strain = 3.047320e-03, elapsed = 1110.5 sec
+Step =     81: nodes = 3502, dt = 3.110400e-08, strain = 3.078424e-03, elapsed = 1116.2 sec
+Step =     82: nodes = 3447, dt = 3.732480e-08, strain = 3.115749e-03, elapsed = 1127.3 sec
+Step =     83: nodes = 3363, dt = 4.478976e-08, strain = 3.160539e-03, elapsed = 1135.6 sec
+Step =     84: nodes = 3397, dt = 5.374771e-08, strain = 3.214286e-03, elapsed = 1144.7 sec
+Step =     85: nodes = 3354, dt = 6.449725e-08, strain = 3.278784e-03, elapsed = 1165.2 sec
+Step =     86: nodes = 3357, dt = 3.869835e-08, strain = 3.317482e-03, elapsed = 1172.1 sec
+Step =     87: nodes = 3361, dt = 3.869835e-08, strain = 3.356180e-03, elapsed = 1182.0 sec
+Step =     88: nodes = 3365, dt = 4.643802e-08, strain = 3.402618e-03, elapsed = 1190.0 sec
+Step =     89: nodes = 3438, dt = 5.572563e-08, strain = 3.458344e-03, elapsed = 1199.6 sec
+Step =     90: nodes = 3397, dt = 6.687075e-08, strain = 3.525215e-03, elapsed = 1225.8 sec
+Step =     91: nodes = 3383, dt = 8.024490e-08, strain = 3.605460e-03, elapsed = 1241.3 sec
+Step =     92: nodes = 3349, dt = 2.407347e-08, strain = 3.629533e-03, elapsed = 1245.9 sec
+Step =     93: nodes = 3305, dt = 2.407347e-08, strain = 3.653607e-03, elapsed = 1251.7 sec
+Step =     94: nodes = 3266, dt = 2.888817e-08, strain = 3.682495e-03, elapsed = 1256.6 sec
+Step =     95: nodes = 3298, dt = 3.466580e-08, strain = 3.717161e-03, elapsed = 1262.5 sec
+Step =     96: nodes = 3244, dt = 4.159896e-08, strain = 3.758760e-03, elapsed = 1273.7 sec
+Step =     97: nodes = 3250, dt = 4.991875e-08, strain = 3.808678e-03, elapsed = 1282.3 sec
+Step =     98: nodes = 3285, dt = 2.995125e-08, strain = 3.838630e-03, elapsed = 1287.2 sec
+Step =     99: nodes = 3269, dt = 2.995125e-08, strain = 3.868581e-03, elapsed = 1295.6 sec
+Step =    100: nodes = 3253, dt = 3.594150e-08, strain = 3.904522e-03, elapsed = 1306.3 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/config.100.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/restart.100.exadis
+Step =    101: nodes = 3270, dt = 4.312980e-08, strain = 3.947652e-03, elapsed = 1316.9 sec
+Step =    102: nodes = 3252, dt = 5.175576e-08, strain = 3.999408e-03, elapsed = 1332.6 sec
+Step =    103: nodes = 3165, dt = 6.210691e-08, strain = 4.061515e-03, elapsed = 1361.6 sec
+Step =    104: nodes = 3152, dt = 7.452829e-08, strain = 4.136043e-03, elapsed = 1374.7 sec
+Step =    105: nodes = 3163, dt = 4.471698e-08, strain = 4.180760e-03, elapsed = 1382.0 sec
+Step =    106: nodes = 3154, dt = 4.471698e-08, strain = 4.225477e-03, elapsed = 1389.0 sec
+Step =    107: nodes = 3116, dt = 5.366037e-08, strain = 4.279137e-03, elapsed = 1403.5 sec
+Step =    108: nodes = 3148, dt = 6.439245e-08, strain = 4.343530e-03, elapsed = 1414.4 sec
+Step =    109: nodes = 3117, dt = 1.931773e-08, strain = 4.362848e-03, elapsed = 1418.7 sec
+Step =    110: nodes = 3076, dt = 1.931773e-08, strain = 4.382165e-03, elapsed = 1423.0 sec
+Step =    111: nodes = 3038, dt = 2.318128e-08, strain = 4.405347e-03, elapsed = 1427.9 sec
+Step =    112: nodes = 3057, dt = 2.781754e-08, strain = 4.433164e-03, elapsed = 1432.1 sec
+Step =    113: nodes = 3006, dt = 3.338104e-08, strain = 4.466545e-03, elapsed = 1440.5 sec
+Step =    114: nodes = 3042, dt = 4.005725e-08, strain = 4.506602e-03, elapsed = 1449.0 sec
+Step =    115: nodes = 3054, dt = 4.806870e-08, strain = 4.554671e-03, elapsed = 1459.3 sec
+Step =    116: nodes = 3009, dt = 5.768244e-08, strain = 4.612354e-03, elapsed = 1468.4 sec
+Step =    117: nodes = 2975, dt = 3.460947e-08, strain = 4.646963e-03, elapsed = 1476.2 sec
+Step =    118: nodes = 3008, dt = 3.460947e-08, strain = 4.681573e-03, elapsed = 1484.0 sec
+Step =    119: nodes = 2979, dt = 2.076568e-08, strain = 4.702338e-03, elapsed = 1487.8 sec
+Step =    120: nodes = 2936, dt = 2.076568e-08, strain = 4.723104e-03, elapsed = 1491.8 sec
+Step =    121: nodes = 2959, dt = 2.491882e-08, strain = 4.748023e-03, elapsed = 1495.4 sec
+Step =    122: nodes = 2996, dt = 2.990258e-08, strain = 4.777925e-03, elapsed = 1499.9 sec
+Step =    123: nodes = 3010, dt = 3.588309e-08, strain = 4.813808e-03, elapsed = 1507.6 sec
+Step =    124: nodes = 2975, dt = 4.305971e-08, strain = 4.856868e-03, elapsed = 1518.6 sec
+Step =    125: nodes = 2960, dt = 5.167166e-08, strain = 4.908540e-03, elapsed = 1526.8 sec
+Step =    126: nodes = 2962, dt = 6.200599e-08, strain = 4.970546e-03, elapsed = 1536.6 sec
+Step =    127: nodes = 2963, dt = 7.440719e-08, strain = 5.044953e-03, elapsed = 1553.2 sec
+Step =    128: nodes = 2925, dt = 8.928862e-08, strain = 5.134242e-03, elapsed = 1567.5 sec
+Step =    129: nodes = 2873, dt = 5.000000e-08, strain = 5.184242e-03, elapsed = 1575.1 sec
+Step =    130: nodes = 2902, dt = 5.000000e-08, strain = 5.234242e-03, elapsed = 1582.6 sec
+Step =    131: nodes = 2955, dt = 6.000000e-08, strain = 5.294242e-03, elapsed = 1591.8 sec
+Step =    132: nodes = 3026, dt = 7.200000e-08, strain = 5.366242e-03, elapsed = 1612.1 sec
+Step =    133: nodes = 2963, dt = 8.640000e-08, strain = 5.452642e-03, elapsed = 1641.9 sec
+Step =    134: nodes = 2935, dt = 5.000000e-08, strain = 5.502642e-03, elapsed = 1649.9 sec
+Step =    135: nodes = 2912, dt = 5.000000e-08, strain = 5.552642e-03, elapsed = 1658.0 sec
+Step =    136: nodes = 2867, dt = 6.000000e-08, strain = 5.612642e-03, elapsed = 1672.5 sec
+Step =    137: nodes = 2881, dt = 7.200000e-08, strain = 5.684642e-03, elapsed = 1690.1 sec
+Step =    138: nodes = 2824, dt = 8.640000e-08, strain = 5.771042e-03, elapsed = 1712.1 sec
+Step =    139: nodes = 2792, dt = 5.000000e-08, strain = 5.821042e-03, elapsed = 1719.7 sec
+Step =    140: nodes = 2773, dt = 5.000000e-08, strain = 5.871042e-03, elapsed = 1727.0 sec
+Step =    141: nodes = 2812, dt = 6.000000e-08, strain = 5.931042e-03, elapsed = 1738.7 sec
+Step =    142: nodes = 2795, dt = 3.600000e-08, strain = 5.967042e-03, elapsed = 1746.9 sec
+Step =    143: nodes = 2745, dt = 3.600000e-08, strain = 6.003042e-03, elapsed = 1754.0 sec
+Step =    144: nodes = 2745, dt = 4.320000e-08, strain = 6.046242e-03, elapsed = 1761.8 sec
+Step =    145: nodes = 2710, dt = 5.184000e-08, strain = 6.098082e-03, elapsed = 1772.4 sec
+Step =    146: nodes = 2754, dt = 6.220800e-08, strain = 6.160290e-03, elapsed = 1781.8 sec
+Step =    147: nodes = 2693, dt = 7.464960e-08, strain = 6.234939e-03, elapsed = 1797.8 sec
+[TwinWall] projected 1 node(s)
+Step =    148: nodes = 2710, dt = 8.957952e-08, strain = 6.324519e-03, elapsed = 1813.0 sec
+[TwinWall] projected 3 node(s)
+Step =    149: nodes = 2807, dt = 5.000000e-08, strain = 6.374519e-03, elapsed = 1827.6 sec
+[TwinWall] projected 2 node(s)
+Step =    150: nodes = 2779, dt = 1.250000e-08, strain = 6.387019e-03, elapsed = 1830.1 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/config.150.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/restart.150.exadis
+[TwinWall] projected 3 node(s)
+Step =    151: nodes = 2764, dt = 1.250000e-08, strain = 6.399519e-03, elapsed = 1832.3 sec
+[TwinWall] projected 6 node(s)
+Step =    152: nodes = 2760, dt = 1.500000e-08, strain = 6.414519e-03, elapsed = 1836.3 sec
+[TwinWall] projected 7 node(s)
+Step =    153: nodes = 2856, dt = 1.800000e-08, strain = 6.432519e-03, elapsed = 1841.9 sec
+[TwinWall] projected 12 node(s)
+Step =    154: nodes = 2922, dt = 1.080000e-08, strain = 6.443319e-03, elapsed = 1844.2 sec
+[TwinWall] projected 19 node(s)
+Step =    155: nodes = 3003, dt = 1.080000e-08, strain = 6.454119e-03, elapsed = 1847.1 sec
+[TwinWall] projected 24 node(s)
+Step =    156: nodes = 3110, dt = 1.296000e-08, strain = 6.467079e-03, elapsed = 1851.0 sec
+[TwinWall] projected 36 node(s)
+Step =    157: nodes = 3203, dt = 7.776000e-09, strain = 6.474855e-03, elapsed = 1852.9 sec
+[TwinWall] projected 51 node(s)
+Step =    158: nodes = 3311, dt = 7.776000e-09, strain = 6.482631e-03, elapsed = 1855.3 sec
+[TwinWall] projected 83 node(s)
+Step =    159: nodes = 3530, dt = 9.331200e-09, strain = 6.491962e-03, elapsed = 1858.8 sec
+[TwinWall] projected 139 node(s)
+Step =    160: nodes = 3829, dt = 1.119744e-08, strain = 6.503159e-03, elapsed = 1865.0 sec
+[TwinWall] projected 242 node(s)
+Step =    161: nodes = 4329, dt = 1.343693e-08, strain = 6.516596e-03, elapsed = 1878.5 sec
+[TwinWall] projected 313 node(s)
+Step =    162: nodes = 4967, dt = 4.031078e-09, strain = 6.520627e-03, elapsed = 1882.1 sec
+[TwinWall] projected 427 node(s)
+Step =    163: nodes = 5747, dt = 4.031078e-09, strain = 6.524658e-03, elapsed = 1888.4 sec
+[TwinWall] projected 601 node(s)
+Step =    164: nodes = 6527, dt = 2.418647e-09, strain = 6.527077e-03, elapsed = 1896.0 sec
+[TwinWall] projected 721 node(s)
+Step =    165: nodes = 7295, dt = 2.418647e-09, strain = 6.529496e-03, elapsed = 1908.5 sec
+[TwinWall] projected 1018 node(s)
+Step =    166: nodes = 8386, dt = 2.902376e-09, strain = 6.532398e-03, elapsed = 1931.4 sec
+[TwinWall] projected 1194 node(s)
+Step =    167: nodes = 9510, dt = 1.741426e-09, strain = 6.534139e-03, elapsed = 1952.1 sec
+[TwinWall] projected 1482 node(s)
+Step =    168: nodes = 10842, dt = 1.741426e-09, strain = 6.535881e-03, elapsed = 1987.2 sec
+[TwinWall] projected 1671 node(s)
+Step =    169: nodes = 11578, dt = 5.224278e-10, strain = 6.536403e-03, elapsed = 2001.2 sec
+[TwinWall] projected 1790 node(s)
+Step =    170: nodes = 11987, dt = 5.224278e-10, strain = 6.536926e-03, elapsed = 2017.1 sec
+[TwinWall] projected 1824 node(s)
+Step =    171: nodes = 12507, dt = 6.269133e-10, strain = 6.537553e-03, elapsed = 2037.5 sec
+[TwinWall] projected 1868 node(s)
+Step =    172: nodes = 13133, dt = 7.522960e-10, strain = 6.538305e-03, elapsed = 2074.9 sec
+[TwinWall] projected 1845 node(s)
+Step =    173: nodes = 13847, dt = 9.027552e-10, strain = 6.539208e-03, elapsed = 2128.2 sec
+[TwinWall] projected 1826 node(s)
+Step =    174: nodes = 14277, dt = 5.416531e-10, strain = 6.539749e-03, elapsed = 2154.6 sec
+[TwinWall] projected 1783 node(s)
+Step =    175: nodes = 14764, dt = 5.416531e-10, strain = 6.540291e-03, elapsed = 2186.9 sec
+[TwinWall] projected 1755 node(s)
+Step =    176: nodes = 15364, dt = 6.499837e-10, strain = 6.540941e-03, elapsed = 2220.2 sec
+[TwinWall] projected 1659 node(s)
+Step =    177: nodes = 15683, dt = 3.899902e-10, strain = 6.541331e-03, elapsed = 2245.1 sec
+[TwinWall] projected 1642 node(s)
+Step =    178: nodes = 16056, dt = 3.899902e-10, strain = 6.541721e-03, elapsed = 2277.4 sec
+[TwinWall] projected 1665 node(s)
+Step =    179: nodes = 16476, dt = 4.679883e-10, strain = 6.542189e-03, elapsed = 2321.6 sec
+[TwinWall] projected 1681 node(s)
+Step =    180: nodes = 17020, dt = 5.615859e-10, strain = 6.542751e-03, elapsed = 2367.7 sec
+[TwinWall] projected 1778 node(s)
+Step =    181: nodes = 17657, dt = 6.739031e-10, strain = 6.543424e-03, elapsed = 2414.5 sec
+[TwinWall] projected 1730 node(s)
+Step =    182: nodes = 17949, dt = 4.043419e-10, strain = 6.543829e-03, elapsed = 2451.3 sec
+[TwinWall] projected 1661 node(s)
+Step =    183: nodes = 18276, dt = 4.043419e-10, strain = 6.544233e-03, elapsed = 2493.5 sec
+[TwinWall] projected 1549 node(s)
+Step =    184: nodes = 18414, dt = 2.426051e-10, strain = 6.544476e-03, elapsed = 2522.8 sec
+[TwinWall] projected 1530 node(s)
+Step =    185: nodes = 18633, dt = 2.426051e-10, strain = 6.544718e-03, elapsed = 2551.0 sec
+[TwinWall] projected 1489 node(s)
+Step =    186: nodes = 18873, dt = 2.911261e-10, strain = 6.545009e-03, elapsed = 2581.4 sec
+[TwinWall] projected 1513 node(s)
+Step =    187: nodes = 19152, dt = 3.493514e-10, strain = 6.545359e-03, elapsed = 2619.3 sec
+[TwinWall] projected 1512 node(s)
+Step =    188: nodes = 19526, dt = 4.192217e-10, strain = 6.545778e-03, elapsed = 2675.4 sec
+[TwinWall] projected 1525 node(s)
+Step =    189: nodes = 19989, dt = 5.030660e-10, strain = 6.546281e-03, elapsed = 2736.0 sec
+[TwinWall] projected 1468 node(s)
+Step =    190: nodes = 20199, dt = 3.018396e-10, strain = 6.546583e-03, elapsed = 2779.7 sec
+[TwinWall] projected 1455 node(s)
+Step =    191: nodes = 20388, dt = 3.018396e-10, strain = 6.546885e-03, elapsed = 2819.6 sec
+[TwinWall] projected 1428 node(s)
+Step =    192: nodes = 20697, dt = 3.622075e-10, strain = 6.547247e-03, elapsed = 2864.8 sec
+[TwinWall] projected 1393 node(s)
+Step =    193: nodes = 21015, dt = 4.346490e-10, strain = 6.547682e-03, elapsed = 2914.2 sec
+[TwinWall] projected 1402 node(s)
+Step =    194: nodes = 21487, dt = 5.215788e-10, strain = 6.548203e-03, elapsed = 2978.0 sec
+[TwinWall] projected 1381 node(s)
+Step =    195: nodes = 21664, dt = 3.129473e-10, strain = 6.548516e-03, elapsed = 3032.2 sec
+[TwinWall] projected 1287 node(s)
+Step =    196: nodes = 21938, dt = 3.129473e-10, strain = 6.548829e-03, elapsed = 3079.3 sec
+[TwinWall] projected 1295 node(s)
+Step =    197: nodes = 22215, dt = 3.755367e-10, strain = 6.549205e-03, elapsed = 3130.9 sec
+[TwinWall] projected 1360 node(s)
+Step =    198: nodes = 22628, dt = 4.506441e-10, strain = 6.549655e-03, elapsed = 3206.3 sec
+[TwinWall] projected 1227 node(s)
+Step =    199: nodes = 22776, dt = 2.703865e-10, strain = 6.549926e-03, elapsed = 3267.6 sec
+[TwinWall] projected 1223 node(s)
+Step =    200: nodes = 22939, dt = 2.703865e-10, strain = 6.550196e-03, elapsed = 3332.0 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/config.200.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/restart.200.exadis
+[TwinWall] projected 1176 node(s)
+Step =    201: nodes = 23143, dt = 3.244637e-10, strain = 6.550521e-03, elapsed = 3390.9 sec
+[TwinWall] projected 1106 node(s)
+Step =    202: nodes = 23292, dt = 1.946782e-10, strain = 6.550715e-03, elapsed = 3435.6 sec
+[TwinWall] projected 1068 node(s)
+Step =    203: nodes = 23443, dt = 1.946782e-10, strain = 6.550910e-03, elapsed = 3478.0 sec
+[TwinWall] projected 1079 node(s)
+Step =    204: nodes = 23593, dt = 2.336139e-10, strain = 6.551144e-03, elapsed = 3518.4 sec
+[TwinWall] projected 1114 node(s)
+Step =    205: nodes = 23797, dt = 2.803367e-10, strain = 6.551424e-03, elapsed = 3573.9 sec
+[TwinWall] projected 1000 node(s)
+Step =    206: nodes = 23821, dt = 1.682020e-10, strain = 6.551592e-03, elapsed = 3628.7 sec
+[TwinWall] projected 947 node(s)
+Step =    207: nodes = 23909, dt = 1.682020e-10, strain = 6.551760e-03, elapsed = 3671.8 sec
+[TwinWall] projected 973 node(s)
+Step =    208: nodes = 24013, dt = 2.018424e-10, strain = 6.551962e-03, elapsed = 3724.6 sec
+[TwinWall] projected 949 node(s)
+Step =    209: nodes = 24197, dt = 2.422109e-10, strain = 6.552204e-03, elapsed = 3772.6 sec
+[TwinWall] projected 903 node(s)
+Step =    210: nodes = 24318, dt = 2.906531e-10, strain = 6.552495e-03, elapsed = 3827.1 sec
+[TwinWall] projected 932 node(s)
+Step =    211: nodes = 24511, dt = 3.487837e-10, strain = 6.552844e-03, elapsed = 3884.5 sec
+[TwinWall] projected 874 node(s)
+Step =    212: nodes = 24571, dt = 2.092702e-10, strain = 6.553053e-03, elapsed = 3931.6 sec
+[TwinWall] projected 840 node(s)
+Step =    213: nodes = 24668, dt = 2.092702e-10, strain = 6.553262e-03, elapsed = 3998.8 sec
+[TwinWall] projected 898 node(s)
+Step =    214: nodes = 24820, dt = 2.511243e-10, strain = 6.553513e-03, elapsed = 4067.2 sec
+[TwinWall] projected 851 node(s)
+Step =    215: nodes = 25001, dt = 3.013491e-10, strain = 6.553815e-03, elapsed = 4125.5 sec
+[TwinWall] projected 830 node(s)
+Step =    216: nodes = 25111, dt = 1.808095e-10, strain = 6.553996e-03, elapsed = 4168.6 sec
+[TwinWall] projected 828 node(s)
+Step =    217: nodes = 25207, dt = 1.808095e-10, strain = 6.554176e-03, elapsed = 4217.7 sec
+[TwinWall] projected 822 node(s)
+Step =    218: nodes = 25300, dt = 2.169714e-10, strain = 6.554393e-03, elapsed = 4267.6 sec
+[TwinWall] projected 840 node(s)
+Step =    219: nodes = 25469, dt = 2.603656e-10, strain = 6.554654e-03, elapsed = 4315.1 sec
+[TwinWall] projected 856 node(s)
+Step =    220: nodes = 25631, dt = 3.124387e-10, strain = 6.554966e-03, elapsed = 4372.3 sec
+[TwinWall] projected 796 node(s)
+Step =    221: nodes = 25708, dt = 1.874632e-10, strain = 6.555154e-03, elapsed = 4411.1 sec
+[TwinWall] projected 773 node(s)
+Step =    222: nodes = 25837, dt = 1.874632e-10, strain = 6.555341e-03, elapsed = 4452.5 sec
+[TwinWall] projected 836 node(s)
+Step =    223: nodes = 25919, dt = 2.249559e-10, strain = 6.555566e-03, elapsed = 4492.0 sec
+[TwinWall] projected 823 node(s)
+Step =    224: nodes = 26034, dt = 2.699471e-10, strain = 6.555836e-03, elapsed = 4550.4 sec
+[TwinWall] projected 837 node(s)
+Step =    225: nodes = 26245, dt = 3.239365e-10, strain = 6.556160e-03, elapsed = 4608.7 sec
+[TwinWall] projected 837 node(s)
+Step =    226: nodes = 26539, dt = 3.887238e-10, strain = 6.556549e-03, elapsed = 4672.2 sec
+[TwinWall] projected 803 node(s)
+Step =    227: nodes = 26669, dt = 2.332343e-10, strain = 6.556782e-03, elapsed = 4731.6 sec
+[TwinWall] projected 791 node(s)
+Step =    228: nodes = 26788, dt = 2.332343e-10, strain = 6.557015e-03, elapsed = 4786.9 sec
+[TwinWall] projected 822 node(s)
+Step =    229: nodes = 26978, dt = 2.798811e-10, strain = 6.557295e-03, elapsed = 4845.2 sec
+[TwinWall] projected 810 node(s)
+Step =    230: nodes = 27237, dt = 3.358574e-10, strain = 6.557631e-03, elapsed = 4899.9 sec
+[TwinWall] projected 816 node(s)
+Step =    231: nodes = 27496, dt = 4.030288e-10, strain = 6.558034e-03, elapsed = 4962.1 sec
+[TwinWall] projected 812 node(s)
+Step =    232: nodes = 27651, dt = 2.418173e-10, strain = 6.558276e-03, elapsed = 5014.2 sec
+[TwinWall] projected 815 node(s)
+Step =    233: nodes = 27790, dt = 2.418173e-10, strain = 6.558518e-03, elapsed = 5056.5 sec
+[TwinWall] projected 830 node(s)
+Step =    234: nodes = 27941, dt = 2.901808e-10, strain = 6.558808e-03, elapsed = 5106.0 sec
+[TwinWall] projected 843 node(s)
+Step =    235: nodes = 28167, dt = 3.482169e-10, strain = 6.559156e-03, elapsed = 5176.5 sec
+[TwinWall] projected 887 node(s)
+Step =    236: nodes = 28394, dt = 4.178603e-10, strain = 6.559574e-03, elapsed = 5242.1 sec
+[TwinWall] projected 902 node(s)
+Step =    237: nodes = 28771, dt = 5.014323e-10, strain = 6.560075e-03, elapsed = 5321.9 sec
+[TwinWall] projected 893 node(s)
+Step =    238: nodes = 28830, dt = 3.008594e-10, strain = 6.560376e-03, elapsed = 5400.2 sec
+[TwinWall] projected 876 node(s)
+Step =    239: nodes = 28991, dt = 3.008594e-10, strain = 6.560677e-03, elapsed = 5459.5 sec
+[TwinWall] projected 922 node(s)
+Step =    240: nodes = 29237, dt = 3.610313e-10, strain = 6.561038e-03, elapsed = 5524.2 sec
+[TwinWall] projected 928 node(s)
+Step =    241: nodes = 29589, dt = 4.332375e-10, strain = 6.561471e-03, elapsed = 5613.1 sec
+[TwinWall] projected 1023 node(s)
+Step =    242: nodes = 29927, dt = 5.198851e-10, strain = 6.561991e-03, elapsed = 5699.8 sec
+[TwinWall] projected 956 node(s)
+Step =    243: nodes = 30121, dt = 3.119310e-10, strain = 6.562303e-03, elapsed = 5792.4 sec
+[TwinWall] projected 950 node(s)
+Step =    244: nodes = 30355, dt = 3.119310e-10, strain = 6.562615e-03, elapsed = 5863.3 sec
+[TwinWall] projected 944 node(s)
+Step =    245: nodes = 30453, dt = 1.871586e-10, strain = 6.562802e-03, elapsed = 5916.5 sec
+[TwinWall] projected 895 node(s)
+Step =    246: nodes = 30542, dt = 1.871586e-10, strain = 6.562989e-03, elapsed = 5963.5 sec
+[TwinWall] projected 924 node(s)
+Step =    247: nodes = 30702, dt = 2.245903e-10, strain = 6.563214e-03, elapsed = 6032.9 sec
+[TwinWall] projected 873 node(s)
+Step =    248: nodes = 30853, dt = 2.695084e-10, strain = 6.563483e-03, elapsed = 6087.1 sec
+[TwinWall] projected 962 node(s)
+Step =    249: nodes = 31084, dt = 3.234101e-10, strain = 6.563807e-03, elapsed = 6156.4 sec
+[TwinWall] projected 953 node(s)
+Step =    250: nodes = 31399, dt = 3.880921e-10, strain = 6.564195e-03, elapsed = 6232.9 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/config.250.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/restart.250.exadis
+[TwinWall] projected 950 node(s)
+Step =    251: nodes = 31613, dt = 2.328553e-10, strain = 6.564428e-03, elapsed = 6293.3 sec
+[TwinWall] projected 974 node(s)
+Step =    252: nodes = 31747, dt = 2.328553e-10, strain = 6.564661e-03, elapsed = 6353.6 sec
+[TwinWall] projected 982 node(s)
+Step =    253: nodes = 31931, dt = 2.794263e-10, strain = 6.564940e-03, elapsed = 6426.7 sec
+[TwinWall] projected 969 node(s)
+Step =    254: nodes = 32206, dt = 3.353116e-10, strain = 6.565275e-03, elapsed = 6502.3 sec
+[TwinWall] projected 961 node(s)
+Step =    255: nodes = 32320, dt = 2.011870e-10, strain = 6.565477e-03, elapsed = 6567.5 sec
+[TwinWall] projected 923 node(s)
+Step =    256: nodes = 32448, dt = 2.011870e-10, strain = 6.565678e-03, elapsed = 6616.8 sec
+[TwinWall] projected 905 node(s)
+Step =    257: nodes = 32592, dt = 2.414243e-10, strain = 6.565919e-03, elapsed = 6694.2 sec
+[TwinWall] projected 947 node(s)
+Step =    258: nodes = 32837, dt = 2.897092e-10, strain = 6.566209e-03, elapsed = 6768.0 sec
+[TwinWall] projected 931 node(s)
+Step =    259: nodes = 33027, dt = 3.476511e-10, strain = 6.566556e-03, elapsed = 6846.9 sec
+[TwinWall] projected 929 node(s)
+Step =    260: nodes = 33243, dt = 2.085906e-10, strain = 6.566765e-03, elapsed = 6910.7 sec
+[TwinWall] projected 908 node(s)
+Step =    261: nodes = 33328, dt = 2.085906e-10, strain = 6.566974e-03, elapsed = 6962.3 sec
+[TwinWall] projected 953 node(s)
+Step =    262: nodes = 33532, dt = 2.503088e-10, strain = 6.567224e-03, elapsed = 7021.8 sec
+[TwinWall] projected 926 node(s)
+Step =    263: nodes = 33726, dt = 3.003705e-10, strain = 6.567524e-03, elapsed = 7108.1 sec
+[TwinWall] projected 959 node(s)
+Step =    264: nodes = 34004, dt = 3.604446e-10, strain = 6.567885e-03, elapsed = 7190.8 sec
+[TwinWall] projected 970 node(s)
+Step =    265: nodes = 34133, dt = 2.162668e-10, strain = 6.568101e-03, elapsed = 7248.1 sec
+[TwinWall] projected 951 node(s)
+Step =    266: nodes = 34252, dt = 2.162668e-10, strain = 6.568317e-03, elapsed = 7308.8 sec
+[TwinWall] projected 960 node(s)
+Step =    267: nodes = 34351, dt = 2.595201e-10, strain = 6.568577e-03, elapsed = 7369.4 sec
+[TwinWall] projected 902 node(s)
+Step =    268: nodes = 34453, dt = 1.557121e-10, strain = 6.568733e-03, elapsed = 7421.4 sec
+[TwinWall] projected 918 node(s)
+Step =    269: nodes = 34593, dt = 1.557121e-10, strain = 6.568888e-03, elapsed = 7475.5 sec
+[TwinWall] projected 932 node(s)
+Step =    270: nodes = 34679, dt = 1.868545e-10, strain = 6.569075e-03, elapsed = 7528.2 sec
+[TwinWall] projected 948 node(s)
+Step =    271: nodes = 34800, dt = 2.242254e-10, strain = 6.569299e-03, elapsed = 7589.7 sec
+[TwinWall] projected 1000 node(s)
+Step =    272: nodes = 35042, dt = 2.690705e-10, strain = 6.569568e-03, elapsed = 7655.8 sec
+[TwinWall] projected 920 node(s)
+Step =    273: nodes = 35158, dt = 1.614423e-10, strain = 6.569730e-03, elapsed = 7714.2 sec
+[TwinWall] projected 922 node(s)
+Step =    274: nodes = 35262, dt = 1.614423e-10, strain = 6.569891e-03, elapsed = 7770.7 sec
+[TwinWall] projected 950 node(s)
+Step =    275: nodes = 35395, dt = 1.937307e-10, strain = 6.570085e-03, elapsed = 7824.7 sec
+[TwinWall] projected 967 node(s)
+Step =    276: nodes = 35540, dt = 2.324769e-10, strain = 6.570317e-03, elapsed = 7887.6 sec
+[TwinWall] projected 1103 node(s)
+Step =    277: nodes = 35821, dt = 2.789723e-10, strain = 6.570596e-03, elapsed = 8012.9 sec
+[TwinWall] projected 1060 node(s)
+Step =    278: nodes = 35919, dt = 1.673834e-10, strain = 6.570764e-03, elapsed = 8092.9 sec
+[TwinWall] projected 1046 node(s)
+Step =    279: nodes = 36068, dt = 1.673834e-10, strain = 6.570931e-03, elapsed = 8159.1 sec
+[TwinWall] projected 1031 node(s)
+Step =    280: nodes = 36194, dt = 2.008600e-10, strain = 6.571132e-03, elapsed = 8235.7 sec
+[TwinWall] projected 1062 node(s)
+Step =    281: nodes = 36405, dt = 2.410320e-10, strain = 6.571373e-03, elapsed = 8307.8 sec
+[TwinWall] projected 1090 node(s)
+Step =    282: nodes = 36696, dt = 2.892384e-10, strain = 6.571662e-03, elapsed = 8390.3 sec
+[TwinWall] projected 1103 node(s)
+Step =    283: nodes = 36850, dt = 1.735431e-10, strain = 6.571836e-03, elapsed = 8459.5 sec
+[TwinWall] projected 1072 node(s)
+Step =    284: nodes = 36964, dt = 1.735431e-10, strain = 6.572009e-03, elapsed = 8514.6 sec
+[TwinWall] projected 1029 node(s)
+Step =    285: nodes = 37118, dt = 2.082517e-10, strain = 6.572218e-03, elapsed = 8602.9 sec
+[TwinWall] projected 1042 node(s)
+Step =    286: nodes = 37318, dt = 2.499020e-10, strain = 6.572468e-03, elapsed = 8680.4 sec
+[TwinWall] projected 1098 node(s)
+Step =    287: nodes = 37547, dt = 2.998824e-10, strain = 6.572767e-03, elapsed = 8786.5 sec
+[TwinWall] projected 1153 node(s)
+Step =    288: nodes = 37889, dt = 3.598589e-10, strain = 6.573127e-03, elapsed = 8901.2 sec
+[TwinWall] projected 1134 node(s)
+Step =    289: nodes = 38053, dt = 2.159153e-10, strain = 6.573343e-03, elapsed = 8990.3 sec
+[TwinWall] projected 1120 node(s)
+Step =    290: nodes = 38226, dt = 2.159153e-10, strain = 6.573559e-03, elapsed = 9061.5 sec
+[TwinWall] projected 1147 node(s)
+Step =    291: nodes = 38431, dt = 2.590984e-10, strain = 6.573818e-03, elapsed = 9145.6 sec
+[TwinWall] projected 1069 node(s)
+Step =    292: nodes = 38501, dt = 1.554590e-10, strain = 6.573974e-03, elapsed = 9204.3 sec
+[TwinWall] projected 1093 node(s)
+Step =    293: nodes = 38674, dt = 1.554590e-10, strain = 6.574129e-03, elapsed = 9271.0 sec
+[TwinWall] projected 1108 node(s)
+Step =    294: nodes = 38866, dt = 1.865508e-10, strain = 6.574316e-03, elapsed = 9329.1 sec
+[TwinWall] projected 1118 node(s)
+Step =    295: nodes = 39026, dt = 2.238610e-10, strain = 6.574540e-03, elapsed = 9397.2 sec
+[TwinWall] projected 1189 node(s)
+Step =    296: nodes = 39147, dt = 2.686332e-10, strain = 6.574808e-03, elapsed = 9490.0 sec
+[TwinWall] projected 1207 node(s)
+Step =    297: nodes = 39354, dt = 3.223599e-10, strain = 6.575131e-03, elapsed = 9577.6 sec
+[TwinWall] projected 1119 node(s)
+Step =    298: nodes = 39502, dt = 1.934159e-10, strain = 6.575324e-03, elapsed = 9651.0 sec
+[TwinWall] projected 1093 node(s)
+Step =    299: nodes = 39619, dt = 1.934159e-10, strain = 6.575517e-03, elapsed = 9710.0 sec
+[TwinWall] projected 1138 node(s)
+Step =    300: nodes = 39822, dt = 2.320991e-10, strain = 6.575750e-03, elapsed = 9809.1 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/config.300.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/restart.300.exadis
+[TwinWall] projected 1139 node(s)
+Step =    301: nodes = 40059, dt = 2.785189e-10, strain = 6.576028e-03, elapsed = 9897.7 sec
+[TwinWall] projected 1212 node(s)
+Step =    302: nodes = 40343, dt = 3.342227e-10, strain = 6.576362e-03, elapsed = 9992.3 sec
+[TwinWall] projected 1130 node(s)
+Step =    303: nodes = 40516, dt = 2.005336e-10, strain = 6.576563e-03, elapsed = 10059.4 sec
+[TwinWall] projected 1139 node(s)
+Step =    304: nodes = 40689, dt = 2.005336e-10, strain = 6.576763e-03, elapsed = 10128.8 sec
+[TwinWall] projected 1146 node(s)
+Step =    305: nodes = 40858, dt = 2.406404e-10, strain = 6.577004e-03, elapsed = 10204.6 sec
+[TwinWall] projected 1190 node(s)
+Step =    306: nodes = 41064, dt = 2.887684e-10, strain = 6.577293e-03, elapsed = 10281.1 sec
+[TwinWall] projected 1189 node(s)
+Step =    307: nodes = 41293, dt = 3.465221e-10, strain = 6.577639e-03, elapsed = 10389.2 sec
+[TwinWall] projected 1135 node(s)
+Step =    308: nodes = 41437, dt = 2.079133e-10, strain = 6.577847e-03, elapsed = 10457.9 sec
+[TwinWall] projected 1167 node(s)
+Step =    309: nodes = 41553, dt = 2.079133e-10, strain = 6.578055e-03, elapsed = 10528.6 sec
+[TwinWall] projected 1161 node(s)
+Step =    310: nodes = 41714, dt = 2.494959e-10, strain = 6.578305e-03, elapsed = 10606.7 sec
+[TwinWall] projected 1224 node(s)
+Step =    311: nodes = 41966, dt = 2.993951e-10, strain = 6.578604e-03, elapsed = 10717.4 sec
+[TwinWall] projected 1212 node(s)
+Step =    312: nodes = 42293, dt = 3.592741e-10, strain = 6.578963e-03, elapsed = 10817.0 sec
+[TwinWall] projected 1163 node(s)
+Step =    313: nodes = 42377, dt = 2.155645e-10, strain = 6.579179e-03, elapsed = 10897.0 sec
+[TwinWall] projected 1115 node(s)
+Step =    314: nodes = 42559, dt = 2.155645e-10, strain = 6.579394e-03, elapsed = 10970.0 sec
+[TwinWall] projected 1163 node(s)
+Step =    315: nodes = 42737, dt = 2.586774e-10, strain = 6.579653e-03, elapsed = 11067.8 sec
+[TwinWall] projected 1225 node(s)
+Step =    316: nodes = 43061, dt = 3.104128e-10, strain = 6.579963e-03, elapsed = 11170.7 sec
+[TwinWall] projected 1150 node(s)
+Step =    317: nodes = 43246, dt = 1.862477e-10, strain = 6.580150e-03, elapsed = 11251.7 sec
+[TwinWall] projected 1087 node(s)
+Step =    318: nodes = 43403, dt = 1.862477e-10, strain = 6.580336e-03, elapsed = 11316.5 sec
+[TwinWall] projected 1086 node(s)
+Step =    319: nodes = 43548, dt = 2.234972e-10, strain = 6.580559e-03, elapsed = 11395.8 sec
+[TwinWall] projected 1110 node(s)
+Step =    320: nodes = 43804, dt = 2.681967e-10, strain = 6.580828e-03, elapsed = 11531.4 sec
+[TwinWall] projected 1190 node(s)
+Step =    321: nodes = 44044, dt = 3.218360e-10, strain = 6.581150e-03, elapsed = 11663.6 sec
+[TwinWall] projected 1138 node(s)
+Step =    322: nodes = 44206, dt = 1.931016e-10, strain = 6.581343e-03, elapsed = 11751.0 sec
+[TwinWall] projected 1164 node(s)
+Step =    323: nodes = 44370, dt = 1.931016e-10, strain = 6.581536e-03, elapsed = 11841.6 sec
+[TwinWall] projected 1065 node(s)
+Step =    324: nodes = 44505, dt = 2.317219e-10, strain = 6.581767e-03, elapsed = 11918.3 sec
+[TwinWall] projected 1116 node(s)
+Step =    325: nodes = 44788, dt = 2.780663e-10, strain = 6.582045e-03, elapsed = 12015.8 sec
+[TwinWall] projected 1084 node(s)
+Step =    326: nodes = 44912, dt = 1.668398e-10, strain = 6.582212e-03, elapsed = 12088.1 sec
+[TwinWall] projected 1066 node(s)
+Step =    327: nodes = 45023, dt = 1.668398e-10, strain = 6.582379e-03, elapsed = 12164.0 sec
+[TwinWall] projected 1047 node(s)
+Step =    328: nodes = 45189, dt = 2.002078e-10, strain = 6.582579e-03, elapsed = 12230.8 sec
+[TwinWall] projected 1006 node(s)
+Step =    329: nodes = 45283, dt = 1.201247e-10, strain = 6.582700e-03, elapsed = 12300.3 sec
+[TwinWall] projected 1040 node(s)
+Step =    330: nodes = 45347, dt = 1.201247e-10, strain = 6.582820e-03, elapsed = 12371.8 sec
+[TwinWall] projected 995 node(s)
+Step =    331: nodes = 45418, dt = 1.441496e-10, strain = 6.582964e-03, elapsed = 12432.4 sec
+[TwinWall] projected 1012 node(s)
+Step =    332: nodes = 45538, dt = 1.729795e-10, strain = 6.583137e-03, elapsed = 12508.2 sec
+[TwinWall] projected 1021 node(s)
+Step =    333: nodes = 45711, dt = 2.075754e-10, strain = 6.583344e-03, elapsed = 12595.1 sec
+[TwinWall] projected 1079 node(s)
+Step =    334: nodes = 45913, dt = 2.490905e-10, strain = 6.583593e-03, elapsed = 12670.4 sec
+[TwinWall] projected 1116 node(s)
+Step =    335: nodes = 46168, dt = 2.989086e-10, strain = 6.583892e-03, elapsed = 12806.2 sec
+[TwinWall] projected 1054 node(s)
+Step =    336: nodes = 46219, dt = 1.793451e-10, strain = 6.584072e-03, elapsed = 12885.7 sec
+[TwinWall] projected 1058 node(s)
+Step =    337: nodes = 46356, dt = 1.793451e-10, strain = 6.584251e-03, elapsed = 12953.6 sec
+[TwinWall] projected 1048 node(s)
+Step =    338: nodes = 46512, dt = 2.152142e-10, strain = 6.584466e-03, elapsed = 13031.9 sec
+[TwinWall] projected 1096 node(s)
+Step =    339: nodes = 46710, dt = 2.582570e-10, strain = 6.584725e-03, elapsed = 13128.0 sec
+[TwinWall] projected 1230 node(s)
+Step =    340: nodes = 46940, dt = 3.099084e-10, strain = 6.585034e-03, elapsed = 13249.6 sec
+[TwinWall] projected 1140 node(s)
+Step =    341: nodes = 47053, dt = 1.859451e-10, strain = 6.585220e-03, elapsed = 13325.8 sec
+[TwinWall] projected 1109 node(s)
+Step =    342: nodes = 47196, dt = 1.859451e-10, strain = 6.585406e-03, elapsed = 13404.3 sec
+[TwinWall] projected 1096 node(s)
+Step =    343: nodes = 47333, dt = 2.231341e-10, strain = 6.585629e-03, elapsed = 13475.7 sec
+[TwinWall] projected 1130 node(s)
+Step =    344: nodes = 47532, dt = 2.677609e-10, strain = 6.585897e-03, elapsed = 13561.7 sec
+[TwinWall] projected 1203 node(s)
+Step =    345: nodes = 47879, dt = 3.213130e-10, strain = 6.586219e-03, elapsed = 13683.6 sec
+[TwinWall] projected 1210 node(s)
+Step =    346: nodes = 48001, dt = 1.927878e-10, strain = 6.586411e-03, elapsed = 13771.8 sec
+[TwinWall] projected 1178 node(s)
+Step =    347: nodes = 48175, dt = 1.927878e-10, strain = 6.586604e-03, elapsed = 13851.8 sec
+[TwinWall] projected 1183 node(s)
+Step =    348: nodes = 48356, dt = 2.313454e-10, strain = 6.586835e-03, elapsed = 13929.5 sec
+[TwinWall] projected 1172 node(s)
+Step =    349: nodes = 48691, dt = 2.776145e-10, strain = 6.587113e-03, elapsed = 14018.5 sec
+[TwinWall] projected 1135 node(s)
+Step =    350: nodes = 48809, dt = 1.665687e-10, strain = 6.587280e-03, elapsed = 14107.4 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/config.350.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/restart.350.exadis
+[TwinWall] projected 1180 node(s)
+Step =    351: nodes = 48973, dt = 1.665687e-10, strain = 6.587446e-03, elapsed = 14179.3 sec
+[TwinWall] projected 1143 node(s)
+Step =    352: nodes = 49096, dt = 1.998824e-10, strain = 6.587646e-03, elapsed = 14262.4 sec
+[TwinWall] projected 1148 node(s)
+Step =    353: nodes = 49331, dt = 2.398589e-10, strain = 6.587886e-03, elapsed = 14344.3 sec
+[TwinWall] projected 1181 node(s)
+Step =    354: nodes = 49520, dt = 2.878307e-10, strain = 6.588174e-03, elapsed = 14441.0 sec
+[TwinWall] projected 1135 node(s)
+Step =    355: nodes = 49653, dt = 1.726984e-10, strain = 6.588346e-03, elapsed = 14522.7 sec
+[TwinWall] projected 1150 node(s)
+Step =    356: nodes = 49768, dt = 1.726984e-10, strain = 6.588519e-03, elapsed = 14600.3 sec
+[TwinWall] projected 1129 node(s)
+Step =    357: nodes = 49962, dt = 2.072381e-10, strain = 6.588726e-03, elapsed = 14674.4 sec
+[TwinWall] projected 1178 node(s)
+Step =    358: nodes = 50177, dt = 2.486857e-10, strain = 6.588975e-03, elapsed = 14796.0 sec
+[TwinWall] projected 1123 node(s)
+Step =    359: nodes = 50316, dt = 1.492114e-10, strain = 6.589124e-03, elapsed = 14892.2 sec
+[TwinWall] projected 1134 node(s)
+Step =    360: nodes = 50452, dt = 1.492114e-10, strain = 6.589273e-03, elapsed = 14965.5 sec
+[TwinWall] projected 1156 node(s)
+Step =    361: nodes = 50528, dt = 1.790537e-10, strain = 6.589453e-03, elapsed = 15049.6 sec
+[TwinWall] projected 1147 node(s)
+Step =    362: nodes = 50778, dt = 2.148645e-10, strain = 6.589667e-03, elapsed = 15134.7 sec
+[TwinWall] projected 1111 node(s)
+Step =    363: nodes = 50891, dt = 1.289187e-10, strain = 6.589796e-03, elapsed = 15216.7 sec
+[TwinWall] projected 1089 node(s)
+Step =    364: nodes = 51008, dt = 1.289187e-10, strain = 6.589925e-03, elapsed = 15284.1 sec
+[TwinWall] projected 1065 node(s)
+Step =    365: nodes = 51155, dt = 1.547024e-10, strain = 6.590080e-03, elapsed = 15375.3 sec
+[TwinWall] projected 1066 node(s)
+Step =    366: nodes = 51319, dt = 1.856429e-10, strain = 6.590266e-03, elapsed = 15449.7 sec
+[TwinWall] projected 1107 node(s)
+Step =    367: nodes = 51561, dt = 2.227715e-10, strain = 6.590488e-03, elapsed = 15535.4 sec
+[TwinWall] projected 1183 node(s)
+Step =    368: nodes = 51775, dt = 2.673258e-10, strain = 6.590756e-03, elapsed = 15679.5 sec
+[TwinWall] projected 1080 node(s)
+Step =    369: nodes = 51812, dt = 1.603955e-10, strain = 6.590916e-03, elapsed = 15757.9 sec
+[TwinWall] projected 1100 node(s)
+Step =    370: nodes = 51967, dt = 1.603955e-10, strain = 6.591076e-03, elapsed = 15838.4 sec
+[TwinWall] projected 1124 node(s)
+Step =    371: nodes = 52079, dt = 1.924745e-10, strain = 6.591269e-03, elapsed = 15924.4 sec
+[TwinWall] projected 1176 node(s)
+Step =    372: nodes = 52380, dt = 2.309695e-10, strain = 6.591500e-03, elapsed = 16008.4 sec
+[TwinWall] projected 1215 node(s)
+Step =    373: nodes = 52685, dt = 2.771633e-10, strain = 6.591777e-03, elapsed = 16116.4 sec
+[TwinWall] projected 1174 node(s)
+Step =    374: nodes = 52799, dt = 1.662980e-10, strain = 6.591943e-03, elapsed = 16205.0 sec
+[TwinWall] projected 1176 node(s)
+Step =    375: nodes = 52924, dt = 1.662980e-10, strain = 6.592110e-03, elapsed = 16292.9 sec
+[TwinWall] projected 1182 node(s)
+Step =    376: nodes = 53065, dt = 1.995576e-10, strain = 6.592309e-03, elapsed = 16369.9 sec
+[TwinWall] projected 1223 node(s)
+Step =    377: nodes = 53402, dt = 2.394691e-10, strain = 6.592549e-03, elapsed = 16465.8 sec
+[TwinWall] projected 1239 node(s)
+Step =    378: nodes = 53699, dt = 2.873630e-10, strain = 6.592836e-03, elapsed = 16562.0 sec
+[TwinWall] projected 1240 node(s)
+Step =    379: nodes = 53774, dt = 1.724178e-10, strain = 6.593008e-03, elapsed = 16653.7 sec
+[TwinWall] projected 1195 node(s)
+Step =    380: nodes = 53906, dt = 1.724178e-10, strain = 6.593181e-03, elapsed = 16731.4 sec
+[TwinWall] projected 1179 node(s)
+Step =    381: nodes = 54148, dt = 2.069013e-10, strain = 6.593388e-03, elapsed = 16820.0 sec
+[TwinWall] projected 1229 node(s)
+Step =    382: nodes = 54420, dt = 2.482816e-10, strain = 6.593636e-03, elapsed = 16906.7 sec
+[TwinWall] projected 1179 node(s)
+Step =    383: nodes = 54507, dt = 1.489690e-10, strain = 6.593785e-03, elapsed = 16998.7 sec
+[TwinWall] projected 1145 node(s)
+Step =    384: nodes = 54635, dt = 1.489690e-10, strain = 6.593934e-03, elapsed = 17077.5 sec
+[TwinWall] projected 1156 node(s)
+Step =    385: nodes = 54812, dt = 1.787628e-10, strain = 6.594113e-03, elapsed = 17168.0 sec
+[TwinWall] projected 1176 node(s)
+Step =    386: nodes = 55066, dt = 2.145153e-10, strain = 6.594327e-03, elapsed = 17259.5 sec
+[TwinWall] projected 1255 node(s)
+Step =    387: nodes = 55343, dt = 2.574184e-10, strain = 6.594585e-03, elapsed = 17365.5 sec
+[TwinWall] projected 1361 node(s)
+Step =    388: nodes = 55674, dt = 3.089020e-10, strain = 6.594894e-03, elapsed = 17514.8 sec
+[TwinWall] projected 1257 node(s)
+Step =    389: nodes = 55842, dt = 1.853412e-10, strain = 6.595079e-03, elapsed = 17606.6 sec
+[TwinWall] projected 1231 node(s)
+Step =    390: nodes = 56028, dt = 1.853412e-10, strain = 6.595264e-03, elapsed = 17699.8 sec
+[TwinWall] projected 1220 node(s)
+Step =    391: nodes = 56242, dt = 2.224095e-10, strain = 6.595487e-03, elapsed = 17802.0 sec
+[TwinWall] projected 1257 node(s)
+Step =    392: nodes = 56554, dt = 2.668914e-10, strain = 6.595754e-03, elapsed = 17904.3 sec
+[TwinWall] projected 1358 node(s)
+Step =    393: nodes = 56923, dt = 3.202696e-10, strain = 6.596074e-03, elapsed = 18053.6 sec
+[TwinWall] projected 1292 node(s)
+Step =    394: nodes = 57108, dt = 1.921618e-10, strain = 6.596266e-03, elapsed = 18147.3 sec
+[TwinWall] projected 1290 node(s)
+Step =    395: nodes = 57266, dt = 1.921618e-10, strain = 6.596458e-03, elapsed = 18242.9 sec
+[TwinWall] projected 1315 node(s)
+Step =    396: nodes = 57460, dt = 2.305941e-10, strain = 6.596689e-03, elapsed = 18346.4 sec
+[TwinWall] projected 1284 node(s)
+Step =    397: nodes = 57647, dt = 1.383565e-10, strain = 6.596827e-03, elapsed = 18433.8 sec
+[TwinWall] projected 1244 node(s)
+Step =    398: nodes = 57814, dt = 1.383565e-10, strain = 6.596966e-03, elapsed = 18522.1 sec
+[TwinWall] projected 1233 node(s)
+Step =    399: nodes = 57935, dt = 1.660278e-10, strain = 6.597132e-03, elapsed = 18609.9 sec
+[TwinWall] projected 1223 node(s)
+Step =    400: nodes = 58111, dt = 1.992333e-10, strain = 6.597331e-03, elapsed = 18709.3 sec
+Writing configuration in legacy data format
+ Output file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/config.400.data
+Writing restart file
+ Restart file: /data/home/dg000246b/openDIS/HomeWork/output_Cu_twin/restart.400.exadis
+[TwinWall] projected 1199 node(s)
+Step =    401: nodes = 58369, dt = 2.390800e-10, strain = 6.597570e-03, elapsed = 18815.7 sec
+[TwinWall] projected 1189 node(s)
+Step =    402: nodes = 58515, dt = 1.434480e-10, strain = 6.597713e-03, elapsed = 18918.3 sec
+[TwinWall] projected 1131 node(s)
+Step =    403: nodes = 58593, dt = 1.434480e-10, strain = 6.597857e-03, elapsed = 18995.7 sec
+[TwinWall] projected 1136 node(s)
+Step =    404: nodes = 58750, dt = 1.721376e-10, strain = 6.598029e-03, elapsed = 19093.7 sec
+[TwinWall] projected 1178 node(s)
+Step =    405: nodes = 59011, dt = 2.065651e-10, strain = 6.598235e-03, elapsed = 19199.9 sec
+[TwinWall] projected 1148 node(s)
+Step =    406: nodes = 59282, dt = 2.478781e-10, strain = 6.598483e-03, elapsed = 19307.2 sec
+[TwinWall] projected 1195 node(s)
+Step =    407: nodes = 59523, dt = 1.487269e-10, strain = 6.598632e-03, elapsed = 19406.5 sec
+[TwinWall] projected 1165 node(s)
+Step =    408: nodes = 59676, dt = 1.487269e-10, strain = 6.598781e-03, elapsed = 19488.4 sec
+[TwinWall] projected 1181 node(s)
+Step =    409: nodes = 59848, dt = 1.784723e-10, strain = 6.598959e-03, elapsed = 19589.0 sec
+[TwinWall] projected 1180 node(s)
+Step =    410: nodes = 60120, dt = 2.141667e-10, strain = 6.599173e-03, elapsed = 19696.6 sec
+[TwinWall] projected 1207 node(s)
+Step =    411: nodes = 60464, dt = 2.570001e-10, strain = 6.599430e-03, elapsed = 19806.8 sec
+[TwinWall] projected 1184 node(s)
+Step =    412: nodes = 60600, dt = 1.542000e-10, strain = 6.599585e-03, elapsed = 19912.7 sec
+[TwinWall] projected 1153 node(s)
+Step =    413: nodes = 60794, dt = 1.542000e-10, strain = 6.599739e-03, elapsed = 20008.8 sec
+[TwinWall] projected 1133 node(s)
+Step =    414: nodes = 61018, dt = 1.850400e-10, strain = 6.599924e-03, elapsed = 20103.5 sec
+[TwinWall] projected 1196 node(s)
+Step =    415: nodes = 61287, dt = 2.220480e-10, strain = 6.600146e-03, elapsed = 20207.4 sec
+[TwinWall] projected 1228 node(s)
+Step =    416: nodes = 61625, dt = 2.664577e-10, strain = 6.600412e-03, elapsed = 20371.0 sec
+[TwinWall] projected 1178 node(s)
+Step =    417: nodes = 61861, dt = 1.598746e-10, strain = 6.600572e-03, elapsed = 20487.9 sec
+[TwinWall] projected 1123 node(s)
+Step =    418: nodes = 62042, dt = 1.598746e-10, strain = 6.600732e-03, elapsed = 20582.1 sec
+[TwinWall] projected 1211 node(s)
+Step =    419: nodes = 62351, dt = 1.918495e-10, strain = 6.600924e-03, elapsed = 20689.7 sec
+[TwinWall] projected 1253 node(s)
+Step =    420: nodes = 62539, dt = 2.302194e-10, strain = 6.601154e-03, elapsed = 20850.5 sec
+[TwinWall] projected 1296 node(s)
+Step =    421: nodes = 62986, dt = 2.762633e-10, strain = 6.601430e-03, elapsed = 21001.7 sec
+[TwinWall] projected 1256 node(s)
+Step =    422: nodes = 63167, dt = 1.657580e-10, strain = 6.601596e-03, elapsed = 21112.4 sec
+[TwinWall] projected 1241 node(s)
+Step =    423: nodes = 63441, dt = 1.657580e-10, strain = 6.601762e-03, elapsed = 21225.3 sec
+[TwinWall] projected 1342 node(s)
+Step =    424: nodes = 63724, dt = 1.989096e-10, strain = 6.601961e-03, elapsed = 21340.0 sec
+[TwinWall] projected 1368 node(s)
+Step =    425: nodes = 63997, dt = 2.386915e-10, strain = 6.602200e-03, elapsed = 21495.2 sec
+slurmstepd-c2n197: error: *** JOB 227237 ON c2n197 CANCELLED AT 2026-05-10T05:15:18 DUE TO TIME LIMIT ***
