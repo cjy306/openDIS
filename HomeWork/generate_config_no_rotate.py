@@ -6,7 +6,7 @@
 按 mode 生成配置：
   python generate_config_no_rotate.py --mode pure    → init_data_pure/
   python generate_config_no_rotate.py --mode precip  → init_data_precip/
-  python generate_config_no_rotate.py --mode twin    → init_data_twin/
+  python generate_config_no_rotate.py --mode twin    → init_data_twin_no_rorient/
   python generate_config_no_rotate.py --mode all     → 依次生成全部三份
 """
 import os, sys
@@ -113,7 +113,7 @@ def generate_dislocation_network(Lbox_m, burgmag, target_density, seed=12345,
 
     attempt, src_count = 0, 0
     while accumulated < total_length * 0.85 and attempt < 15000:
-        length_m = rng.uniform(0.3e-6, 1.0e-6)
+        length_m = rng.uniform(1.0e-6, 2.0e-6)
         length_b = length_m / burgmag
         margin = length_m * 0.8
 
