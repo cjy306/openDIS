@@ -81,7 +81,7 @@ def main():
 
     calforce  = CalForce(force_mode='SUBCYCLING_MODEL', state=state, Ngrid=64, cell=exadis_net.cell)
     mobility  = MobilityLaw(mobility_law='FCC_0', state=state, Medge=64103.0, Mscrew=64103.0, vmax=50.0)
-    timeint   = TimeIntegration(integrator='Subcycling', rgroups=[0.0, 300.0, 1000.0, 2000.0], state=state, force=calforce, mobility=mobility)
+    timeint   = TimeIntegration(integrator='Subcycling', rgroups=[0.0, 10.0, 60.0, 200.0], state=state, force=calforce, mobility=mobility)
     collision = Collision(collision_mode='Orowan', state=state)
     topology  = Topology(topology_mode='TopologyParallel', state=state, force=calforce, mobility=mobility)
     remesh    = Remesh(remesh_rule='LengthBased', state=state)
