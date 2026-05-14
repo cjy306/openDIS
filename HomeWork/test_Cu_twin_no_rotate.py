@@ -39,8 +39,8 @@ def main():
     args = parser.parse_args()
 
     base_dir   = os.path.dirname(os.path.abspath(__file__))
-    init_dir   = os.path.join(base_dir, 'init_data_twin')
-    output_dir = os.path.join(base_dir, 'output_Cu_twin')
+    init_dir   = os.path.join(base_dir, 'init_data_twin_no_rorient')
+    output_dir = os.path.join(base_dir, 'output_Cu_twin_no_rorient')
     os.makedirs(output_dir, exist_ok=True)
 
     # 加载杂质数据
@@ -96,7 +96,7 @@ def main():
         burgmag=state["burgmag"],
         state=state,
         print_freq=1,
-        write_freq=50,
+        write_freq=1,
         write_dir=output_dir,
         restart=restart,
     )

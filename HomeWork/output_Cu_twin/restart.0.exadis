@@ -1,7 +1,7 @@
 # ExaDiS restart file
 
 version 1.0
-date_and_time Sat May  9 23:15:18 2026
+date_and_time Wed May 13 23:03:02 2026
 
 step 0
 Etot 0 0 0 0 0 0 0 0 0
@@ -9,7 +9,7 @@ stress 0
 strain 0
 pstrain 0
 tottime 0
-edir 0 0 1
+edir 0 -0.81649658092772615 0.57735026918962584
 opreccounter 0
 
 extstress 0 0 0 0 0 0
