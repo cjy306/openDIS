@@ -113,7 +113,7 @@ def generate_dislocation_network(Lbox_m, burgmag, target_density, seed=12345,
 
     attempt, src_count = 0, 0
     while accumulated < total_length * 0.85 and attempt < 15000:
-        length_m = rng.uniform(1.0e-6, 2.0e-6)
+        length_m = rng.uniform(0.3e-6, 1.0e-6)
         length_b = length_m / burgmag
         margin = length_m * 0.8
 
