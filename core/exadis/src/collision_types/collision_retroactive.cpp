@@ -1621,17 +1621,21 @@ void CollisionRetroactive::retroactive_collision(System* system)
             // Check glide plane violations
             //check_node_plane_violation(network, conn, mergenode1, "before merge collision");
             //check_node_plane_violation(network, conn, mergenode2, "before merge collision");
-            
+
+            // Skip merge if either node is pinned
+            if (network->nodes[mergenode1].constraint == PINNED_NODE ||
+                network->nodes[mergenode2].constraint == PINNED_NODE) continue;
+
             // Merge nodes
             bool merge_error = network->merge_nodes_position(mergenode1, mergenode2, newpos, system->dEp);
             nmerge++;
-            
+
             // Attempt to fix glide plane violations that may have been
             // introduced during the merge operation.
             if (!merge_error && system->crystal.use_glide_planes) {
-                
+
                 system->crystal.reset_node_glide_planes(network, mergenode1);
-                
+
                 Vec3 newpos0 = newpos;
                 newpos = AdjustMergePoint(system, network, mergenode1, vmn1, newpos);
                 
@@ -1799,7 +1803,11 @@ void CollisionRetroactive::retroactive_collision(System* system)
                 
                 //check_node_plane_violation(network, conn, mergenode1, "before merge hinge collision");
                 //check_node_plane_violation(network, conn, mergenode2, "before merge hinge collision");
-                
+
+                // Skip merge if either node is pinned
+                if (network->nodes[mergenode1].constraint == PINNED_NODE ||
+                    network->nodes[mergenode2].constraint == PINNED_NODE) continue;
+
                 bool merge_error = network->merge_nodes_position(mergenode1, mergenode2, newpos, system->dEp);
                 nmerge++;
                 
@@ -2094,7 +2102,11 @@ void CollisionRetroactive::retroactive_collision_parallel(System* system)
         // Check glide plane violations
         //check_node_plane_violation(network, conn, mergenode1, "before merge collision");
         //check_node_plane_violation(network, conn, mergenode2, "before merge collision");
-        
+
+        // Skip merge if either node is pinned
+        if (network->nodes[mergenode1].constraint == PINNED_NODE ||
+            network->nodes[mergenode2].constraint == PINNED_NODE) continue;
+
         // Merge nodes
         bool merge_error = network->merge_nodes_position(mergenode1, mergenode2, newpos, system->dEp);
         nmerge++;
@@ -2274,7 +2286,11 @@ void CollisionRetroactive::retroactive_collision_parallel(System* system)
                 
                 //check_node_plane_violation(network, conn, mergenode1, "before merge hinge collision");
                 //check_node_plane_violation(network, conn, mergenode2, "before merge hinge collision");
-                
+
+                // Skip merge if either node is pinned
+                if (network->nodes[mergenode1].constraint == PINNED_NODE ||
+                    network->nodes[mergenode2].constraint == PINNED_NODE) continue;
+
                 bool merge_error = network->merge_nodes_position(mergenode1, mergenode2, newpos, system->dEp);
                 nmerge++;
                 
