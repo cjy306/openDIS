@@ -113,7 +113,7 @@ def generate_dislocation_network(Lbox_m, burgmag, target_density, seed=12345,
 
     attempt, src_count = 0, 0
     while accumulated < total_length * 0.85 and attempt < 15000:
-        length_m = rng.uniform(1.0e-6, 2.0e-6)
+        length_m = rng.uniform(0.8e-6, 1.5e-6)
         length_b = length_m / burgmag
         margin = length_m * 0.4
 
@@ -135,7 +135,7 @@ def generate_dislocation_network(Lbox_m, burgmag, target_density, seed=12345,
         cz = rng.uniform(z_low, z_high)
         c_m = np.array([cx, cy, cz])
 
-        overlap = any(np.linalg.norm(c_m - src_centers_m[i]) < (length_m + src_lengths_m[i]) * 0.6
+        overlap = any(np.linalg.norm(c_m - src_centers_m[i]) < (length_m + src_lengths_m[i]) * 0.3
                       for i in range(len(src_centers_m)))
 
         if not overlap and precip_centers_m is not None and len(precip_centers_m) > 0:
