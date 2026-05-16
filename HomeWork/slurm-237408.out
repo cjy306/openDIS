@@ -1,0 +1,7 @@
+Host Parallel Execution Space:
+  KOKKOS_ENABLE_OPENMP: yes
+
+OpenMP Runtime Configuration:
+Kokkos::OpenMP thread_pool_topology[ 1 x 48 x 1 ]
+usage: test_Cu_twin_no_rotate.py [-h] [--restart RESTART]
+test_Cu_twin_no_rotate.py: error: unrecognized arguments: 3700

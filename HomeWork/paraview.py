@@ -1,7 +1,7 @@
 """
 ParaDiS data → VTK 转换脚本
 用法:
-  python paraview.py --sim output_Cu_twin --init init_data_twin --out vtk_twin
+  python paraview.py --sim output_Cu_twin_no_rorient --init init_data_twin_no_rorient --out vtk_twin
   python paraview.py --sim output_Cu_fcc  --init init_data_precip --out vtk_precip
   python paraview.py --sim output_Cu_fcc_pure --out vtk_pure
 """
