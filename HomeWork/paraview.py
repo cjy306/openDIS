@@ -4,6 +4,14 @@ ParaDiS data → VTK 转换脚本
   python paraview.py --sim output_Cu_twin_no_rorient --init init_data_twin_no_rorient --out vtk_twin
   python paraview.py --sim output_Cu_fcc  --init init_data_precip --out vtk_precip
   python paraview.py --sim output_Cu_fcc_pure --out vtk_pure
+# 只转换第 3700 到 5000 步
+python paraview.py --sim output_Cu_twin_no_rorient --init init_data_twin_no_rorient --out vtk_twin --start 3700 --end 5000
+
+# 只指定起始步
+python paraview.py --sim output_Cu_twin_no_rorient --init init_data_twin_no_rorient --out vtk_twin --start 3700
+
+# 只指定结束步
+python paraview.py --sim output_Cu_twin_no_rorient --init init_data_twin_no_rorient --out vtk_twin --end 5000
 """
 import os, sys, glob, time
 import numpy as np
