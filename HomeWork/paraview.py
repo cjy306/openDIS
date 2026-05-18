@@ -163,7 +163,7 @@ def wrap_vtk_pbc(vtk_file, Lbox):
         f.writelines(lines)
 
 
-def convert(sim_dir, out_dir, init_dir=None):
+def convert(sim_dir, out_dir, init_dir=None, start=None, end=None):
     os.makedirs(out_dir, exist_ok=True)
     Lbox_b = LBOX_M / BURGMAG
 
@@ -190,6 +190,21 @@ def convert(sim_dir, out_dir, init_dir=None):
     all_data = sorted(glob.glob(os.path.join(sim_dir, '*.data')))
     data_files = [f for f in all_data
                   if os.path.basename(f) not in ('obstacles.data', 'twin_planes.data')]
+
+    # Filter by step range
+    if start is not None or end is not None:
+        import re
+        filtered = []
+        for f in data_files:
+            m = re.search(r'(\d+)', os.path.basename(f))
+            if m:
+                step = int(m.group(1))
+                if start is not None and step < start:
+                    continue
+                if end is not None and step > end:
+                    continue
+            filtered.append(f)
+        data_files = filtered
 
     if not data_files:
         print(f"No .data files found in {sim_dir}")
@@ -219,6 +234,8 @@ if __name__ == '__main__':
     parser.add_argument('--sim', required=True, help='Simulation output directory (e.g. output_Cu_twin)')
     parser.add_argument('--init', default=None, help='Init data directory (e.g. init_data_twin)')
     parser.add_argument('--out', required=True, help='VTK output directory (e.g. vtk_twin)')
+    parser.add_argument('--start', type=int, default=None, help='Start step number (inclusive)')
+    parser.add_argument('--end', type=int, default=None, help='End step number (inclusive)')
     args = parser.parse_args()
 
     base = os.path.dirname(os.path.abspath(__file__))
@@ -226,4 +243,4 @@ if __name__ == '__main__':
     out_dir  = os.path.join(base, args.out)  if not os.path.isabs(args.out)  else args.out
     init_dir = os.path.join(base, args.init) if args.init and not os.path.isabs(args.init) else args.init
 
-    convert(sim_dir, out_dir, init_dir)
+    convert(sim_dir, out_dir, init_dir, start=args.start, end=args.end)
