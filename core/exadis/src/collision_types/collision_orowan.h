@@ -90,6 +90,8 @@ public:
         Kokkos::deep_copy(d_planes, h_planes);
 
         auto nodes = net->get_nodes();
+        auto segs  = net->get_segs();
+        auto conn  = net->get_conn();
         auto cell  = net->cell;
         Vec3 box_center = cell.center();
 
@@ -103,14 +105,71 @@ public:
             Vec3 pos = nodes[i].pos;
 
             for (int j = 0; j < Nplanes; j++) {
-                Vec3   normal = d_planes(j).normal;
+                Vec3   n_twin = d_planes(j).normal;
                 Vec3   point  = d_planes(j).point;
-                double d = dot(pos - point, normal);
-                double center_d = dot(box_center - point, normal);
+                double d = dot(pos - point, n_twin);
+                double center_d = dot(box_center - point, n_twin);
 
                 // Node is on the opposite side of center → project back
                 if (d * center_d < 0.0) {
-                    nodes[i].pos = pos - d * normal;
+                    // Collect unique glide plane normals from connected segments
+                    int nconn = conn[i].num;
+                    Vec3 n1(0.0), n2(0.0);
+                    int nplanes_found = 0;
+                    for (int k = 0; k < nconn; k++) {
+                        Vec3 sp = segs[conn[i].seg[k]].plane;
+                        double sp_norm = sp.norm();
+                        if (sp_norm < 1e-10) continue;
+                        sp = (1.0 / sp_norm) * sp;
+                        if (nplanes_found == 0) {
+                            n1 = sp;
+                            nplanes_found = 1;
+                        } else if (nplanes_found == 1) {
+                            // Check if different from n1
+                            double cr = cross(n1, sp).norm();
+                            if (cr > 1e-4) {
+                                n2 = sp;
+                                nplanes_found = 2;
+                                break;
+                            }
+                        }
+                    }
+
+                    if (nplanes_found == 1) {
+                        // Single glide plane: project along glide-plane direction
+                        // proj_dir = n_twin - dot(n_twin, n_glide) * n_glide
+                        Vec3 proj_dir = n_twin - dot(n_twin, n1) * n1;
+                        double pdn = dot(proj_dir, n_twin);
+                        if (fabs(pdn) > 1e-10) {
+                            double t = -d / pdn;
+                            nodes[i].pos = pos + t * proj_dir;
+                        } else {
+                            // Glide plane parallel to twin plane, skip
+                            continue;
+                        }
+                    } else if (nplanes_found == 2) {
+                        // Junction: project along junction line
+                        Vec3 L = cross(n1, n2);
+                        double L_norm = L.norm();
+                        if (L_norm > 1e-10) {
+                            L = (1.0 / L_norm) * L;
+                            double ldn = dot(L, n_twin);
+                            if (fabs(ldn) > 0.1) {
+                                double t = -d / ldn;
+                                nodes[i].pos = pos + t * L;
+                            } else {
+                                // Junction line nearly parallel to twin plane, fallback
+                                nodes[i].pos = pos - d * n_twin;
+                            }
+                        } else {
+                            // Degenerate, fallback to vertical projection
+                            nodes[i].pos = pos - d * n_twin;
+                        }
+                    } else {
+                        // No valid glide plane found, fallback to vertical projection
+                        nodes[i].pos = pos - d * n_twin;
+                    }
+
                     Kokkos::atomic_inc(&d_count());
                     return;
                 }
