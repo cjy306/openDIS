@@ -343,19 +343,29 @@ def generate_prismatic_config(crystal, Lbox, num_loops, radius, maxseg=-1, Rorie
     return G
 
 
-def _compute_slip_system_ids(bsegs, planes, crystal='BCC', tol=1e-3):
+def _compute_slip_system_ids(bsegs, planes, crystal='BCC', tol=1e-3, Rorient=None):
     """Compute slip system IDs for segments.
-    For BCC: 
+    For BCC:
         - 1-12: <111>{110} 滑移系
-        - 13-24: <111>{112} 滑移系  
+        - 13-24: <111>{112} 滑移系
         - 25: 其他/未识别
-    For FCC: 
+    For FCC:
         - 1-12: <110>{111} 滑移系
         - 13: 其他/未识别
+    Rorient: if provided, transform b and plane back to crystal frame before matching.
     """
     bsegs = np.asarray(bsegs)
     planes = np.asarray(planes)
     nsegs = bsegs.shape[0]
+
+    # If Rorient is provided, compute Rinv and transform to crystal frame
+    Rinv = None
+    if Rorient is not None:
+        Rorient = np.array(Rorient)
+        Rorient = Rorient / np.linalg.norm(Rorient, axis=1)[:, None]
+        Rinv = np.linalg.inv(Rorient)
+        bsegs = np.dot(bsegs, Rinv.T)
+        planes = np.dot(planes, Rinv.T)
     
     if crystal is not None and crystal.lower() in ['fcc']:
         ids = 13 * np.ones(nsegs, dtype=int)
@@ -675,8 +685,8 @@ def write_data(N: DisNetManager, datafile: str):
     N.get_disnet(ExaDisNet).write_data(datafile)
 
 
-def write_vtk(N: DisNetManager, vtkfile: str, segprops={}, pbc_wrap=True, 
-              crystal=None, add_slipsystems=True, verbose=False, precipitates=None):
+def write_vtk(N: DisNetManager, vtkfile: str, segprops={}, pbc_wrap=True,
+              crystal=None, add_slipsystems=True, verbose=False, precipitates=None, Rorient=None):
     """Write dislocation network to VTK format with automatic crystal type detection
     
     Args:
@@ -769,7 +779,7 @@ def write_vtk(N: DisNetManager, vtkfile: str, segprops={}, pbc_wrap=True,
     b = segs.get("burgers")
     p = segs.get("planes")
     
-    slip_ids = _compute_slip_system_ids(b, p, crystal=crystal, tol=1e-3)
+    slip_ids = _compute_slip_system_ids(b, p, crystal=crystal, tol=1e-3, Rorient=Rorient)
     char_ids, char_angles = _compute_segment_character(b, r1, r2)
     
     nsegs = segsnid.shape[0]

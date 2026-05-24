@@ -12,6 +12,12 @@ python paraview.py --sim output_Cu_twin_no_rorient --init init_data_twin_no_rori
 
 # 只指定结束步
 python paraview.py --sim output_Cu_twin_no_rorient --init init_data_twin_no_rorient --out vtk_twin --end 5000
+
+# 旋转坐标系版本
+python paraview.py --sim output_Cu_twin --init init_data_twin --out vtk_twin --rorient
+
+# 不旋转版本（不加 --rorient，行为不变）
+python paraview.py --sim output_Cu_twin_no_rorient --init init_data_twin_no_rorient --out vtk_twin
 """
 import os, sys, glob, time
 import numpy as np
@@ -171,7 +177,7 @@ def wrap_vtk_pbc(vtk_file, Lbox):
         f.writelines(lines)
 
 
-def convert(sim_dir, out_dir, init_dir=None, start=None, end=None):
+def convert(sim_dir, out_dir, init_dir=None, start=None, end=None, Rorient=None):
     os.makedirs(out_dir, exist_ok=True)
     Lbox_b = LBOX_M / BURGMAG
 
@@ -228,7 +234,7 @@ def convert(sim_dir, out_dir, init_dir=None, start=None, end=None):
         try:
             net = read_paradis(data_file)
             vtk_file = os.path.join(out_dir, f'{name}.vtk')
-            write_vtk(net, vtk_file, precipitates=precipitates, verbose=False)
+            write_vtk(net, vtk_file, precipitates=precipitates, verbose=False, Rorient=Rorient)
         except Exception as e:
             print(f"    Failed: {e}")
 
@@ -244,6 +250,8 @@ if __name__ == '__main__':
     parser.add_argument('--out', required=True, help='VTK output directory (e.g. vtk_twin)')
     parser.add_argument('--start', type=int, default=None, help='Start step number (inclusive)')
     parser.add_argument('--end', type=int, default=None, help='End step number (inclusive)')
+    parser.add_argument('--rorient', action='store_true', default=False,
+                        help='Apply Rorient (111) rotation for slip system identification')
     args = parser.parse_args()
 
     base = os.path.dirname(os.path.abspath(__file__))
@@ -251,4 +259,12 @@ if __name__ == '__main__':
     out_dir  = os.path.join(base, args.out)  if not os.path.isabs(args.out)  else args.out
     init_dir = os.path.join(base, args.init) if args.init and not os.path.isabs(args.init) else args.init
 
-    convert(sim_dir, out_dir, init_dir, start=args.start, end=args.end)
+    Rorient = None
+    if args.rorient:
+        Rorient = [
+            [ 1/np.sqrt(2), -1/np.sqrt(2),  0           ],
+            [ 1/np.sqrt(6),  1/np.sqrt(6), -2/np.sqrt(6)],
+            [ 1/np.sqrt(3),  1/np.sqrt(3),  1/np.sqrt(3)],
+        ]
+
+    convert(sim_dir, out_dir, init_dir, start=args.start, end=args.end, Rorient=Rorient)
