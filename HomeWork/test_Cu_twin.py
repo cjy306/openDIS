@@ -50,8 +50,8 @@ def main():
     args = parser.parse_args()
 
     base_dir   = os.path.dirname(os.path.abspath(__file__))
-    init_dir   = os.path.join(base_dir, 'init_data_twin')
-    output_dir = os.path.join(base_dir, 'output_Cu_twin')
+    init_dir   = os.path.join(base_dir, 'init_data_twin_rorient')
+    output_dir = os.path.join(base_dir, 'output_Cu_twin_rorient')
     os.makedirs(output_dir, exist_ok=True)
 
     # 加载杂质数据
@@ -92,7 +92,7 @@ def main():
 
     calforce  = CalForce(force_mode='SUBCYCLING_MODEL', state=state, Ngrid=64, cell=exadis_net.cell)
     mobility  = MobilityLaw(mobility_law='FCC_0', state=state, Medge=64103.0, Mscrew=64103.0, vmax=50.0)
-    timeint   = TimeIntegration(integrator='Subcycling', rgroups=[0.0, 300.0, 1000.0, 2000.0], state=state, force=calforce, mobility=mobility)
+    timeint   = TimeIntegration(integrator='Subcycling', rgroups=[0.0, 10.0, 60.0, 200.0], state=state, force=calforce, mobility=mobility)
     collision = Collision(collision_mode='Orowan', state=state)
     topology  = Topology(topology_mode='TopologyParallel', state=state, force=calforce, mobility=mobility)
     remesh    = Remesh(remesh_rule='LengthBased', state=state)
@@ -107,7 +107,7 @@ def main():
         burgmag=state["burgmag"],
         state=state,
         print_freq=1,
-        write_freq=50,
+        write_freq=100,
         write_dir=output_dir,
         restart=restart,
     )

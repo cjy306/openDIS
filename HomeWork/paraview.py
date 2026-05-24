@@ -16,7 +16,7 @@ python paraview.py --sim output_Cu_twin_no_rorient --init init_data_twin_no_rori
 # 旋转坐标系版本
 python paraview.py --sim output_Cu_twin --init init_data_twin --out vtk_twin --rorient
 
-# 不旋转版本（不加 --rorient，行为不变）
+# 不旋转版本（不加 --rorient,行为不变)
 python paraview.py --sim output_Cu_twin_no_rorient --init init_data_twin_no_rorient --out vtk_twin
 """
 import os, sys, glob, time

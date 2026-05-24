@@ -3,7 +3,7 @@
 按 mode 生成 3 份独立配置：
   python generate_config.py --mode pure    → init_data_pure/
   python generate_config.py --mode precip  → init_data_precip/
-  python generate_config.py --mode twin    → init_data_twin/
+  python generate_config.py --mode twin    → init_data_twin_rorient/
   python generate_config.py --mode all     → 依次生成全部三份
 """
 import os, sys
@@ -111,7 +111,7 @@ def generate_twin_planes(Lbox_b, twin_z_fractions):
 def generate_dislocation_network(Lbox_m, burgmag, target_density, seed=12345,
                                   precip_centers_m=None, precip_radii_m=None,
                                   z_range_m=None):
-    """z_range_m: (z_min, z_max) 米制，FR 源严格限制在此区间内。None 则全盒子。"""
+    """z_range_m: (z_min, z_max) 米制,FR 源严格限制在此区间内。None 则全盒子。"""
     Lbox = int(round(Lbox_m / burgmag))
     total_length = target_density * Lbox_m**3
 
@@ -128,9 +128,9 @@ def generate_dislocation_network(Lbox_m, burgmag, target_density, seed=12345,
 
     attempt, src_count = 0, 0
     while accumulated < total_length * 0.85 and attempt < 15000:
-        length_m = rng.uniform(1.0e-6, 2.0e-6)
+        length_m = rng.uniform(0.8e-6, 1.5e-6)
         length_b = length_m / burgmag
-        margin = length_m * 0.8
+        margin = length_m * 0.4
 
         # x, y: 全盒子范围
         xy_low  = margin
