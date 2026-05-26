@@ -95,6 +95,15 @@ public:
         auto cell  = net->cell;
         Vec3 box_center = cell.center();
 
+        // Load spherical obstacles for proximity check
+        int Nobs = (int)system->obstacles.size();
+        Kokkos::View<SphericalObstacle*, T_memory_space> d_obs_tw("d_obs_tw", Nobs > 0 ? Nobs : 1);
+        if (Nobs > 0) {
+            auto h_obs_tw = Kokkos::create_mirror_view(d_obs_tw);
+            for (int k = 0; k < Nobs; k++) h_obs_tw(k) = system->obstacles[k];
+            Kokkos::deep_copy(d_obs_tw, h_obs_tw);
+        }
+
         Kokkos::View<int, T_memory_space> d_count("d_count_wall");
         Kokkos::deep_copy(d_count, 0);
 
@@ -103,6 +112,12 @@ public:
                 nodes[i].constraint == CORNER_NODE) return;
 
             Vec3 pos = nodes[i].pos;
+
+            // Skip nodes near precipitates (Orowan mechanism takes priority)
+            for (int k = 0; k < Nobs; k++) {
+                double dist = (pos - d_obs_tw(k).center).norm();
+                if (dist < d_obs_tw(k).radius * 2.0) return;
+            }
 
             for (int j = 0; j < Nplanes; j++) {
                 Vec3   n_twin = d_planes(j).normal;
