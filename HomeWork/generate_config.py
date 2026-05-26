@@ -153,7 +153,7 @@ def generate_dislocation_network(Lbox_m, burgmag, target_density, seed=12345,
         c_m = np.array([cx, cy, cz])
 
         # 检查与已有 FR 源重叠
-        overlap = any(np.linalg.norm(c_m - src_centers_m[i]) < (length_m + src_lengths_m[i]) * 0.6
+        overlap = any(np.linalg.norm(c_m - src_centers_m[i]) < (length_m + src_lengths_m[i]) * 0.3
                       for i in range(len(src_centers_m)))
 
         # 检查与杂质重叠
