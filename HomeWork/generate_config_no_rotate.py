@@ -37,10 +37,15 @@ LBOX_M   = 5e-6
 FCC_SLIP_SYSTEMS = []
 _fcc_planes = np.array([[1,1,1],[-1,1,1],[1,-1,1],[1,1,-1]], dtype=float)
 _fcc_burgers = np.array([[0,1,1],[0,-1,1],[1,0,1],[-1,0,1],[1,1,0],[-1,1,0]], dtype=float) / np.sqrt(2.0)
+_loading_dir = np.array([0,0,1], dtype=float)  # [001] loading direction
 for _p in _fcc_planes:
     _pn = _p / np.linalg.norm(_p)
     for _b in _fcc_burgers:
         if abs(np.dot(_b, _pn)) < 1e-5:
+            _b_hat = _b / np.linalg.norm(_b)
+            _schmid = abs(np.dot(_loading_dir, _b_hat) * np.dot(_loading_dir, _pn))
+            if _schmid < 1e-3:
+                continue  # Skip slip systems with zero Schmid factor under [001]
             FCC_SLIP_SYSTEMS.append((_b.copy(), _pn.copy()))
 
 
