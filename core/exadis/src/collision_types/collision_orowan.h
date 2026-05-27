@@ -44,6 +44,8 @@ public:
         Kokkos::deep_copy(d_obs, h_obs);
 
         auto nodes = net->get_nodes();
+        auto segs  = net->get_segs();
+        auto conn  = net->get_conn();
 
         Kokkos::parallel_for("OrowanNodes", Nnodes, KOKKOS_LAMBDA(const int i) {
             if (nodes[i].constraint == PINNED_NODE ||
@@ -52,15 +54,58 @@ public:
             Vec3 pos = nodes[i].pos;
 
             for (int j = 0; j < Nobs; j++) {
-                Vec3   d     = pos - d_obs(j).center;
-                double dist2 = d.norm2();
-                double r2    = d_obs(j).radius * d_obs(j).radius;
+                Vec3   dv    = pos - d_obs(j).center;
+                double dist2 = dv.norm2();
+                double R     = d_obs(j).radius;
+                double r2    = R * R;
 
                 if (dist2 < r2) {
-                    double dist   = sqrt(dist2);
-                    Vec3   normal = (dist > 1e-10) ? (1.0/dist) * d
-                                                   : Vec3(0.0, 0.0, 1.0);
-                    nodes[i].pos = d_obs(j).center + d_obs(j).radius * normal;
+                    // Find glide plane normal from connected segments
+                    Vec3 n_glide(0.0);
+                    int nconn = conn[i].num;
+                    for (int k = 0; k < nconn; k++) {
+                        Vec3 sp = segs[conn[i].seg[k]].plane;
+                        double sp_norm = sp.norm();
+                        if (sp_norm > 1e-10) {
+                            n_glide = (1.0 / sp_norm) * sp;
+                            break;
+                        }
+                    }
+
+                    if (n_glide.norm2() > 0.5) {
+                        // Project sphere center onto glide plane
+                        Vec3 C = d_obs(j).center;
+                        double h = dot(C - pos, n_glide);
+                        Vec3 C_proj = C - h * n_glide;
+
+                        // Intersection circle radius
+                        double r_circle2 = r2 - h * h;
+                        if (r_circle2 > 0.0) {
+                            double r_circle = sqrt(r_circle2);
+                            // Direction from C_proj to node (in glide plane)
+                            Vec3 d_dir = pos - C_proj;
+                            double d_norm = d_dir.norm();
+                            if (d_norm > 1e-10) {
+                                d_dir = (1.0 / d_norm) * d_dir;
+                            } else {
+                                // Node is at center projection, pick arbitrary in-plane direction
+                                Vec3 arb = (fabs(n_glide.x) < 0.9) ? Vec3(1,0,0) : Vec3(0,1,0);
+                                d_dir = cross(n_glide, arb).normalized();
+                            }
+                            // Project to nearest point on intersection circle
+                            nodes[i].pos = C_proj + r_circle * d_dir;
+                        } else {
+                            // Glide plane doesn't intersect sphere, fallback to radial
+                            double dist = sqrt(dist2);
+                            Vec3 normal = (dist > 1e-10) ? (1.0/dist) * dv : Vec3(0,0,1);
+                            nodes[i].pos = C + R * normal;
+                        }
+                    } else {
+                        // No valid glide plane, fallback to radial projection
+                        double dist = sqrt(dist2);
+                        Vec3 normal = (dist > 1e-10) ? (1.0/dist) * dv : Vec3(0,0,1);
+                        nodes[i].pos = d_obs(j).center + R * normal;
+                    }
                     return;
                 }
             }
