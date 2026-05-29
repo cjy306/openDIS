@@ -101,7 +101,7 @@ def main():
         calforce=calforce, mobility=mobility, timeint=timeint,
         collision=collision, topology=topology, remesh=remesh,
         loading_mode='strain_rate',
-        erate=1e3,
+        erate=1e4,
         edir=np.array([0.0, -2.0/np.sqrt(6), 1.0/np.sqrt(3)]),  # [001] crystal direction in rotated frame
         max_strain=0.01,
         burgmag=state["burgmag"],
