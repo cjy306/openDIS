@@ -126,6 +126,7 @@ def generate_dislocation_network(Lbox_m, burgmag, target_density, seed=12345,
     nodes, segs = [], []
     accumulated = 0.0
     src_lengths_m, src_centers_m = [], []
+    src_slip_ids = []  # 记录每个源的滑移系编号
 
     nsys = len(FCC_SLIP_SYSTEMS)
 
@@ -158,9 +159,18 @@ def generate_dislocation_network(Lbox_m, burgmag, target_density, seed=12345,
         cz = rng.uniform(z_low, z_high)
         c_m = np.array([cx, cy, cz])
 
-        # 检查与已有 FR 源重叠
-        overlap = any(np.linalg.norm(c_m - src_centers_m[i]) < (length_m + src_lengths_m[i]) * 0.3
-                      for i in range(len(src_centers_m)))
+        # 检查与已有 FR 源重叠（同滑移系要求更大间距）
+        slip_id = src_count % nsys
+        overlap = False
+        for i in range(len(src_centers_m)):
+            dist = np.linalg.norm(c_m - src_centers_m[i])
+            if src_slip_ids[i] == slip_id:
+                # 同滑移系（平行滑移面）：更大间距避免纠缠
+                if dist < (length_m + src_lengths_m[i]) * 0.8:
+                    overlap = True; break
+            else:
+                if dist < (length_m + src_lengths_m[i]) * 0.3:
+                    overlap = True; break
 
         # 检查与杂质重叠
         if not overlap and precip_centers_m is not None and len(precip_centers_m) > 0:
@@ -179,6 +189,7 @@ def generate_dislocation_network(Lbox_m, burgmag, target_density, seed=12345,
                 numnodes=numnodes)
             src_lengths_m.append(length_m)
             src_centers_m.append(c_m)
+            src_slip_ids.append(slip_id)
             accumulated += length_m
             src_count += 1
             attempt = 0
