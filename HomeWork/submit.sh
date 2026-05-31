@@ -12,4 +12,4 @@ export OMP_PLACES=threads
 module purge
 module load miniforge/25.3.1
 source activate opendis_cpu
-python /data/home/dg000246b/openDIS/HomeWork/test_Cu_twin.py --restart 9900
+python /data/home/dg000246b/openDIS/HomeWork/test_Cu_twin.py
