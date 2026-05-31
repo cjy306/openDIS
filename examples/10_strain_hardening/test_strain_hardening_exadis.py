@@ -71,8 +71,8 @@ def example_fcc_Cu_15um_1e3():
                               collision=collision, topology=topology, remesh=remesh, vis=vis,
                               loading_mode='strain_rate', erate=1e3, edir=np.array([0.,0.,1.]),
                               max_strain=0.01, burgmag=state["burgmag"], state=state,
-                              print_freq=1, plot_freq=10, plot_pause_seconds=0.0001,
-                              write_freq=100, write_dir=output_dir, restart=restart)
+                              print_freq=1, plot_freq=1, plot_pause_seconds=0.0001,
+                              write_freq=1, write_dir=output_dir, restart=restart)
     sim.run(net, state)
     
     pyexadis.finalize()

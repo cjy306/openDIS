@@ -1,9 +1,3 @@
-"""
-Cu FCC 位错动力学模拟：球形杂质（Orowan bypass）+ 孪晶面（twin boundary blocking）
-初始构型从 init_data/init_config.data 读取
-杂质数据从 init_data/obstacles.npz 读取
-孪晶面数据从 init_data/twin_planes.npz 读取
-"""
 import os, sys
 import numpy as np
 
@@ -35,10 +29,10 @@ state = {
     "a":       4.0,
     "maxseg":  200,
     "minseg":  50,
-    "rtol":    1.0,
+    "rtol":    0.5,
     "rann":    2.0,
     "nextdt":  1e-9,
-    "maxdt":   1e-7,
+    "maxdt":   1e-8,
 }
 
 
@@ -92,7 +86,7 @@ def main():
 
     calforce  = CalForce(force_mode='SUBCYCLING_MODEL', state=state, Ngrid=64, cell=exadis_net.cell)
     mobility  = MobilityLaw(mobility_law='FCC_0', state=state, Medge=64103.0, Mscrew=64103.0, vmax=50.0)
-    timeint   = TimeIntegration(integrator='Subcycling', rgroups=[0.0, 10.0, 60.0, 200.0], state=state, force=calforce, mobility=mobility)
+    timeint   = TimeIntegration(integrator='Subcycling', rgroups=[0.0, 5.0, 30.0, 100.0], state=state, force=calforce, mobility=mobility)
     collision = Collision(collision_mode='Orowan', state=state)
     topology  = Topology(topology_mode='TopologyParallel', state=state, force=calforce, mobility=mobility)
     remesh    = Remesh(remesh_rule='LengthBased', state=state)
@@ -107,7 +101,7 @@ def main():
         burgmag=state["burgmag"],
         state=state,
         print_freq=1,
-        write_freq=100,
+        write_freq=1,
         write_dir=output_dir,
         restart=restart,
     )
