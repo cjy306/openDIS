@@ -12,4 +12,4 @@ export OMP_PLACES=threads
 module purge
 module load miniforge/25.3.1
 source activate opendis_cpu
-python /data/home/dg000246b/openDIS/HomeWork/test_pure_fr_no_rorient.py
+python /data/home/dg000246b/openDIS/HomeWork/test_pure_fr_subcycling_rorient.py
