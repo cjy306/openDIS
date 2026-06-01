@@ -1,4 +1,4 @@
-"""对照组：纯 FR 源弓出，无孪晶面、无杂质"""
+"""对照组1：纯 FR 源弓出，无孪晶面、无杂质、无 Rorient"""
 import os, sys
 import numpy as np
 
@@ -14,15 +14,8 @@ except ImportError as e:
 
 from pyexadis_utils import insert_frank_read_src
 
-Rorient = [
-    [ 1/np.sqrt(2), -1/np.sqrt(2),  0           ],
-    [ 1/np.sqrt(6),  1/np.sqrt(6), -2/np.sqrt(6)],
-    [ 1/np.sqrt(3),  1/np.sqrt(3),  1/np.sqrt(3)],
-]
-
 state = {
     "crystal": 'fcc',
-    "Rorient": Rorient,
     "burgmag": 0.2556e-9,
     "mu":      48e9,
     "nu":      0.324,
@@ -44,15 +37,14 @@ def main():
     Lbox = int(round(Lbox_m / burgmag))
     cell = pyexadis.Cell(Lbox)
 
-    R = np.array(Rorient)
+    # 标准坐标系，不旋转
+    # (111)[0,1,1] 滑移系，[001]加载 Schmid因子 ≈ 0.408
+    burg  = np.array([0, 1, 1]) / np.sqrt(2)
+    plane = np.array([1, 1, 1]) / np.sqrt(3)
 
-    # 单个 FR 源：(111)[0,1,1] 滑移系，Schmid因子 ≈ 0.408
-    burg  = R @ (np.array([0, 1, 1]) / np.sqrt(2))
-    plane = R @ (np.array([1, 1, 1]) / np.sqrt(3))
-
-    length_m = 1.0e-6  # 1 μm
+    length_m = 1.0e-6
     length_b = length_m / burgmag
-    center_b = np.array([Lbox/2, Lbox/2, Lbox/2])  # 盒子中心
+    center_b = np.array([Lbox/2, Lbox/2, Lbox/2])
     numnodes = max(3, int(round(length_b / 100.0)))
 
     nodes, segs = [], []
@@ -63,14 +55,12 @@ def main():
     net = DisNetManager(G)
     exadis_net = net.get_disnet(ExaDisNet)
 
-    # 不加载杂质、不加载孪晶面
-
-    output_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'output_pure_fr')
+    output_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'output_pure_fr_no_rorient')
     os.makedirs(output_dir, exist_ok=True)
 
-    calforce  = CalForce(force_mode='SUBCYCLING_MODEL', state=state, Ngrid=64, cell=exadis_net.cell)
+    calforce = CalForce(force_mode='DDD_FFT_MODEL', state=state, Ngrid=64, cell=exadis_net.cell)
     mobility  = MobilityLaw(mobility_law='FCC_0', state=state, Medge=64103.0, Mscrew=64103.0, vmax=50.0)
-    timeint   = TimeIntegration(integrator='Subcycling', rgroups=[0.0, 10.0, 60.0, 200.0], state=state, force=calforce, mobility=mobility)
+    timeint  = TimeIntegration(integrator='Trapezoid', state=state, force=calforce, mobility=mobility)
     collision = Collision(collision_mode='Retroactive', state=state)
     topology  = Topology(topology_mode='TopologyParallel', state=state, force=calforce, mobility=mobility)
     remesh    = Remesh(remesh_rule='LengthBased', state=state)
@@ -80,7 +70,7 @@ def main():
         collision=collision, topology=topology, remesh=remesh,
         loading_mode='strain_rate',
         erate=1e4,
-        edir=np.array([0.0, -2.0/np.sqrt(6), 1.0/np.sqrt(3)]),
+        edir=np.array([0.0, 0.0, 1.0]),  # 标准 [001] 加载方向
         max_strain=0.01,
         burgmag=burgmag,
         state=state,

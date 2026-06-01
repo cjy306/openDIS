@@ -45,7 +45,7 @@ def main():
 
     base_dir   = os.path.dirname(os.path.abspath(__file__))
     init_dir   = os.path.join(base_dir, 'init_data_twin_rorient')
-    output_dir = os.path.join(base_dir, 'output_Cu_twin_rorient2')
+    output_dir = os.path.join(base_dir, 'output_Cu_twin_rorient')
     os.makedirs(output_dir, exist_ok=True)
 
     # 加载杂质数据
