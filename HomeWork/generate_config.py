@@ -182,11 +182,12 @@ def generate_dislocation_network(Lbox_m, burgmag, target_density, seed=12345,
 
         burg, plane = FCC_SLIP_SYSTEMS[src_count % nsys]
         numnodes = max(3, int(round(length_b / 100.0)))
+        theta = rng.uniform(0.0, 360.0)  # 随机线方向角 → 混合位错（0=纯螺, 90=纯刃）
 
         try:
             nodes, segs = insert_frank_read_src(
                 cell, nodes, segs, burg, plane, length_b, c_m / burgmag,
-                numnodes=numnodes)
+                theta=theta, numnodes=numnodes)
             src_lengths_m.append(length_m)
             src_centers_m.append(c_m)
             src_slip_ids.append(slip_id)
