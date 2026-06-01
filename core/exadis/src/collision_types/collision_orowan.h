@@ -59,7 +59,14 @@ public:
                 double R     = d_obs(j).radius;
                 double r2    = R * R;
 
-                if (dist2 < r2) {
+                // Thin shell around the sphere: also catch nodes slightly outside
+                // the surface so near-surface loop nodes are projected consistently.
+                // This removes the in/out flip-flop (one node snapped, its neighbor
+                // left free) that produced the jagged loop. The projection target is
+                // still the radius-R intersection circle (uses r2 = R*R below);
+                // the shell only widens the catch zone.
+                double Rs    = 1.025 * R;  // shell outer radius (~10b @ R=391b); tune via the 0.025 factor
+                if (dist2 < Rs * Rs) {
                     // Find glide plane normal from connected segments
                     Vec3 n_glide(0.0);
                     int nconn = conn[i].num;

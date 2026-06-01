@@ -184,6 +184,21 @@ def generate_dislocation_network(Lbox_m, burgmag, target_density, seed=12345,
         numnodes = max(3, int(round(length_b / 100.0)))
         theta = rng.uniform(0.0, 360.0)  # 随机线方向角 → 混合位错（0=纯螺, 90=纯刃）
 
+        # 保证两个固定端点都不会因 PBC 穿过盒子边界
+        # （复现 insert_frank_read_src 内部的 ldir 算法，算出端点实际位置）
+        b_hat = burg / np.linalg.norm(burg)
+        y_dir = np.cross(plane, b_hat)
+        y_dir = y_dir / np.linalg.norm(y_dir)
+        ldir = np.cos(np.radians(theta)) * b_hat + np.sin(np.radians(theta)) * y_dir
+        c_b = c_m / burgmag
+        ep0 = c_b - 0.5 * length_b * ldir
+        ep1 = c_b + 0.5 * length_b * ldir
+        edge_b = 0.02 * Lbox  # 端点距盒子边界的最小安全距离
+        if (np.any(ep0 < edge_b) or np.any(ep0 > Lbox - edge_b) or
+            np.any(ep1 < edge_b) or np.any(ep1 > Lbox - edge_b)):
+            attempt += 1
+            continue
+
         try:
             nodes, segs = insert_frank_read_src(
                 cell, nodes, segs, burg, plane, length_b, c_m / burgmag,
