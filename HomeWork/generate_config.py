@@ -41,7 +41,8 @@ _R = np.array([
 # FCC 滑移系（12个：4个{111}面 × 3个<110>方向）
 # 在旋转后的坐标系中表示
 # ============================================================
-FCC_SLIP_SYSTEMS = []
+FCC_SLIP_SYSTEMS = []    # 高 Schmid 活动系（[001]加载下能开动，填充密度）
+FCC_FOREST_SYSTEMS = []  # 零 Schmid 森林系（不开动，作 forest hardening 障碍）
 _fcc_planes = np.array([[1,1,1],[-1,1,1],[1,-1,1],[1,1,-1]], dtype=float)
 _fcc_burgers = np.array([[0,1,1],[0,-1,1],[1,0,1],[-1,0,1],[1,1,0],[-1,1,0]], dtype=float) / np.sqrt(2.0)
 _loading_dir = np.array([0,0,1], dtype=float)  # [001] in crystal frame
@@ -52,12 +53,13 @@ for _p in _fcc_planes:
             # Schmid factor: |dot(loading, b_hat) * dot(loading, n)|
             _b_hat = _b / np.linalg.norm(_b)
             _schmid = abs(np.dot(_loading_dir, _b_hat) * np.dot(_loading_dir, _pn))
-            if _schmid < 1e-3:
-                continue  # Skip slip systems with zero Schmid factor under [001]
             _b_rot = _R @ _b
             _pn_rot = _R @ _pn
             _pn_rot /= np.linalg.norm(_pn_rot)
-            FCC_SLIP_SYSTEMS.append((_b_rot.copy(), _pn_rot.copy()))
+            if _schmid < 1e-3:
+                FCC_FOREST_SYSTEMS.append((_b_rot.copy(), _pn_rot.copy()))  # 零Schmid → 森林
+            else:
+                FCC_SLIP_SYSTEMS.append((_b_rot.copy(), _pn_rot.copy()))    # 高Schmid → 活动
 
 
 # ============================================================
@@ -114,105 +116,127 @@ def generate_twin_planes(Lbox_b, twin_z_fractions):
 # ============================================================
 # 按密度生成 Frank-Read 源网络（避开杂质和孪晶面）
 # ============================================================
+def _try_place_fr(cell, nodes, segs, burg, plane, slip_id, length_m, c_m, theta,
+                  burgmag, Lbox, src_centers_m, src_lengths_m, src_slip_ids,
+                  precip_centers_m, precip_radii_m):
+    """尝试在 c_m 放一个 FR 源（重叠检查 + 端点不跨 PBC + 插入）。
+    成功返回 (True, nodes, segs) 并更新跟踪列表；失败返回 (False, nodes, segs)。"""
+    length_b = length_m / burgmag
+
+    # 与已有源重叠（同滑移系要求更大间距）
+    for i in range(len(src_centers_m)):
+        dist = np.linalg.norm(c_m - src_centers_m[i])
+        thr = 0.8 if src_slip_ids[i] == slip_id else 0.3
+        if dist < (length_m + src_lengths_m[i]) * thr:
+            return False, nodes, segs
+
+    # 与杂质重叠
+    if precip_centers_m is not None and len(precip_centers_m) > 0:
+        if any(np.linalg.norm(c_m - precip_centers_m[i]) < (length_m * 0.5 + precip_radii_m[i]) * 1.5
+               for i in range(len(precip_centers_m))):
+            return False, nodes, segs
+
+    # 端点不跨 PBC 边界（复现 insert_frank_read_src 内部 ldir 算法）
+    b_hat = burg / np.linalg.norm(burg)
+    y_dir = np.cross(plane, b_hat)
+    y_dir = y_dir / np.linalg.norm(y_dir)
+    ldir = np.cos(np.radians(theta)) * b_hat + np.sin(np.radians(theta)) * y_dir
+    c_b = c_m / burgmag
+    ep0 = c_b - 0.5 * length_b * ldir
+    ep1 = c_b + 0.5 * length_b * ldir
+    edge_b = 0.02 * Lbox
+    if (np.any(ep0 < edge_b) or np.any(ep0 > Lbox - edge_b) or
+        np.any(ep1 < edge_b) or np.any(ep1 > Lbox - edge_b)):
+        return False, nodes, segs
+
+    # 插入
+    numnodes = max(3, int(round(length_b / 100.0)))
+    try:
+        nodes, segs = insert_frank_read_src(
+            cell, nodes, segs, burg, plane, length_b, c_b, theta=theta, numnodes=numnodes)
+    except Exception:
+        return False, nodes, segs
+
+    src_lengths_m.append(length_m)
+    src_centers_m.append(c_m)
+    src_slip_ids.append(slip_id)
+    return True, nodes, segs
+
+
+def _random_center(rng, Lbox_m, length_m, z_range_m):
+    """随机候选中心：x,y 全盒子；z 限制在孪晶面之间。区间太窄返回 None。"""
+    margin = length_m * 0.4
+    xy_low, xy_high = margin, Lbox_m - margin
+    if z_range_m is not None:
+        z_low, z_high = z_range_m[0] + margin, z_range_m[1] - margin
+    else:
+        z_low, z_high = margin, Lbox_m - margin
+    if xy_high <= xy_low or z_high <= z_low:
+        return None
+    return np.array([rng.uniform(xy_low, xy_high),
+                     rng.uniform(xy_low, xy_high),
+                     rng.uniform(z_low, z_high)])
+
+
 def generate_dislocation_network(Lbox_m, burgmag, target_density, seed=12345,
                                   precip_centers_m=None, precip_radii_m=None,
                                   z_range_m=None):
-    """z_range_m: (z_min, z_max) 米制,FR 源严格限制在此区间内。None 则全盒子。"""
+    """z_range_m: (z_min, z_max) 米制，FR 源严格限制在此区间内。None 则全盒子。"""
     Lbox = int(round(Lbox_m / burgmag))
-    total_length = target_density * Lbox_m**3
+    total_length = target_density * Lbox_m**3   # 按整盒子体积算密度
 
     rng  = np.random.RandomState(seed)
     cell = pyexadis.Cell(Lbox)
     nodes, segs = [], []
     accumulated = 0.0
-    src_lengths_m, src_centers_m = [], []
-    src_slip_ids = []  # 记录每个源的滑移系编号
+    src_lengths_m, src_centers_m, src_slip_ids = [], [], []
 
     nsys = len(FCC_SLIP_SYSTEMS)
 
-    # x,y 方向范围
-    xy_margin_frac = 0.05  # 距盒子边缘的安全距离
-
+    # ---- 主相：高Schmid活动系，填充密度（短源 → 更多更密 → 形成森林、不自重合）----
     attempt, src_count = 0, 0
     while accumulated < total_length * 0.85 and attempt < 15000:
-        length_m = rng.uniform(0.8e-6, 1.5e-6)
-        length_b = length_m / burgmag
-        margin = length_m * 0.4
-
-        # x, y: 全盒子范围
-        xy_low  = margin
-        xy_high = Lbox_m - margin
-
-        # z: 严格限制在两孪晶面之间
-        if z_range_m is not None:
-            z_low  = z_range_m[0] + margin
-            z_high = z_range_m[1] - margin
-        else:
-            z_low  = margin
-            z_high = Lbox_m - margin
-
-        if xy_high <= xy_low or z_high <= z_low:
+        length_m = rng.uniform(0.4e-6, 0.8e-6)
+        c_m = _random_center(rng, Lbox_m, length_m, z_range_m)
+        if c_m is None:
             attempt += 1; continue
-
-        cx = rng.uniform(xy_low, xy_high)
-        cy = rng.uniform(xy_low, xy_high)
-        cz = rng.uniform(z_low, z_high)
-        c_m = np.array([cx, cy, cz])
-
-        # 检查与已有 FR 源重叠（同滑移系要求更大间距）
         slip_id = src_count % nsys
-        overlap = False
-        for i in range(len(src_centers_m)):
-            dist = np.linalg.norm(c_m - src_centers_m[i])
-            if src_slip_ids[i] == slip_id:
-                # 同滑移系（平行滑移面）：更大间距避免纠缠
-                if dist < (length_m + src_lengths_m[i]) * 0.8:
-                    overlap = True; break
+        burg, plane = FCC_SLIP_SYSTEMS[slip_id]
+        theta = rng.uniform(0.0, 360.0)   # 随机线方向 → 混合位错
+        ok, nodes, segs = _try_place_fr(
+            cell, nodes, segs, burg, plane, slip_id, length_m, c_m, theta,
+            burgmag, Lbox, src_centers_m, src_lengths_m, src_slip_ids,
+            precip_centers_m, precip_radii_m)
+        if ok:
+            accumulated += length_m; src_count += 1; attempt = 0
+        else:
+            attempt += 1
+
+    print(f"  Active sources: {src_count}, length = {accumulated:.3e} m")
+
+    # ---- 森林相：零Schmid系，每系 1-2 根（forest hardening，撑住流变应力）----
+    n_forest = 0
+    for fs_idx, (burg, plane) in enumerate(FCC_FOREST_SYSTEMS):
+        slip_id = nsys + fs_idx          # 森林系用独立 slip_id
+        n_target = rng.randint(1, 3)     # 1 或 2 根
+        placed, f_attempt = 0, 0
+        while placed < n_target and f_attempt < 3000:
+            length_m = rng.uniform(0.4e-6, 0.8e-6)
+            c_m = _random_center(rng, Lbox_m, length_m, z_range_m)
+            if c_m is None:
+                f_attempt += 1; continue
+            theta = rng.uniform(0.0, 360.0)
+            ok, nodes, segs = _try_place_fr(
+                cell, nodes, segs, burg, plane, slip_id, length_m, c_m, theta,
+                burgmag, Lbox, src_centers_m, src_lengths_m, src_slip_ids,
+                precip_centers_m, precip_radii_m)
+            if ok:
+                placed += 1; n_forest += 1; f_attempt = 0
             else:
-                if dist < (length_m + src_lengths_m[i]) * 0.3:
-                    overlap = True; break
+                f_attempt += 1
 
-        # 检查与杂质重叠
-        if not overlap and precip_centers_m is not None and len(precip_centers_m) > 0:
-            overlap = any(np.linalg.norm(c_m - precip_centers_m[i]) < (length_m * 0.5 + precip_radii_m[i]) * 1.5
-                          for i in range(len(precip_centers_m)))
-
-        if overlap:
-            attempt += 1; continue
-
-        burg, plane = FCC_SLIP_SYSTEMS[src_count % nsys]
-        numnodes = max(3, int(round(length_b / 100.0)))
-        theta = rng.uniform(0.0, 360.0)  # 随机线方向角 → 混合位错（0=纯螺, 90=纯刃）
-
-        # 保证两个固定端点都不会因 PBC 穿过盒子边界
-        # （复现 insert_frank_read_src 内部的 ldir 算法，算出端点实际位置）
-        b_hat = burg / np.linalg.norm(burg)
-        y_dir = np.cross(plane, b_hat)
-        y_dir = y_dir / np.linalg.norm(y_dir)
-        ldir = np.cos(np.radians(theta)) * b_hat + np.sin(np.radians(theta)) * y_dir
-        c_b = c_m / burgmag
-        ep0 = c_b - 0.5 * length_b * ldir
-        ep1 = c_b + 0.5 * length_b * ldir
-        edge_b = 0.02 * Lbox  # 端点距盒子边界的最小安全距离
-        if (np.any(ep0 < edge_b) or np.any(ep0 > Lbox - edge_b) or
-            np.any(ep1 < edge_b) or np.any(ep1 > Lbox - edge_b)):
-            attempt += 1
-            continue
-
-        try:
-            nodes, segs = insert_frank_read_src(
-                cell, nodes, segs, burg, plane, length_b, c_m / burgmag,
-                theta=theta, numnodes=numnodes)
-            src_lengths_m.append(length_m)
-            src_centers_m.append(c_m)
-            src_slip_ids.append(slip_id)
-            accumulated += length_m
-            src_count += 1
-            attempt = 0
-        except Exception:
-            attempt += 1
-
-    print(f"Generated {src_count} Frank-Read sources, total length = {accumulated:.3e} m")
+    print(f"  Forest sources: {n_forest} (on {len(FCC_FOREST_SYSTEMS)} zero-Schmid systems)")
+    print(f"Generated {src_count + n_forest} FR sources total, active length = {accumulated:.3e} m")
     return ExaDisNet(cell, nodes, segs)
 
 
