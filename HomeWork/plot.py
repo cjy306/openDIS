@@ -11,8 +11,8 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 
 # ========== 路径配置 ==========
-FILE_WITH = "/data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc/stress_strain_dens.dat"
-FILE_PURE = "/data/home/dg000246b/openDIS/HomeWork/output_Cu_fcc_pure/stress_strain_dens.dat"
+FILE_WITH = "/data/home/dg000246b/openDIS/HomeWork/stress_strain_dens.dat"
+FILE_PURE = "/data/home/dg000246b/openDIS/HomeWork/stress_strain_dens.dat"
 OUTPUT_DIR = "/data/home/dg000246b/openDIS/HomeWork/Post-processing simulation"
 # ==============================
 
