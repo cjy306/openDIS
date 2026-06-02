@@ -86,7 +86,7 @@ def main():
     os.makedirs(output_dir, exist_ok=True)
 
     # 力/积分器：与 5µm 版完全一致，仅 Ngrid 同比例 64→256 保持网格分辨率
-    calforce  = CalForce(force_mode='SUBCYCLING_MODEL', state=state, Ngrid=256, cell=exadis_net.cell)
+    calforce  = CalForce(force_mode='SUBCYCLING_MODEL', state=state, Ngrid=32, cell=exadis_net.cell)
     mobility  = MobilityLaw(mobility_law='FCC_0', state=state, Medge=64103.0, Mscrew=64103.0, vmax=50.0)
     timeint   = TimeIntegration(integrator='Subcycling', rgroups=[0.0, 10.0, 60.0, 200.0], state=state, force=calforce, mobility=mobility)
     collision = Collision(collision_mode='Orowan', state=state)
