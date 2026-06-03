@@ -196,7 +196,7 @@ def generate_dislocation_network(Lbox_m, burgmag, target_density, seed=12345,
     # ---- 主相：高Schmid活动系，填充密度（短源 → 更多更密 → 形成森林、不自重合）----
     attempt, src_count = 0, 0
     while accumulated < total_length * 0.85 and attempt < 15000:
-        length_m = rng.uniform(0.4e-6, 0.8e-6)
+        length_m = rng.uniform(0.8e-6, 1.2e-6)
         c_m = _random_center(rng, Lbox_m, length_m, z_range_m)
         if c_m is None:
             attempt += 1; continue
@@ -221,7 +221,7 @@ def generate_dislocation_network(Lbox_m, burgmag, target_density, seed=12345,
         n_target = rng.randint(1, 3)     # 1 或 2 根
         placed, f_attempt = 0, 0
         while placed < n_target and f_attempt < 3000:
-            length_m = rng.uniform(0.6e-6, 1.0e-6)
+            length_m = rng.uniform(0.4e-6, 0.8e-6)
             c_m = _random_center(rng, Lbox_m, length_m, z_range_m)
             if c_m is None:
                 f_attempt += 1; continue
