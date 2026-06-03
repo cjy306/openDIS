@@ -143,7 +143,7 @@ struct DisSeg
  *    Struct:        Conn
  *
  *-------------------------------------------------------------------------*/
-#define MAX_CONN 10
+#define MAX_CONN 15
 struct Conn 
 {
     int num;
