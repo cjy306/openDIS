@@ -13,7 +13,7 @@ import matplotlib.pyplot as plt
 # ========== 路径配置（按需修改）==========
 DATA_FILE  = "/data/home/dg000246b/openDIS/HomeWork/output_Cu_twin_rorient/stress_strain_dens.dat"
 OUTPUT_DIR = "/data/home/dg000246b/openDIS/HomeWork/Post-processing simulation"
-LABEL      = "twin + precip (1e3)"   # 图例标签，标注这是哪个工况
+LABEL      = "twin + precip (1e4)"   # 图例标签，标注这是哪个工况
 # =========================================
 
 
@@ -69,7 +69,7 @@ def main():
     ax2.tick_params(labelsize=11)
 
     plt.tight_layout(pad=2.0)
-    output_path = os.path.join(OUTPUT_DIR, "results.png")
+    output_path = os.path.join(OUTPUT_DIR, "results1.png")
     plt.savefig(output_path, dpi=300, bbox_inches='tight', facecolor='white')
     plt.close()
 

@@ -45,7 +45,7 @@ def main():
 
     base_dir   = os.path.dirname(os.path.abspath(__file__))
     init_dir   = os.path.join(base_dir, 'init_data_twin_rorient')
-    output_dir = os.path.join(base_dir, 'output_Cu_twin_rorient')
+    output_dir = os.path.join(base_dir, 'output_Cu_twin_rorient1')
     os.makedirs(output_dir, exist_ok=True)
 
     # 加载杂质数据
@@ -95,13 +95,13 @@ def main():
         calforce=calforce, mobility=mobility, timeint=timeint,
         collision=collision, topology=topology, remesh=remesh,
         loading_mode='strain_rate',
-        erate=1e3,
+        erate=1e4,
         edir=np.array([0.0, -2.0/np.sqrt(6), 1.0/np.sqrt(3)]),  # [001] crystal direction in rotated frame
         max_strain=0.01,
         burgmag=state["burgmag"],
         state=state,
         print_freq=1,
-        write_freq=100,
+        write_freq=1,
         write_dir=output_dir,
         restart=restart,
     )
