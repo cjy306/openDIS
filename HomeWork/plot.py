@@ -11,9 +11,9 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 
 # ========== 路径配置（按需修改）==========
-DATA_FILE  = "/data/home/dg000246b/openDIS/HomeWork/output_Cu_twin_rorient/stress_strain_dens.dat"
+DATA_FILE  = "/data/home/dg000246b/openDIS/HomeWork/output_Cu_line/stress_strain_dens.dat"
 OUTPUT_DIR = "/data/home/dg000246b/openDIS/HomeWork/Post-processing simulation"
-LABEL      = "twin + precip (1e4)"   # 图例标签，标注这是哪个工况
+LABEL      = "twin + precip 1e3 LINE"   # 图例标签，标注这是哪个工况
 # =========================================
 
 
