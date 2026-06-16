@@ -25,10 +25,8 @@ pyexadis_paths = ['../python', '../lib', '../core/pydis/python', '../core/exadis
 import pyexadis
 from pyexadis_base import ExaDisNet, DisNetManager
 from pyexadis_utils import insert_prismatic_loop, write_vtk   # a/2<111> 可动环(ExaDiS 自带)
-from generate_glide_loop import (                          # 本课题自写
-    insert_glide_loop, insert_sessile_loop_100,
-    _BCC_SLIP_B, _BCC_SLIP_N,
-)
+from generate_glide_loop import insert_sessile_loop_100       # a<100> 不可动环(本课题自写)
+from generate_microstructure import build_matrix             # 混合基体(75%直线+25%FR)
 
 # ============================================================
 # 参数(材料 = Yan 2023 一套;辐照环 = Zhang 2020)
@@ -36,10 +34,10 @@ from generate_glide_loop import (                          # 本课题自写
 BURGMAG    = 0.248e-9     # b [m]
 LBOX_M     = 5.0e-6       # bulk 周期盒 [m]
 
-# --- 基体可动滑移网络(同 Case A) ---
-RHO_TARGET   = 1.0e12     # 基体可动位错密度 [1/m^2]
-GLIDE_RMIN_M = 0.10e-6
-GLIDE_RMAX_M = 0.20e-6
+# --- 基体混合网络(同 Case A:75% 可动直线 + 25% FR 源) ---
+RHO_TARGET   = 1.0e12     # 基体总位错密度 [1/m^2]
+FRS_FRACTION = 0.25
+FRS_LENGTH_M = 1.0e-6
 
 # --- a/2<111> 可动辐照环(Zhang 2020) ---
 N111_DENS = 3.73e21       # 数密度 [1/m^3]
@@ -71,37 +69,15 @@ def build_caseB(seed, verbose=True):
 
     Lbox = LBOX_M / BURGMAG
     cell = pyexadis.Cell(Lbox)
-    nodes, segs = [], []
 
-    b_glide = _BCC_SLIP_B / np.linalg.norm(_BCC_SLIP_B, axis=1)[:, None]
-    n_glide = _BCC_SLIP_N / np.linalg.norm(_BCC_SLIP_N, axis=1)[:, None]
-    nsys = b_glide.shape[0]
+    # loop_type 标记(按段顺序):基体子类 0=直线/3=FR(来自 build_matrix),
+    # 辐照环 1=a/2<111>可动环, 2=a<100>不可动环。段顺序追加,故各类连续。
 
-    # loop_type 标记(按段顺序;0=基体滑移, 1=a/2<111>可动环, 2=a<100>不可动环)
-    # 段在 nodes/segs 中顺序追加,故各类对应连续区间,用 len(segs) 差值切片。
-    loop_type = []
-
-    # ---------- 1) 基体可动滑移网络(按密度填充)----------
-    vol_m3 = LBOX_M**3
-    L_target_m = RHO_TARGET * vol_m3
-    acc_m = 0.0
-    placed_glide = 0
-    attempt = 0
-    while acc_m < 0.99 * L_target_m and attempt < 100000:
-        R_m = rng.uniform(GLIDE_RMIN_M, GLIDE_RMAX_M)
-        R_b = R_m / BURGMAG
-        margin = R_b
-        pos = rng.uniform(margin, Lbox - margin, size=3)
-        isys = placed_glide % nsys
-        nseg0 = len(segs)
-        nodes, segs = insert_glide_loop(cell, nodes, segs, b_glide[isys], n_glide[isys],
-                                        R_b, pos, numnodes=20)
-        loop_type += [0] * (len(segs) - nseg0)
-        acc_m += 2.0 * np.pi * R_m
-        placed_glide += 1
-        attempt += 1
-    if verbose:
-        print('基体可动滑移环: %d 个, 密度 %.2e /m^2' % (placed_glide, acc_m/vol_m3))
+    # ---------- 1) 基体混合网络(75% 可动直线 + 25% FR 源,同 Case A)----------
+    nodes, segs, lt_matrix = build_matrix(
+        cell, LBOX_M, BURGMAG, RHO_TARGET, rng,
+        frs_fraction=FRS_FRACTION, frs_length_m=FRS_LENGTH_M, verbose=verbose)
+    loop_type = list(lt_matrix)
 
     # ---------- 2) a/2<111> 可动辐照环 ----------
     n111 = _num_from_density(N111_DENS, LBOX_M)
@@ -150,18 +126,18 @@ def main():
     out_file = os.path.join(out_dir, 'init_config.data')
     G.write_data(out_file)
 
-    # loop_type 伴随文件(按段顺序;0=基体, 1=a/2<111>环, 2=a<100>环)
+    # loop_type 伴随文件(按段顺序;0=直线基体, 3=FR源, 1=a/2<111>环, 2=a<100>环)
     lt_file = os.path.join(out_dir, 'loop_type.txt')
     np.savetxt(lt_file, loop_type, fmt='%d')
 
     # 直接出一份带 LoopType 标记的初始构型 VTK(段顺序=生成顺序,与 loop_type 严格对齐,
-    # 不经 .data 往返,零重排风险)。ParaView 里按 LoopType 染色即可区分三类。
+    # 不经 .data 往返,零重排风险)。ParaView 里按 LoopType 染色即可区分各类。
     vtk_file = os.path.join(out_dir, 'init_config_labeled.vtk')
     write_vtk(DisNetManager(G), vtk_file,
               segprops={'LoopType': loop_type.astype(float)}, verbose=False)
 
     print(f'Case B 初始构型已写出: {out_file}')
-    print(f'段类别标记已写出: {lt_file}  (0=基体 1=<111>环 2=<100>环, 共 {len(loop_type)} 段)')
+    print(f'段类别标记已写出: {lt_file}  (0=直线 3=FR 1=<111>环 2=<100>环, 共 {len(loop_type)} 段)')
     print(f'带标记 VTK 已写出: {vtk_file}  (ParaView 按 LoopType 染色)')
     pyexadis.finalize()
 
