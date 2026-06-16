@@ -26,7 +26,7 @@ pyexadis_paths = ['../python', '../lib', '../core/pydis/python', '../core/exadis
 
 import pyexadis
 from pyexadis_base import ExaDisNet, DisNetManager, NodeConstraints
-from pyexadis_utils import insert_frank_read_src, insert_prismatic_loop, write_vtk
+from pyexadis_utils import insert_infinite_line, insert_frank_read_src, insert_prismatic_loop, write_vtk
 
 # ============================================================
 # 参数(材料 = Yan 2023 一套;辐照环 = Zhang 2020)
@@ -34,11 +34,11 @@ from pyexadis_utils import insert_frank_read_src, insert_prismatic_loop, write_v
 BURGMAG    = 0.248e-9     # b [m]
 LBOX_M     = 300e-9       # bulk 周期盒 300nm 立方(Pachaury 纳米尺度)
 
-# --- 基体网络(同 Case A:75% 长 FR 段 + 25% 短 FR 段) ---
+# --- 基体网络(同 Case A:少量可动直线 + FR 源主体) ---
 RHO_TARGET   = 2.0e14     # 基体总位错密度 [1/m^2]
-LONG_FRAC    = 0.75
-LONG_LEN_M   = 120e-9     # 盒子的 0.4,留弓出空间
-SHORT_LEN_M  = 80e-9
+LINE_FRAC    = 0.20       # 可动穿盒直线占比(绕过 FR 饥饿,载初始微塑性)
+LONG_LEN_M   = 120e-9     # FR 长段
+SHORT_LEN_M  = 80e-9      # FR 短段
 
 # --- a/2<111> 可动辐照环(Zhang 2020) ---
 N111_DENS = 3.73e21       # 数密度 [1/m^3]
@@ -62,8 +62,8 @@ _BCC_SLIP_N = np.array([
 _B111 = np.array([[1., 1., 1.], [-1., 1., 1.], [1., -1., 1.], [1., 1., -1.]])  # a/2<111>
 _B100 = np.array([[1., 0., 0.], [0., 1., 0.], [0., 0., 1.]])                   # a<100>
 
-# loop_type:0=长FR段基体, 3=短FR段基体, 1=a/2<111>环, 2=a<100>环
-LT_LONG, LT_SHORT, LT_111, LT_100 = 0, 3, 1, 2
+# loop_type:0=可动直线基体, 3=FR源基体, 1=a/2<111>环, 2=a<100>环
+LT_LINE, LT_FR, LT_111, LT_100 = 0, 3, 1, 2
 
 
 def insert_sessile_loop_100(cell, nodes, segs, burg, radius, center, numnodes=20):
@@ -89,8 +89,27 @@ def insert_sessile_loop_100(cell, nodes, segs, burg, radius, center, numnodes=20
     return nodes, segs
 
 
-def _fill_fr(cell, rng, nodes, segs, loop_type, L_target_m, seg_len_m, lt_tag, b_sys, n_sys, label, verbose):
-    """按目标线长填一群指定长度的 FR 段(两端 PINNED)。"""
+def _fill_lines(cell, rng, nodes, segs, loop_type, L_target_m, b_sys, n_sys, verbose):
+    """填少量穿盒无限直线(UNCONSTRAINED 全可动),按目标线长。"""
+    origin, h = np.array(cell.origin), np.array(cell.h)
+    nsys = b_sys.shape[0]
+    acc, placed, attempt = 0.0, 0, 0
+    while acc < 0.99 * L_target_m and attempt < 100000:
+        isys = placed % nsys
+        pos = origin + np.matmul(rng.rand(3), h.T)
+        Lb = insert_infinite_line(cell, nodes, segs, b_sys[isys], n_sys[isys], pos, trial=True)
+        if Lb is None or Lb < 0:
+            attempt += 1; continue
+        nseg0 = len(segs)
+        nodes, segs = insert_infinite_line(cell, nodes, segs, b_sys[isys], n_sys[isys], pos)
+        loop_type += [LT_LINE] * (len(segs) - nseg0)
+        acc += Lb * BURGMAG; placed += 1; attempt = 0
+    if verbose: print('可动穿盒直线: %d 条, 线长 %.3e m' % (placed, acc))
+    return nodes, segs, loop_type
+
+
+def _fill_fr(cell, rng, nodes, segs, loop_type, L_target_m, seg_len_m, b_sys, n_sys, label, verbose):
+    """按目标线长填一群指定长度的 FR 段(两端 PINNED),标记 LT_FR。"""
     Lbox = LBOX_M / BURGMAG
     nsys = b_sys.shape[0]
     seg_len_b = seg_len_m / BURGMAG
@@ -101,7 +120,7 @@ def _fill_fr(cell, rng, nodes, segs, loop_type, L_target_m, seg_len_m, lt_tag, b
         center = rng.uniform(margin, Lbox - margin, size=3)
         nseg0 = len(segs)
         nodes, segs = insert_frank_read_src(cell, nodes, segs, b_sys[isys], n_sys[isys], seg_len_b, center)
-        loop_type += [lt_tag] * (len(segs) - nseg0)
+        loop_type += [LT_FR] * (len(segs) - nseg0)
         acc += seg_len_m; placed += 1; attempt += 1
     if verbose:
         print('%s: %d 段 (长 %.0f nm), 线长 %.3e m' % (label, placed, seg_len_m*1e9, acc))
@@ -109,16 +128,19 @@ def _fill_fr(cell, rng, nodes, segs, loop_type, L_target_m, seg_len_m, lt_tag, b
 
 
 def build_matrix(cell, rng, segs, nodes, loop_type, verbose=True):
-    """追加基体(75% 长 FR 段 + 25% 短 FR 段)到给定 nodes/segs/loop_type。"""
+    """追加基体(少量可动直线 + FR 源主体)到给定 nodes/segs/loop_type。"""
     vol_m3 = LBOX_M ** 3
     L_total_m = RHO_TARGET * vol_m3
-    L_long_m, L_short_m = LONG_FRAC * L_total_m, (1.0 - LONG_FRAC) * L_total_m
+    L_line_m = LINE_FRAC * L_total_m
+    L_fr_m = (1.0 - LINE_FRAC) * L_total_m
     b_sys = _BCC_SLIP_B / np.linalg.norm(_BCC_SLIP_B, axis=1)[:, None]
     n_sys = _BCC_SLIP_N / np.linalg.norm(_BCC_SLIP_N, axis=1)[:, None]
-    nodes, segs, loop_type = _fill_fr(cell, rng, nodes, segs, loop_type, L_long_m,
-                                      LONG_LEN_M, LT_LONG, b_sys, n_sys, '长FR段(微塑性)', verbose)
-    nodes, segs, loop_type = _fill_fr(cell, rng, nodes, segs, loop_type, L_short_m,
-                                      SHORT_LEN_M, LT_SHORT, b_sys, n_sys, '短FR段(增殖)', verbose)
+    nodes, segs, loop_type = _fill_lines(cell, rng, nodes, segs, loop_type, L_line_m,
+                                         b_sys, n_sys, verbose)
+    nodes, segs, loop_type = _fill_fr(cell, rng, nodes, segs, loop_type, 0.5*L_fr_m,
+                                      LONG_LEN_M, b_sys, n_sys, 'FR长段', verbose)
+    nodes, segs, loop_type = _fill_fr(cell, rng, nodes, segs, loop_type, 0.5*L_fr_m,
+                                      SHORT_LEN_M, b_sys, n_sys, 'FR短段', verbose)
     return nodes, segs, loop_type
 
 
@@ -182,7 +204,7 @@ def main():
               segprops={'LoopType': loop_type.astype(float)}, verbose=False)
 
     print(f'Case B 初始构型已写出: {out_file}')
-    print(f'段类别标记: {lt_file}  (0=长FR 3=短FR 1=<111>环 2=<100>环, 共 {len(loop_type)} 段)')
+    print(f'段类别标记: {lt_file}  (0=可动直线 3=FR源 1=<111>环 2=<100>环, 共 {len(loop_type)} 段)')
     print(f'带标记 VTK: {vtk_file}  (ParaView 按 LoopType 染色)')
     pyexadis.finalize()
 
