@@ -56,15 +56,16 @@
   超算 git pull 后用已有 submit.sh 跑。SCNet 路径/env 待用户上平台后填。
 - **M1 / Case A 基准** ◑:BCC FeCrAl、{110}⟨111⟩、bulk 周期 5×5×5 μm、0.2% 偏移屈服、3 随机实现。
   已写文件(均在 `ODS-FeCrAl/`):
-  - `generate_caseA.py` — Case A 构型生成,**自包含**(内含 build_matrix:75%直线+25%FR)
+  - `generate_caseA.py` — Case A 构型生成,**自包含**(内含 build_matrix:75%长FR+25%短FR)
   - `test_caseA_baseline.py` — Case A 主脚本(无障碍物,材料 Yan 2023 一套)
   - `extract_yield.py` — 0.2% 偏移屈服提取 + 多实现均值/误差棒(读 stress_strain_dens.dat)
   - 注:每个 generate 脚本自包含(不互相 import),基体逻辑在 A/B 各存一份,换独立性
-  已定决策:材料=Yan 2023 一套;基体=75%直线+25%FR(Pachaury 配方);ρ=1e12/m²;
+  已定决策:材料=Yan 2023;**盒子 300nm 立方;ρ=2e14**;基体=75%长FR段(120nm)+25%短FR段(80nm);
   屈服=0.2% offset + 多 seed 平均。
   → 验证(待超算):出屈服曲线 + 均值/误差棒。这是 B–F 全复用的底座。
-  ⚠️ **教训(已修)**:首版用无钉扎闭合滑移环,实测两步内 nodes 2600→312→0 全自湮灭;
-  已改混合基体。残留待实跑校:直线默认段长偏粗(可能需传 maxseg)。
+  ⚠️ **两次教训(已修)**:① 无钉扎闭合滑移环→两步 nodes 2600→312→0 全自湮灭;
+  ② 5μm 大盒→辐照环爆炸到 46 万个。现已改:纳米盒 300nm + FR 段基体。
+  残留待实跑校:FR 段 120nm vs 盒 300nm 弓出空间;段与周期镜像自交。
 - **M0 / SCNet 启动**:编译 OpenDiS/ExaDiS、跑通 stock example、确认 Kokkos OpenMP 后端。
   → 阻塞:用户上平台后才能做。
 
@@ -74,8 +75,8 @@
   **不复用**现有几何投影 Orowan(`collision_types/collision_orowan.h`)。
   → 验证:单排氧化物强度与 **BKS 解析式**吻合(BKS 仅用于氧化物)。
 - **Case B / 位错环** ◑ 脚本已写:已写文件
-  - `generate_caseB.py` — **自包含**:基体混合网络 + a/2⟨111⟩ 可动环(ExaDiS insert_prismatic_loop)
-    + a⟨100⟩ PINNED 环(内含 insert_sessile_loop_100);辐照环 Zhang 2020(½⟨111⟩ 16.6nm/3.73e21、⟨100⟩ 18.6nm/3.44e21)
+  - `generate_caseB.py` — **自包含**:基体 FR 段网络 + a/2⟨111⟩ 可动环(ExaDiS insert_prismatic_loop)
+    + a⟨100⟩ PINNED 环(内含 insert_sessile_loop_100);辐照环 Zhang 2020,300nm 盒下各 ~101/~93 个
   - `test_caseB_loops.py` — 仿 test_Cu_pure 读构型跑屈服
   - 可视化区分三类:generate_caseB.py 直接出 `init_config_labeled.vtk`(段带 LoopType 标量:
     0=基体 1=<111>环 2=<100>环),ParaView 按 LoopType 染色。仅初始构型(不经 .data 往返、

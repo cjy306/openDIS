@@ -2,15 +2,15 @@
 生成 Case A 初始配置:混合基体位错网络(无障碍物)—— ODS-FeCrAl 课题
 
 Case A = 纯基体,无环 / 无 α′ / 无氧化物,是 B~F 的公共底座。
-基体配方(沿用 Pachaury 2023):
-  - 75% 可动直线位错(穿周期盒,首尾经 PBC 相接;UNCONSTRAINED 全可动)
-    → 从第 0 步即全长可动,加载即产生渐进微塑性,应力-应变曲线平滑
-  - 25% Frank-Read 源(两端 PINNED)
-    → 加载下弓出增殖,保证大应变下位错密度供给
+基体配方(沿用 Pachaury 2023 的 75%直线+25%单臂源,均以两端钉扎 FR 段实现):
+  - 75% 长 FR 段(~200nm,接近盒边):加载即大段弓出滑移 → 提供渐进微塑性,曲线平滑
+  - 25% 短 FR 段(~80nm):弓出到临界应力增殖放环 → 保证位错密度供给
+  两者都是 insert_frank_read_src(两端 PINNED),只是长度不同;长度可控 → 精确配密度。
 
-为何不用闭合滑移环(历史教训):无钉扎闭合滑移环受线张力向心收缩,零外力下稳态=
-缩成零 → 加载两步内全部自湮灭(实测 nodes 2600→312→0)。直线穿周期盒去掉"闭合"
-即可三者(可动+无钉扎+稳定)兼得。
+为何不用其他形式(历史教训,见 CLAUDE_FeCrAl.md §4):
+  - 无钉扎闭合滑移环:线张力向心收缩,加载两步内全自湮灭(实测 2600→312→0)。
+  - 穿盒无限直线:无钉扎可动,但长度锁死,纳米盒里一条就 ~5e15/m² 远超目标密度。
+  结论:纳米盒里"可动+长度可控+稳定"必须有端点 → 用两端钉扎 FR 段(钉扎不影响屈服物理)。
 
 用法(仿 HomeWork/generate_config.py):
   python generate_caseA.py --seed 12345
@@ -24,16 +24,17 @@ pyexadis_paths = ['../python', '../lib', '../core/pydis/python', '../core/exadis
 
 import pyexadis
 from pyexadis_base import ExaDisNet, DisNetManager
-from pyexadis_utils import insert_infinite_line, insert_frank_read_src, write_vtk
+from pyexadis_utils import insert_frank_read_src, write_vtk
 
 # ============================================================
-# 参数(材料 = Yan 2023 一套,见 CLAUDE_FeCrAl.md §3.5)
+# 参数(材料 = Yan 2023 一套;尺度/密度 = Pachaury 2023)
 # ============================================================
 BURGMAG      = 0.248e-9    # b [m]
-LBOX_M       = 5.0e-6      # bulk 周期盒 [m]
-RHO_TARGET   = 1.0e12      # 基体总位错密度 [1/m^2]
-FRS_FRACTION = 0.25        # FR 源占比(25%);其余 75% 为可动直线
-FRS_LENGTH_M = 1.0e-6      # 单个 FR 源长度 [m]
+LBOX_M       = 300e-9      # bulk 周期盒 300nm 立方(Pachaury 纳米尺度)
+RHO_TARGET   = 2.0e14      # 基体总位错密度 [1/m^2](Pachaury ~1.8-2.2e14)
+LONG_FRAC    = 0.75        # 长 FR 段占总线长比例(微塑性)
+LONG_LEN_M   = 120e-9      # 长 FR 段长度 [m](盒子的 0.4,留弓出空间)
+SHORT_LEN_M  = 80e-9       # 短 FR 段长度 [m](增殖)
 
 # BCC 12 个 <111>{110} 滑移系(b 在 plane 内,b·n=0)
 _BCC_SLIP_B = np.array([
@@ -47,69 +48,52 @@ _BCC_SLIP_N = np.array([
     [1., 1., 0.], [-1., 1., 0.], [-1., 1., 0.], [1., 1., 0.],
 ])
 
-LOOP_TYPE_LINE = 0   # 直线可动位错
-LOOP_TYPE_FRS  = 3   # Frank-Read 源
+LT_LONG  = 0   # 长 FR 段(微塑性)
+LT_SHORT = 3   # 短 FR 段(增殖)
+
+
+def _fill_fr(cell, rng, nodes, segs, loop_type, L_target_m, seg_len_m, lt_tag,
+             b_sys, n_sys, label, verbose):
+    """按目标线长填一群指定长度的 FR 段(两端 PINNED),追加到 nodes/segs/loop_type。"""
+    Lbox = LBOX_M / BURGMAG
+    nsys = b_sys.shape[0]
+    seg_len_b = seg_len_m / BURGMAG
+    margin = 0.5 * seg_len_b
+    acc, placed, attempt = 0.0, 0, 0
+    while acc < 0.99 * L_target_m and attempt < 100000:
+        isys = placed % nsys
+        center = rng.uniform(margin, Lbox - margin, size=3)
+        nseg0 = len(segs)
+        nodes, segs = insert_frank_read_src(cell, nodes, segs, b_sys[isys], n_sys[isys],
+                                            seg_len_b, center)
+        loop_type += [lt_tag] * (len(segs) - nseg0)
+        acc += seg_len_m
+        placed += 1
+        attempt += 1
+    if verbose:
+        print('%s: %d 段 (长 %.0f nm), 线长 %.3e m (目标 %.3e)'
+              % (label, placed, seg_len_m*1e9, acc, L_target_m))
+    return nodes, segs, loop_type
 
 
 def build_matrix(cell, rng, verbose=True):
-    """生成混合基体(75% 可动直线 + 25% FR 源),返回 (nodes, segs, loop_type)。
+    """生成基体(75% 长 FR 段 + 25% 短 FR 段),返回 (nodes, segs, loop_type)。
 
-    loop_type 按段顺序:0=直线, 3=FR 源(Case B 另用 1=<111>环, 2=<100>环,不冲突)。
+    loop_type 按段顺序:0=长FR段, 3=短FR段(Case B 另用 1=<111>环, 2=<100>环,不冲突)。
     """
-    Lbox = LBOX_M / BURGMAG
     vol_m3 = LBOX_M ** 3
     L_total_m = RHO_TARGET * vol_m3
-    L_frs_m  = FRS_FRACTION * L_total_m
-    L_line_m = (1.0 - FRS_FRACTION) * L_total_m
+    L_long_m  = LONG_FRAC * L_total_m
+    L_short_m = (1.0 - LONG_FRAC) * L_total_m
 
     b_sys = _BCC_SLIP_B / np.linalg.norm(_BCC_SLIP_B, axis=1)[:, None]
     n_sys = _BCC_SLIP_N / np.linalg.norm(_BCC_SLIP_N, axis=1)[:, None]
-    nsys = b_sys.shape[0]
 
-    origin = np.array(cell.origin)
-    h = np.array(cell.h)
     nodes, segs, loop_type = [], [], []
-
-    # ---------- 1) 75% 可动直线位错(穿周期盒)----------
-    acc_line_m = 0.0
-    placed_line = 0
-    attempt = 0
-    while acc_line_m < 0.99 * L_line_m and attempt < 100000:
-        isys = placed_line % nsys
-        burg, plane = b_sys[isys], n_sys[isys]
-        pos = origin + np.matmul(rng.rand(3), h.T)
-        Lline_b = insert_infinite_line(cell, nodes, segs, burg, plane, pos, trial=True)
-        if Lline_b is None or Lline_b < 0:
-            attempt += 1
-            continue
-        nseg0 = len(segs)
-        nodes, segs = insert_infinite_line(cell, nodes, segs, burg, plane, pos)
-        loop_type += [LOOP_TYPE_LINE] * (len(segs) - nseg0)
-        acc_line_m += Lline_b * BURGMAG
-        placed_line += 1
-        attempt = 0
-    if verbose:
-        print('可动直线位错: %d 条, 线长 %.3e m (目标 %.3e, 75%%)' % (placed_line, acc_line_m, L_line_m))
-
-    # ---------- 2) 25% Frank-Read 源(两端 PINNED)----------
-    frs_len_b = FRS_LENGTH_M / BURGMAG
-    margin = frs_len_b
-    acc_frs_m = 0.0
-    placed_frs = 0
-    attempt = 0
-    while acc_frs_m < 0.99 * L_frs_m and attempt < 100000:
-        isys = placed_frs % nsys
-        burg, plane = b_sys[isys], n_sys[isys]
-        center = rng.uniform(margin, Lbox - margin, size=3)
-        nseg0 = len(segs)
-        nodes, segs = insert_frank_read_src(cell, nodes, segs, burg, plane, frs_len_b, center)
-        loop_type += [LOOP_TYPE_FRS] * (len(segs) - nseg0)
-        acc_frs_m += FRS_LENGTH_M
-        placed_frs += 1
-        attempt += 1
-    if verbose:
-        print('Frank-Read 源: %d 个, 线长 %.3e m (目标 %.3e, 25%%)' % (placed_frs, acc_frs_m, L_frs_m))
-
+    nodes, segs, loop_type = _fill_fr(cell, rng, nodes, segs, loop_type, L_long_m,
+                                      LONG_LEN_M, LT_LONG, b_sys, n_sys, '长FR段(微塑性)', verbose)
+    nodes, segs, loop_type = _fill_fr(cell, rng, nodes, segs, loop_type, L_short_m,
+                                      SHORT_LEN_M, LT_SHORT, b_sys, n_sys, '短FR段(增殖)', verbose)
     return nodes, segs, np.array(loop_type, dtype=int)
 
 
@@ -141,7 +125,7 @@ def main():
               segprops={'LoopType': loop_type.astype(float)}, verbose=False)
 
     print(f'Case A 初始构型已写出: {out_file}')
-    print(f'段类别标记: {lt_file}  (0=直线 3=FR源, 共 {len(loop_type)} 段)')
+    print(f'段类别标记: {lt_file}  (0=长FR段 3=短FR段, 共 {len(loop_type)} 段)')
     print(f'带标记 VTK: {vtk_file}  (ParaView 按 LoopType 染色)')
     pyexadis.finalize()
 
