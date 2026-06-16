@@ -2,7 +2,6 @@
 生成 Case B 初始配置:混合基体 + 辐照位错环(无 α′、无氧化物)—— ODS-FeCrAl 课题
 
 Case B = Case A 基体 + 两类辐照环(见 CLAUDE_FeCrAl.md §4 矩阵 B 行):
-  - 基体:75% 可动直线 + 25% FR 源(同 Case A 配方)
   - a/2<111> 六边形棱柱环:可动(可被相干应力转动 → 相消干涉主角),
     用 ExaDiS 自带 insert_prismatic_loop 生成,UNCONSTRAINED
   - a<100>  方形棱柱环:不可动 sessile,全节点 PINNED
