@@ -1,7 +1,16 @@
 {
   "permissions": {
     "allow": [
-      "Bash(wc -l /e/openDIS/core/exadis/src/*.h /e/openDIS/core/exadis/src/*.cpp)"
+      "Bash(wc -l /e/openDIS/core/exadis/src/*.h /e/openDIS/core/exadis/src/*.cpp)",
+      "mcp__semantic-scholar__search_papers",
+      "mcp__semantic-scholar__get_paper_details",
+      "WebFetch(domain:link.aps.org)",
+      "WebFetch(domain:iopscience.iop.org)",
+      "WebFetch(domain:ar5iv.org)",
+      "WebFetch(domain:doi.org)",
+      "WebFetch(domain:ar5iv.labs.arxiv.org)",
+      "WebFetch(domain:linkinghub.elsevier.com)",
+      "WebSearch"
     ]
   }
 }
