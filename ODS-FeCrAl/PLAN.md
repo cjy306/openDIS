@@ -27,7 +27,7 @@
 | Phase 1 | M1 Case A 基准 harness | ◑ 脚本已写+静态自查通过,待超算实跑 |
 | Phase 1 | M0 SCNet 平台启动 | ◻ 阻塞:需用户上平台 |
 | Phase 2 | Case D 氧化物高斯势(★创新核心) | ◻ 阻塞于 T2 |
-| Phase 2 | Case B 位错环 | ◻ |
+| Phase 2 | Case B 位错环 | ◑ 脚本已写+静态自查,待超算实跑(⚠️ remesh 量级隐患见下) |
 | Phase 2 | Case C α′ 相干应力(⚠️长杆) | ◻ |
 | Phase 3 | Case E 环+α′(定性锚定 Pachaury) | ◻ |
 | Phase 3 | Case F 三体(★论文落点) | ◻ |
@@ -71,8 +71,21 @@
   **新写高斯势力** U=A·e^(−r²/Rp²),F=2Ar·e(...)/Rp²;A、Rp 由 BCC-MD 标定(T2)。
   **不复用**现有几何投影 Orowan(`collision_types/collision_orowan.h`)。
   → 验证:单排氧化物强度与 **BKS 解析式**吻合(BKS 仅用于氧化物)。
-- **Case B / 位错环**:BCC 配置生成 a/2⟨111⟩ 六边形(可动)+ a⟨100⟩ 方形(不可动)。
-  → 验证:单环硬化随密度合理。
+- **Case B / 位错环** ◑ 脚本已写:已写文件
+  - `generate_glide_loop.py::insert_sessile_loop_100` — a⟨100⟩ 不可动环(全节点 PINNED)
+  - `generate_caseB.py` — 组装:基体可动滑移网络 + a/2⟨111⟩ 可动环(ExaDiS insert_prismatic_loop)
+    + a⟨100⟩ PINNED 环;辐照环密度/尺寸取 Zhang 2020(½⟨111⟩ 16.6nm/3.73e21、⟨100⟩ 18.6nm/3.44e21)
+  - `test_caseB_loops.py` — 仿 test_Cu_pure 读构型跑屈服
+  - 可视化区分三类:generate_caseB.py 直接出 `init_config_labeled.vtk`(段带 LoopType 标量:
+    0=基体 1=<111>环 2=<100>环),ParaView 按 LoopType 染色。仅初始构型(不经 .data 往返、
+    零段重排风险);仿真后续步因环运动/反应无法按段跟踪,屈服分析靠 extract_yield 不靠可视化。
+  - 钉死方案已定+已核实:**全节点 PINNED**;PINNED 段的弹性场仍进 N²/FFT/自力三路径
+    (障碍有效),迁移率令其速度=0(环冻结),顺带是 §2.2 免疫对照 proxy。
+    代价:PINNED 环不被滑移位错反应吸收(屈服阶段可接受)。
+  - ⚠️ **量级隐患(待超算实跑校)**:辐照环 R≈34–38 b、直径~17nm,**小于基体离散尺度**
+    (maxseg 200b≈50nm、minseg 50b);环可能被 remesh 当过短段合并/吃掉。
+    实跑先确认环是否存活;若被吃,需给辐照环单独设小 maxseg/minseg 或调离散参数。
+  → 验证:单环硬化随密度合理;对比 Case A 看屈服增量。
 - **Case C / α′(⚠️ 长杆,最重)**:相干应力场。轻量路线 = **离线预计算应力场、采样进位错段当
   外部力**,不在 ExaDiS 里耦合活 FEM;迁移率先用成分平均 BCC。→ 验证:复现 α′ 弱摩擦行为。
 

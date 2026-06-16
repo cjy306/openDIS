@@ -107,6 +107,53 @@ def insert_glide_loop(cell, nodes, segs, burg, plane, radius, center,
     return nodes, segs
 
 
+def insert_sessile_loop_100(cell, nodes, segs, burg, radius, center, numnodes=20):
+    """插入一个 a<100> 不可动 (sessile) 方形/多边形辐照环 —— Case B 障碍物。
+
+    物理 (见 CLAUDE_FeCrAl.md §1.2、§2.2):
+      a<100> 环不在常规 BCC 滑移系上,室温 sessile。本函数把它实现为
+      "全节点 PINNED" 的刚性弹性场障碍:
+        - 弹性场照常进入力计算 (已核实:N²/FFT/自力三路径均不看节点 constraint,
+          只按段的柏氏矢量分配电荷) → 滑移位错能感受到它、被它阻挡
+        - 所有节点 PINNED → 迁移率直接令其速度=0 (mobility_bcc0b.h:107) → 环冻结
+      这同时是 §2.2 氧化物免疫假设的对照 proxy (Pachaury "环设为 immobile" 对照实验)。
+      代价: 环不会被滑移位错反应/吸收 (屈服阶段小应变可接受)。
+
+    与 insert_glide_loop 的区别:
+      - burg 与环面垂直 (b·n!=0,棱柱型),不要求在滑移面内
+      - 习惯面法向 n 取 = b 方向 (a<100> 棱柱环 habit plane ⊥ b)
+      - 全节点 PINNED_NODE,而非 UNCONSTRAINED
+
+    参数:
+      burg:   a<100> 型柏氏矢量 (会被归一化);如 [1,0,0]/[0,1,0]/[0,0,1]
+      radius: 环 "半径" (无量纲,以 burgmag 为单位)
+      center: 环心 (无量纲)
+    """
+    b = np.asarray(burg, dtype=float)
+    b = b / np.linalg.norm(b)
+    # a<100> 棱柱环: habit plane 法向 = b 方向 (b·n!=0,故 sessile)
+    n = b.copy()
+
+    # 环面内 (⊥ b) 的两个正交方向,用于摆放环节点
+    ref = np.array([1.0, 0.0, 0.0]) if abs(b[0]) < 0.9 else np.array([0.0, 1.0, 0.0])
+    u = np.cross(n, ref); u = u / np.linalg.norm(u)
+    v = np.cross(n, u);   v = v / np.linalg.norm(v)
+
+    center = np.asarray(center, dtype=float)
+    istart = len(nodes)
+    for i in range(numnodes):
+        theta = 2.0 * np.pi * i / numnodes
+        p = center + radius * (np.cos(theta) * u + np.sin(theta) * v)
+        nodes.append(np.concatenate((p, [NodeConstraints.PINNED_NODE])))
+
+    for i in range(numnodes):
+        n1 = istart + i
+        n2 = istart + (i + 1) % numnodes
+        segs.append(np.concatenate(([n1, n2], b, n)))
+
+    return nodes, segs
+
+
 def generate_glide_loop_config(crystal, Lbox_m, burgmag, target_density,
                                radius_min_m=0.05e-6, radius_max_m=0.15e-6,
                                numnodes=20, Rorient=None, seed=-1,
