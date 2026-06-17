@@ -28,6 +28,7 @@ import pyexadis
 from pyexadis_utils import read_paradis, write_vtk
 
 BURGMAG = 0.248e-9   # b [m](与生成/模拟脚本一致)
+LBOX_M  = 300e-9     # bulk 周期盒边长 [m](与生成/模拟脚本一致)
 
 
 def _step_of(fname):
@@ -36,8 +37,44 @@ def _step_of(fname):
     return int(m.group(1)) if m else -1
 
 
-def convert(sim_dir, out_dir, init_dir=None, start=None, end=None):
+def wrap_vtk_pbc(vtk_file, Lbox):
+    """把 VTK 段端点坐标折回 [0, Lbox)(无量纲,以 b 为单位)。
+    write_vtk 用 closest_image() 保证线段连续,会把端点放到盒外镜像位置;
+    本函数把它们 % Lbox 折回主盒,使 ParaView 显示全部落在盒内。
+    跳过前 8 个点(晶胞顶点),只折段端点。"""
+    with open(vtk_file, 'r') as f:
+        lines = f.readlines()
+
+    in_points = False
+    total_points = 0
+    points_written = 0
+    for idx, line in enumerate(lines):
+        if line.strip().startswith('POINTS'):
+            in_points = True
+            total_points = int(line.strip().split()[1])
+            points_written = 0
+            continue
+        if not in_points:
+            continue
+        parts = line.strip().split()
+        if len(parts) != 3:
+            continue
+        if points_written >= 8:   # 前 8 个是晶胞顶点,不折
+            x = float(parts[0]) % Lbox
+            y = float(parts[1]) % Lbox
+            z = float(parts[2]) % Lbox
+            lines[idx] = f"{x:.8e} {y:.8e} {z:.8e}\n"
+        points_written += 1
+        if points_written >= total_points:
+            break
+
+    with open(vtk_file, 'w') as f:
+        f.writelines(lines)
+
+
+def convert(sim_dir, out_dir, init_dir=None, start=None, end=None, wrap=True):
     os.makedirs(out_dir, exist_ok=True)
+    Lbox_b = LBOX_M / BURGMAG   # 无量纲盒边(折叠用)
 
     # 收集 config.*.data(排除 restart 等非构型文件)
     data_files = sorted(glob.glob(os.path.join(sim_dir, '*.data')))
@@ -88,6 +125,8 @@ def convert(sim_dir, out_dir, init_dir=None, start=None, end=None):
                 print(f"  [跳过LoopType] 段数({nseg}) != loop_type({len(loop_type)}),该帧已非初始构型")
 
         write_vtk(net, vtk_file, segprops=segprops, crystal='BCC', verbose=False)
+        if wrap:
+            wrap_vtk_pbc(vtk_file, Lbox_b)
         print(f"  [{i+1}/{len(data_files)}] {name}.vtk"
               + ("  +LoopType" if segprops else ""))
 
@@ -103,6 +142,8 @@ if __name__ == '__main__':
     parser.add_argument('--init', default=None, help='init_data 目录(给出则初始帧叠加 LoopType 染色)')
     parser.add_argument('--start', type=int, default=None, help='起始步(含)')
     parser.add_argument('--end', type=int, default=None, help='结束步(含)')
+    parser.add_argument('--no-wrap', action='store_true',
+                        help='不折叠 PBC(保留穿盒连续线;默认折回盒内)')
     args = parser.parse_args()
 
     base = os.path.dirname(os.path.abspath(__file__))
@@ -110,4 +151,5 @@ if __name__ == '__main__':
     out_dir  = args.out  if os.path.isabs(args.out)  else os.path.join(base, args.out)
     init_dir = (args.init if os.path.isabs(args.init) else os.path.join(base, args.init)) if args.init else None
 
-    convert(sim_dir, out_dir, init_dir=init_dir, start=args.start, end=args.end)
+    convert(sim_dir, out_dir, init_dir=init_dir, start=args.start, end=args.end,
+            wrap=not args.no_wrap)
