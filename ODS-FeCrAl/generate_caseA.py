@@ -1,19 +1,17 @@
 """
-生成 Case A 初始配置:混合基体位错网络(无障碍物)—— ODS-FeCrAl 课题
+生成 Case A 初始配置:纯 Frank-Read 源基体(无障碍物)—— ODS-FeCrAl 课题
 
 Case A = 纯基体,无环 / 无 α′ / 无氧化物,是 B~F 的公共底座。
-基体配方(少量可动直线 + FR 源主体):
-  - 少量穿盒无限直线(~20% 密度,UNCONSTRAINED 全可动):初始即可动,加载第一步就
-    弓曲滑移、扫面积 → 提供初始微塑性,**绕过 FR 源的"初始可动位错=0"饥饿骤降**。
-  - FR 源主体(~80% 密度,两端 PINNED):弓出增殖、提供密度主体。
-    其中含长段(120nm)与短段(80nm)以分散激活应力。
+基体 = 多个 Frank-Read 闭合回路(照搬 ExaDiS 官方 02_frank_read_src 构型):
+  每个回路 5 节点矩形:顶边中点 UNCONSTRAINED(可动臂),其余 4 角 PINNED 兜成闭合。
+  - 初始即有可动段(顶边中点)→ 加载即弓出产微塑性
+  - 可动臂被两角钉住、回路闭合 → 弓出到 τ_c≈μb/L 后吐环增殖(标准 FR 增殖)
+  - 不用穿盒无限直线:无限直线整体无阻平移会把应力摁到 ~1MPa(实测),已弃用。
 
-为何这样配(关键教训,见 CLAUDE_FeCrAl.md §4):
-  - **FR 饥饿骤降**:纯 FR 初始可动位错≈0,零外力预弛豫也无法让 FR 放出位错(需 τ>μb/L
-    的外力);一加载则应力涨到一批源同时失稳 → 雪崩 → 应力崩塌(实测 362MPa 峰后跌到 20MPa)。
-    解法:让初始构型本身含少量可动位错(穿盒直线初始即可动)→ 第一步即载微塑性,无饥饿。
-  - 穿盒直线"长度不可控、一条就超密度"在此不再是问题:它只占少量,密度主体由 FR 配。
-  - 无钉扎闭合滑移环已弃用(线张力向心收缩,加载两步内自湮灭 2600→312→0)。
+演化历史(教训,见 CLAUDE_FeCrAl.md §4):
+  ① 无钉扎闭合滑移环 → 线张力收缩两步自湮灭(2600→312→0)
+  ② 穿盒无限直线 → 整体无阻平移,应力摁死在 1MPa、密度死平、FR 不开动
+  ③ pyexadis 自带 insert_frank_read_src(开放线段)→ 改用官方闭合回路构型(本文件)
 
 用法(仿 HomeWork/generate_config.py):
   python generate_caseA.py --seed 12345
@@ -26,114 +24,106 @@ pyexadis_paths = ['../python', '../lib', '../core/pydis/python', '../core/exadis
 [sys.path.append(os.path.abspath(path)) for path in pyexadis_paths if not path in sys.path]
 
 import pyexadis
-from pyexadis_base import ExaDisNet, DisNetManager
-from pyexadis_utils import insert_infinite_line, insert_frank_read_src, write_vtk
+from pyexadis_base import ExaDisNet, DisNetManager, NodeConstraints
+from pyexadis_utils import write_vtk
 
 # ============================================================
 # 参数(材料 = Yan 2023 一套;尺度/密度 = Pachaury 2023)
 # ============================================================
-BURGMAG      = 0.248e-9    # b [m]
-LBOX_M       = 300e-9      # bulk 周期盒 300nm 立方(Pachaury 纳米尺度)
-RHO_TARGET   = 2.0e14      # 基体总位错密度 [1/m^2](Pachaury ~1.8-2.2e14)
-LINE_FRAC    = 0.20        # 可动穿盒直线占总线长比例(绕过 FR 饥饿,载初始微塑性)
-LONG_LEN_M   = 60e-9       # FR 长段长度 [m](盒子的 1/5,留弓出空间、避免镜像自交)
-SHORT_LEN_M  = 40e-9       # FR 短段长度 [m](分散激活应力)
-MAXSEG_B     = 80          # 离散段长上限 [b](≈20nm,与 test 脚本 maxseg 一致)
+BURGMAG    = 0.248e-9    # b [m]
+LBOX_M     = 300e-9      # bulk 周期盒 300nm 立方
+RHO_TARGET = 2.0e14      # 基体总位错密度 [1/m^2]
+ARM_LEN_M  = 60e-9       # FR 回路臂长 [m](τ_c≈μb/L;盒子的 1/5,留弓出空间)
 
-# BCC 12 个 <111>{110} 滑移系(b 在 plane 内,b·n=0)
-_BCC_SLIP_B = np.array([
-    [-1., 1., 1.], [1., 1., 1.], [-1., -1., 1.], [1., -1., 1.],
-    [-1., 1., 1.], [1., 1., 1.], [-1., -1., 1.], [1., -1., 1.],
-    [-1., 1., 1.], [1., 1., 1.], [-1., -1., 1.], [1., -1., 1.],
-])
-_BCC_SLIP_N = np.array([
-    [0., -1., 1.], [0., -1., 1.], [0., 1., 1.], [0., 1., 1.],
-    [1., 0., 1.], [-1., 0., 1.], [1., 0., 1.], [-1., 0., 1.],
-    [1., 1., 0.], [-1., 1., 0.], [-1., 1., 0.], [1., 1., 0.],
-])
+# 单一取向滑移系(先验证用):b=1/2[111], n=(0 -1 1)
+# [001] 加载下 Schmid 因子 = (b·F)(n·F) = (1/√3)(1/√2) = 0.41(最大,确保可动臂受力)
+_B_SINGLE = np.array([1., 1., 1.])
+_N_SINGLE = np.array([0., -1., 1.])
 
-LT_LINE  = 0   # 可动穿盒直线
-LT_FR    = 3   # FR 源(长段+短段统一标记)
+LT_FR = 3   # loop_type 标记:FR 回路基体(Case B 另用 1=<111>环, 2=<100>环)
 
 
-def _fill_lines(cell, rng, nodes, segs, loop_type, L_target_m, b_sys, n_sys, verbose):
-    """填少量穿盒无限直线(UNCONSTRAINED 全可动),按目标线长。"""
-    origin, h = np.array(cell.origin), np.array(cell.h)
-    nsys = b_sys.shape[0]
-    acc, placed, attempt = 0.0, 0, 0
-    while acc < 0.99 * L_target_m and attempt < 100000:
-        isys = placed % nsys
-        pos = origin + np.matmul(rng.rand(3), h.T)
-        Lb = insert_infinite_line(cell, nodes, segs, b_sys[isys], n_sys[isys], pos,
-                                  maxseg=MAXSEG_B, trial=True)
-        if Lb is None or Lb < 0:
-            attempt += 1; continue
-        nseg0 = len(segs)
-        nodes, segs = insert_infinite_line(cell, nodes, segs, b_sys[isys], n_sys[isys], pos,
-                                           maxseg=MAXSEG_B)
-        loop_type += [LT_LINE] * (len(segs) - nseg0)
-        acc += Lb * BURGMAG; placed += 1; attempt = 0
-    if verbose:
-        print('可动穿盒直线: %d 条, 线长 %.3e m (目标 %.3e)' % (placed, acc, L_target_m))
-    return nodes, segs, loop_type
+def insert_fr_loop(nodes, segs, burg, plane, arm_len_b, center):
+    """插入一个 Frank-Read 闭合回路(照搬官方 02_frank_read_src 构型,旋转到给定滑移系)。
 
+    官方构型(标准取向):b‖x,可动臂‖y(刃型),虚拟臂‖-z;三者两两正交。
+    本函数把官方的 (x,y,z) 轴整体替换为局部正交基 (b̂, e, f):
+      b̂ = burg 方向
+      e  = (n × b̂) 归一  → 可动臂方向(在滑移面内、垂直 b,纯刃型,对应官方 y)
+      f  = b̂ × e         → 虚拟臂方向(对应官方 -z 的非共面兜底段)
+    因只是刚体旋转,官方各段 b·plane=0 的合法性自动保持。
 
-def _fill_fr(cell, rng, nodes, segs, loop_type, L_target_m, seg_len_m, lt_tag,
-             b_sys, n_sys, label, verbose):
-    """按目标线长填一群指定长度的 FR 段(两端 PINNED),追加到 nodes/segs/loop_type。"""
-    Lbox = LBOX_M / BURGMAG
-    nsys = b_sys.shape[0]
-    seg_len_b = seg_len_m / BURGMAG
-    margin = 0.5 * seg_len_b
-    acc, placed, attempt = 0.0, 0, 0
-    while acc < 0.99 * L_target_m and attempt < 100000:
-        isys = placed % nsys
-        center = rng.uniform(margin, Lbox - margin, size=3)
-        nseg0 = len(segs)
-        nodes, segs = insert_frank_read_src(cell, nodes, segs, b_sys[isys], n_sys[isys],
-                                            seg_len_b, center)
-        loop_type += [lt_tag] * (len(segs) - nseg0)
-        acc += seg_len_m
-        placed += 1
-        attempt += 1
-    if verbose:
-        print('%s: %d 段 (长 %.0f nm), 线长 %.3e m (目标 %.3e)'
-              % (label, placed, seg_len_m*1e9, acc, L_target_m))
-    return nodes, segs, loop_type
+    参数(均无量纲,以 b 为单位):burg/plane 会归一化;arm_len_b 臂长;center 回路中心。
+    """
+    b = np.asarray(burg, dtype=float); b = b / np.linalg.norm(b)
+    n = np.asarray(plane, dtype=float); n = n / np.linalg.norm(n)
+    e = np.cross(n, b); e = e / np.linalg.norm(e)    # 可动臂方向(刃型,面内垂直 b)
+    f = np.cross(b, e); f = f / np.linalg.norm(f)    # 虚拟臂方向(对应官方 -z)
+
+    L = arm_len_b
+    c = np.asarray(center, dtype=float)
+    istart = len(nodes)
+    # 节点对应官方 rn(把 y→e, z→f):
+    #  0 顶左角(钉) -e/2; 1 顶中(可动) 0; 2 顶右角(钉) +e/2; 3 底右角(钉) +e/2 - f; 4 底左角(钉) -e/2 - f
+    pts = [
+        (c - 0.5 * L * e,            NodeConstraints.PINNED_NODE),
+        (c,                          NodeConstraints.UNCONSTRAINED),
+        (c + 0.5 * L * e,            NodeConstraints.PINNED_NODE),
+        (c + 0.5 * L * e - L * f,    NodeConstraints.PINNED_NODE),
+        (c - 0.5 * L * e - L * f,    NodeConstraints.PINNED_NODE),
+    ]
+    for p, cst in pts:
+        nodes.append(np.concatenate((p, [cst])))
+
+    N = len(pts)
+    for i in range(N):
+        n1 = istart + i
+        n2 = istart + (i + 1) % N   # 末节点接回首节点 → 闭合回路
+        ldir = pts[(i + 1) % N][0] - pts[i][0]
+        pn = np.cross(b, ldir)      # 滑移面法向 = b × 线方向(官方做法)
+        nn = np.linalg.norm(pn)
+        pn = pn / nn if nn > 1e-10 else n
+        segs.append(np.concatenate(([n1, n2], b, pn)))
+    return nodes, segs
 
 
 def build_matrix(cell, rng, verbose=True):
-    """生成基体(少量可动穿盒直线 + FR 源主体),返回 (nodes, segs, loop_type)。
+    """按目标密度铺多个 FR 闭合回路(单一取向 b=1/2[111],n=(0-11),Schmid=0.41)。
 
-    loop_type 按段顺序:0=可动直线, 3=FR 源(Case B 另用 1=<111>环, 2=<100>环,不冲突)。
+    每个矩形回路周长 ≈ 4*臂长。返回 (nodes, segs, loop_type)。
     """
+    Lbox = LBOX_M / BURGMAG
     vol_m3 = LBOX_M ** 3
-    L_total_m = RHO_TARGET * vol_m3
-    L_line_m = LINE_FRAC * L_total_m
-    L_fr_m   = (1.0 - LINE_FRAC) * L_total_m
-    # FR 主体的长段/短段各半(分散激活应力)
-    L_fr_long_m  = 0.5 * L_fr_m
-    L_fr_short_m = 0.5 * L_fr_m
+    L_target_m = RHO_TARGET * vol_m3
+    arm_b = ARM_LEN_M / BURGMAG
+    per_loop_m = 4.0 * ARM_LEN_M
 
-    b_sys = _BCC_SLIP_B / np.linalg.norm(_BCC_SLIP_B, axis=1)[:, None]
-    n_sys = _BCC_SLIP_N / np.linalg.norm(_BCC_SLIP_N, axis=1)[:, None]
+    b1 = _B_SINGLE / np.linalg.norm(_B_SINGLE)
+    n1 = _N_SINGLE / np.linalg.norm(_N_SINGLE)
+
+    origin, h = np.array(cell.origin), np.array(cell.h)
+    margin = arm_b   # 留边距,使回路初始不跨周期边界
 
     nodes, segs, loop_type = [], [], []
-    # 1) 少量可动直线(绕过 FR 饥饿、载初始微塑性)
-    nodes, segs, loop_type = _fill_lines(cell, rng, nodes, segs, loop_type, L_line_m,
-                                         b_sys, n_sys, verbose)
-    # 2) FR 源主体(增殖 + 密度主体),长段+短段
-    nodes, segs, loop_type = _fill_fr(cell, rng, nodes, segs, loop_type, L_fr_long_m,
-                                      LONG_LEN_M, LT_FR, b_sys, n_sys, 'FR长段', verbose)
-    nodes, segs, loop_type = _fill_fr(cell, rng, nodes, segs, loop_type, L_fr_short_m,
-                                      SHORT_LEN_M, LT_FR, b_sys, n_sys, 'FR短段', verbose)
+    acc_m, placed = 0.0, 0
+    while acc_m < 0.99 * L_target_m and placed < 100000:
+        center = rng.uniform(margin, Lbox - margin, size=3)
+        nseg0 = len(segs)
+        nodes, segs = insert_fr_loop(nodes, segs, b1, n1, arm_b, center)
+        loop_type += [LT_FR] * (len(segs) - nseg0)
+        acc_m += per_loop_m
+        placed += 1
+    if verbose:
+        print('FR 闭合回路(单一取向 b=1/2[111] n=(0-11) Schmid=0.41): %d 个 (臂长 %.0f nm), '
+              '线长 %.3e m (目标 %.3e, 密度 %.2e /m^2)'
+              % (placed, ARM_LEN_M * 1e9, acc_m, L_target_m, acc_m / vol_m3))
     return nodes, segs, np.array(loop_type, dtype=int)
 
 
 def main():
     import argparse
     pyexadis.initialize()
-    parser = argparse.ArgumentParser(description='生成 Case A 混合基体构型')
+    parser = argparse.ArgumentParser(description='生成 Case A 纯 FR 回路基体构型')
     parser.add_argument('--seed', type=int, default=12345)
     parser.add_argument('--out', type=str, default=None)
     args = parser.parse_args()
@@ -158,7 +148,7 @@ def main():
               segprops={'LoopType': loop_type.astype(float)}, verbose=False)
 
     print(f'Case A 初始构型已写出: {out_file}')
-    print(f'段类别标记: {lt_file}  (0=可动直线 3=FR源, 共 {len(loop_type)} 段)')
+    print(f'段类别标记: {lt_file}  (3=FR回路, 共 {len(loop_type)} 段)')
     print(f'带标记 VTK: {vtk_file}  (ParaView 按 LoopType 染色)')
     pyexadis.finalize()
 
