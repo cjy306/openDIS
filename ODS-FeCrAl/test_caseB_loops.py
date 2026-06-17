@@ -61,9 +61,9 @@ def main():
         net = DisNetManager(G)
         restart = None
 
-    calforce  = CalForce(force_mode='SUBCYCLING_MODEL', state=state, Ngrid=64, cell=net.get_disnet(ExaDisNet).cell)
+    calforce  = CalForce(force_mode='SUBCYCLING_MODEL', state=state, Ngrid=32, cell=net.get_disnet(ExaDisNet).cell)
     mobility  = MobilityLaw(mobility_law='BCC_0B', state=state, Medge=15000.0, Mscrew=3000.0, Mclimb=100.0, vmax=30000.0)
-    timeint   = TimeIntegration(integrator='Subcycling', rgroups=[0.0, 50.0, 300.0, 800.0], state=state, force=calforce, mobility=mobility)
+    timeint   = TimeIntegration(integrator='Subcycling', rgroups=[0.0, 10.0, 25.0, 50.0], state=state, force=calforce, mobility=mobility)
     collision = Collision(collision_mode='Retroactive', state=state)
     topology  = Topology(topology_mode='TopologyParallel', state=state, force=calforce, mobility=mobility)
     remesh    = Remesh(remesh_rule='LengthBased', state=state)

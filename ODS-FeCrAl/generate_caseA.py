@@ -36,8 +36,9 @@ BURGMAG      = 0.248e-9    # b [m]
 LBOX_M       = 300e-9      # bulk 周期盒 300nm 立方(Pachaury 纳米尺度)
 RHO_TARGET   = 2.0e14      # 基体总位错密度 [1/m^2](Pachaury ~1.8-2.2e14)
 LINE_FRAC    = 0.20        # 可动穿盒直线占总线长比例(绕过 FR 饥饿,载初始微塑性)
-LONG_LEN_M   = 120e-9      # FR 长段长度 [m](盒子的 0.4,留弓出空间)
-SHORT_LEN_M  = 80e-9       # FR 短段长度 [m](分散激活应力)
+LONG_LEN_M   = 60e-9       # FR 长段长度 [m](盒子的 1/5,留弓出空间、避免镜像自交)
+SHORT_LEN_M  = 40e-9       # FR 短段长度 [m](分散激活应力)
+MAXSEG_B     = 80          # 离散段长上限 [b](≈20nm,与 test 脚本 maxseg 一致)
 
 # BCC 12 个 <111>{110} 滑移系(b 在 plane 内,b·n=0)
 _BCC_SLIP_B = np.array([
@@ -63,11 +64,13 @@ def _fill_lines(cell, rng, nodes, segs, loop_type, L_target_m, b_sys, n_sys, ver
     while acc < 0.99 * L_target_m and attempt < 100000:
         isys = placed % nsys
         pos = origin + np.matmul(rng.rand(3), h.T)
-        Lb = insert_infinite_line(cell, nodes, segs, b_sys[isys], n_sys[isys], pos, trial=True)
+        Lb = insert_infinite_line(cell, nodes, segs, b_sys[isys], n_sys[isys], pos,
+                                  maxseg=MAXSEG_B, trial=True)
         if Lb is None or Lb < 0:
             attempt += 1; continue
         nseg0 = len(segs)
-        nodes, segs = insert_infinite_line(cell, nodes, segs, b_sys[isys], n_sys[isys], pos)
+        nodes, segs = insert_infinite_line(cell, nodes, segs, b_sys[isys], n_sys[isys], pos,
+                                           maxseg=MAXSEG_B)
         loop_type += [LT_LINE] * (len(segs) - nseg0)
         acc += Lb * BURGMAG; placed += 1; attempt = 0
     if verbose:
