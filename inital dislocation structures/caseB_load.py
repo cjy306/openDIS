@@ -1,14 +1,19 @@
 """
-工况 A —— 基线:同一随机棱柱环网络,无预处理,直接正式加载
-(预弛豫 否 / 预变形 否 / 二次弛豫 否 / 正式加载 是)
+工况 B —— 预弛豫后的网络 → 正式加载
+(预弛豫 是 / 预变形 否 / 二次弛豫 否 / 正式加载 是)
 
-初始构型从 init_loops_seed<seed>/init_config.data 读取
-(先运行 generate_loops.py 生成该文件)。
+弛豫已由 diagnose_relax.py 统一做过并存为 relaxed_config.data(B/C 共用同一份),
+本脚本不再自己弛豫,直接读 relaxed 网络做单轴加载。
 
-写法参考 HomeWork/test_Cu_pure.py,材料换成 Fe BCC。
-材料/迁移率参数为占位值,待用户最终敲定(见下方 ⚠️ 标注)。
-单轴应变率控制,[001] 方向;屈服由后处理(0.2% offset)从
-stress_strain_dens.dat 提取。
+与 caseA_baseline.py 的唯一区别:读的初始构型不同
+  - A: init_config.data      (原始未弛豫 N0)
+  - B: relaxed_config.data   (弛豫后)
+对比 A vs B 即隔离出"预弛豫"对屈服的影响。
+
+材料/迁移率/加载参数与 caseA_baseline.py 完全一致(占位值待最终敲定)。
+
+前置:先跑 generate_loops.py → diagnose_relax.py(产出 relaxed_config.data)。
+用法:python caseB_load.py --seed 12345
 """
 import os, sys
 import numpy as np
@@ -24,15 +29,15 @@ except ImportError:
     raise ImportError('Cannot import pyexadis')
 
 
-# ⚠️ Fe BCC 参数 —— 占位值,待用户最终敲定
+# ⚠️ Fe BCC 参数 —— 与 caseA_baseline.py 一致,占位值待最终敲定
 state = {
     "crystal":   'bcc',
-    "burgmag":   0.248e-9,   # b [m], Fe a/2<111>
-    "mu":        82e9,       # 剪切模量 [Pa] ⚠️待定
-    "nu":        0.29,       # 泊松比 ⚠️待定
-    "a":         4.0,        # 核心参数
-    "maxseg":    200,        # ≈50nm,与生成脚本 MAXSEG_B 一致
-    "minseg":    50,         # ≈12nm
+    "burgmag":   0.248e-9,
+    "mu":        82e9,
+    "nu":        0.29,
+    "a":         4.0,
+    "maxseg":    200,
+    "minseg":    50,
     "rtol":      1.0,
     "rann":      2.0,
     "nextdt":    1e-9,
@@ -52,7 +57,7 @@ def main():
 
     base_dir   = os.path.dirname(os.path.abspath(__file__))
     init_dir   = os.path.join(base_dir, f'init_loops_seed{args.seed}')
-    output_dir = os.path.join(base_dir, f'output_caseA_seed{args.seed}')
+    output_dir = os.path.join(base_dir, f'output_caseB_seed{args.seed}')
     os.makedirs(output_dir, exist_ok=True)
 
     if args.restart is not None:
@@ -61,11 +66,10 @@ def main():
             restart_file=os.path.join(output_dir, f'restart.{args.restart}.exadis'))
     else:
         G = ExaDisNet()
-        G.read_paradis(os.path.join(init_dir, 'init_config.data'))
+        G.read_paradis(os.path.join(init_dir, 'relaxed_config.data'))  # 弛豫后的共用网络
         net = DisNetManager(G)
         restart = None
 
-    # ⚠️ 迁移率参数 (BCC_0B) —— 占位值,待用户最终敲定
     calforce  = CalForce(force_mode='SUBCYCLING_MODEL', state=state, Ngrid=64, cell=net.get_disnet(ExaDisNet).cell)
     mobility  = MobilityLaw(mobility_law='BCC_0B', state=state, Medge=15000.0, Mscrew=3000.0, Mclimb=100.0, vmax=30000.0)
     timeint   = TimeIntegration(integrator='Subcycling', rgroups=[], state=state, force=calforce, mobility=mobility)
@@ -77,13 +81,13 @@ def main():
         calforce=calforce, mobility=mobility, timeint=timeint,
         collision=collision, topology=topology, remesh=remesh,
         loading_mode='strain_rate',
-        erate=1e4,                       # ⚠️应变率 [1/s] 待定
-        edir=np.array([0., 0., 1.]),     # 加载轴 [001]
-        max_strain=0.01,                 # ⚠️最大应变 待定
+        erate=1e4,                       # ⚠️ 与 caseA 一致,待定
+        edir=np.array([0., 0., 1.]),
+        max_strain=0.01,                 # ⚠️ 与 caseA 一致,待定
         burgmag=state["burgmag"],
         state=state,
         print_freq=1,
-        write_freq=100,
+        write_freq=50,
         write_dir=output_dir,
         restart=restart,
     )

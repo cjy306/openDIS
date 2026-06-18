@@ -741,8 +741,8 @@ class SimulateNetwork:
         """
         if len(self.results) > 0:
             with open('%s/stress_strain_dens.dat'%self.write_dir, 'w') as f:
-                f.write('# Step Strain Stress Density Walltime\n')
-                np.savetxt(f, np.array(self.results), fmt='%d %e %e %e %e')
+                f.write('# Step Strain Stress Density Nnodes Nsegs dt\n')
+                np.savetxt(f, np.array(self.results), fmt='%d %e %e %e %d %d %e')
     
     def save_old_nodes(self, N: DisNetManager, state: dict):
         """save_old_nodes: save current nodal positions
@@ -871,12 +871,13 @@ class SimulateNetwork:
             if state["istep"] % self.print_freq == 0:
                 dt = self.timeint.dt if self.timeint else 0.0
                 Nnodes = N.num_nodes()
+                Nsegs = N.num_segments()
                 elapsed = time.perf_counter()-self.t0
                 if self.loading_mode == 'strain_rate':
                     print("step = %d, nodes = %d, dt = %e, strain = %e, elapsed = %.1f sec"%(state["istep"], Nnodes, dt, state["strain"], elapsed))
                 else:
                     print("step = %d, nodes = %d, dt = %e, time = %e, elapsed = %.1f sec"%(state["istep"], Nnodes, dt, state["time"], elapsed))
-                self.results.append([state["istep"], state["strain"], state["stress"], state["density"], elapsed])
+                self.results.append([state["istep"], state["strain"], state["stress"], state["density"], Nnodes, Nsegs, dt])
         
     def step_visualize(self, N: DisNetManager, state: dict):
         """step_visualize: invoked to visualize the configuration at the end of each step
