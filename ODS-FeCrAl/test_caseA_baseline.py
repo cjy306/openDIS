@@ -32,7 +32,7 @@ state = {
     "rtol":      0.75,
     "rann":      1.5,
     "nextdt":    1e-9,
-    "maxdt":     1e-7,
+    "maxdt":     1e-8,
     "use_glide_planes":       1,
     "num_bcc_plane_families": 1,
 }
@@ -74,7 +74,7 @@ def main():
         loading_mode='strain_rate',
         erate=1e3,
         edir=np.array([0., 0., 1.]),
-        max_strain=0.005,
+        max_strain=0.01,
         burgmag=state["burgmag"],
         state=state,
         print_freq=1,
