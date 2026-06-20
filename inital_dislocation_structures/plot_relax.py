@@ -66,7 +66,7 @@ def main():
 
     # ρ - Step
     ax1.plot(step, rho, color="#1F77B4", lw=1.3)
-    ax1.axvspan(step[i0], step[-1], color='gray', alpha=0.12, label=f'尾部 {int(TAIL_FRAC*100)}%')
+    ax1.axvspan(step[i0], step[-1], color='gray', alpha=0.12, label=f'tail {int(TAIL_FRAC*100)}%')
     ax1.set_xlabel('Step'); ax1.set_ylabel(r'Dislocation Density (m$^{-2}$)')
     ax1.set_title('ρ vs Step'); ax1.grid(True, alpha=0.3, ls='--'); ax1.legend()
 
@@ -74,13 +74,13 @@ def main():
     ax2.plot(step, nnodes, color="#D41010", lw=1.3, label='Nnodes')
     ax2.plot(step, nsegs,  color="#2CA02C", lw=1.3, label='Nsegs')
     ax2.set_xlabel('Step'); ax2.set_ylabel('Count')
-    ax2.set_title('拓扑 (Nnodes/Nsegs) vs Step'); ax2.grid(True, alpha=0.3, ls='--'); ax2.legend()
+    ax2.set_title('Topology (Nnodes/Nsegs) vs Step'); ax2.grid(True, alpha=0.3, ls='--'); ax2.legend()
 
     # dt - Step (log y)
     ax3.plot(step, dt, color="#9467BD", lw=1.3)
     ax3.set_xlabel('Step'); ax3.set_ylabel('dt (s)')
     ax3.set_yscale('log')
-    ax3.set_title('时间步 dt vs Step'); ax3.grid(True, alpha=0.3, ls='--', which='both')
+    ax3.set_title('dt vs Step'); ax3.grid(True, alpha=0.3, ls='--', which='both')
 
     plt.tight_layout(pad=2.0)
     plt.savefig(OUTPUT_PNG, dpi=300, bbox_inches='tight', facecolor='white')

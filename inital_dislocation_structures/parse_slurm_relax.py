@@ -86,7 +86,7 @@ def main():
     fig, (ax1, ax2, ax3) = plt.subplots(1, 3, figsize=(18, 5))
     fig.patch.set_facecolor('white')
     ax1.plot(step, rho, color="#1F77B4", lw=1.3)
-    ax1.axvspan(step[i0], step[-1], color='gray', alpha=0.12, label=f'尾部 {int(TAIL_FRAC*100)}%')
+    ax1.axvspan(step[i0], step[-1], color='gray', alpha=0.12, label=f'tail {int(TAIL_FRAC*100)}%')
     ax1.set_xlabel('Step'); ax1.set_ylabel(r'Density (m$^{-2}$)'); ax1.set_title('ρ vs Step')
     ax1.grid(True, alpha=0.3, ls='--'); ax1.legend()
 

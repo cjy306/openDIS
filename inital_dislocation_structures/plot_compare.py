@@ -27,11 +27,11 @@ OFFSET      = 0.002    # 0.2% offset 屈服
 # 五工况:标签、相对脚本目录的 .dat 路径、颜色
 #   A/B 直接在 output_caseX_seed/,C 在 output_caseC_pX_seed/load/
 CASES = [
-    ("A (无预处理)",      f"output_caseA_seed{SEED}/stress_strain_dens.dat",            "#000000"),
-    ("B (预弛豫)",        f"output_caseB_seed{SEED}/stress_strain_dens.dat",            "#1F77B4"),
-    ("C1 (预变形 0.1%)",  f"output_caseC_p0.1_seed{SEED}/load/stress_strain_dens.dat",  "#FFB000"),
-    ("C2 (预变形 0.3%)",  f"output_caseC_p0.3_seed{SEED}/load/stress_strain_dens.dat",  "#FF6A00"),
-    ("C3 (预变形 0.5%)",  f"output_caseC_p0.5_seed{SEED}/load/stress_strain_dens.dat",  "#D40010"),
+    ("A (no preproc)",   f"output_caseA_seed{SEED}/stress_strain_dens.dat",            "#000000"),
+    ("B (relaxed)",      f"output_caseB_seed{SEED}/stress_strain_dens.dat",            "#1F77B4"),
+    ("C1 (predef 0.1%)", f"output_caseC_p0.1_seed{SEED}/load/stress_strain_dens.dat",  "#FFB000"),
+    ("C2 (predef 0.3%)", f"output_caseC_p0.3_seed{SEED}/load/stress_strain_dens.dat",  "#FF6A00"),
+    ("C3 (predef 0.5%)", f"output_caseC_p0.5_seed{SEED}/load/stress_strain_dens.dat",  "#D40010"),
 ]
 # =========================
 
@@ -116,7 +116,7 @@ def main():
     # 左:应力-应变
     ax1.set_xlabel('Strain (%)', fontsize=13)
     ax1.set_ylabel('Stress (MPa)', fontsize=13)
-    ax1.set_title('应力-应变(五工况对比)', fontsize=14)
+    ax1.set_title('Stress-Strain (5 cases)', fontsize=14)
     ax1.legend(fontsize=10, framealpha=0.9)
     ax1.grid(True, alpha=0.3, ls='--')
     ax1.set_xlim(left=0); ax1.set_ylim(bottom=0)
@@ -124,7 +124,7 @@ def main():
     # 右:应变-位错密度
     ax2.set_xlabel('Strain (%)', fontsize=13)
     ax2.set_ylabel(r'Dislocation Density (m$^{-2}$)', fontsize=13)
-    ax2.set_title('应变-位错密度(五工况对比)', fontsize=14)
+    ax2.set_title('Strain vs Dislocation Density (5 cases)', fontsize=14)
     ax2.legend(fontsize=10, framealpha=0.9)
     ax2.grid(True, alpha=0.3, ls='--')
     ax2.set_yscale('log')
