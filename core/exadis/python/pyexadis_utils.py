@@ -196,7 +196,79 @@ def insert_prismatic_loop(crystal, cell, nodes, segs, burg, radius, center, maxs
             n2 = istart if (i == Nsides-1 and j == Nseg-1) else n1+1
             segs.append(np.concatenate(([n1, n2], b, n[i])))
             Nnodes += 1
-            
+
+    return nodes, segs
+
+
+def insert_glide_loop(crystal, cell, nodes, segs, burg, plane, radius, center,
+                      nsides=12, maxseg=-1, Rorient=None):
+    """Insert a glide (shear) dislocation loop into the list of nodes and segments.
+
+    Unlike insert_prismatic_loop (Burgers vector out of the loop plane), a glide
+    loop has its Burgers vector IN the loop plane (b.n=0), so the loop lies in the
+    {110} glide plane and can expand/shrink in-plane to carry plastic shear -- i.e.
+    it is the closed loop a Frank-Read source emits once activated.
+
+    Arguments:
+      crystal : 'BCC' or 'FCC'
+      burg    : Burgers vector (1/2<111> for BCC, 1/2<110> for FCC); must lie in plane
+      plane   : glide plane normal (must satisfy b.n=0); one of the {110}(BCC)/{111}(FCC)
+      radius  : loop radius
+      center  : loop center position
+      nsides  : number of polygon sides discretizing the circle (default 12)
+
+    Note (physics): a glide loop shrinks under its own line tension unless the
+    resolved shear stress exceeds ~mu*b/(2R); small loops at low stress collapse.
+    """
+    b = np.asarray(burg, dtype=float); b = b / np.linalg.norm(b)
+    n = np.asarray(plane, dtype=float); n = n / np.linalg.norm(n)
+
+    # Validate Burgers vector type (same check style as insert_prismatic_loop)
+    if crystal in ['BCC', 'bcc']:
+        b0 = 1.0/np.sqrt(3.0)*np.array([[1.,1.,1.],[-1.,1.,1.],[1.,-1.,1.],[1.,1.,-1.]])
+        if np.abs(np.abs(np.dot(b0, b)).max()-1.0) > 1e-5:
+            raise ValueError('BCC Burgers vector must be of the 1/2<111> type in insert_glide_loop()')
+    elif crystal in ['FCC', 'fcc']:
+        b0 = 1.0/np.sqrt(2.0)*np.array([[0,1,1],[0,-1,1],[1,0,1],[-1,0,1],[1,1,0],[-1,1,0]])
+        if np.abs(np.abs(np.dot(b0, b)).max()-1.0) > 1e-5:
+            raise ValueError('FCC Burgers vector must be of the 1/2<110> type in insert_glide_loop()')
+    else:
+        raise ValueError('Error: unsupported crystal type = %s in insert_glide_loop()' % crystal)
+
+    # Glide loop requires b in the loop plane
+    if np.abs(np.dot(b, n)) >= 1e-5:
+        raise ValueError('insert_glide_loop() requires b.n=0 (Burgers vector in the glide plane); '
+                         'use insert_prismatic_loop() for out-of-plane (prismatic) loops')
+
+    # In-plane orthonormal basis (u along b, v = n x u) to lay out the circular loop
+    u = b.copy()
+    v = np.cross(n, u); v = v / np.linalg.norm(v)
+
+    if Rorient is not None:
+        Rorient = np.array(Rorient)
+        Rorient = Rorient / np.linalg.norm(Rorient, axis=1)[:,None]
+        b = np.matmul(b, Rorient.T)
+        n = np.matmul(n, Rorient.T)
+        u = np.matmul(u, Rorient.T)
+        v = np.matmul(v, Rorient.T)
+
+    # Polygon vertices on the circle; refine by maxseg if requested
+    center = np.asarray(center, dtype=float)
+    if maxseg > 0:
+        nside_seg = max(nsides, int(np.ceil(2.0*np.pi*radius/maxseg)))
+    else:
+        nside_seg = nsides
+
+    istart = len(nodes)
+    for i in range(nside_seg):
+        theta = 2.0*np.pi*i/nside_seg
+        p = center + radius*(np.cos(theta)*u + np.sin(theta)*v)
+        nodes.append(np.concatenate((p, [NodeConstraints.UNCONSTRAINED])))
+    for i in range(nside_seg):
+        n1 = istart + i
+        n2 = istart + (i+1)%nside_seg   # close the loop: last node back to first
+        segs.append(np.concatenate(([n1, n2], b, n)))
+
     return nodes, segs
 
 
@@ -339,6 +411,85 @@ def generate_prismatic_config(crystal, Lbox, num_loops, radius, maxseg=-1, Rorie
         nodes, segs = insert_prismatic_loop(crystal, cell, nodes, segs, burg,
                                             R[i], pos[i], maxseg, Rorient)
     
+    G = ExaDisNet(cell, nodes, segs)
+    return G
+
+
+# BCC 12 <111>{110} slip systems (b in plane, b.n=0); FCC 12 <110>{111} systems
+_GLIDE_SLIP_BCC_B = np.array([
+    [-1.,1.,1.], [1.,1.,1.], [-1.,-1.,1.], [1.,-1.,1.],
+    [-1.,1.,1.], [1.,1.,1.], [-1.,-1.,1.], [1.,-1.,1.],
+    [-1.,1.,1.], [1.,1.,1.], [-1.,-1.,1.], [1.,-1.,1.],
+])
+_GLIDE_SLIP_BCC_N = np.array([
+    [0.,-1.,1.], [0.,-1.,1.], [0.,1.,1.], [0.,1.,1.],
+    [1.,0.,1.], [-1.,0.,1.], [1.,0.,1.], [-1.,0.,1.],
+    [1.,1.,0.], [-1.,1.,0.], [-1.,1.,0.], [1.,1.,0.],
+])
+_GLIDE_SLIP_FCC_B = np.array([
+    [0.,1.,-1.], [1.,0.,-1.], [1.,-1.,0.],
+    [0.,1.,-1.], [1.,0.,1.], [1.,1.,0.],
+    [0.,1.,1.], [1.,0.,-1.], [1.,1.,0.],
+    [0.,1.,1.], [1.,0.,1.], [1.,-1.,0.],
+])
+_GLIDE_SLIP_FCC_N = np.array([
+    [1.,1.,1.], [1.,1.,1.], [1.,1.,1.],
+    [-1.,1.,1.], [-1.,1.,1.], [-1.,1.,1.],
+    [1.,-1.,1.], [1.,-1.,1.], [1.,-1.,1.],
+    [1.,1.,-1.], [1.,1.,-1.], [1.,1.,-1.],
+])
+
+
+def generate_glide_config(crystal, Lbox, num_loops, radius, nsides=12, maxseg=-1,
+                          Rorient=None, seed=-1, sysids=None, uniform=False):
+    """Generate a configuration made of glide (shear) dislocation loops.
+
+    Like generate_prismatic_config but builds in-plane glide loops (b.n=0) via
+    insert_glide_loop. Each loop is assigned a <111>{110} (BCC) / <110>{111} (FCC)
+    slip system. Glide loops carry plastic shear by in-plane expansion, but shrink
+    under line tension below ~mu*b/(2R) -- see insert_glide_loop note.
+
+    Arguments mirror generate_prismatic_config, plus:
+      nsides : polygon sides discretizing each loop (default 12)
+      sysids : optional list of slip-system indices (0..11) to restrict to
+               (e.g. only Schmid>0 systems for a given loading); default = all 12
+    """
+    if crystal in ['BCC', 'bcc']:
+        bsys, nsys = _GLIDE_SLIP_BCC_B, _GLIDE_SLIP_BCC_N
+    elif crystal in ['FCC', 'fcc']:
+        bsys, nsys = _GLIDE_SLIP_FCC_B, _GLIDE_SLIP_FCC_N
+    else:
+        raise ValueError('Error: unsupported crystal type = %s in generate_glide_config()' % crystal)
+
+    bsys = bsys / np.linalg.norm(bsys, axis=1)[:,None]
+    nsys = nsys / np.linalg.norm(nsys, axis=1)[:,None]
+    sel = np.array(sysids) if sysids is not None else np.arange(bsys.shape[0])
+    nsel = len(sel)
+
+    cell = pyexadis.Cell(Lbox)
+    if seed > 0: np.random.seed(seed)
+    if uniform:
+        ngrid = np.ceil((1.0*num_loops)**(1.0/3.0))
+        H = 1.0/ngrid
+        x = 0.5*H + H*np.arange(ngrid)
+        x, y, z = np.meshgrid(x, x, x)
+        p = np.random.permutation(len(x.flatten()))
+        x, y, z = x.flatten()[p], y.flatten()[p], z.flatten()[p]
+        pos = np.vstack((x, y, z)).T + 0.5*H*(np.random.rand(len(x), 3)-0.5)
+    else:
+        pos = np.random.rand(num_loops, 3)
+    pos = np.array(cell.origin) + np.matmul(pos, np.array(cell.h).T)
+    if isinstance(radius, list):
+        R = np.random.uniform(radius[0], radius[1], size=(num_loops,))
+    else:
+        R = radius*np.ones(num_loops)
+
+    nodes, segs = [], []
+    for i in range(num_loops):
+        isys = sel[i % nsel]
+        nodes, segs = insert_glide_loop(crystal, cell, nodes, segs, bsys[isys], nsys[isys],
+                                        R[i], pos[i], nsides=nsides, maxseg=maxseg, Rorient=Rorient)
+
     G = ExaDisNet(cell, nodes, segs)
     return G
 

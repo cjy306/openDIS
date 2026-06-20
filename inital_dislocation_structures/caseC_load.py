@@ -82,7 +82,7 @@ def main():
         burgmag=state["burgmag"],
         state=state,
         print_freq=1,
-        write_freq=50,
+        write_freq=100,
         write_dir=load_dir,
         restart=restart,
     )

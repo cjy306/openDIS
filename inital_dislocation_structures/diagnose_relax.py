@@ -55,7 +55,7 @@ def main():
     import argparse
     parser = argparse.ArgumentParser()
     parser.add_argument('--seed', type=int, default=12345, help='随机实现种子(对应 init_loops 目录)')
-    parser.add_argument('--steps', type=int, default=5000, help='诊断弛豫步数(故意偏大,看曲线走平)')
+    parser.add_argument('--steps', type=int, default=10000, help='诊断弛豫步数(故意偏大,看曲线走平)')
     args = parser.parse_args()
 
     base_dir   = os.path.dirname(os.path.abspath(__file__))

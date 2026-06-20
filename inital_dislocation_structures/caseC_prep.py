@@ -69,7 +69,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--seed', type=int, default=12345, help='随机实现种子(对应 init_loops 目录)')
     parser.add_argument('--predeform', type=float, required=True, help='预变形总应变 [%%],如 0.1 / 0.3 / 0.5')
-    parser.add_argument('--relax2-steps', type=int, default=5000, help='二次弛豫步数(偏大,跑完看 relax2/ 曲线验证收敛)')
+    parser.add_argument('--relax2-steps', type=int, default=10000, help='二次弛豫步数(偏大,跑完看 relax2/ 曲线验证收敛)')
     args = parser.parse_args()
 
     predeform_strain = args.predeform / 100.0   # % → 应变
@@ -97,7 +97,7 @@ def main():
         erate=ERATE, edir=EDIR,
         max_strain=predeform_strain,
         burgmag=state["burgmag"], state=state,
-        print_freq=1, write_freq=50, write_dir=predef_dir,
+        print_freq=1, write_freq=100, write_dir=predef_dir,
     )
     pre_sim.run(net, state)
     state.pop("istep", None)
