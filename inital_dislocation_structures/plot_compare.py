@@ -29,9 +29,9 @@ OFFSET      = 0.002    # 0.2% offset 屈服
 CASES = [
     ("A (no preproc)",   f"output_caseA_seed{SEED}/stress_strain_dens.dat",            "#000000"),
     ("B (relaxed)",      f"output_caseB_seed{SEED}/stress_strain_dens.dat",            "#1F77B4"),
-    ("C1 (predef 0.1%)", f"output_caseC_p0.1_seed{SEED}/load/stress_strain_dens.dat",  "#FFB000"),
-    ("C2 (predef 0.3%)", f"output_caseC_p0.3_seed{SEED}/load/stress_strain_dens.dat",  "#FF6A00"),
-    ("C3 (predef 0.5%)", f"output_caseC_p0.5_seed{SEED}/load/stress_strain_dens.dat",  "#D40010"),
+    ("C1 (predef 0.1%)", f"output_caseC_0.14%_seed{SEED}/load/stress_strain_dens.dat",  "#FFB000"),
+    ("C2 (predef 0.3%)", f"output_caseC_0.18%_seed{SEED}/load/stress_strain_dens.dat",  "#FF6A00"),
+    ("C3 (predef 0.5%)", f"output_caseC_0.5_seed{SEED}/load/stress_strain_dens.dat",  "#D40010"),
 ]
 # =========================
 

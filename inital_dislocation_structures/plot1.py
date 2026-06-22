@@ -13,18 +13,19 @@ import matplotlib.pyplot as plt
 # ========== 在这里配置要对比的曲线（可加 2 条以上）==========
 CURVES = [
     {
-        "file":  "/data/home/dg000246b/openDIS/HomeWork/output_Cu_twin_rorient/stress_strain_dens.dat",
-        "label": "曲线1（自己改：比如 有析出）",
-        "color": "#1F77B4",   # 蓝
+        "file":  "/data/home/dg000246b/openDIS/inital_dislocation_structures/output_caseB_seed12345/stress_strain_dens.dat",
+        "label": "caseB",
+        "color": "#1F77B4",   
     },
     {
-        "file":  "/data/home/dg000246b/openDIS/HomeWork/output_relax_load/stress_strain_dens.dat",
-        "label": "曲线2（自己改：比如 无析出）",
-        "color": "#D41010",   # 红
+        "file":  "/data/home/dg000246b/openDIS/inital_dislocation_structures/output_caseA_seed12345/stress_strain_dens.dat",
+        "label": "caseA",
+        "color": "#EE0A16",   
     },
+ 
 ]
-OUTPUT_DIR  = "/data/home/dg000246b/openDIS/HomeWork/Post-processing simulation"
-OUTPUT_NAME = "comparison.png"
+OUTPUT_DIR  = "/data/home/dg000246b/openDIS/inital_dislocation_structures"
+OUTPUT_NAME = "caseA AND caseB"
 # =========================================================
 
 

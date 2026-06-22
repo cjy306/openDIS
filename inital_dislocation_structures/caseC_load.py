@@ -44,12 +44,12 @@ def main():
     import argparse
     parser = argparse.ArgumentParser()
     parser.add_argument('--seed', type=int, default=12345, help='随机实现种子')
-    parser.add_argument('--predeform', type=float, required=True, help='预变形总应变 [%%],定位 prep 产出目录')
+    parser.add_argument('--predeform', type=float, default=0.18, help='预变形总应变 [%%],定位 prep 产出目录')
     parser.add_argument('--restart', type=int, help='从指定步骤重启')
     args = parser.parse_args()
 
     base_dir = os.path.dirname(os.path.abspath(__file__))
-    out_dir  = os.path.join(base_dir, f'output_caseC_p{args.predeform}_seed{args.seed}')
+    out_dir  = os.path.join(base_dir, f'output_caseC_{args.predeform}%_seed{args.seed}')
     load_dir = os.path.join(out_dir, 'load')
     os.makedirs(load_dir, exist_ok=True)
 
@@ -59,7 +59,7 @@ def main():
             restart_file=os.path.join(load_dir, f'restart.{args.restart}.exadis'))
     else:
         # 读 prep 产出的"预变形+二次弛豫后"构型
-        cfg = os.path.join(out_dir, 'predeformed_relaxed_config.data')
+        cfg = os.path.join(out_dir, 'predeformed_relaxedC2_config.data')
         G = ExaDisNet()
         G.read_paradis(cfg)
         net = DisNetManager(G)

@@ -18,10 +18,10 @@ import pyexadis
 from pyexadis_utils import read_paradis, write_vtk
 
 # ========== 配置 ==========
-INPUT  = "output_caseB_seed12345"   # 单个 .data 文件 或 含 *.data 的目录
-OUTPUT = "vtk_caseB"                 # VTK 输出目录
-START  = None                       # 起始步号(含),None 表示不限
-END    = None                       # 结束步号(含),None 表示不限
+INPUT  = "output_caseA_seed12345"   # 单个 .data 文件 或 含 *.data 的目录
+OUTPUT = "vtk_caseA"                 # VTK 输出目录
+START  = 0                       # 起始步号(含),None 表示不限
+END    = 10000                       # 结束步号(含),None 表示不限
 # =========================
 
 

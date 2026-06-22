@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """多曲线对比绘图：应力-应变 + 应变-位错密度
-每条曲线一个 stress_strain_dens.dat，标签/颜色自己填。
-格式：step  strain  stress(Pa)  density(m^-2)  [plastic_strain]
+每条曲线一个 stress_strain_dens.dat,标签/颜色自己填。
+格式:step  strain  stress(Pa)  density(m^-2)  [plastic_strain]
 """
 
 import os
@@ -14,12 +14,12 @@ import matplotlib.pyplot as plt
 CURVES = [
     {
         "file":  "/data/home/dg000246b/openDIS/HomeWork/output_Cu_twin_rorient/stress_strain_dens.dat",
-        "label": "曲线1（自己改：比如 有析出）",
+        "label": "pre-yield-0.7%",
         "color": "#1F77B4",   # 蓝
     },
     {
         "file":  "/data/home/dg000246b/openDIS/HomeWork/output_relax_load/stress_strain_dens.dat",
-        "label": "曲线2（自己改：比如 无析出）",
+        "label": "pre-yield-0.7% +2000steps_relaxation",
         "color": "#D41010",   # 红
     },
 ]

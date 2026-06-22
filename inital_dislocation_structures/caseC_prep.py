@@ -68,7 +68,7 @@ def main():
     import argparse
     parser = argparse.ArgumentParser()
     parser.add_argument('--seed', type=int, default=12345, help='随机实现种子(对应 init_loops 目录)')
-    parser.add_argument('--predeform', type=float, required=True, help='预变形总应变 [%%],如 0.1 / 0.3 / 0.5')
+    parser.add_argument('--predeform', type=float, default=0.28,help='预变形总应变 [%%],如 0.1 / 0.3 / 0.5')
     parser.add_argument('--relax2-steps', type=int, default=10000, help='二次弛豫步数(偏大,跑完看 relax2/ 曲线验证收敛)')
     args = parser.parse_args()
 
@@ -76,7 +76,7 @@ def main():
 
     base_dir   = os.path.dirname(os.path.abspath(__file__))
     init_dir   = os.path.join(base_dir, f'init_loops_seed{args.seed}')
-    out_dir    = os.path.join(base_dir, f'output_caseC_p{args.predeform}_seed{args.seed}')
+    out_dir    = os.path.join(base_dir, f'output_caseC_{args.predeform}%_seed{args.seed}')
     predef_dir = os.path.join(out_dir, 'predeform')
     relax2_dir = os.path.join(out_dir, 'relax2')
     os.makedirs(predef_dir, exist_ok=True)
@@ -114,7 +114,7 @@ def main():
     relax2_sim.run(net, state)
 
     # 存预变形+二次弛豫后的构型(正式加载的起点),停。先验证 relax2 收敛再跑 load。
-    out_cfg = os.path.join(out_dir, 'predeformed_relaxed_config.data')
+    out_cfg = os.path.join(out_dir, 'predeformed_relaxedC3_config.data')
     net.get_disnet(ExaDisNet).write_data(out_cfg)
     print(f'预变形+二次弛豫后构型已存: {out_cfg}')
     print(f'下一步:plot_relax.py 看 {relax2_dir} 确认收敛,再跑 caseC_load.py --predeform {args.predeform}')
