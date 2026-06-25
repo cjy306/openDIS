@@ -52,7 +52,7 @@ def main():
 
     base_dir   = os.path.dirname(os.path.abspath(__file__))
     init_dir   = os.path.join(base_dir, f'init_loops_seed{args.seed}')
-    output_dir = os.path.join(base_dir, f'output_caseA_1e3_seed{args.seed}')
+    output_dir = os.path.join(base_dir, f'output_caseA_100_seed{args.seed}')
     os.makedirs(output_dir, exist_ok=True)
 
     if args.restart is not None:
@@ -77,13 +77,13 @@ def main():
         calforce=calforce, mobility=mobility, timeint=timeint,
         collision=collision, topology=topology, remesh=remesh,
         loading_mode='strain_rate',
-        erate=1e3,                       # ⚠️应变率 [1/s] 待定
+        erate=100,                       # ⚠️应变率 [1/s] 待定
         edir=np.array([0., 0., 1.]),     # 加载轴 [001]
         max_strain=0.01,                 # ⚠️最大应变 待定
         burgmag=state["burgmag"],
         state=state,
         print_freq=1,
-        write_freq=100,
+        write_freq=1000,
         write_dir=output_dir,
         restart=restart,
     )

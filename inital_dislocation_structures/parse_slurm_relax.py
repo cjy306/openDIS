@@ -15,9 +15,9 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 
 # ========== 配置 ==========
-SLURM_LOG  = "slurm-c2.out"                              # 作业日志(含每步 nodes/dt)
-DAT_FILE   = "/data/home/dg000246b/openDIS/inital_dislocation_structures/output_caseC_0.18%_seed12345/relax2/stress_strain_dens.dat"  # 含 density
-OUTPUT_PNG = "relax_convergence_from_slurm_c2.png"
+SLURM_LOG  = "slurm-c3.out"                              # 作业日志(含每步 nodes/dt)
+DAT_FILE   = "/data/home/dg000246b/openDIS/inital_dislocation_structures/output_caseC_0.28%_seed12345/relax2/stress_strain_dens.dat"  # 含 density
+OUTPUT_PNG = "relax_convergence_from_slurm_c3.png"
 TAIL_FRAC  = 0.20
 RHO_TOL    = 0.01
 # =========================

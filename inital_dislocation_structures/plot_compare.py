@@ -27,11 +27,11 @@ OFFSET      = 0.002    # 0.2% offset 屈服
 # 五工况:标签、相对脚本目录的 .dat 路径、颜色
 #   A/B 直接在 output_caseX_seed/,C 在 output_caseC_pX_seed/load/
 CASES = [
-    ("A (no preproc)",   f"output_caseA_seed{SEED}/stress_strain_dens.dat",            "#000000"),
+    ("A (no preproc)",   f"output_caseA_1e4_seed12345/stress_strain_dens.dat",            "#000000"),
     ("B (relaxed)",      f"output_caseB_seed{SEED}/stress_strain_dens.dat",            "#1F77B4"),
-    ("C1 (predef 0.1%)", f"output_caseC_0.14%_seed{SEED}/load/stress_strain_dens.dat",  "#FFB000"),
-    ("C2 (predef 0.3%)", f"output_caseC_0.18%_seed{SEED}/load/stress_strain_dens.dat",  "#FF6A00"),
-    ("C3 (predef 0.5%)", f"output_caseC_0.5_seed{SEED}/load/stress_strain_dens.dat",  "#D40010"),
+    ("C1 (predef 0.14%)", f"output_caseC_0.14%_seed{SEED}/load/stress_strain_dens.dat",  "#FFB000"),
+    ("C2 (predef 0.18%)", f"output_caseC_0.18%_seed{SEED}/load/stress_strain_dens.dat",  "#FF6A00"),
+    ("C3 (predef 0.28%)", f"output_caseC_0.28%_seed{SEED}/load/stress_strain_dens.dat",  "#D40010"),
 ]
 # =========================
 
@@ -127,7 +127,7 @@ def main():
     ax2.set_title('Strain vs Dislocation Density (5 cases)', fontsize=14)
     ax2.legend(fontsize=10, framealpha=0.9)
     ax2.grid(True, alpha=0.3, ls='--')
-    ax2.set_yscale('log')
+    ax2.ticklabel_format(axis='y', style='sci', scilimits=(0, 0))
     ax2.set_xlim(left=0)
 
     plt.tight_layout(pad=2.0)
