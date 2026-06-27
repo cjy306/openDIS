@@ -251,6 +251,116 @@ public:
     }
 
     /*-----------------------------------------------------------------------
+     *  point_in_tri  (planar point-in-triangle test in the glide plane)
+     *      a,b,c : triangle vertices (assumed coplanar with normal n)
+     *      p     : query point;  returns true if p is inside triangle abc
+     *---------------------------------------------------------------------*/
+    static bool point_in_tri(const Vec3& a, const Vec3& b, const Vec3& c,
+                             const Vec3& p, const Vec3& n)
+    {
+        double d1 = dot(cross(b - a, p - a), n);
+        double d2 = dot(cross(c - b, p - b), n);
+        double d3 = dot(cross(a - c, p - c), n);
+        bool has_neg = (d1 < 0.0) || (d2 < 0.0) || (d3 < 0.0);
+        bool has_pos = (d1 > 0.0) || (d2 > 0.0) || (d3 > 0.0);
+        return !(has_neg && has_pos);
+    }
+
+    /*-----------------------------------------------------------------------
+     *  handle_breakaway  (serial network)
+     *
+     *  Foreman-Makin point-obstacle (cutting) mechanism, complementary to
+     *  the Orowan bypass in handle_orowan().  When a dislocation segment
+     *  sweeps across an obstacle during this step, a node is inserted at
+     *  the obstacle and pinned (v=0 via PINNED_NODE).  The pinned node is
+     *  released when the resultant of its unit arm tangents exceeds
+     *  2*cos(phi_crit/2) -- the N-arm generalization of the breakaway-angle
+     *  criterion (identical to the segment-angle test for a 2-arm node).
+     *
+     *  Runs on the serial network because split_seg() is a topological
+     *  operation; placed right after CollisionRetroactive::handle() so the
+     *  serial copy is fresh, before handle_orowan() syncs to the device.
+     *---------------------------------------------------------------------*/
+    void handle_breakaway(System* system)
+    {
+        if (system->obstacles.empty()) return;
+
+        SerialDisNet* network = system->get_serial_network();
+        double dt   = system->realdt;
+        int    Nobs = (int)system->obstacles.size();
+
+        // ---- Phase A: capture ----
+        // Iterate over the original segments only (splits append at the end).
+        int nseg = network->Nsegs_local;
+        for (int s = 0; s < nseg; s++) {
+            int n1 = network->segs[s].n1;
+            int n2 = network->segs[s].n2;
+
+            Vec3 ng = network->segs[s].plane;
+            double ngn = ng.norm();
+            if (ngn < 1e-10) continue;          // no glide plane -> skip
+            ng = (1.0 / ngn) * ng;
+
+            // swept quad this step: old segment (pos - dt*v) -> current segment
+            Vec3 p1 = network->nodes[n1].pos;
+            Vec3 p2 = network->cell.pbc_position(p1, network->nodes[n2].pos);
+            Vec3 o1 = p1 - dt * network->nodes[n1].v;
+            Vec3 o2 = p2 - dt * network->nodes[n2].v;
+
+            for (int j = 0; j < Nobs; j++) {
+                // skip if an endpoint already pins this obstacle
+                if (network->nodes[n1].sphere_id == j ||
+                    network->nodes[n2].sphere_id == j) continue;
+
+                Vec3   C = network->cell.pbc_position(p1, system->obstacles[j].center);
+                double R = system->obstacles[j].radius;
+
+                // vertical gate: does the glide plane cut the sphere?
+                double h = dot(C - p1, ng);
+                if (h * h >= R * R) continue;
+                Vec3 Cproj = C - h * ng;        // obstacle projected into glide plane
+
+                // did the segment sweep across Cproj this step? quad = [o1,o2,p2,p1]
+                bool hit = point_in_tri(o1, o2, p2, Cproj, ng) ||
+                           point_in_tri(o1, p2, p1, Cproj, ng);
+                if (!hit) continue;
+
+                int nnew = network->split_seg(s, Cproj);
+                network->nodes[nnew].constraint = PINNED_NODE;
+                network->nodes[nnew].sphere_id  = j;
+                break;                          // one capture per segment per pass
+            }
+        }
+
+        // ---- Phase B: release ----
+        int nnode = network->Nnodes_local;
+        for (int i = 0; i < nnode; i++) {
+            if (network->nodes[i].constraint != PINNED_NODE) continue;
+            int oid = network->nodes[i].sphere_id;
+            if (oid < 0) continue;              // BC pin, not managed by this mechanism
+            int nc = network->conn[i].num;
+            if (nc < 2) continue;
+
+            // R = | sum of unit arm tangents |
+            Vec3 pi = network->nodes[i].pos;
+            Vec3 sum(0.0);
+            for (int k = 0; k < nc; k++) {
+                int nbr = network->conn[i].node[k];
+                Vec3 t = network->cell.pbc_position(pi, network->nodes[nbr].pos) - pi;
+                double tn = t.norm();
+                if (tn > 1e-10) sum = sum + (1.0 / tn) * t;
+            }
+
+            double phi_c  = system->obstacles[oid].phi_crit;
+            double thresh = 2.0 * cos(0.5 * phi_c);
+            if (sum.norm() > thresh) {
+                network->nodes[i].constraint = UNCONSTRAINED;
+                network->nodes[i].sphere_id  = -1;
+            }
+        }
+    }
+
+    /*-----------------------------------------------------------------------
      *  handle  (overrides CollisionRetroactive::handle)
      *---------------------------------------------------------------------*/
     void handle(System* system) override
@@ -261,10 +371,13 @@ public:
         Kokkos::fence();
         system->timer[system->TIMER_COLLISION].start();
 
-        // 2. Orowan sphere-surface enforcement.
+        // 2. Breakaway (cutting) capture/release on point obstacles (serial).
+        handle_breakaway(system);
+
+        // 3. Orowan sphere-surface enforcement.
         handle_orowan(system);
 
-        // 3. Twin-plane crossing check: project back any node that crossed.
+        // 4. Twin-plane crossing check: project back any node that crossed.
         handle_twin_wall(system);
 
         Kokkos::fence();

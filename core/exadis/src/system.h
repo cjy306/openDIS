@@ -33,6 +33,7 @@ struct SphericalObstacle {
     Vec3   center;
     double radius;
     int    id;
+    double phi_crit;  // breakaway critical angle (radians); depin when |sum of arm tangents| > 2*cos(phi_crit/2)
 };
 
 /*---------------------------------------------------------------------------
@@ -105,14 +106,16 @@ public:
     std::vector<SphericalObstacle> obstacles;
 
     void load_obstacles(const std::vector<Vec3>& centers_b,
-                        const std::vector<double>& radii_b)
+                        const std::vector<double>& radii_b,
+                        double phi_crit = M_PI/2)  // default 90 deg (Foreman-Makin moderate obstacle)
     {
         obstacles.clear();
         int n = (int)centers_b.size();
         obstacles.reserve(n);
         for (int i = 0; i < n; i++)
-            obstacles.push_back({centers_b[i], radii_b[i], i});
-        ExaDiS_log("[System] %d spherical obstacles loaded\n", n);
+            obstacles.push_back({centers_b[i], radii_b[i], i, phi_crit});
+        ExaDiS_log("[System] %d spherical obstacles loaded (phi_crit = %.1f deg)\n",
+                   n, phi_crit * 180.0 / M_PI);
     }
 
     // Planar obstacles (twin boundaries) (all units in Burgers vector)
