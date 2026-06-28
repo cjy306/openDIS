@@ -51,6 +51,7 @@ state = {
     "maxdt":     1e-9,
 }
 
+INIT      = 'init_fr_seed12345'        # 初始构型目录(换工况改这里; 命令行 --init 可覆盖)
 SIGMA0    = 95e6                       # 初始预应力 [Pa], 单轴 zz; 略高于激活阈值 ~85MPa
 EDIR      = np.array([0., 0., 1.])     # 加载轴 [001]
 ERATE     = 1e3                        # 应变率 [1/s]
@@ -61,8 +62,8 @@ def main():
     pyexadis.initialize()
     import argparse
     parser = argparse.ArgumentParser()
-    parser.add_argument('--init', required=True,
-                        help='初始构型目录(如 init_glide_seed12345); 换工况即换此目录')
+    parser.add_argument('--init', default=INIT,
+                        help=f'初始构型目录(默认顶部 INIT={INIT}); 换工况改顶部常量或用此覆盖')
     parser.add_argument('--out', default=None,
                         help='输出目录名; 默认把 init 目录名前缀 init 换成 output')
     parser.add_argument('--restart', type=int, help='从指定步骤重启')
