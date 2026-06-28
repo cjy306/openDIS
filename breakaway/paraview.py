@@ -51,6 +51,10 @@ def write_obstacles_vtk(obs_path, out_dir):
         f.write(f'POINTS {n} float\n')
         for c in centers:
             f.write(f'{c[0]:.6e} {c[1]:.6e} {c[2]:.6e}\n')
+        # 每个点配一个 VERTICES 单元,否则 ParaView 视作 0 单元、渲染不出来
+        f.write(f'VERTICES {n} {2*n}\n')
+        for i in range(n):
+            f.write(f'1 {i}\n')
         f.write(f'POINT_DATA {n}\n')
         f.write('SCALARS radius float 1\n')
         f.write('LOOKUP_TABLE default\n')
