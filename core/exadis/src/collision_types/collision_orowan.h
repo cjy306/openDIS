@@ -288,6 +288,7 @@ public:
         SerialDisNet* network = system->get_serial_network();
         double dt   = system->realdt;
         int    Nobs = (int)system->obstacles.size();
+        int    ncap = 0, nrel = 0, npin = 0;   // diagnostics
 
         // ---- Phase A: capture ----
         // Iterate over the original segments only (splits append at the end).
@@ -328,6 +329,7 @@ public:
                 int nnew = network->split_seg(s, Cproj);
                 network->nodes[nnew].constraint = PINNED_NODE;
                 network->nodes[nnew].sphere_id  = j;
+                ncap++;
                 break;                          // one capture per segment per pass
             }
         }
@@ -351,13 +353,24 @@ public:
                 if (tn > 1e-10) sum = sum + (1.0 / tn) * t;
             }
 
+            double Rmag   = sum.norm();
             double phi_c  = system->obstacles[oid].phi_crit;
             double thresh = 2.0 * cos(0.5 * phi_c);
-            if (sum.norm() > thresh) {
+            if (Rmag > thresh) {
                 network->nodes[i].constraint = UNCONSTRAINED;
                 network->nodes[i].sphere_id  = -1;
+                nrel++;
+                // 2-arm: R = 2 cos(phi/2) -> phi = 2 acos(R/2)
+                double phi = (Rmag < 2.0) ? 2.0 * acos(0.5 * Rmag) : 0.0;
+                printf("[Breakaway] depin: R=%.3f  phi=%.1f deg (crit=%.1f)\n",
+                       Rmag, phi * 180.0 / M_PI, phi_c * 180.0 / M_PI);
+            } else {
+                npin++;
             }
         }
+
+        if (ncap || nrel)
+            printf("[Breakaway] captured=%d released=%d pinned=%d\n", ncap, nrel, npin);
     }
 
     /*-----------------------------------------------------------------------
