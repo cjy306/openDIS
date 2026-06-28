@@ -15,7 +15,7 @@ pyexadis_paths = ['../python', '../lib', '../core/pydis/python', '../core/exadis
 [sys.path.append(os.path.abspath(path)) for path in pyexadis_paths if not path in sys.path]
 
 import pyexadis
-from pyexadis_base import ExaDisNet, DisNetManager, SimulateNetworkPerf
+from pyexadis_base import ExaDisNet, DisNetManager, SimulateNetworkPerf, read_restart
 from pyexadis_base import CalForce, MobilityLaw, TimeIntegration, Collision, Topology, Remesh
 
 # ===== 加载参数(占位值,自行调整) =====
@@ -41,18 +41,29 @@ state = {
 
 
 def main():
+    import argparse
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--restart', type=int, help='从指定步骤重启(读 output 里的 restart.<步号>.exadis)')
+    args = parser.parse_args()
+
     pyexadis.initialize()
     base_dir   = os.path.dirname(os.path.abspath(__file__))
     init_dir   = os.path.join(base_dir, 'init_breakaway')
     output_dir = os.path.join(base_dir, 'output_breakaway_single')
     os.makedirs(output_dir, exist_ok=True)
 
-    # 读环
-    G = ExaDisNet()
-    G.read_paradis(os.path.join(init_dir, 'init_config.data'))
-    net = DisNetManager(G)
+    # 读构型: 重启 或 从预生成 init 起步
+    if args.restart is not None:
+        net, restart = read_restart(
+            state=state,
+            restart_file=os.path.join(output_dir, f'restart.{args.restart}.exadis'))
+    else:
+        G = ExaDisNet()
+        G.read_paradis(os.path.join(init_dir, 'init_config.data'))
+        net = DisNetManager(G)
+        restart = None
 
-    # 读障碍并加载(默认 phi_crit = 90°)
+    # 读障碍并加载(重启/起步都要;障碍存在 System 上,不随 restart 恢复;默认 phi_crit=90°)
     obs = np.loadtxt(os.path.join(init_dir, 'obstacles.data'))
     if obs.ndim == 1:
         obs = obs.reshape(1, -1)
@@ -85,6 +96,7 @@ def main():
         print_freq=1,
         write_freq=1,
         write_dir=output_dir,
+        restart=restart,
     )
     sim.run(net, state)
     pyexadis.finalize()
