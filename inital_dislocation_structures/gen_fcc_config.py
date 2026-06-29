@@ -40,11 +40,17 @@ from pyexadis_utils import (generate_glide_config, generate_prismatic_config,
 # ============================================================
 CRYSTAL    = 'fcc'
 BURGMAG    = 2.55e-10    # b [m] —— Cu a/2<110>
-LBOX_M     = 5.0e-6      # bulk 周期盒 5um 立方
-RHO_TARGET = 1.0e12      # 初始位错密度 [1/m^2](三类型统一锁定)
+LBOX_M     = 2.0e-6      # bulk 周期盒 2um 立方(A/B 统一盒)
 RADIUS_M   = 200e-9      # 环半径 [m]; FR 臂长 L = 2R = 400nm
 MAXSEG_B   = 200         # 离散段长上限 [b](约 51nm)
 NSIDES     = 12          # 环离散多边形边数
+
+# 密度 [1/m^2](A/B 统一加载密度,详见对话纪要):
+#   FR/棱柱 直接加载 -> 用加载密度 RHO_LOAD(= B 弛豫后的目标密度)
+#   glide  需弛豫成网 -> 播种 RHO_SEED_GLIDE(弛豫后掉到 ~RHO_LOAD)
+RHO_LOAD       = 1.5e13
+RHO_SEED_GLIDE = 1.5e14
+DEFAULT_RHO = {'glide': RHO_SEED_GLIDE, 'prismatic': RHO_LOAD, 'fr': RHO_LOAD}
 
 # [001] 拉伸下 12 个 {111}<110> 系的 Schmid 因子: 8 个为 0.408, 4 个为 0。
 # 剔除 m=0 的 4 个(0-based 索引 2,5,8,11), 留 8 个高 Schmid 系给 glide/fr,
@@ -103,8 +109,11 @@ def main():
     parser = argparse.ArgumentParser(description='生成 FCC Cu 初始位错构型 (glide/prismatic/fr)')
     parser.add_argument('--type', required=True, choices=['glide', 'prismatic', 'fr'])
     parser.add_argument('--seed', type=int, default=12345)
+    parser.add_argument('--rho', type=float, default=None,
+                        help=f'密度 [1/m^2]; 默认按类型 {DEFAULT_RHO}')
     parser.add_argument('--out', type=str, default=None)
     args = parser.parse_args()
+    rho = args.rho if args.rho is not None else DEFAULT_RHO[args.type]
 
     base_dir = os.path.dirname(os.path.abspath(__file__))
     out_dir = args.out or os.path.join(base_dir, f'init_{args.type}_seed{args.seed}')
@@ -114,19 +123,20 @@ def main():
     radius_b = RADIUS_M / BURGMAG
 
     if args.type == 'glide':
-        num = _num_units(RHO_TARGET, LBOX_M, 2.0 * np.pi * RADIUS_M)
-        print(f'[glide] {num} 环, R={RADIUS_M*1e9:.0f}nm, 限 {len(HIGH_SCHMID_001)} 高Schmid系')
+        # 弛豫路线: 全 12 个滑移系随机(成网需要跨系结点), 不限高 Schmid
+        num = _num_units(rho, LBOX_M, 2.0 * np.pi * RADIUS_M)
+        print(f'[glide] seed rho={rho:.1e}, {num} 环, R={RADIUS_M*1e9:.0f}nm, 全12系')
         G = generate_glide_config(CRYSTAL, Lbox_b, num, radius_b, nsides=NSIDES,
-                                  maxseg=MAXSEG_B, seed=args.seed, sysids=HIGH_SCHMID_001)
+                                  maxseg=MAXSEG_B, seed=args.seed)
     elif args.type == 'prismatic':
-        num = _num_units(RHO_TARGET, LBOX_M, 2.0 * np.pi * RADIUS_M)
-        print(f'[prismatic] {num} 环, R={RADIUS_M*1e9:.0f}nm')
+        num = _num_units(rho, LBOX_M, 2.0 * np.pi * RADIUS_M)
+        print(f'[prismatic] rho={rho:.1e}, {num} 环, R={RADIUS_M*1e9:.0f}nm')
         G = generate_prismatic_config(CRYSTAL, Lbox_b, num, radius_b,
                                       maxseg=MAXSEG_B, seed=args.seed)
     else:  # fr
         length_b = 2.0 * radius_b
-        num = _num_units(RHO_TARGET, LBOX_M, 2.0 * RADIUS_M)
-        print(f'[fr] {num} 源, L=2R={2*RADIUS_M*1e9:.0f}nm, 限 {len(HIGH_SCHMID_001)} 高Schmid系')
+        num = _num_units(rho, LBOX_M, 2.0 * RADIUS_M)
+        print(f'[fr] rho={rho:.1e}, {num} 源, L=2R={2*RADIUS_M*1e9:.0f}nm, 限 {len(HIGH_SCHMID_001)} 高Schmid系')
         G = generate_fr_config(Lbox_b, num, length_b, args.seed, HIGH_SCHMID_001)
 
     out_file = os.path.join(out_dir, 'init_config.data')
