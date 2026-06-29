@@ -22,6 +22,8 @@ from pyexadis_base import CalForce, MobilityLaw, TimeIntegration, Collision, Top
 ERATE      = 1e3                       # 应变率 [1/s]
 EDIR       = np.array([0., 0., 1.])    # 加载轴 [001](Schmid≈0.408,环沿[111]滑移)
 MAX_STRAIN = 0.01
+INIT_STRESS = 100e6                    # 初始单轴 σzz [Pa];预加省去从零弹性爬坡
+                                       # (分解≈41MPa,接近激活阈值~51MPa;太慢就调大)
 
 state = {
     "crystal":   'bcc',
@@ -91,6 +93,8 @@ def main():
         erate=ERATE,
         edir=EDIR,
         max_strain=MAX_STRAIN,
+        applied_stress=np.array([0., 0., INIT_STRESS, 0., 0., 0.]),  # 初始 σzz 预加载
+
         burgmag=state["burgmag"],
         state=state,
         print_freq=1,
