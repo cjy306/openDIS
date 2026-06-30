@@ -5,9 +5,9 @@
 #SBATCH --output=slurm-%j.out
 #SBATCH --error=slurm-%j.err
 # ===== 每次改这里：队列/核数(不超单节点)/时长 =====
-#SBATCH --partition=xhacnormalb      # CPU:xhhctdnormal/xhacnormala(64) xhacnormalb(128); GPU:xhhgnormal01
+#SBATCH --partition=xhhctdnormal      # CPU:xhhctdnormal/xhacnormala(64) xhacnormalb(128); GPU:xhhgnormal01
 ##SBATCH --gres=gpu:1                 # 用GPU解开此行；纯CPU注释掉
-#SBATCH --cpus-per-task=128
+#SBATCH --cpus-per-task=64
 #SBATCH --time=10:00:00
 
 PYFILE=/work/home/cjy306/openDIS/breakaway/test_breakaway_prismatic.py
