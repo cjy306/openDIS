@@ -112,7 +112,7 @@ def main():
         applied_stress=applied_stress,
         erate=ERATE, edir=EDIR, max_strain=MAXSTRAIN,
         burgmag=state["burgmag"], state=state,
-        print_freq=1, write_freq=100,
+        print_freq=1, write_freq=500,
         write_dir=output_dir, restart=restart,
     )
     sim.run(net, state)

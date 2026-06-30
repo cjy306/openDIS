@@ -251,22 +251,6 @@ public:
     }
 
     /*-----------------------------------------------------------------------
-     *  point_in_tri  (planar point-in-triangle test in the glide plane)
-     *      a,b,c : triangle vertices (assumed coplanar with normal n)
-     *      p     : query point;  returns true if p is inside triangle abc
-     *---------------------------------------------------------------------*/
-    static bool point_in_tri(const Vec3& a, const Vec3& b, const Vec3& c,
-                             const Vec3& p, const Vec3& n)
-    {
-        double d1 = dot(cross(b - a, p - a), n);
-        double d2 = dot(cross(c - b, p - b), n);
-        double d3 = dot(cross(a - c, p - c), n);
-        bool has_neg = (d1 < 0.0) || (d2 < 0.0) || (d3 < 0.0);
-        bool has_pos = (d1 > 0.0) || (d2 > 0.0) || (d3 > 0.0);
-        return !(has_neg && has_pos);
-    }
-
-    /*-----------------------------------------------------------------------
      *  handle_breakaway  (serial network)
      *
      *  Foreman-Makin point-obstacle (cutting) mechanism, complementary to
@@ -286,51 +270,44 @@ public:
         if (system->obstacles.empty()) return;
 
         SerialDisNet* network = system->get_serial_network();
-        double dt   = system->realdt;
         int    Nobs = (int)system->obstacles.size();
         int    ncap = 0, nrel = 0, npin = 0;   // diagnostics
 
-        // ---- Phase A: capture ----
-        // Iterate over the original segments only (splits append at the end).
+        // ---- Phase A: capture (proximity to point obstacle) ----
+        // 点障碍:段到障碍中心 C 的最近距离 < R(R 是捕获容差,取小)就在 C 插一个钉节点。
+        // 纯 3D 距离判据,不依赖滑移面,可直接用于 bulk。仅端点护栏防同段相邻臂重复钉;
+        // 不同位错线到同一障碍仍会被钉(析出相可钉多条),是否合并交给碰撞机制按 Frank 法则判。
         int nseg = network->Nsegs_local;
         for (int s = 0; s < nseg; s++) {
             int n1 = network->segs[s].n1;
             int n2 = network->segs[s].n2;
 
-            Vec3 ng = network->segs[s].plane;
-            double ngn = ng.norm();
-            if (ngn < 1e-10) continue;          // no glide plane -> skip
-            ng = (1.0 / ngn) * ng;
-
-            // swept quad this step: old segment (pos - dt*v) -> current segment
-            Vec3 p1 = network->nodes[n1].pos;
-            Vec3 p2 = network->cell.pbc_position(p1, network->nodes[n2].pos);
-            Vec3 o1 = p1 - dt * network->nodes[n1].v;
-            Vec3 o2 = p2 - dt * network->nodes[n2].v;
+            Vec3   p1  = network->nodes[n1].pos;
+            Vec3   p2  = network->cell.pbc_position(p1, network->nodes[n2].pos);
+            Vec3   d12 = p2 - p1;
+            double L2  = dot(d12, d12);
+            if (L2 < 1e-20) continue;
 
             for (int j = 0; j < Nobs; j++) {
-                // skip if an endpoint already pins this obstacle
+                // endpoint guard: 同段相邻臂已钉此障碍则跳过
                 if (network->nodes[n1].sphere_id == j ||
                     network->nodes[n2].sphere_id == j) continue;
 
                 Vec3   C = network->cell.pbc_position(p1, system->obstacles[j].center);
                 double R = system->obstacles[j].radius;
 
-                // vertical gate: does the glide plane cut the sphere?
-                double h = dot(C - p1, ng);
-                if (h * h >= R * R) continue;
-                Vec3 Cproj = C - h * ng;        // obstacle projected into glide plane
+                // 段 [p1,p2] 上离 C 最近点
+                double t = dot(C - p1, d12) / L2;
+                t = (t < 0.0) ? 0.0 : (t > 1.0 ? 1.0 : t);
+                Vec3 P = p1 + t * d12;
 
-                // did the segment sweep across Cproj this step? quad = [o1,o2,p2,p1]
-                bool hit = point_in_tri(o1, o2, p2, Cproj, ng) ||
-                           point_in_tri(o1, p2, p1, Cproj, ng);
-                if (!hit) continue;
-
-                int nnew = network->split_seg(s, Cproj);
-                network->nodes[nnew].constraint = PINNED_NODE;
-                network->nodes[nnew].sphere_id  = j;
-                ncap++;
-                break;                          // one capture per segment per pass
+                if ((P - C).norm2() < R * R) {           // 进入捕获半径 -> 接触
+                    int nnew = network->split_seg(s, C); // 钉在障碍点 C
+                    network->nodes[nnew].constraint = PINNED_NODE;
+                    network->nodes[nnew].sphere_id  = j;
+                    ncap++;
+                    break;                               // 本段本轮只钉一次
+                }
             }
         }
 
