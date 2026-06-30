@@ -82,6 +82,12 @@ function(check_git_version)
   )
 
   check_git_read(GIT_HASH_CACHE)
+  if(NOT GIT_COMMIT_HASH)
+    set(GIT_COMMIT_HASH "unknown")
+  endif()
+  if(NOT GIT_CLEAN_STATUS)
+    set(GIT_CLEAN_STATUS "clean")
+  endif()
 
   if(NOT EXISTS ${post_configure_dir})
     file(MAKE_DIRECTORY ${post_configure_dir})
