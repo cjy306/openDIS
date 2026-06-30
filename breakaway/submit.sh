@@ -8,9 +8,9 @@
 #SBATCH --partition=xhacnormalb      # CPU:xhhctdnormal/xhacnormala(64) xhacnormalb(128); GPU:xhhgnormal01
 ##SBATCH --gres=gpu:1                 # 用GPU解开此行；纯CPU注释掉
 #SBATCH --cpus-per-task=128
-#SBATCH --time=4:00:00
+#SBATCH --time=10:00:00
 
-PYFILE=/work/home/cjy306/openDIS/inital_dislocation_structures/relax_fcc.py
+PYFILE=/work/home/cjy306/openDIS/breakaway/test_breakaway_prismatic.py
 # ===================================================
 export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK
 export OMP_PROC_BIND=spread

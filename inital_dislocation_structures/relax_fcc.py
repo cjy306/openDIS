@@ -41,11 +41,11 @@ state = {
     "burgmag":   2.55e-10,   # b [m], Cu a/2<110>
     "mu":        54.6e9,     # 剪切模量 [Pa]
     "nu":        0.324,      # 泊松比
-    "a":         6.0,        # 核心参数
+    "a":         4.0,        # 核心参数
     "maxseg":    200.0,      # 约 51nm
     "minseg":    40.0,       # 约 10nm
-    "rtol":      10.0,
-    "rann":      10.0,
+    "rtol":      1.0,
+    "rann":      2.0,
     "nextdt":    1e-10,
     "maxdt":     1e-8,       # 弛豫比加载放大一档
 }
@@ -94,7 +94,7 @@ def main():
         loading_mode='stress',            # 零应力(applied_stress 默认 0) = 纯弛豫
         num_steps=args.steps,
         burgmag=state["burgmag"], state=state,
-        print_freq=10, write_freq=1000,
+        print_freq=1, write_freq=1000,
         out_props=OUT_PROPS,
         write_dir=output_dir,
     )
