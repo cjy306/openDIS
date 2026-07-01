@@ -29,8 +29,8 @@ from pyexadis_utils import read_paradis, write_vtk
 INPUT     = "output_breakaway_single"               # 位错快照: 单 .data 或含 *.data 的目录
 OUTPUT    = "vtk_breakaway"                          # VTK 输出目录
 OBSTACLES = "init_breakaway/obstacles.data"          # 障碍文件(预生成); None 跳过
-START     =5000                                       # 起始步号(含), None 不限
-END       = None                                     # 结束步号(含), None 不限
+START     =0                                       # 起始步号(含), None 不限
+END       =5000                                     # 结束步号(含), None 不限
 # =========================
 
 

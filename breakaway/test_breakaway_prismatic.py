@@ -74,7 +74,7 @@ def main():
     cell = net.get_disnet(ExaDisNet).cell
 
     # collision_mode='Orowan' 触发 handle_breakaway
-    calforce  = CalForce(force_mode='SUBCYCLING_MODEL', state=state, Ngrid=64, cell=cell)
+    calforce  = CalForce(force_mode='SUBCYCLING_MODEL', state=state, Ngrid=32, cell=cell)
     mobility  = MobilityLaw(mobility_law='BCC_0B', state=state,
                             Medge=15000.0, Mscrew=3000.0, Mclimb=100.0, vmax=30000.0)
     timeint   = TimeIntegration(integrator='Subcycling', rgroups=[], state=state,
