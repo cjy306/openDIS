@@ -42,6 +42,8 @@ When your changes create orphans:
 
 The test: Every changed line should trace directly to the user's request.
 
+**Bug fix = root cause, not symptom:** a report names a symptom. Grep every caller of the function you touch and fix the shared function once - one guard there is a smaller diff than one per caller, and patching only the path the ticket names leaves a sibling caller still broken. But the smallest change in the wrong place isn't lazy, it's a second bug: understand the real flow before choosing where to cut.
+
 ## 4. Goal-Driven Execution
 
 **Define success criteria. Loop until verified.**
@@ -66,6 +68,14 @@ For multi-step tasks, state a brief plan:
 7.以假装理解为耻，以诚实无知为菜
 8.以盲目修改为耻，以谨慎重构为荣
 Strong success criteria let you loop independently. Weak criteria ("make it work") require constant clarification.
+
+## 5. Physical Fidelity Guardrail (scientific code)
+
+**Simplicity applies to code, never to physics.** This is a DDD/materials-simulation project - the core work is implementing a physical mechanism correctly, not producing the shortest solution.
+
+- Never trade a real physical mechanism for a shorter implementation (e.g. don't fake a strength field with a geometric projection).
+- Mark every intentional numerical/physical approximation with a `# PHYS-APPROX:` comment that names its ceiling AND its upgrade path. Example: `# PHYS-APPROX: pure geometric projection; ceiling = no strength field; upgrade = add per-obstacle strength`.
+- This keeps a temporary approximation from silently becoming the assumed final physics.
 
 ---
 

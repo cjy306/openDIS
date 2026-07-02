@@ -251,6 +251,22 @@ public:
     }
 
     /*-----------------------------------------------------------------------
+     *  point_in_tri  (planar point-in-triangle test in the glide plane)
+     *      a,b,c : triangle vertices (assumed coplanar with normal n)
+     *      p     : query point;  returns true if p is inside triangle abc
+     *---------------------------------------------------------------------*/
+    static bool point_in_tri(const Vec3& a, const Vec3& b, const Vec3& c,
+                             const Vec3& p, const Vec3& n)
+    {
+        double d1 = dot(cross(b - a, p - a), n);
+        double d2 = dot(cross(c - b, p - b), n);
+        double d3 = dot(cross(a - c, p - c), n);
+        bool has_neg = (d1 < 0.0) || (d2 < 0.0) || (d3 < 0.0);
+        bool has_pos = (d1 > 0.0) || (d2 > 0.0) || (d3 > 0.0);
+        return !(has_neg && has_pos);
+    }
+
+    /*-----------------------------------------------------------------------
      *  handle_breakaway  (serial network)
      *
      *  Foreman-Makin point-obstacle (cutting) mechanism, complementary to
@@ -270,23 +286,30 @@ public:
         if (system->obstacles.empty()) return;
 
         SerialDisNet* network = system->get_serial_network();
+        double dt   = system->realdt;
         int    Nobs = (int)system->obstacles.size();
         int    ncap = 0, nrel = 0, npin = 0;   // diagnostics
 
-        // ---- Phase A: capture (proximity to point obstacle) ----
-        // 点障碍:段到障碍中心 C 的最近距离 < R(R 是捕获容差,取小)就在 C 插一个钉节点。
-        // 纯 3D 距离判据,不依赖滑移面,可直接用于 bulk。仅端点护栏防同段相邻臂重复钉;
-        // 不同位错线到同一障碍仍会被钉(析出相可钉多条),是否合并交给碰撞机制按 Frank 法则判。
+        // ---- Phase A: capture (swept area over point obstacle) ----
+        // 本步段扫过的四边形 [o1,o2,p2,p1](o = pos - dt*v 为步初位置)若包含障碍在滑移面内的
+        // 投影 C_proj,即认为线扫过该障碍 -> 在 C_proj 插一个钉节点(回退到障碍处)。
+        // 扫掠能抓"一步跨过"的快线;垂直门 h^2<R^2 限定障碍要贴近该段滑移面。
+        // 仅端点护栏防同段相邻臂重复钉;不同线到同一障碍仍会被钉,合并交给碰撞机制。
         int nseg = network->Nsegs_local;
         for (int s = 0; s < nseg; s++) {
             int n1 = network->segs[s].n1;
             int n2 = network->segs[s].n2;
 
-            Vec3   p1  = network->nodes[n1].pos;
-            Vec3   p2  = network->cell.pbc_position(p1, network->nodes[n2].pos);
-            Vec3   d12 = p2 - p1;
-            double L2  = dot(d12, d12);
-            if (L2 < 1e-20) continue;
+            Vec3 ng = network->segs[s].plane;
+            double ngn = ng.norm();
+            if (ngn < 1e-10) continue;          // 无滑移面 -> 跳过
+            ng = (1.0 / ngn) * ng;
+
+            // 步初 -> 当前 段位置
+            Vec3 p1 = network->nodes[n1].pos;
+            Vec3 p2 = network->cell.pbc_position(p1, network->nodes[n2].pos);
+            Vec3 o1 = p1 - dt * network->nodes[n1].v;
+            Vec3 o2 = p2 - dt * network->nodes[n2].v;
 
             for (int j = 0; j < Nobs; j++) {
                 // endpoint guard: 同段相邻臂已钉此障碍则跳过
@@ -296,18 +319,21 @@ public:
                 Vec3   C = network->cell.pbc_position(p1, system->obstacles[j].center);
                 double R = system->obstacles[j].radius;
 
-                // 段 [p1,p2] 上离 C 最近点
-                double t = dot(C - p1, d12) / L2;
-                t = (t < 0.0) ? 0.0 : (t > 1.0 ? 1.0 : t);
-                Vec3 P = p1 + t * d12;
+                // 垂直门:障碍到该段滑移面的距离 < R?
+                double h = dot(C - p1, ng);
+                if (h * h >= R * R) continue;
+                Vec3 Cproj = C - h * ng;        // 障碍投影到滑移面
 
-                if ((P - C).norm2() < R * R) {           // 进入捕获半径 -> 接触
-                    int nnew = network->split_seg(s, C); // 钉在障碍点 C
-                    network->nodes[nnew].constraint = PINNED_NODE;
-                    network->nodes[nnew].sphere_id  = j;
-                    ncap++;
-                    break;                               // 本段本轮只钉一次
-                }
+                // 本步扫过四边形 [o1,o2,p2,p1] 是否包含 Cproj
+                bool hit = point_in_tri(o1, o2, p2, Cproj, ng) ||
+                           point_in_tri(o1, p2, p1, Cproj, ng);
+                if (!hit) continue;
+
+                int nnew = network->split_seg(s, Cproj);   // 钉在障碍投影点 C_proj(回退)
+                network->nodes[nnew].constraint = PINNED_NODE;
+                network->nodes[nnew].sphere_id  = j;
+                ncap++;
+                break;                                     // 本段本轮只钉一次
             }
         }
 

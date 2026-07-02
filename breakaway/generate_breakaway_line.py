@@ -59,15 +59,23 @@ def main():
 
     # 线方向 xi(刃型) 与滑移方向 g(=b̂);障碍沿 ±g 偏移,落在滑移面内
     g = b_hat
-    pick = np.unique(np.linspace(0, len(nodes_arr) - 1, N_OBS, dtype=int))
+    # insert_infinite_line 的节点从盒中心一路铺到盒外的 originpbc(未折回),
+    # 直接取锚点会把障碍摆到盒外。先筛出坐标在 [0,Lbox] 的盒内节点做锚点;
+    # 沿面内 b̂ 偏移不离滑移面,偏移后再校验仍在盒内才收 -> 障碍全在盒内、且与
+    # 旁边那段线共仿射滑移面(h≈0),不触发离面的 y/z 周期绕。
+    inbox = np.all((nodes_arr[:, :3] >= 0.0) & (nodes_arr[:, :3] <= Lbox_b), axis=1)
+    inbox_idx = np.where(inbox)[0]
+    pick = inbox_idx[np.unique(np.linspace(0, len(inbox_idx) - 1, N_OBS, dtype=int))]
     centers, radii = [], []
     for idx in pick:
         M = nodes_arr[idx, :3]
         for sign in (+1.0, -1.0):
-            centers.append(M + sign * H_OFFSET_B * g)
-            radii.append(float(OBS_RADIUS_B))
+            C = M + sign * H_OFFSET_B * g
+            if np.all((C >= 0.0) & (C <= Lbox_b)):
+                centers.append(C)
+                radii.append(float(OBS_RADIUS_B))
     centers, radii = np.array(centers), np.array(radii)
-    print(f'放了 {len(centers)} 个障碍(滑移面上, ±{H_OFFSET_B}b, 捕获半径 {OBS_RADIUS_B}b)')
+    print(f'放了 {len(centers)} 个障碍(盒内滑移面上, ±{H_OFFSET_B}b, 捕获半径 {OBS_RADIUS_B}b)')
 
     # 写出
     G.write_data(os.path.join(out_dir, 'init_config.data'))

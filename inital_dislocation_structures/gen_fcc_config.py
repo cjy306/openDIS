@@ -1,25 +1,17 @@
 """
 生成 FCC Cu 初始位错构型 —— "类型 × 半径 → 力学性能" 研究的公共生成器
 
-三种类型(均 FCC Cu, 5um bulk RVE, rho 锁定为同一值):
-  glide      滑移环(闭合, b.n=0, {111}<110>), 限高 Schmid 滑移系
-  prismatic  棱柱环(b 面外, 沿柱面保守运动)
-  fr         Frank-Read 源(钉扎有限段, 臂长 L = 2R), 限高 Schmid 滑移系
+两种类型(均 FCC Cu, 5um bulk RVE, rho 统一), 都是不同塑性机制:
+  prismatic  棱柱环(b 面外, 沿柱面保守运动), interaction-limited
+  fr         Frank-Read 源(钉扎有限段, 臂长 L=2R; 限高 Schmid + 掺零 Schmid 林源), source-limited
 
-类型是不同塑性机制, 不是单一参数:
-  glide      自由闭合环, 直接承载剪切。本密度(rho=1e12)下邻居内应力 ~3MPa 远
-             小于线张力坍缩应力 ~35MPa, 自由环会自湮灭 -> 加载时用 sigma0 预应力
-             从激活阈值起步(见 fcc_load.py), 这是明确的建模假设。
-  prismatic  近 sessile 障碍, interaction-limited。
-  fr         可增殖源, source-limited。臂长 L=2R 使其激活应力 ~mu*b/L 与
-             环的 mu*b/(2R) 同量级, 三类型在同一半径横坐标上可比。
+(滑移环 glide 已移除: 闭合环在 bulk PBC 无自由表面会自湮灭, 直接加载/弛豫都不行,
+ 见记忆 fcc-initial-structure-study。)
 
 按目标密度反算数量: 总线长 rho*V = num * (单元线长)。
-  环   单元线长 = 2*pi*R(周长)
-  FR   单元线长 = L = 2R(初始直段)
+  棱柱环 单元线长 = 2*pi*R(周长); FR 单元线长 = L = 2R(初始直段)
 
 用法:
-  python gen_fcc_config.py --type glide     --seed 12345
   python gen_fcc_config.py --type prismatic --seed 12345
   python gen_fcc_config.py --type fr        --seed 12345
   -> 写 init_<type>_seed<seed>/{init_config.data, init_config_labeled.vtk}
@@ -32,7 +24,7 @@ pyexadis_paths = ['../python', '../lib', '../core/pydis/python', '../core/exadis
 
 import pyexadis
 from pyexadis_base import ExaDisNet, DisNetManager
-from pyexadis_utils import (generate_glide_config, generate_prismatic_config,
+from pyexadis_utils import (generate_prismatic_config,
                             insert_frank_read_src, write_vtk)
 
 # ============================================================
@@ -43,14 +35,10 @@ BURGMAG    = 2.55e-10    # b [m] —— Cu a/2<110>
 LBOX_M     = 5.0e-6      # bulk 周期盒 5um 立方
 RADIUS_M   = 200e-9      # 环半径 [m]; FR 臂长 L = 2R = 400nm
 MAXSEG_B   = 200         # 离散段长上限 [b](约 51nm)
-NSIDES     = 12          # 环离散多边形边数
 
-# 密度 [1/m^2](A/B 统一加载密度,详见对话纪要):
-#   FR/棱柱 直接加载 -> 用加载密度 RHO_LOAD(= B 弛豫后的目标密度)
-#   glide  需弛豫成网 -> 播种 RHO_SEED_GLIDE(弛豫后掉到 ~RHO_LOAD)
-RHO_LOAD       = 2.0e12   # 适中密度(FR/棱柱 统一)
-RHO_SEED_GLIDE = 1.5e14
-DEFAULT_RHO = {'glide': RHO_SEED_GLIDE, 'prismatic': RHO_LOAD, 'fr': RHO_LOAD}
+# 密度 [1/m^2]: FR/棱柱 直接加载, 统一用适中密度 RHO_LOAD。
+RHO_LOAD    = 2.0e12
+DEFAULT_RHO = {'prismatic': RHO_LOAD, 'fr': RHO_LOAD}
 
 # [001] 拉伸下 12 个 {111}<110> 系的 Schmid 因子: 8 个为 0.408, 4 个为 0。
 # 高 Schmid 8 个(0-based)作 FR 主群, 保证主群在 [001] 下都能开动。
@@ -124,8 +112,8 @@ def generate_fr_config(Lbox_b, num_src, length_b, seed, sysids, zero_sysids=None
 def main():
     import argparse
     pyexadis.initialize()
-    parser = argparse.ArgumentParser(description='生成 FCC Cu 初始位错构型 (glide/prismatic/fr)')
-    parser.add_argument('--type', required=True, choices=['glide', 'prismatic', 'fr'])
+    parser = argparse.ArgumentParser(description='生成 FCC Cu 初始位错构型 (prismatic/fr)')
+    parser.add_argument('--type', required=True, choices=['prismatic', 'fr'])
     parser.add_argument('--seed', type=int, default=12345)
     parser.add_argument('--rho', type=float, default=None,
                         help=f'密度 [1/m^2]; 默认按类型 {DEFAULT_RHO}')
@@ -142,13 +130,7 @@ def main():
     Lbox_b   = LBOX_M / BURGMAG
     radius_b = RADIUS_M / BURGMAG
 
-    if args.type == 'glide':
-        # 弛豫路线: 全 12 个滑移系随机(成网需要跨系结点), 不限高 Schmid
-        num = _num_units(rho, LBOX_M, 2.0 * np.pi * RADIUS_M)
-        print(f'[glide] seed rho={rho:.1e}, {num} 环, R={RADIUS_M*1e9:.0f}nm, 全12系')
-        G = generate_glide_config(CRYSTAL, Lbox_b, num, radius_b, nsides=NSIDES,
-                                  maxseg=MAXSEG_B, seed=args.seed)
-    elif args.type == 'prismatic':
+    if args.type == 'prismatic':
         num = _num_units(rho, LBOX_M, 2.0 * np.pi * RADIUS_M)
         print(f'[prismatic] rho={rho:.1e}, {num} 环, R={RADIUS_M*1e9:.0f}nm')
         G = generate_prismatic_config(CRYSTAL, Lbox_b, num, radius_b,
