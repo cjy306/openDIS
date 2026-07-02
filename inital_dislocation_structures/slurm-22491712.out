@@ -1,7 +1,0 @@
-Host Parallel Execution Space:
-  KOKKOS_ENABLE_OPENMP: yes
-
-OpenMP Runtime Configuration:
-Kokkos::OpenMP thread_pool_topology[ 1 x 128 x 1 ]
-Reading ParaDiS configuration
-Error: cannot open ParaDiS file /work/home/cjy306/openDIS/inital_dislocation_structures/init_glide_seed12345/init_config.data
