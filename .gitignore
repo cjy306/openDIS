@@ -12,3 +12,8 @@ build/*
 dist/*
 docs/*
 .local/*
+*.so
+*.so.*
+*.vtk
+init_config*.data
+output/
