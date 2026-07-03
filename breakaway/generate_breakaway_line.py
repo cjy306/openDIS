@@ -31,9 +31,12 @@ BURG_DIR   = np.array([1.,  1., 1.])    # 柏氏矢量 <111>
 PLANE_DIR  = np.array([0., -1., 1.])    # 滑移面 {110},须 ⊥ b ([0,-1,1]·[1,1,1]=0 ✓)
 THETA      = 90.0        # 位向角:90=刃型, 0=螺型
 
-N_OBS        = 3         # 沿线放障碍的点数(每点 ±g 各一 → 共 2*N 个)
-H_OFFSET_B   = 300       # 障碍沿滑移方向 g 偏离线的距离 [b](线滑这么远后接触)
-OBS_RADIUS_B = 40        # 障碍捕获半径 [b](点障碍,取小;别小于每步位移)
+N_OBS         = 3        # 沿线放障碍的点数(每点 ±g 各一 → 共 2*N 个)
+H_OFFSET_B    = 300      # 障碍沿滑移方向 g 偏离线的距离 [b](线滑这么远后接触)
+OBS_RADIUS_B  = 40       # 障碍捕获半径 [b](点障碍,取小;别小于每步位移)
+OBS_OFFPLANE_B = 20      # 障碍离滑移面的垂直距离 [b](沿面法向);必须 < OBS_RADIUS_B 才过垂直门
+                         #   =0 -> 障碍在面上(h=0, Cproj≡C, 验证不了投影)
+                         #   >0 -> 障碍在面外, h≠0, Cproj≠C, 用来验证"钉在投影点"确实生效
 
 
 def main():
@@ -57,12 +60,13 @@ def main():
     print(f'盒 {LBOX_M*1e6:.1f}μm, 单根刃型直线 b={BURG_DIR.tolist()}, '
           f'面 {PLANE_DIR.tolist()}, {len(nodes_arr)} 节点')
 
-    # 线方向 xi(刃型) 与滑移方向 g(=b̂);障碍沿 ±g 偏移,落在滑移面内
+    # 线方向 xi(刃型) 与滑移方向 g(=b̂);障碍沿 ±g 偏移(面内),再沿面法向推 OBS_OFFPLANE_B 到面外
+    assert OBS_OFFPLANE_B < OBS_RADIUS_B, 'OBS_OFFPLANE_B 必须 < OBS_RADIUS_B,否则垂直门拦掉、根本不捕获'
     g = b_hat
     # insert_infinite_line 的节点从盒中心一路铺到盒外的 originpbc(未折回),
     # 直接取锚点会把障碍摆到盒外。先筛出坐标在 [0,Lbox] 的盒内节点做锚点;
-    # 沿面内 b̂ 偏移不离滑移面,偏移后再校验仍在盒内才收 -> 障碍全在盒内、且与
-    # 旁边那段线共仿射滑移面(h≈0),不触发离面的 y/z 周期绕。
+    # 面内 b̂ 偏移 + 面法向 OBS_OFFPLANE_B 偏移,偏移后再校验仍在盒内才收。
+    # 面外偏移让 h≠0 -> Cproj≠C,才能验证"钉在投影点"生效。
     inbox = np.all((nodes_arr[:, :3] >= 0.0) & (nodes_arr[:, :3] <= Lbox_b), axis=1)
     inbox_idx = np.where(inbox)[0]
     pick = inbox_idx[np.unique(np.linspace(0, len(inbox_idx) - 1, N_OBS, dtype=int))]
@@ -70,12 +74,12 @@ def main():
     for idx in pick:
         M = nodes_arr[idx, :3]
         for sign in (+1.0, -1.0):
-            C = M + sign * H_OFFSET_B * g
+            C = M + sign * H_OFFSET_B * g + OBS_OFFPLANE_B * plane_hat
             if np.all((C >= 0.0) & (C <= Lbox_b)):
                 centers.append(C)
                 radii.append(float(OBS_RADIUS_B))
     centers, radii = np.array(centers), np.array(radii)
-    print(f'放了 {len(centers)} 个障碍(盒内滑移面上, ±{H_OFFSET_B}b, 捕获半径 {OBS_RADIUS_B}b)')
+    print(f'放了 {len(centers)} 个障碍(盒内, ±{H_OFFSET_B}b, 离面 {OBS_OFFPLANE_B}b, 捕获半径 {OBS_RADIUS_B}b)')
 
     # 写出
     G.write_data(os.path.join(out_dir, 'init_config.data'))
