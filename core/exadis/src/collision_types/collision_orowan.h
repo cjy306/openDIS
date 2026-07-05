@@ -329,7 +329,45 @@ public:
                            point_in_tri(o1, p2, p1, Cproj, ng);
                 if (!hit) continue;
 
-                int nnew = network->split_seg(s, Cproj);   // 钉在障碍投影点 C_proj(回退)
+                // ---- 回退到接触时刻 τ(办法1):端点也退回,消掉过冲尖 ----
+                // 段随步线性运动 a(τ)=o1+τ(p1-o1), b(τ)=o2+τ(p2-o2)。
+                // 令 Cproj 落在动段直线上:f(τ)=dot(cross(b-a, Cproj-a), ng)=0,
+                // 展开为 c0+c1τ+c2τ^2=0,取 [0,1] 内(优先较小=首次接触)的根。
+                Vec3 U0 = o2 - o1;
+                Vec3 U1 = (p2 - o2) - (p1 - o1);
+                Vec3 W0 = Cproj - o1;
+                Vec3 W1 = p1 - o1;
+                double c0 =  dot(cross(U0, W0), ng);
+                double c1 =  dot(cross(U1, W0), ng) - dot(cross(U0, W1), ng);
+                double c2 = -dot(cross(U1, W1), ng);
+                double tau = 1.0;                          // 兜底:解不出则不回退(= 旧行为)
+                if (fabs(c2) < 1e-20) {
+                    if (fabs(c1) > 1e-20) {
+                        double t = -c0 / c1;
+                        if (t >= 0.0 && t <= 1.0) tau = t;
+                    }
+                } else {
+                    double disc = c1 * c1 - 4.0 * c2 * c0;
+                    if (disc >= 0.0) {
+                        double sq = sqrt(disc);
+                        double r1 = (-c1 - sq) / (2.0 * c2);
+                        double r2 = (-c1 + sq) / (2.0 * c2);
+                        double best = 2.0;
+                        if (r1 >= -1e-6 && r1 <= 1.000001 && r1 < best) best = r1;
+                        if (r2 >= -1e-6 && r2 <= 1.000001 && r2 < best) best = r2;
+                        if (best <= 1.000001) {
+                            if (best < 0.0) best = 0.0;
+                            if (best > 1.0) best = 1.0;
+                            tau = best;
+                        }
+                    }
+                }
+                // 端点回退到接触构型(增量式,PBC 安全):pos -= (1-τ)·dt·v
+                double back = (1.0 - tau) * dt;
+                network->nodes[n1].pos = network->nodes[n1].pos - back * network->nodes[n1].v;
+                network->nodes[n2].pos = network->nodes[n2].pos - back * network->nodes[n2].v;
+
+                int nnew = network->split_seg(s, Cproj);   // 钉在障碍投影点 C_proj(接触时刻的动段上)
                 network->nodes[nnew].constraint = PINNED_NODE;
                 network->nodes[nnew].sphere_id  = j;
                 ncap++;
