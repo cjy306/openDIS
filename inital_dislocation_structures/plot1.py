@@ -13,29 +13,19 @@ import matplotlib.pyplot as plt
 # ========== 在这里配置要对比的曲线（可加 2 条以上）==========
 CURVES = [
     {
-        "file":  "/data/home/dg000246b/openDIS/inital_dislocation_structures/output_caseA_100_seed12345/stress_strain_dens.dat",
-        "label": "erate_100",
+        "file":  "/public/home/cjy306/openDIS/inital_dislocation_structures/output_fr_seed12345/stress_strain_dens.dat",
+        "label": "fr",
         "color": "#1F77B4",   
     },
     {
-        "file":  "/data/home/dg000246b/openDIS/inital_dislocation_structures/output_caseA_500_seed12345/stress_strain_dens.dat",
-        "label": "erate_500",
+        "file":  "/public/home/cjy306/openDIS/inital_dislocation_structures/output_prismatic_seed12345/stress_strain_dens.dat",
+        "label": "prismatic",
         "color": "#F1310E",   
-    },
-    {
-        "file":  "/data/home/dg000246b/openDIS/inital_dislocation_structures/output_caseA_2000_seed12345/stress_strain_dens.dat",
-        "label": "erate_2e3",
-        "color": "#19EC12",   
-    },
-    {
-        "file":  "/data/home/dg000246b/openDIS/inital_dislocation_structures/output_caseA_1e4_seed12345/stress_strain_dens.dat",
-        "label": "erate_1e4",
-        "color": "#030303",   
-    },
+    }
 
  
 ]
-OUTPUT_DIR  = "/data/home/dg000246b/openDIS/inital_dislocation_structures/Post-processing simulation"
+OUTPUT_DIR  = "/public/home/cjy306/openDIS/inital_dislocation_structures/Post-processing simulation"
 OUTPUT_NAME = "erate_compare"
 # =========================================================
 

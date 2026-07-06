@@ -16,5 +16,9 @@ docs/*
 *.so.*
 *.vtk
 init_config*.data
-restart.*.exadis
 output/
+*.exadis
+*.log
+slurm-*.out
+slurm-*.err
+output*/
