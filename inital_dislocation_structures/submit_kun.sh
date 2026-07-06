@@ -10,7 +10,7 @@
 #SBATCH --ntasks=1
 #SBATCH --output=slurm-%j.out
 #SBATCH --error=slurm-%j.err
-#SBATCH --time=24:00:00
+#SBATCH --time=48:00:00
 #SBATCH --partition=ksagnormal01     # 昆山 GPU 队列
 #SBATCH --gres=gpu:1
 #SBATCH --cpus-per-task=8
@@ -38,15 +38,15 @@ nvidia-smi | head -15
 # ============================================================================
 echo ">>> [1/2] 生成初始构型..."
 cd /public/home/cjy306/openDIS/inital_dislocation_structures
-python 生成脚本.py --seed 12345
+python gen_fcc_config.py --type prismatic --seed 12345
 echo ">>> 生成完成"
 
 # ============================================================================
 #  ★★★ 第二步:跑模拟(填你的运行脚本路径和参数) ★★★
 # ============================================================================
 echo ">>> [2/2] 开始模拟..."
-cd /public/home/cjy306/openDIS/运行脚本所在目录
-python 运行脚本.py
+cd /public/home/cjy306/openDIS/inital_dislocation_structures
+python load.py
 echo ">>> 模拟完成"
 
 echo "=== Job 结束 $(date) ==="
