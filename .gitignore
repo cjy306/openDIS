@@ -16,4 +16,5 @@ docs/*
 *.so.*
 *.vtk
 init_config*.data
+restart.*.exadis
 output/
