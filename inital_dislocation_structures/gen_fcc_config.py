@@ -9,7 +9,8 @@
  见记忆 fcc-initial-structure-study。)
 
 按目标密度反算数量: 总线长 rho*V = num * (单元线长)。
-  棱柱环 单元线长 = 2*pi*R(周长); FR 单元线长 = L = 2R(初始直段)
+  棱柱环 单元线长 = 4R (FCC 是 Nsides=4 菱形, 四边各长 R, 周长 4R, 不是圆的 2*pi*R!)
+  FR     单元线长 = L = 2R(初始直段)
 
 用法:
   python gen_fcc_config.py --type prismatic --seed 12345
@@ -131,8 +132,9 @@ def main():
     radius_b = RADIUS_M / BURGMAG
 
     if args.type == 'prismatic':
-        num = _num_units(rho, LBOX_M, 2.0 * np.pi * RADIUS_M)
-        print(f'[prismatic] rho={rho:.1e}, {num} 环, R={RADIUS_M*1e9:.0f}nm')
+        # FCC 棱柱环是 Nsides=4 菱形, 周长 = 4R(不是 2*pi*R), 否则密度偏低 0.64x
+        num = _num_units(rho, LBOX_M, 4.0 * RADIUS_M)
+        print(f'[prismatic] rho={rho:.1e}, {num} 环, R={RADIUS_M*1e9:.0f}nm (周长4R)')
         G = generate_prismatic_config(CRYSTAL, Lbox_b, num, radius_b,
                                       maxseg=MAXSEG_B, seed=args.seed)
     else:  # fr
