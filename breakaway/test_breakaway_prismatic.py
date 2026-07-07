@@ -19,7 +19,7 @@ from pyexadis_base import ExaDisNet, DisNetManager, SimulateNetworkPerf, read_re
 from pyexadis_base import CalForce, MobilityLaw, TimeIntegration, Collision, Topology, Remesh
 
 # ===== 加载参数(占位值,自行调整) =====
-ERATE      = 1e4                       # 应变率 [1/s]
+ERATE      = 1e3                       # 应变率 [1/s]
 EDIR       = np.array([0., 0., 1.])    # 加载轴 [001](Schmid≈0.408,环沿[111]滑移)
 MAX_STEP   = 10000                      # 跑满 5000 步就停(停机判据用步数,不用应变)
 
