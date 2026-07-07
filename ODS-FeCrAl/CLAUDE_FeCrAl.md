@@ -129,8 +129,13 @@ immobile,Fig.8)恰好是本假设的 proxy——障碍物一旦不可转动,相�
 ### 3.2 三类障碍物的建模方式
 - **氧化物**:MD 标定的**高斯势强障碍**。范式照搬 Lehtinen 2016/2018(ParaDiS):
   势 U(r)=A·exp(−r²/Rp²),力 F(r)=2Ar·exp(−r²/Rp²)/Rp²;A=力参数(调强度),
-  Rp=尺寸参数,二者由 MD 标定。优点:空间连续、对节点无力突变、利于数值稳定;
-  调 A 可从弱可剪切连续过渡到强 Orowan。⚠️ A、Rp 具体数值见待办 T2。
+  Rp=尺寸参数。优点:空间连续、对节点无力突变、利于数值稳定;
+  调 A 可从弱可剪切连续过渡到强 Orowan。
+  ✅ **A、Rp 已解锁(2026-06,详见 §3.7 + DESIGN_oxide_gaussian_force.md)**:
+  A=1.56×10⁻¹⁸ Pa·m³(Lehtinen 2018 原文 MD 标定值),Rp 用实验尺寸(5–14nm);
+  BKS 验证公式已从 Lehtinen 2018 Eq.2-3 抄准。原"待办 T2"卡点已解除。
+- **集成方式(2026-06 定,见 DESIGN 文档)**:高斯势力**加进 SUBCYCLING 力体系**,
+  用 `oxides.empty()` 自动开关(没氧化物零开销、对现有仿真零影响);近邻用双循环。
 - **α′ 成分起伏**:相干应力场 + 弱摩擦(可沿用 Pachaury 的随机成分重构 + 相干应力 BVP
   思路;特征波长实验约 5 nm,Pachaury 因算力人为放大到 ~50 nm 并验证趋势不变)。
 - **位错环**:闭合位错环;a/2⟨111⟩ 生成为六边形(可动),a⟨100⟩ 生成为方形(不可动)。
@@ -195,6 +200,30 @@ DDD 里氧化物只演强化相,不演阱。⚠️ 这个输入微观结构需�
    论文表述:"以标准 yttria 类弥散相为代表刚性氧化物,几何参数 (d,L) 取自 FeCrAl-ODS 实测
    (Yan 2023 等)"——文献通行、可辩护。
 
+### 3.7 Case D 高斯势标定参数(已解锁 — 三篇 bcc-Fe+Y₂O₃ 文献,2026-06 读全文)
+Case D 的 A/Rp/BKS 卡点(原 V4/V5/T2)**已全部解除**,来源:
+
+| 参数 | 值 | 来源 | 备注 |
+|---|---|---|---|
+| **A(高斯势强度)** | **1.56×10⁻¹⁸ Pa·m³** | **Lehtinen 2018**(Sci.Rep. 8:6914) | BCC-Fe 强 Orowan 障碍,MD 反推;势形式与本课题完全一致 |
+| **Rp(势宽度)** | 5、10 nm(或用实验尺寸 6–27nm) | Lehtinen 2018 / Yan 2023 | 直接用氧化物有效半径,不必标定 |
+| **BKS 验证式** | 见下 | Lehtinen 2018 Eq.2-3 | 含 3D 密度→间距换算 |
+| **Y₂O₃ CRSS 交叉值** | ~400–900 MPa (D=5nm) | Takahashi 2011 | 用于 Y₂O₃ 专属反标微调 |
+| **CRSS vs 尺寸/f 全曲线** | D=3–6nm, f=0–0.837% | Takahashi 2014 | Orowan 高估、需含偶极子修正(与 Yan RSS 一致) |
+
+**BKS 式(从 Lehtinen 2018 抄准,用于 §3.3 验证)**:
+  σ_r = C·Gb/(L−D)·[ln(L/rcore)]^(−1/2)·[ln(D̄/rcore)+0.7]^(3/2)
+  C=1/(2π);L=(2·D·ρp)^(−0.5)(3D 数密度→滑移面间距);D̄=D·L/(D+L)
+
+⚠️ 三点诚实分寸:
+- Lehtinen 的 A 是**通用强障碍**值(非专门 Y₂O₃);先直接用起步,论文注明出处;
+  要 Y₂O₃ 专属值用 Takahashi 2011 的 CRSS 反标微调。
+- Lehtinen 用 **750K 高温**参数(G=75GPa),本课题室温 μ=81GPa;A 是能量量纲,
+  换模量时可按 μ 比例微调(⚠️ 此比例关系仅七成把握,精确前需核对 A 的量纲标度)。
+- Takahashi 2011 实证:位错穿切 Y₂O₃ 需 21–128 GPa(不现实)→ **必然 Orowan 绕过**,
+  印证本课题"氧化物不可剪切、纯排斥"建模假设正确。
+- 三篇 PDF 均在仓库根目录;Lehtinen 2018 = 原 V2 待核项,现已读全文核实无误。
+
 ---
 
 ## 4. 模拟矩阵(屈服阶段;判据见底部)
@@ -244,19 +273,19 @@ DDD 里氧化物只演强化相,不演阱。⚠️ 这个输入微观结构需�
   [氧化物+环]。novelty 已据此收紧到"α′ + 相消免疫"。
   ⚠️ 残留缺口:Semantic Scholar 免费档限速、未覆盖知网中文库;Robertson 正刊全文未读。
   若要彻底闭合,待 SS API key 到账后批量补扫 + 下 Robertson 正刊确认无 α′。
-- **V2 — Lehtinen 2018 的内容**:文中引用"Lehtinen et al. 2018, Sci. Reports,
-  ParaDiS,环+强析出相,析出相密度按 ODS 量级,BKS 验证"——此细节来自早期检索,
-  **未逐字核对原文**,引用前需取原文确认。
+- **V2 — Lehtinen 2018 的内容**:✅ **已核实(2026-06,读全文)**。原文确为 BCC-Fe DDD +
+  高斯势障碍(A=1.56e-18 Pa·m³)+ a/2⟨111⟩ 环 + BKS 验证,与本课题方案一致。
+  参数已提取进 §3.7。此项闭合。
 - **V3 — 氧化物实验参数来源**:🟡 **部分完成**。
   - ✅ 氧化物**基准参数**已取自 Yan 2023(arXiv:2309.03703),见 §3.5(尺寸/密度/类型/
     Orowan 式/α(r))。但为**未辐照**态,仅作 Case D 档位。
   - ◻ **辐照后输入微结构**(环/α′/氧化物在辐照后的密度与尺寸,§3.4 所需)**仍缺**。
     候选:Zhang et al. 2020, *J. Nucl. Mater.* 533, 152094(MA956 中子辐照 4.36 dpa,
     DOI:10.1016/j.jnucmat.2020.152094)——含三者辐照后实测,但非 arXiv,需下载 PDF。
-- **V4 — BKS 公式精确形式**:不同文献系数/特征长度定义略有出入,定量对照前回原始文献
-  (Bacon-Kocks-Scattergood 1973 或 Lehtinen 方法部分)抄准确表达式。
-- **V5 — 氧化物迁移率/参数不可从 FCC 迁移**:A、Rp 及迁移率必须用 **BCC 基体**的 MD
-  标定,**不得**套用任何 FCC 体系(包括用户熟悉的 FCC 铜)的数值。
+- **V4 — BKS 公式精确形式**:✅ **已解决(2026-06)**。从 Lehtinen 2018 Eq.2-3 抄准,
+  完整式见 §3.7。此项闭合。
+- **V5 — 氧化物参数不可从 FCC 迁移**:✅ **满足**。§3.7 三篇(Lehtinen/Takahashi ×2)
+  均为 **BCC-Fe + Y₂O₃**,无 FCC 污染。A=1.56e-18 Pa·m³ 是 bcc-Fe 标定值。此项闭合。
 
 ---
 
@@ -272,23 +301,34 @@ DDD 里氧化物只演强化相,不演阱。⚠️ 这个输入微观结构需�
 ## 7. 第一步待办(建议执行顺序)
 
 - **T1 — 复核空白 (对应 V1)**:Scholar 检索,确认三体方向未被占用。先做,成本最低。
-- **T2 — 标定氧化物障碍参数 (对应 V4/V5)**:按 Lehtinen 范式从 BCC 基体 MD 标定
-  高斯势 A、Rp;查 BKS 精确公式备用。
+- **T2 — 标定氧化物障碍参数 (对应 V4/V5)**:✅ **完成(2026-06)**。A=1.56e-18 Pa·m³
+  (Lehtinen 2018)、Rp=实验尺寸、BKS 式已抄准,见 §3.7。下一步是写高斯势 C++
+  (集成进 subcycling,见 DESIGN_oxide_gaussian_force.md §6 代码待办)。
 - **T3 — 跑通单机制工况 B/C/D**:先各自单独跑通,其中 D(氧化物)用 BKS 交叉验证强度,
   确保障碍物建模可信,再进入 E/F 耦合。
+  当前状态:Case A 基体(预变形路线)在调试中;Case D 设计+参数就绪,待写 C++(需重编译)。
 - **T4 — 锁定实验参数源 (对应 V3)**:确定 ODS-FeCrAl 表征文献,提取氧化物尺寸/数密度
   及辐照后微观结构作为输入。
 
 ---
 
-## 8. 环境与平台(⚠️ 请用户补全)
+## 8. 环境与平台
 
-- HPC 平台:______(如 DGHPC / BSCC-M9 / SCNet 等,请填实际使用的)
-- ExaDiS / OpenDiS 安装路径:______
-- 代码仓库:______
-- 已有相关脚本(如 ParaView 后处理 paraview.py、Orowan 检测):______
-
-> 说明:以上空白请用户填入,以便 Claude Code 直接定位环境与已有代码。
+- **HPC 平台**:SCNet(国家超算互联网,Slurm);另有本地 4090 GPU 跑小规模验证。
+  旧 Cu 算例在另一 Slurm 集群(账号 dg000246b)。SCNet 安装路径/env 待用户上平台后填。
+- **代码仓库**:`e:\openDIS`(本地 Windows);linux .so 本地不可跑,改代码 → git push →
+  超算/GPU 端 git pull 编译测试。工作区 `e:\openDIS\ODS-FeCrAl\`。
+- **已有脚本(ODS-FeCrAl/)**:
+  - `generate_caseA.py` / `generate_caseB.py` — 构型生成(自包含)
+  - `test_caseA_baseline.py` / `test_caseB_loops.py` — 模拟(仿 HomeWork/test_Cu_pure.py)
+  - `extract_yield.py` — 0.2% offset 屈服提取 + 多实现平均
+  - `paraview.py` — 位错网络 data→VTK(带 PBC 折叠 + LoopType 染色)
+  - `DESIGN_oxide_gaussian_force.md` — Case D 高斯势力设计说明(最新版)
+  - `PLAN.md` — 排程/状态
+- **旧代码(HomeWork/,Cu 参考)**:paraview.py、test_Cu*.py、几何投影 Orowan
+  (`core/exadis/src/collision_types/collision_orowan.h`,Case D 弃用不改造)。
+- **pyexadis_utils.py 新增(本课题)**:`insert_glide_loop` / `generate_glide_config`
+  (剪切环,和棱柱环那对平级;⚠️ 剪切环会线张力坍缩,Case A 未采用)。
 
 ---
 
