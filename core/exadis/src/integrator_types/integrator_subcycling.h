@@ -54,7 +54,14 @@ public:
     
     static const int Ngmax = MAXGROUPS;
     Kokkos::View<Vec3*> fgroup[Ngmax-1];
-    
+
+    // Case D: pre-computed per-node oxide Gaussian force (device View).
+    // Filled in pre_compute() when system->oxides is non-empty; added as an
+    // external (group-0-like) force. Empty when no oxides -> zero overhead.
+    Kokkos::View<Vec3*> foxide;
+    Kokkos::View<Vec3*>::HostMirror h_foxide;   // host copy for host-side node_force
+    bool has_oxides = false;
+
 public:
     struct Params {
         FSeg::Params FSegParams;
@@ -127,6 +134,77 @@ public:
         flong->pre_compute(system);
         // Skip fsegseg pre-compute. We'll build all
         // subcycling groups during the integration.
+
+        // Case D: pre-compute per-node oxide Gaussian force (once per global step).
+        // Oxides are immobile and the force is slowly varying, so computing it here
+        // (rather than inside the subcycle loop) is accurate and cheap.
+        compute_oxide_force(system);
+    }
+
+    // Compute repulsive Gaussian force from each oxide on each node, store in foxide.
+    // U(r)=A*exp(-r^2/Rp^2), F(r)=2*A*r/Rp^2*exp(-r^2/Rp^2), pointing oxide->node.
+    // Short-range: skip beyond 3*Rp. No-op (zero overhead) if system->oxides empty.
+    void compute_oxide_force(System* system) {
+        int Nox = (int)system->oxides.size();
+        has_oxides = (Nox > 0);
+        if (!has_oxides) return;
+
+        DeviceDisNet* net = system->get_device_network();
+        int Nnodes = net->Nnodes_local;
+
+        // Copy oxide list host -> device (same paradigm as collision_orowan.h)
+        Kokkos::View<OxideParticle*, T_memory_space> d_ox("d_ox", Nox);
+        auto h_ox = Kokkos::create_mirror_view(d_ox);
+        for (int j = 0; j < Nox; j++) h_ox(j) = system->oxides[j];
+        Kokkos::deep_copy(d_ox, h_ox);
+
+        if ((int)foxide.extent(0) != Nnodes)
+            Kokkos::resize(foxide, Nnodes);
+
+        // Local copies for lambda capture (avoid capturing `this` in KOKKOS_LAMBDA,
+        // same pattern as save_subforce)
+        Kokkos::View<Vec3*> fox = foxide;
+        auto cell = net->cell;
+        Kokkos::parallel_for("OxideGaussianForce", Nnodes, KOKKOS_LAMBDA(const int& i) {
+            auto nodes = net->get_nodes();
+            Vec3 p = nodes[i].pos;
+            Vec3 f(0.0);
+            for (int j = 0; j < Nox; j++) {
+                // nearest periodic image of node relative to oxide center
+                Vec3 r = cell.pbc_position(d_ox(j).center, p) - d_ox(j).center;
+                double d2 = r.norm2();
+                double Rp = d_ox(j).Rp;
+                double cut = 3.0 * Rp;
+                if (d2 < cut * cut && d2 > 1e-20) {
+                    double d = sqrt(d2);
+                    double Fmag = 2.0 * d_ox(j).A * d / (Rp * Rp) * exp(-d2 / (Rp * Rp));
+                    f += (Fmag / d) * r;   // direction oxide->node (repulsive)
+                }
+            }
+            fox(i) = f;
+        });
+        Kokkos::fence();
+
+        // Host mirror for host-side single-node force queries (topology ops etc.)
+        h_foxide = Kokkos::create_mirror_view(foxide);
+        Kokkos::deep_copy(h_foxide, foxide);
+    }
+
+    // Add the pre-computed oxide force to all nodal forces (device path).
+    // Called from compute() for group 0. Bounds-guarded: nodes created by
+    // topology ops after pre_compute (i >= extent) simply get no oxide force
+    // until the next global step, which is an acceptable approximation.
+    void add_oxide_force(DeviceDisNet* net) {
+        if (!has_oxides) return;
+        Kokkos::View<Vec3*>& fox = foxide;
+        int Nfox = (int)fox.extent(0);
+        Kokkos::parallel_for("AddOxideForce", net->Nnodes_local, KOKKOS_LAMBDA(const int& i) {
+            if (i < Nfox) {
+                auto nodes = net->get_nodes();
+                nodes[i].f += fox(i);
+            }
+        });
+        Kokkos::fence();
     }
     
     void compute(System* system, bool zero=true) {
@@ -142,6 +220,9 @@ public:
             if (flong_group0)
                 flong->compute(system, false);
             fsegseg->compute(system, false);
+            // Case D: oxide Gaussian force is an external slowly-varying force,
+            // treated as part of group 0 (pre-computed once per global step).
+            add_oxide_force(net);
             // In the drift scheme we integrate under all forces
             // so add all other group forces
             if (drift) {
@@ -162,9 +243,12 @@ public:
         f += fseg->node_force(system, i);
         f += flong->node_force(system, i);
         f += fsegseg->node_force(system, i);
+        // Case D: pre-computed oxide force (host mirror; bounds-guarded for new nodes)
+        if (has_oxides && i < (int)h_foxide.extent(0))
+            f += h_foxide(i);
         return f;
     }
-    
+
     template<class N>
     KOKKOS_INLINE_FUNCTION
     Vec3 node_force(System* system, N* net, const int& i, const team_handle& team)
@@ -173,6 +257,9 @@ public:
         f += fseg->node_force(system, net, i, team);
         f += flong->node_force(system, net, i, team);
         f += fsegseg->node_force(system, net, i, team);
+        // Case D: pre-computed oxide force (device View; bounds-guarded for new nodes)
+        if (has_oxides && i < (int)foxide.extent(0))
+            f += foxide(i);
         return f;
     }
     

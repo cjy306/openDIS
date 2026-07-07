@@ -1089,7 +1089,13 @@ PYBIND11_MODULE(pyexadis, m) {
              "Load planar obstacles (twin boundaries) that block dislocation motion. "
              "points_b: list of [x,y,z] on each plane in Burgers units; "
              "normals_b: list of [nx,ny,nz] unit normals.",
-             py::arg("points_b"), py::arg("normals_b"));
+             py::arg("points_b"), py::arg("normals_b"))
+        .def("load_oxides", &ExaDisNet::load_oxides,
+             "Load nano-oxide particles as repulsive Gaussian force fields (Case D, "
+             "Lehtinen paradigm). centers_b: list of [x,y,z] in Burgers units; "
+             "Rp_b: list of Gaussian size parameters in Burgers units; "
+             "A_vals: list of Gaussian strength parameters.",
+             py::arg("centers_b"), py::arg("Rp_b"), py::arg("A_vals"));
 
     py::class_<SystemBind, ExaDisNet>(m, "System")
         .def(py::init<ExaDisNet, Params>())

@@ -247,6 +247,21 @@ struct ExaDisNet {
     {
         system->load_planar_obstacles(points_b, normals_b);
     }
+
+    /*
+     * load_oxides(centers_b, Rp_b, A_vals)  (Case D)
+     *   centers_b : list of [x,y,z] oxide centers in Burgers vector units
+     *   Rp_b      : list of Gaussian size parameters Rp in Burgers vector units
+     *   A_vals    : list of Gaussian strength parameters A
+     * Stores in system->oxides; ForceSubcycling adds the repulsive Gaussian
+     * force (Lehtinen paradigm) each global step. Empty list = zero overhead.
+     */
+    void load_oxides(const std::vector<Vec3>& centers_b,
+                     const std::vector<double>& Rp_b,
+                     const std::vector<double>& A_vals)
+    {
+        system->load_oxides(centers_b, Rp_b, A_vals);
+    }
 };
 
 struct SystemBind : ExaDisNet {
@@ -258,6 +273,7 @@ struct SystemBind : ExaDisNet {
         // Copy obstacles from source network so the driver's System has them
         system->obstacles         = disnet.system->obstacles;
         system->planar_obstacles  = disnet.system->planar_obstacles;
+        system->oxides            = disnet.system->oxides;
     }
     void set_neighbor_cutoff(double cutoff) {
         system->neighbor_cutoff = cutoff;

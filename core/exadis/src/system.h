@@ -51,6 +51,23 @@ struct PlanarObstacle {
     int    id;
 };
 
+/*---------------------------------------------------------------------------
+ *
+ *    Struct:        OxideParticle
+ *                  Nano-oxide particle modeled as a repulsive Gaussian force
+ *                  field (Lehtinen 2016/2018 paradigm) for Orowan bypass.
+ *                  Potential U(r)=A*exp(-r^2/Rp^2), force F(r)=2*A*r/Rp^2*exp(...).
+ *                  A tunes strength (soft shearable -> hard Orowan);
+ *                  Rp is the size parameter. All positions in Burgers vector mag.
+ *
+ *-------------------------------------------------------------------------*/
+struct OxideParticle {
+    Vec3   center;   // center (in b units)
+    double Rp;       // Gaussian width / size parameter (in b units)
+    double A;        // Gaussian strength (force parameter, in ExaDiS force units)
+    int    id;
+};
+
 class System {
 public:
     DisNetManager* net_mngr = nullptr;
@@ -134,6 +151,21 @@ public:
             planar_obstacles.push_back({points_b[i], nn, i});
         }
         ExaDiS_log("[System] %d planar obstacles (twin boundaries) loaded\n", n);
+    }
+
+    // Nano-oxide particles (Gaussian repulsive potential, Case D) (all units in Burgers vector)
+    std::vector<OxideParticle> oxides;
+
+    void load_oxides(const std::vector<Vec3>& centers_b,
+                     const std::vector<double>& Rp_b,
+                     const std::vector<double>& A_vals)
+    {
+        oxides.clear();
+        int n = (int)centers_b.size();
+        oxides.reserve(n);
+        for (int i = 0; i < n; i++)
+            oxides.push_back({centers_b[i], Rp_b[i], A_vals[i], i});
+        ExaDiS_log("[System] %d oxide particles loaded (Gaussian potential)\n", n);
     }
 
     bool pyexadis = false;
