@@ -31,6 +31,6 @@ nvidia-smi | head -15
 # --- 直接续跑,不生成初始构型 ---
 echo ">>> 从第 5000 步续跑..."
 cd /public/home/cjy306/openDIS/ODS-FeCrAl
-python test_caseA_baseline.py --restart 300700
+python test_caseA_baseline.py --restart 667100
 
 echo "=== Job 结束 $(date) ==="
