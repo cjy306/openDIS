@@ -8,7 +8,7 @@
 #SBATCH --ntasks=1
 #SBATCH --output=slurm-%j.out
 #SBATCH --error=slurm-%j.err
-#SBATCH --time=24:00:00
+#SBATCH --time=72:00:00
 #SBATCH --partition=ksagnormal01
 #SBATCH --gres=gpu:1
 #SBATCH --cpus-per-task=8
@@ -31,6 +31,6 @@ nvidia-smi | head -15
 # --- 直接续跑,不生成初始构型 ---
 echo ">>> 从第 5000 步续跑..."
 cd /public/home/cjy306/openDIS/inital_dislocation_structures
-python load.py --restart 287000
+python load.py --restart 365000
 
 echo "=== Job 结束 $(date) ==="
