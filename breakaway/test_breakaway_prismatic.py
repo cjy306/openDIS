@@ -64,11 +64,12 @@ def main():
         restart = None
 
     # 读障碍并加载(重启/起步都要;障碍存在 System 上,不随 restart 恢复;默认 phi_crit=90°)
+    # type=1(breakaway 切过型点障碍):只走 handle_breakaway 钉/脱,不受 handle_orowan 硬球投影
     obs = np.loadtxt(os.path.join(init_dir, 'obstacles.data'))
     if obs.ndim == 1:
         obs = obs.reshape(1, -1)
     centers_b, radii_b = obs[:, :3], obs[:, 3]
-    net.get_disnet(ExaDisNet).load_obstacles([list(c) for c in centers_b], list(radii_b))
+    net.get_disnet(ExaDisNet).load_obstacles([list(c) for c in centers_b], list(radii_b), type=1)
     print(f'读入 {len(centers_b)} 个障碍')
 
     cell = net.get_disnet(ExaDisNet).cell

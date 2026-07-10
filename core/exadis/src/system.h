@@ -29,11 +29,17 @@ extern FILE* flog;
  *                  All units in Burgers vector magnitude.
  *
  *-------------------------------------------------------------------------*/
+enum ObstacleType {
+    OBSTACLE_OROWAN    = 0,  // hard sphere: Orowan bypass only (handle_orowan projection)
+    OBSTACLE_BREAKAWAY = 1   // point obstacle: cut-through only (handle_breakaway pin/depin), no sphere geometry
+};
+
 struct SphericalObstacle {
     Vec3   center;
     double radius;
     int    id;
     double phi_crit;  // breakaway critical angle (radians); depin when |sum of arm tangents| > 2*cos(phi_crit/2)
+    int    type;      // ObstacleType: which mechanism owns this obstacle (mutually exclusive)
 };
 
 /*---------------------------------------------------------------------------
@@ -124,15 +130,17 @@ public:
 
     void load_obstacles(const std::vector<Vec3>& centers_b,
                         const std::vector<double>& radii_b,
-                        double phi_crit = M_PI/2)  // default 90 deg (Foreman-Makin moderate obstacle)
+                        double phi_crit = M_PI/2,   // default 90 deg (Foreman-Makin moderate obstacle)
+                        int type = OBSTACLE_OROWAN) // default keeps legacy hard-sphere behavior
     {
         obstacles.clear();
         int n = (int)centers_b.size();
         obstacles.reserve(n);
         for (int i = 0; i < n; i++)
-            obstacles.push_back({centers_b[i], radii_b[i], i, phi_crit});
-        ExaDiS_log("[System] %d spherical obstacles loaded (phi_crit = %.1f deg)\n",
-                   n, phi_crit * 180.0 / M_PI);
+            obstacles.push_back({centers_b[i], radii_b[i], i, phi_crit, type});
+        ExaDiS_log("[System] %d spherical obstacles loaded (phi_crit = %.1f deg, type = %s)\n",
+                   n, phi_crit * 180.0 / M_PI,
+                   type == OBSTACLE_BREAKAWAY ? "breakaway" : "orowan");
     }
 
     // Planar obstacles (twin boundaries) (all units in Burgers vector)

@@ -54,6 +54,11 @@ public:
             Vec3 pos = nodes[i].pos;
 
             for (int j = 0; j < Nobs; j++) {
+                // Breakaway point obstacles are cut through, never bypassed:
+                // no sphere geometry applies (else a just-depinned node sitting
+                // at the center would be teleported by R to the shell).
+                if (d_obs(j).type == OBSTACLE_BREAKAWAY) continue;
+
                 Vec3   dv    = pos - d_obs(j).center;
                 double dist2 = dv.norm2();
                 double R     = d_obs(j).radius;
@@ -312,6 +317,9 @@ public:
             Vec3 o2 = p2 - dt * network->nodes[n2].v;
 
             for (int j = 0; j < Nobs; j++) {
+                // 只捕获切过型点障碍;Orowan 球归 handle_orowan,不插钉
+                if (system->obstacles[j].type != OBSTACLE_BREAKAWAY) continue;
+
                 // endpoint guard: 同段相邻臂已钉此障碍则跳过
                 if (network->nodes[n1].sphere_id == j ||
                     network->nodes[n2].sphere_id == j) continue;

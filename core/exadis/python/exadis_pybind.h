@@ -223,16 +223,19 @@ struct ExaDisNet {
     void write_data(std::string filename) { system->get_serial_network()->write_data(filename); }
 
     /*
-     * load_obstacles(centers_b, radii_b)
+     * load_obstacles(centers_b, radii_b, type)
      *   centers_b : list of [x,y,z] positions in Burgers vector units
      *   radii_b   : list of radii in Burgers vector units
-     * Stores in system->obstacles so that CollisionOrowan enforces
-     * the sphere-surface constraint each step.
+     *   type      : 0 = Orowan hard sphere (default, legacy behavior),
+     *               1 = breakaway cut-through point obstacle (no sphere geometry)
+     * Stores in system->obstacles; CollisionOrowan dispatches each obstacle
+     * to exactly one mechanism based on type.
      */
     void load_obstacles(const std::vector<Vec3>& centers_b,
-                        const std::vector<double>& radii_b)
+                        const std::vector<double>& radii_b,
+                        int type = OBSTACLE_OROWAN)
     {
-        system->load_obstacles(centers_b, radii_b);
+        system->load_obstacles(centers_b, radii_b, M_PI/2, type);
     }
 
     /*

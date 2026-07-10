@@ -1082,9 +1082,10 @@ PYBIND11_MODULE(pyexadis, m) {
         .def("_get_serial_network", &ExaDisNet::get_serial_network, "Get the SerialDisNet object",
              py::return_value_policy::reference_internal)
         .def("load_obstacles", &ExaDisNet::load_obstacles,
-             "Load spherical precipitate obstacles for Orowan bypass simulation. "
-             "centers_b: list of [x,y,z] in Burgers units; radii_b: list of radii in Burgers units.",
-             py::arg("centers_b"), py::arg("radii_b"))
+             "Load spherical precipitate obstacles. "
+             "centers_b: list of [x,y,z] in Burgers units; radii_b: list of radii in Burgers units; "
+             "type: 0 = Orowan hard sphere (default), 1 = breakaway cut-through point obstacle.",
+             py::arg("centers_b"), py::arg("radii_b"), py::arg("type") = 0)
         .def("load_twin_planes", &ExaDisNet::load_twin_planes,
              "Load planar obstacles (twin boundaries) that block dislocation motion. "
              "points_b: list of [x,y,z] on each plane in Burgers units; "
