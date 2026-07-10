@@ -38,7 +38,7 @@ nvidia-smi | head -15
 # ============================================================================
 echo ">>> [1/2] 生成初始构型..."
 cd /public/home/cjy306/openDIS/inital_dislocation_structures
-python gen_fcc_config.py --type fr        --seed 12345
+python gen_fcc_config.py --type prismatic --seed 12345
 echo ">>> 生成完成"
 
 # ============================================================================
@@ -46,7 +46,7 @@ echo ">>> 生成完成"
 # ============================================================================
 echo ">>> [2/2] 开始模拟..."
 cd /public/home/cjy306/openDIS/inital_dislocation_structures
-python fcc_load.py
+python load.py
 echo ">>> 模拟完成"
 
 echo "=== Job 结束 $(date) ==="
