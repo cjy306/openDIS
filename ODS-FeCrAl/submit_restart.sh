@@ -8,7 +8,7 @@
 #SBATCH --ntasks=1
 #SBATCH --output=slurm-%j.out
 #SBATCH --error=slurm-%j.err
-#SBATCH --time=48:00:00
+#SBATCH --time=96:00:00
 #SBATCH --partition=ksagnormal01
 #SBATCH --gres=gpu:1
 #SBATCH --cpus-per-task=8
@@ -31,6 +31,6 @@ nvidia-smi | head -15
 # --- 直接续跑,不生成初始构型 ---
 echo ">>> 从第 5000 步续跑..."
 cd /public/home/cjy306/openDIS/ODS-FeCrAl
-python test_caseA_baseline.py --restart 667100
+python test_caseA_baseline.py --restart 961000
 
 echo "=== Job 结束 $(date) ==="
