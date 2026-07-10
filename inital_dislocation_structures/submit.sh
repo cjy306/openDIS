@@ -31,6 +31,6 @@ nvidia-smi | head -15
 # --- 直接续跑,不生成初始构型 ---
 echo ">>> 从第 5000 步续跑..."
 cd /public/home/cjy306/openDIS/inital_dislocation_structures
-python load.py --restart 365000
+python fcc_load.py --restart 330500
 
 echo "=== Job 结束 $(date) ==="
