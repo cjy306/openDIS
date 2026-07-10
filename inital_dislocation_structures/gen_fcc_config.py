@@ -9,8 +9,9 @@
  见记忆 fcc-initial-structure-study。)
 
 按目标密度反算数量: 总线长 rho*V = num * (单元线长)。
-  棱柱环 单元线长 = 4R (FCC 是 Nsides=4 菱形, 四边各长 R, 周长 4R, 不是圆的 2*pi*R!)
-  FR     单元线长 = L = 2R(初始直段)
+  棱柱环 单元线长 = 4 * PRISM_R (FCC Nsides=4 菱形, 边长=R, 周长 4R, 不是圆的 2*pi*R!)
+  FR     单元线长 = L = 2 * RADIUS_M(初始直段)
+  当前 FR 臂长 = 棱柱边长 = 400nm 对齐; 但两者半径参数不同(RADIUS_M vs PRISM_R_M), 别混。
 
 用法:
   python gen_fcc_config.py --type prismatic --seed 12345
@@ -34,7 +35,8 @@ from pyexadis_utils import (generate_prismatic_config,
 CRYSTAL    = 'fcc'
 BURGMAG    = 2.55e-10    # b [m] —— Cu a/2<110>
 LBOX_M     = 5.0e-6      # bulk 周期盒 5um 立方
-RADIUS_M   = 200e-9      # 环半径 [m]; FR 臂长 L = 2R = 400nm
+RADIUS_M   = 200e-9      # FR 定义半径; FR 臂长 L = 2R = 400nm
+PRISM_R_M  = 400e-9      # 棱柱环半径 = 边长(FCC 菱形边长 = R); 取 400nm 与 FR 臂长齐平
 MAXSEG_B   = 200         # 离散段长上限 [b](约 51nm)
 
 # 密度 [1/m^2]: FR/棱柱 直接加载, 统一用适中密度 RHO_LOAD。
@@ -132,10 +134,11 @@ def main():
     radius_b = RADIUS_M / BURGMAG
 
     if args.type == 'prismatic':
-        # FCC 棱柱环是 Nsides=4 菱形, 周长 = 4R(不是 2*pi*R), 否则密度偏低 0.64x
-        num = _num_units(rho, LBOX_M, 4.0 * RADIUS_M)
-        print(f'[prismatic] rho={rho:.1e}, {num} 环, R={RADIUS_M*1e9:.0f}nm (周长4R)')
-        G = generate_prismatic_config(CRYSTAL, Lbox_b, num, radius_b,
+        # FCC 棱柱环是 Nsides=4 菱形, 边长=R, 周长=4R(不是 2*pi*R)。用 PRISM_R_M
+        prism_radius_b = PRISM_R_M / BURGMAG
+        num = _num_units(rho, LBOX_M, 4.0 * PRISM_R_M)
+        print(f'[prismatic] rho={rho:.1e}, {num} 环, 边长R={PRISM_R_M*1e9:.0f}nm (周长4R)')
+        G = generate_prismatic_config(CRYSTAL, Lbox_b, num, prism_radius_b,
                                       maxseg=MAXSEG_B, seed=args.seed)
     else:  # fr
         length_b = 2.0 * radius_b
