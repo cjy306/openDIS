@@ -34,6 +34,7 @@
 - `collision_orowan.h`:handle_orowan 跳过 type==BREAKAWAY(点障碍无球面几何);
   handle_breakaway Phase A 只捕获 type==BREAKAWAY(Orowan 球不插钉)。
 - pybind 两层穿透 `type` 参数(默认 0);`test_breakaway_prismatic.py` 改为 `type=1` 加载。
+- **踩坑:调用链实为三层**(脚本 → pyexadis_base.ExaDisNet(纯Python)→ pybind → System),首改漏了第一层 → 超算报 `unexpected keyword argument 'type'`(纯 Python 错误格式,pybind 层报错是 "incompatible function arguments"——可用报错格式区分卡在哪层)。已补 pyexadis_base.py:load_obstacles 加 type=0 透传。.py 文件改动不需重编译,pull 即生效。
 - 未动:handle_twin_wall 的球邻近检查仍看全体障碍(超出本修复范围,记录待议);φc 数组、#4 加权本轮不带。
 - 预期重跑差异:释放帧不再有 R=40b 瞬移;钉扎期两臂不再被 1.025R 壳外推;**抖动可能回归**(瞬移此前可能客串防重捕垫片,见追查条目)。
 

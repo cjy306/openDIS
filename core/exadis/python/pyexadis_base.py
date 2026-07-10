@@ -160,8 +160,9 @@ class ExaDisNet(DisNet_Base):
     def set_positions(self, pos):
         self.net.set_positions(pos)
 
-    def load_obstacles(self, centers_b, radii_b):
-        self.net.load_obstacles(centers_b, radii_b)
+    def load_obstacles(self, centers_b, radii_b, type=0):
+        # type: 0 = Orowan hard sphere (default), 1 = breakaway cut-through point obstacle
+        self.net.load_obstacles(centers_b, radii_b, type=type)
 
     def load_twin_planes(self, points_b, normals_b):
         self.net.load_twin_planes(points_b, normals_b)
