@@ -86,6 +86,12 @@ ForceSubcycling 类内 5 处改动:
    力单位——⚠️ **换算式还没推,写 generate_caseD.py 时必须先算清楚**(待办)。
 5. **drift 模式兼容**:add_oxide_force 放在 drift 的 AddSubForces 之前,drift 汇总
    fgroup 时氧化物力已在 nodes[].f 里,不会重复计。
+6. **与旧几何投影(CollisionOrowan)的共存规则**:两套机制完全独立——
+   几何投影用 `obstacles` 列表 + 需 `collision_mode='Orowan'` 才实例化;
+   高斯势用 `oxides` 列表(在 subcycling 力里,empty 即休眠)。
+   现有脚本用 Retroactive 碰撞 + 两列表皆空 → **对 Case A/B 零影响**。
+   ⚠️ 禁忌:同一批颗粒不得同时 load_obstacles + load_oxides 并开 Orowan 碰撞
+   (会投影+推力双重作用)。Case D 正确用法 = 只 load_oxides + Retroactive。
 
 ---
 
