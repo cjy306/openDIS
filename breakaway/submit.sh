@@ -10,7 +10,7 @@
 #SBATCH --cpus-per-task=128
 #SBATCH --time=24:00:00
 
-PYFILE=/work/home/cjy306/openDIS/breakaway/test_breakaway_prismatic.py
+PYFILE=/work/home/cjy306/openDIS/breakaway/test_xold_sweep.py
 # ===================================================
 export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK
 export OMP_PROC_BIND=spread
@@ -25,4 +25,4 @@ export PYTHONPATH=$HOME/openDIS/core/exadis/python:$HOME/openDIS/core/pydis/pyth
 export LD_LIBRARY_PATH=$HOME/openDIS/build/core/exadis/kokkos/core/src:$HOME/openDIS/build/core/exadis/src:$LD_LIBRARY_PATH
 
 cd $(dirname "$PYFILE")
-python "$PYFILE"
+python "$PYFILE" run
