@@ -68,6 +68,11 @@ ForceSubcycling 类内 5 处改动:
 **(3b) core/exadis/python/exadis_pybind.cpp**:
 - `.def("load_oxides", ...)` 绑定(仿 load_obstacles 的 .def,含 docstring 与
   py::arg 签名),挂在 load_twin_planes 的 .def 之后。
+**(3c) core/exadis/python/pyexadis_base.py【补丁,2026-07-12】**:
+- Python 包装类 ExaDisNet 加 `load_oxides` 转发(load_twin_planes 之后三行)。
+- ⚠️ 首跑踩坑:雄衡报 `AttributeError: 'ExaDisNet' object has no attribute 'load_oxides'`
+  ——脚本里的 ExaDisNet 是 pyexadis_base 的 Python 包装类,不是 C++ 对象;
+  只改 C++ 绑定不加 Python 转发层,方法到不了脚本。改完仍需重编译(.so 里才有 C++ 方法)。
 
 ### [4] ODS-FeCrAl/generate_caseD.py + test_caseD.py — Python 侧 (待做)
 - 撒氧化物(中心/Rp/A),调 load_oxides 注入,跑单排 → BKS 验证。

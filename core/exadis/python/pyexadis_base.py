@@ -167,6 +167,10 @@ class ExaDisNet(DisNet_Base):
     def load_twin_planes(self, points_b, normals_b):
         self.net.load_twin_planes(points_b, normals_b)
 
+    def load_oxides(self, centers_b, Rp_b, A_vals):
+        # Case D: nano-oxides as repulsive Gaussian force fields (Lehtinen paradigm)
+        self.net.load_oxides(centers_b, Rp_b, A_vals)
+
 
 def get_exadis_params(state):
     """get_exadis_params: helper function to get exadis global state object
