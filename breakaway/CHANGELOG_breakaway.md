@@ -27,6 +27,18 @@
   - **Phase B 释放**:R=|Σ 单位臂切向| > 2cos(φc/2) → 解钉(constraint→0, sphere_id→−1)。
 - 在 `handle()` 里接线:CollisionRetroactive::handle() → **handle_breakaway** → handle_orowan → handle_twin_wall。
 
+### [5] 扫掠重建升级:步初位置改用 xold 记录(替代 pos−dt·v 反推)✅ 待编译验证
+- 动机:旧反推隐含"步内匀速直线"假设;凡在积分后、检测前挪过节点的工序都会污染重建
+  (retroactive 碰撞挪点、交滑移挪点;另 subcycling 步末 v 是否=步平均未查证,若否则反推每步轻微失真)。
+- 改法(collision_orowan.h handle_breakaway):照抄 retroactive_collision 的 xold 访问范式
+  (UNIFIED_MEMORY 宏分支 + HostMirror);o = pbc_position(p, xold(n));τ 回退改
+  `pos −= (1−τ)·(p−o)`,v 从公式消失。当步新生节点(索引 ≥ xold 长度)退回速度反推(bounds 守卫)。
+- 覆盖:位移类污染全部;**不覆盖交滑移的 plane 字段错位**(方案 B=换面段当步打标豁免,开交滑移时另合;
+  时序调整方案 C 经审查不推荐:动全局流水线+交滑移挪点可能逃检)。
+- 2D 投影与垂直门逻辑不变——本升级只改"步初位置从哪来"。
+- 预期:现有单线 case 若 v 恰为步平均则行为逐位不变;有差异=旧反推本有误差的证据。
+- 验证脚本:`test_xold_sweep.py`(run + verify 两模式,判据 V1-V4)。
+
 ### [4] 障碍分型:切过/Orowan 互斥(正确性修复)✅ 待编译验证
 - 起因:释放节点被 handle_orowan 硬球以任意方向瞬移 R(见"尖角一步愈合追查")。
 - `system.h`:`enum ObstacleType {OBSTACLE_OROWAN=0, OBSTACLE_BREAKAWAY=1}`;

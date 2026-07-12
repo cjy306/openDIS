@@ -292,6 +292,18 @@ public:
 
         SerialDisNet* network = system->get_serial_network();
         double dt   = system->realdt;
+
+        // 步初位置真值(积分器每步存 system->xold;访问范式同 retroactive_collision)。
+        // 用记录替代 pos - dt*v 反推:不再依赖"步内匀速直线"假设,积分后被挪过的
+        // 节点(如 retroactive 碰撞处理)其位移自动纳入扫掠四边形。
+#if EXADIS_FULL_UNIFIED_MEMORY
+        T_x& xold = system->xold;
+#else
+        T_x::HostMirror xold = Kokkos::create_mirror_view(system->xold);
+        Kokkos::deep_copy(xold, system->xold);
+#endif
+        int nxold = (int)xold.extent(0);   // 当步新生节点(索引越界)退回速度反推
+
         int    Nobs = (int)system->obstacles.size();
         int    ncap = 0, nrel = 0, npin = 0;   // diagnostics
 
@@ -310,11 +322,13 @@ public:
             if (ngn < 1e-10) continue;          // 无滑移面 -> 跳过
             ng = (1.0 / ngn) * ng;
 
-            // 步初 -> 当前 段位置
+            // 步初 -> 当前 段位置(o 优先取 xold 记录;当步新生节点退回速度反推)
             Vec3 p1 = network->nodes[n1].pos;
             Vec3 p2 = network->cell.pbc_position(p1, network->nodes[n2].pos);
-            Vec3 o1 = p1 - dt * network->nodes[n1].v;
-            Vec3 o2 = p2 - dt * network->nodes[n2].v;
+            Vec3 o1 = (n1 < nxold) ? network->cell.pbc_position(p1, xold(n1))
+                                   : p1 - dt * network->nodes[n1].v;
+            Vec3 o2 = (n2 < nxold) ? network->cell.pbc_position(p2, xold(n2))
+                                   : p2 - dt * network->nodes[n2].v;
 
             for (int j = 0; j < Nobs; j++) {
                 // 只捕获切过型点障碍;Orowan 球归 handle_orowan,不插钉
@@ -370,10 +384,10 @@ public:
                         }
                     }
                 }
-                // 端点回退到接触构型(增量式,PBC 安全):pos -= (1-τ)·dt·v
-                double back = (1.0 - tau) * dt;
-                network->nodes[n1].pos = network->nodes[n1].pos - back * network->nodes[n1].v;
-                network->nodes[n2].pos = network->nodes[n2].pos - back * network->nodes[n2].v;
+                // 端点回退到接触构型(增量式,PBC 安全):pos -= (1-τ)·(p-o)
+                // p-o 为本步真实位移(o 来自 xold 时不依赖速度假设)
+                network->nodes[n1].pos = network->nodes[n1].pos - (1.0 - tau) * (p1 - o1);
+                network->nodes[n2].pos = network->nodes[n2].pos - (1.0 - tau) * (p2 - o2);
 
                 int nnew = network->split_seg(s, Cproj);   // 钉在障碍投影点 C_proj(接触时刻的动段上)
                 network->nodes[nnew].constraint = PINNED_NODE;
