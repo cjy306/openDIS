@@ -10,7 +10,7 @@
 
 # ============ 只改这两行 ============
 PYFILE=/work/home/cjy306/openDIS/ODS-FeCrAl/test_oxide_verify.py
-PYARGS="--A 1.02e13 --tau 50 --steps 3000 --out output_ox_A100x"      
+PYARGS="--tau 20  --steps 5000 --out output_ox_tau20"      
 # ====================================
 
 # --- 雄衡环境(验证过,勿动) ---
