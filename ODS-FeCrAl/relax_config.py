@@ -53,7 +53,7 @@ def main():
     p = argparse.ArgumentParser(description='Case A 选定帧零外力弛豫')
     p.add_argument('--config', type=str, default='output_caseA_seed12345/config.1094200.data',
                    help='预变形选定帧')
-    p.add_argument('--steps',  type=int, default=5000)
+    p.add_argument('--steps',  type=int, default=10000)
     p.add_argument('--out',    type=str, default='output_relax_seed12345')
     args = p.parse_args()
 
@@ -88,8 +88,8 @@ def main():
         max_step=args.steps,
         burgmag=state["burgmag"],
         state=state,
-        print_freq=10,                        # .dat 每 10 步一行(propfreq=print_freq)
-        write_freq=500,                       # 弛豫过程快照,可 paraview 检查
+        print_freq=1,                        # .dat 每 10 步一行(propfreq=print_freq)
+        write_freq=100,                       # 弛豫过程快照,可 paraview 检查
         write_dir=out_dir,
         out_props=['step', 'time', 'dt', 'density', 'Nnodes'],   # time=物理总时间[s];Nnodes 必须大写N(driver.h 只认这个写法)
     )

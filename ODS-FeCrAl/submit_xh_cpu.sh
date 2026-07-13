@@ -9,7 +9,7 @@
 #SBATCH --time=24:00:00
 
 # ============ 只改这两行 ============
-PYFILE=/work/home/cjy306/openDIS/ODS-FeCrAl/test_oxide_verify.py
+PYFILE=/work/home/cjy306/openDIS/ODS-FeCrAl/relax_config.py
 PYARGS=""                              # 例: "--A 1.02e10" / "--seed 12345" / "--restart 961000"
 # ====================================
 
