@@ -26,7 +26,7 @@ from pyexadis_utils import read_paradis, write_vtk
 # ========== 配置 ==========
 INPUT    = "output_oxide_verify"                 # 位错快照: 单 .data 或含 *.data 的目录
 OUTPUT   = "vtk_oxide_verify"                    # VTK 输出目录
-OXIDES   = "output_oxide_verify/oxides.data"     # 氧化物文件(cx cy cz Rp, 单位 b); None 跳过
+OXIDES   = "init_data_oxide_verify/oxides.data"  # 氧化物文件(cx cy cz Rp, 单位 b); None 跳过
 INIT_DIR = None                                  # init_data 目录(含 loop_type.txt); None 跳过染色
 START    = None                                  # 起始步号(含), None 不限
 END      = None                                  # 结束步号(含), None 不限

@@ -15,6 +15,9 @@
 // collision_retroactive.h is already included by collision.h before this file
 // Do not re-include it here to avoid circular dependency issues.
 
+#include <unordered_map>
+#include <cstdint>
+
 namespace ExaDiS {
 
 /*---------------------------------------------------------------------------
@@ -24,6 +27,35 @@ namespace ExaDiS {
  *-------------------------------------------------------------------------*/
 class CollisionOrowan : public CollisionRetroactive {
 public:
+    // tag -> 步初位置 映射(改动[5a])。xold 按"积分时刻的节点索引"存快照,而
+    // retroactive 碰撞在真实合并的步会 purge_network() -> remove_nodes 用"末尾
+    // 填空位"压缩数组,索引全体重排——之后按索引读 xold 会拿到别的节点的旧位置
+    // (曾致运行 ~6h 后段错误)。tag 随节点结构体整体搬家、重排后仍唯一,故在
+    // retroactive 之前按 tag 建表,handle_breakaway 里按 tag 查表。
+    std::unordered_map<uint64_t, Vec3> xold_map;
+
+    static uint64_t tag_key(const NodeTag& t) {
+        return ((uint64_t)(uint32_t)t.domain << 32) | (uint32_t)t.index;
+    }
+
+    // 必须在本步任何拓扑操作之前调用:此时串行网络索引仍与 xold 写入时一致
+    void build_xold_map(System* system)
+    {
+        xold_map.clear();
+        if (system->obstacles.empty()) return;   // 无障碍零开销
+#if EXADIS_FULL_UNIFIED_MEMORY
+        T_x& xold = system->xold;
+#else
+        T_x::HostMirror xold = Kokkos::create_mirror_view(system->xold);
+        Kokkos::deep_copy(xold, system->xold);
+#endif
+        SerialDisNet* network = system->get_serial_network();
+        int n = (int)xold.extent(0);
+        if (n > network->number_of_nodes()) n = network->number_of_nodes();
+        xold_map.reserve(n);
+        for (int i = 0; i < n; i++)
+            xold_map[tag_key(network->nodes[i].tag)] = xold(i);
+    }
 
     CollisionOrowan(System* system) : CollisionRetroactive(system) {}
 
@@ -293,16 +325,19 @@ public:
         SerialDisNet* network = system->get_serial_network();
         double dt   = system->realdt;
 
-        // 步初位置真值(积分器每步存 system->xold;访问范式同 retroactive_collision)。
-        // 用记录替代 pos - dt*v 反推:不再依赖"步内匀速直线"假设,积分后被挪过的
-        // 节点(如 retroactive 碰撞处理)其位移自动纳入扫掠四边形。
-#if EXADIS_FULL_UNIFIED_MEMORY
-        T_x& xold = system->xold;
-#else
-        T_x::HostMirror xold = Kokkos::create_mirror_view(system->xold);
-        Kokkos::deep_copy(xold, system->xold);
-#endif
-        int nxold = (int)xold.extent(0);   // 当步新生节点(索引越界)退回速度反推
+        // 步初位置:按 tag 查 xold_map(handle() 在 retroactive 之前建表,对索引
+        // 重排/删除/追加全免疫)。查不到(当步新生节点)或位移超上限(2*maxseg,
+        // 防未知重排源的兜底保险丝)则退回速度反推。
+        double cap  = 2.0 * system->params.maxseg;
+        double cap2 = cap * cap;
+        auto step_start_pos = [&](int n, const Vec3& p) -> Vec3 {
+            auto it = xold_map.find(tag_key(network->nodes[n].tag));
+            if (it != xold_map.end()) {
+                Vec3 o = network->cell.pbc_position(p, it->second);
+                if ((p - o).norm2() < cap2) return o;
+            }
+            return p - dt * network->nodes[n].v;
+        };
 
         int    Nobs = (int)system->obstacles.size();
         int    ncap = 0, nrel = 0, npin = 0;   // diagnostics
@@ -322,13 +357,11 @@ public:
             if (ngn < 1e-10) continue;          // 无滑移面 -> 跳过
             ng = (1.0 / ngn) * ng;
 
-            // 步初 -> 当前 段位置(o 优先取 xold 记录;当步新生节点退回速度反推)
+            // 步初 -> 当前 段位置(o 按 tag 查表;失效则退回速度反推)
             Vec3 p1 = network->nodes[n1].pos;
             Vec3 p2 = network->cell.pbc_position(p1, network->nodes[n2].pos);
-            Vec3 o1 = (n1 < nxold) ? network->cell.pbc_position(p1, xold(n1))
-                                   : p1 - dt * network->nodes[n1].v;
-            Vec3 o2 = (n2 < nxold) ? network->cell.pbc_position(p2, xold(n2))
-                                   : p2 - dt * network->nodes[n2].v;
+            Vec3 o1 = step_start_pos(n1, p1);
+            Vec3 o2 = step_start_pos(n2, p2);
 
             for (int j = 0; j < Nobs; j++) {
                 // 只捕获切过型点障碍;Orowan 球归 handle_orowan,不插钉
@@ -441,6 +474,10 @@ public:
      *---------------------------------------------------------------------*/
     void handle(System* system) override
     {
+        // 0. Snapshot tag -> step-start positions while node indices still
+        //    match the integrator's xold ordering (before merge/purge reshuffle).
+        build_xold_map(system);
+
         // 1. Standard dislocation-dislocation retroactive collision.
         CollisionRetroactive::handle(system);
 

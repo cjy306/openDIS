@@ -100,12 +100,21 @@ ForceSubcycling 类内 5 处改动:
 
 ---
 
-### [5] ODS-FeCrAl/test_oxide_verify.py — 最小验证脚本 ✅(待编译后跑)
+### [5] ODS-FeCrAl 验证脚本(两段分离版,2026-07-13 重构)✅
 - 场景:一条穿盒无限刃位错(b=½[111], n=(0-11), 线向=n×b)+ 盒心一个氧化物,
   恒定纯剪应力 τ(b̂⊗n̂+n̂⊗b̂) 驱动位错沿 +b 滑向氧化物。500nm 小盒跑得快。
 - 氧化物中心与位错同滑移面(起点=盒心沿 -b 退 1/4 盒,位移⊥n)→ 正面撞击。
-- 支持 --A/--Rp/--tau/--steps;--A 0 为对照组(不注入,应自由通过)。
-- 用 Retroactive 碰撞(不用 Orowan)→ 只有高斯势一种障碍机制在场。
+- ⚠️ 重构原因(用户踩过的坑):氧化物几何若由 test 脚本写到**输出目录**,
+  转 VTK 时球和初始位错网络对不上号。几何必须由生成脚本产出到 init_data,
+  与初始构型同源同目录。
+- **generate_oxide_verify.py**(生成,跑一次):写 init_data_oxide_verify/
+  {init_config.data, oxides.data}。--Rp 参数(默认 10nm);A 是扫描参数,不进文件。
+- **test_oxide_verify.py**(纯模拟):读上述 init 目录,--A 组装 A_vals 后
+  load_oxides;--A 0 = 对照组(不注入,应自由通过);--tau/--steps/--out 可调。
+  A 扫描换 --out 免得覆盖。用 Retroactive 碰撞(不用 Orowan)→ 只有高斯势在场。
+- **paraview.py**:OXIDES 默认 = init_data_oxide_verify/oxides.data(跟 init 走)。
+- 注:雄衡正在跑的那炉是旧版内联构型 test,结果不受影响,转 VTK 时 OXIDES 设
+  None 或手动指向等效几何即可;新流程从下一炉(A 扫描)开始用。
 
 **A 的单位换算(推导,写进脚本头,待 A 扫描验证)**:
   ExaDiS 内部长度以 b 计、应力 Pa;假设内部力单位=Pa·b² →
