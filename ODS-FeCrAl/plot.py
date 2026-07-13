@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
-"""单次运行绘图：应力-应变曲线 + 应变-位错密度曲线
-数据来源：模拟输出的 stress_strain_dens.dat
+"""多曲线对比绘图：应力-应变 + 应变-位错密度
+每条曲线一个 stress_strain_dens.dat，标签/颜色自己填。
 格式：step  strain  stress(Pa)  density(m^-2)  [plastic_strain]
 """
 
@@ -10,11 +10,17 @@ import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 
-# ========== 路径配置（按需修改）==========
-DATA_FILE  = "/data/home/dg000246b/openDIS/ODS-FeCrAl/output_caseA_seed12345/stress_strain_dens.dat"
-OUTPUT_DIR = "/data/home/dg000246b/openDIS/ODS-FeCrAl/Post-processing simulation"
-LABEL      = "1"   # 图例标签，标注这是哪个工况
-# =========================================
+# ========== 在这里配置要对比的曲线（可加 2 条以上）==========
+CURVES = [
+    {
+        "file":  "/public/home/cjy306/openDIS/ODS-FeCrAl/output_caseA_seed12345/stress_strain_dens.dat",
+        "label": "caseA",
+        "color": "#1F77B4",   
+    }
+]
+OUTPUT_DIR  = "/public/home/cjy306/openDIS/ODS-FeCrAl/Post-processing simulation"
+OUTPUT_NAME = "erate_compare"
+# =========================================================
 
 
 def load_data(filepath):
@@ -31,15 +37,38 @@ def load_data(filepath):
 def main():
     os.makedirs(OUTPUT_DIR, exist_ok=True)
 
-    strain, stress, dens = load_data(DATA_FILE)
-    strain_pct = strain * 100
-
     fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 6))
     fig.patch.set_facecolor('white')
-    COLOR = '#1F77B4'
 
-    # ── 左图：应力-应变 ──
-    ax1.plot(strain_pct, stress, color=COLOR, lw=1.2, label=LABEL)
+    for i, c in enumerate(CURVES):
+        if not os.path.exists(c["file"]):
+            print(f"[警告] 文件不存在，跳过: {c['file']}")
+            continue
+        strain, stress, dens = load_data(c["file"])
+        strain_pct = strain * 100
+        color, label = c["color"], c["label"]
+
+        # 左图：应力-应变
+        ax1.plot(strain_pct, stress, color=color, lw=1.2, label=label)
+        idx_peak = int(np.argmax(stress))
+        ax1.annotate(f"{stress[idx_peak]:.0f} MPa",
+                     xy=(strain_pct[idx_peak], stress[idx_peak]),
+                     xytext=(strain_pct[idx_peak] + 0.05,
+                             stress[idx_peak] + 3 + i * 8),  # 不同曲线标注错开
+                     fontsize=10, color=color,
+                     arrowprops=dict(arrowstyle='->', color=color, lw=1.2))
+
+        # 右图：应变-位错密度
+        ax2.plot(strain_pct, dens, color=color, lw=1.2, label=label)
+
+        # 终端摘要
+        print(f"\n=== {label} ===")
+        print(f"  数据点: {len(strain)}, 最大应变: {strain_pct[-1]:.3f}%")
+        print(f"  峰值应力: {stress[idx_peak]:.1f} MPa @ 应变 {strain_pct[idx_peak]:.3f}%")
+        print(f"  终态应力: {stress[-1]:.1f} MPa (终/峰 = {stress[-1]/stress[idx_peak]*100:.0f}%)")
+        print(f"  峰值密度: {dens.max():.3e} m^-2, 终态密度: {dens[-1]:.3e} m^-2")
+
+    # 左图样式
     ax1.set_xlabel('Strain (%)', fontsize=13)
     ax1.set_ylabel('Stress (MPa)', fontsize=13)
     ax1.set_title('Stress-Strain Curve', fontsize=14)
@@ -49,16 +78,7 @@ def main():
     ax1.set_ylim(bottom=0)
     ax1.tick_params(labelsize=11)
 
-    # 标注峰值应力
-    idx_peak = np.argmax(stress)
-    ax1.annotate(f"{stress[idx_peak]:.0f} MPa",
-                 xy=(strain_pct[idx_peak], stress[idx_peak]),
-                 xytext=(strain_pct[idx_peak] + 0.05, stress[idx_peak] + 3),
-                 fontsize=10, color=COLOR,
-                 arrowprops=dict(arrowstyle='->', color=COLOR, lw=1.2))
-
-    # ── 右图：应变-位错密度 ──
-    ax2.plot(strain_pct, dens, color=COLOR, lw=1.2, label=LABEL)
+    # 右图样式
     ax2.set_xlabel('Strain (%)', fontsize=13)
     ax2.set_ylabel(r'Dislocation Density (m$^{-2}$)', fontsize=13)
     ax2.set_title('Strain vs Dislocation Density', fontsize=14)
@@ -69,16 +89,10 @@ def main():
     ax2.tick_params(labelsize=11)
 
     plt.tight_layout(pad=2.0)
-    output_path = os.path.join(OUTPUT_DIR, "results2.png")
+    output_path = os.path.join(OUTPUT_DIR, OUTPUT_NAME)
     plt.savefig(output_path, dpi=300, bbox_inches='tight', facecolor='white')
     plt.close()
-
-    # ── 终端摘要（判断崩溃/平台/过钉的关键数字）──
-    print(f"图像已保存: {output_path}")
-    print(f"数据点: {len(strain)}, 最大应变: {strain_pct[-1]:.3f}%")
-    print(f"峰值应力: {stress[idx_peak]:.1f} MPa @ 应变 {strain_pct[idx_peak]:.3f}%")
-    print(f"终态应力: {stress[-1]:.1f} MPa (终/峰 = {stress[-1]/stress[idx_peak]*100:.0f}%)")
-    print(f"峰值密度: {dens.max():.3e} m^-2, 终态密度: {dens[-1]:.3e} m^-2")
+    print(f"\n图像已保存: {output_path}")
 
 
 if __name__ == '__main__':
