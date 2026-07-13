@@ -113,6 +113,9 @@ def main():
     exadis_net = net.get_disnet(ExaDisNet)
     if args.A > 0:
         exadis_net.load_oxides(ox_c, ox_rp, ox_a)
+        # 落盘供 paraview.py 画球(cx cy cz Rp,单位 b)
+        ox_arr = np.hstack((np.array(ox_c), np.array(ox_rp).reshape(-1, 1)))
+        np.savetxt(os.path.join(out_dir, 'oxides.data'), ox_arr, fmt='%.6e')
     else:
         print('[verify] A=0 对照组:不注入氧化物,位错应自由滑过盒心')
 

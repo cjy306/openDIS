@@ -1,22 +1,18 @@
 """
-ODS-FeCrAl 项目:位错网络 data → VTK 转换(供 ParaView 可视化)
+ParaDiS data → VTK 转换(ODS-FeCrAl 课题版,仿 breakaway/paraview.py)
 
-参考 HomeWork/paraview.py,但针对本项目精简:
-  - 本项目障碍物(a/2<111> 环、a<100> PINNED 环)本身就是位错段,已在网络里
-    → 不像 HomeWork 那样需单独转球形析出物/孪晶面
-  - 复用 ExaDiS 自带 write_vtk:每段自动带 SlipSystemID / DislocationType /
-    CharacterAngle / SegmentLength 字段,ParaView 里可按这些染色
-  - 初始帧可叠加 loop_type 染色(LoopType 标量:0=可动直线 1=<111>环 2=<100>环 3=FR源)
-    ⚠️ 仅初始帧:loop_type 按生成时段顺序对齐,而仿真输出帧经运动/remesh/反应后
-       段顺序与段数已变,无法对齐 → 演化帧不加 LoopType,只看位错形貌+滑移系。
+在 breakaway 版基础上保留本课题特有两样:
+  - PBC 折叠:write_vtk 为保线段连续会把端点放到盒外镜像,这里 % Lbox 折回主盒
+    (盒边自动从每帧数据读取,不写死——课题里有 2μm / 500nm 多种盒)
+  - LoopType 染色:给出 INIT_DIR(含 loop_type.txt)时,最早帧叠加段类别标量
+    (仅初始帧;段数对齐保护,演化帧自动跳过)
+氧化物:OXIDES 指向 oxides.data(cx cy cz Rp,单位 b)时导出 oxides.vtk(点+Rp 标量)。
 
-用法:
-  # 转某工况所有帧
-  python paraview.py --sim output_caseA_seed12345 --out vtk_caseA_seed12345
-  # 指定步数范围
-  python paraview.py --sim output_caseB_seed12345 --out vtk_caseB --start 0 --end 5000
-  # 叠加初始帧 loop_type 染色(给出 init_data 目录)
-  python paraview.py --sim output_caseB_seed12345 --out vtk_caseB --init init_data_caseB_seed12345
+直接在下面 "配置" 区改 INPUT / OUTPUT / OXIDES 再运行:
+  python paraview.py
+
+ParaView 里看氧化物:加载 oxides.vtk → Glyph 过滤器 → Glyph Type=Sphere,
+  Scale Array=Rp, Scale Factor=2(球半径=Rp,Sphere 默认半径 0.5 → ×2)。
 """
 import os, sys, glob, re
 import numpy as np
@@ -27,21 +23,48 @@ pyexadis_paths = ['../python', '../lib', '../core/pydis/python', '../core/exadis
 import pyexadis
 from pyexadis_utils import read_paradis, write_vtk
 
-BURGMAG = 0.248e-9   # b [m](与生成/模拟脚本一致)
-LBOX_M  = 300e-9     # bulk 周期盒边长 [m](与生成/模拟脚本一致)
+# ========== 配置 ==========
+INPUT    = "output_oxide_verify"                 # 位错快照: 单 .data 或含 *.data 的目录
+OUTPUT   = "vtk_oxide_verify"                    # VTK 输出目录
+OXIDES   = "output_oxide_verify/oxides.data"     # 氧化物文件(cx cy cz Rp, 单位 b); None 跳过
+INIT_DIR = None                                  # init_data 目录(含 loop_type.txt); None 跳过染色
+START    = None                                  # 起始步号(含), None 不限
+END      = None                                  # 结束步号(含), None 不限
+WRAP     = True                                  # PBC 折叠(要看穿盒连续线改 False)
+# =========================
 
 
-def _step_of(fname):
-    """从 config.<step>.data 文件名提取步数;取不到返回 -1。"""
-    m = re.search(r'(\d+)', os.path.basename(fname))
-    return int(m.group(1)) if m else -1
+def write_oxides_vtk(ox_path, out_dir):
+    """oxides.data (cx cy cz Rp, 单位 b) → oxides.vtk(点 + Rp 标量)。"""
+    data = np.loadtxt(ox_path)
+    if data.ndim == 1:
+        data = data.reshape(1, -1)
+    centers, Rp = data[:, :3], data[:, 3]
+    n = len(centers)
+
+    vtk_file = os.path.join(out_dir, 'oxides.vtk')
+    with open(vtk_file, 'w') as f:
+        f.write('# vtk DataFile Version 3.0\n')
+        f.write('oxide particles (Gaussian potential)\n')
+        f.write('ASCII\n')
+        f.write('DATASET POLYDATA\n')
+        f.write(f'POINTS {n} float\n')
+        for c in centers:
+            f.write(f'{c[0]:.6e} {c[1]:.6e} {c[2]:.6e}\n')
+        # 每个点配一个 VERTICES 单元,否则 ParaView 视作 0 单元、渲染不出来
+        f.write(f'VERTICES {n} {2*n}\n')
+        for i in range(n):
+            f.write(f'1 {i}\n')
+        f.write(f'POINT_DATA {n}\n')
+        f.write('SCALARS Rp float 1\n')
+        f.write('LOOKUP_TABLE default\n')
+        for r in Rp:
+            f.write(f'{r:.6e}\n')
+    print(f"Oxides: {n} spheres -> {vtk_file}")
 
 
 def wrap_vtk_pbc(vtk_file, Lbox):
-    """把 VTK 段端点坐标折回 [0, Lbox)(无量纲,以 b 为单位)。
-    write_vtk 用 closest_image() 保证线段连续,会把端点放到盒外镜像位置;
-    本函数把它们 % Lbox 折回主盒,使 ParaView 显示全部落在盒内。
-    跳过前 8 个点(晶胞顶点),只折段端点。"""
+    """把 VTK 段端点坐标折回 [0, Lbox)(无量纲 b)。跳过前 8 个晶胞顶点。"""
     with open(vtk_file, 'r') as f:
         lines = f.readlines()
 
@@ -72,84 +95,93 @@ def wrap_vtk_pbc(vtk_file, Lbox):
         f.writelines(lines)
 
 
-def convert(sim_dir, out_dir, init_dir=None, start=None, end=None, wrap=True):
+def _step_of(fname):
+    m = re.search(r'(\d+)', os.path.basename(fname))
+    return int(m.group(1)) if m else -1
+
+
+def convert(in_path, out_dir, init_dir=None, start=None, end=None, wrap=True):
     os.makedirs(out_dir, exist_ok=True)
-    Lbox_b = LBOX_M / BURGMAG   # 无量纲盒边(折叠用)
 
-    # 收集 config.*.data(排除 restart 等非构型文件)
-    data_files = sorted(glob.glob(os.path.join(sim_dir, '*.data')))
-    data_files = [f for f in data_files if 'restart' not in os.path.basename(f)]
+    if os.path.isfile(in_path):
+        data_files = [in_path]
+    else:
+        data_files = sorted(glob.glob(os.path.join(in_path, '*.data')))
 
-    # 步数范围过滤
+    # 过滤非位错构型文件
+    data_files = [f for f in data_files
+                  if os.path.basename(f) not in ('obstacles.data', 'oxides.data')
+                  and 'restart' not in os.path.basename(f)]
+
     if start is not None or end is not None:
-        kept = []
+        filtered = []
         for f in data_files:
             s = _step_of(f)
-            if start is not None and s >= 0 and s < start:
-                continue
-            if end is not None and s >= 0 and s > end:
-                continue
-            kept.append(f)
-        data_files = kept
+            if s >= 0:
+                if start is not None and s < start:
+                    continue
+                if end is not None and s > end:
+                    continue
+            filtered.append(f)
+        data_files = filtered
 
     if not data_files:
-        print(f"未在 {sim_dir} 找到 config.*.data")
+        print(f"No dislocation .data files found in {in_path}")
         return
 
-    # 初始帧 loop_type(可选):仅用于最早一帧染色
+    # 初始帧 LoopType(可选):仅最早一帧、且段数对齐时叠加
     loop_type = None
     first_step = min((_step_of(f) for f in data_files), default=-1)
     if init_dir:
         lt_file = os.path.join(init_dir, 'loop_type.txt')
-        if os.path.exists(lt_file):
+        if os.path.isfile(lt_file):
             loop_type = np.loadtxt(lt_file).astype(float)
-            print(f"已载入 loop_type ({len(loop_type)} 段),仅叠加到最早帧 step={first_step}")
+            print(f"LoopType: {len(loop_type)} segs, apply to earliest frame step={first_step}")
         else:
-            print(f"[提示] {lt_file} 不存在,跳过 loop_type 染色")
+            print(f"[skip] {lt_file} not found")
 
-    print(f"转换 {len(data_files)} 帧 ...")
+    print(f"Converting {len(data_files)} files...")
     pyexadis.initialize()
-    for i, f in enumerate(data_files):
-        name = os.path.basename(f).replace('.data', '')
-        step = _step_of(f)
-        vtk_file = os.path.join(out_dir, f'{name}.vtk')
 
-        net = read_paradis(f)
-        segprops = {}
-        # 仅当帧的段数与 loop_type 长度一致时才叠加(对齐保护:仿真后段数会变)
-        if loop_type is not None and step == first_step:
-            nseg = net.num_segments()
-            if nseg == len(loop_type):
-                segprops = {'LoopType': loop_type}
-            else:
-                print(f"  [跳过LoopType] 段数({nseg}) != loop_type({len(loop_type)}),该帧已非初始构型")
+    for idx, data_file in enumerate(data_files):
+        basename = os.path.basename(data_file)
+        name = basename.replace('.data', '')
+        print(f"  [{idx+1}/{len(data_files)}] {basename}")
+        try:
+            net = read_paradis(data_file)
+            Lbox = float(np.array(net.cell.h)[0][0])   # 盒边自动读取(立方盒)
 
-        write_vtk(net, vtk_file, segprops=segprops, crystal='BCC', verbose=False)
-        if wrap:
-            wrap_vtk_pbc(vtk_file, Lbox_b)
-        print(f"  [{i+1}/{len(data_files)}] {name}.vtk"
-              + ("  +LoopType" if segprops else ""))
+            segprops = {}
+            if loop_type is not None and _step_of(data_file) == first_step:
+                nseg = net.num_segments()
+                if nseg == len(loop_type):
+                    segprops = {'LoopType': loop_type}
+                else:
+                    print(f"    [skip LoopType] segs({nseg}) != loop_type({len(loop_type)})")
+
+            vtk_file = os.path.join(out_dir, f'{name}.vtk')
+            write_vtk(net, vtk_file, segprops=segprops, crystal='BCC', verbose=False)
+            if wrap:
+                wrap_vtk_pbc(vtk_file, Lbox)
+        except Exception as e:
+            print(f"    Failed: {e}")
 
     pyexadis.finalize()
-    print(f"完成。输出目录: {out_dir}")
+    print(f"Done. Output: {out_dir}")
 
 
 if __name__ == '__main__':
-    import argparse
-    parser = argparse.ArgumentParser(description='ODS-FeCrAl 位错网络 data → VTK')
-    parser.add_argument('--sim', required=True, help='模拟输出目录(如 output_caseA_seed12345)')
-    parser.add_argument('--out', required=True, help='VTK 输出目录')
-    parser.add_argument('--init', default=None, help='init_data 目录(给出则初始帧叠加 LoopType 染色)')
-    parser.add_argument('--start', type=int, default=None, help='起始步(含)')
-    parser.add_argument('--end', type=int, default=None, help='结束步(含)')
-    parser.add_argument('--no-wrap', action='store_true',
-                        help='不折叠 PBC(保留穿盒连续线;默认折回盒内)')
-    args = parser.parse_args()
-
     base = os.path.dirname(os.path.abspath(__file__))
-    sim_dir  = args.sim  if os.path.isabs(args.sim)  else os.path.join(base, args.sim)
-    out_dir  = args.out  if os.path.isabs(args.out)  else os.path.join(base, args.out)
-    init_dir = (args.init if os.path.isabs(args.init) else os.path.join(base, args.init)) if args.init else None
+    in_path  = INPUT  if os.path.isabs(INPUT)  else os.path.join(base, INPUT)
+    out_dir  = OUTPUT if os.path.isabs(OUTPUT) else os.path.join(base, OUTPUT)
+    init_dir = (INIT_DIR if os.path.isabs(INIT_DIR) else os.path.join(base, INIT_DIR)) if INIT_DIR else None
 
-    convert(sim_dir, out_dir, init_dir=init_dir, start=args.start, end=args.end,
-            wrap=not args.no_wrap)
+    convert(in_path, out_dir, init_dir=init_dir, start=START, end=END, wrap=WRAP)
+
+    if OXIDES is not None:
+        ox_path = OXIDES if os.path.isabs(OXIDES) else os.path.join(base, OXIDES)
+        if os.path.isfile(ox_path):
+            os.makedirs(out_dir, exist_ok=True)
+            write_oxides_vtk(ox_path, out_dir)
+        else:
+            print(f"Oxides file not found: {ox_path}")
