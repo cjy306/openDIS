@@ -30,6 +30,8 @@ OXIDES   = "init_data_oxide_verify/oxides.data"  # 氧化物文件(cx cy cz Rp, 
 INIT_DIR = None                                  # init_data 目录(含 loop_type.txt); None 跳过染色
 START    = None                                  # 起始步号(含), None 不限
 END      = None                                  # 结束步号(含), None 不限
+STRIDE   = 100                                   # 抽帧间隔(步号整除才转); None=全转.
+                                                 # write_freq=1 的炉子必配,否则上万帧
 WRAP     = False                                  # PBC 折叠(要看穿盒连续线改 False)
 # =========================
 
@@ -100,7 +102,7 @@ def _step_of(fname):
     return int(m.group(1)) if m else -1
 
 
-def convert(in_path, out_dir, init_dir=None, start=None, end=None, wrap=True):
+def convert(in_path, out_dir, init_dir=None, start=None, end=None, stride=None, wrap=True):
     os.makedirs(out_dir, exist_ok=True)
 
     if os.path.isfile(in_path):
@@ -113,8 +115,9 @@ def convert(in_path, out_dir, init_dir=None, start=None, end=None, wrap=True):
                   if os.path.basename(f) not in ('obstacles.data', 'oxides.data')
                   and 'restart' not in os.path.basename(f)]
 
-    if start is not None or end is not None:
+    if start is not None or end is not None or stride is not None:
         filtered = []
+        last_step = max((_step_of(f) for f in data_files), default=-1)
         for f in data_files:
             s = _step_of(f)
             if s >= 0:
@@ -122,6 +125,8 @@ def convert(in_path, out_dir, init_dir=None, start=None, end=None, wrap=True):
                     continue
                 if end is not None and s > end:
                     continue
+                if stride is not None and s % stride != 0 and s != last_step:
+                    continue          # 抽稀,但末帧永远保留(判定要看它)
             filtered.append(f)
         data_files = filtered
 
@@ -176,7 +181,7 @@ if __name__ == '__main__':
     out_dir  = OUTPUT if os.path.isabs(OUTPUT) else os.path.join(base, OUTPUT)
     init_dir = (INIT_DIR if os.path.isabs(INIT_DIR) else os.path.join(base, INIT_DIR)) if INIT_DIR else None
 
-    convert(in_path, out_dir, init_dir=init_dir, start=START, end=END, wrap=WRAP)
+    convert(in_path, out_dir, init_dir=init_dir, start=START, end=END, stride=STRIDE, wrap=WRAP)
 
     if OXIDES is not None:
         ox_path = OXIDES if os.path.isabs(OXIDES) else os.path.join(base, OXIDES)
