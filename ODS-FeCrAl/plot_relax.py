@@ -17,19 +17,32 @@ OUTPUT = "relax_density_time.png"
 # =========================
 
 
+WRITE_FREQ = 100   # 与 relax_config.py 的 write_freq 一致(config.<step>.data 存盘频率)
+
+
 def main():
     base = os.path.dirname(os.path.abspath(__file__))
     dat = DAT if os.path.isabs(DAT) else os.path.join(base, DAT)
 
     data = np.loadtxt(dat, comments='#')
-    time, dens = data[:, 1], data[:, 3]
+    if len(data) > 1:
+        data = data[1:]                    # 跳过 step=1 异常行(记录偏低,机制未查)
+    step, time, dens = data[:, 0].astype(int), data[:, 1], data[:, 3]
 
     fig, ax = plt.subplots(figsize=(8, 6))
     fig.patch.set_facecolor('white')
-    ax.plot(time * 1e9, dens, color='#1F77B4', lw=1.5)
+    ax.plot(time * 1e9, dens, color='#1F77B4', lw=0.8, alpha=0.45, label='Raw (every step)')
+
+    # 滑动均值叠加:窗口约为数据量的 1/50(10000 点 → 200 点窗)
+    w = max(3, len(dens) // 50)
+    smooth = np.convolve(dens, np.ones(w) / w, mode='valid')
+    t_s = time[(w - 1) // 2 : (w - 1) // 2 + len(smooth)]
+    ax.plot(t_s * 1e9, smooth, color='#FF7F0E', lw=2.0, label=f'Running mean ({w} pts)')
+
     ax.set_xlabel('Time (ns)', fontsize=13)
     ax.set_ylabel(r'Dislocation Density (m$^{-2}$)', fontsize=13)
     ax.set_title('Zero-stress Relaxation: Density vs Time', fontsize=14)
+    ax.legend(fontsize=11, framealpha=0.9)
     ax.grid(True, alpha=0.3, linestyle='--')
     ax.tick_params(labelsize=11)
 
@@ -39,13 +52,21 @@ def main():
     plt.close()
 
     print(f'数据点: {len(time)}, 总物理时间: {time[-1]*1e9:.2f} ns')
-    # 起点跳过第一行:step=1 的记录可能异常偏低(2026-07 弛豫炉实测);
     # 权威保持率以 relax_config.py 打印的构型实算前/后密度为准
-    d0 = dens[1] if len(dens) > 1 else dens[0]
-    print(f'密度: {d0:.4e} -> {dens[-1]:.4e} /m^2 (保持率 {dens[-1]/d0*100:.1f}%)')
+    print(f'密度: {dens[0]:.4e} -> {dens[-1]:.4e} /m^2 (保持率 {dens[-1]/dens[0]*100:.1f}%)')
     tail = dens[int(0.8*len(dens)):]
     drift = (tail[-1] - tail[0]) / tail[0] * 100
     print(f'末段20%漂移: {drift:+.2f}%  (|漂移|<1% 可视为趋平)')
+
+    # 推荐基体帧:末段 40% 里 step%WRITE_FREQ==0(磁盘有快照)且密度最接近末段中位数
+    lo = int(0.6 * len(dens))
+    med = np.median(dens[lo:])
+    cand = [(abs(d - med), s, d) for s, d in zip(step[lo:], dens[lo:]) if s % WRITE_FREQ == 0]
+    if cand:
+        _, s_best, d_best = min(cand)
+        print(f'末段40%中位密度: {med:.4e} /m^2')
+        print(f'推荐基体帧: config.{s_best}.data  (密度 {d_best:.4e}, 距中位 {abs(d_best-med)/med*100:.2f}%)')
+        print('  → 拿这帧(而非终态 relaxed_config.data)作为 Case A 正式基体,避开双稳态低档瞬态')
     print(f'图像: {out}')
 
 
