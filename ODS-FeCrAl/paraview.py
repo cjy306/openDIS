@@ -6,13 +6,11 @@ ParaDiS data → VTK 转换(ODS-FeCrAl 课题版,仿 breakaway/paraview.py)
     (盒边自动从每帧数据读取,不写死——课题里有 2μm / 500nm 多种盒)
   - LoopType 染色:给出 INIT_DIR(含 loop_type.txt)时,最早帧叠加段类别标量
     (仅初始帧;段数对齐保护,演化帧自动跳过)
-氧化物:OXIDES 指向 oxides.data(cx cy cz Rp,单位 b)时导出 oxides.vtk(点+Rp 标量)。
+氧化物:OXIDES 指向 oxides.data(cx cy cz Rp,单位 b)时导出 oxides.vtk
+  (球面网格,加载即显示实体球,半径=Rp;高斯力实际作用到 ~3Rp)。
 
 直接在下面 "配置" 区改 INPUT / OUTPUT / OXIDES 再运行:
   python paraview.py
-
-ParaView 里看氧化物:加载 oxides.vtk → Glyph 过滤器 → Glyph Type=Sphere,
-  Scale Array=Rp, Scale Factor=2(球半径=Rp,Sphere 默认半径 0.5 → ×2)。
 """
 import os, sys, glob, re
 import numpy as np
@@ -36,33 +34,49 @@ WRAP     = False                                  # PBC 折叠(要看穿盒连�
 # =========================
 
 
-def write_oxides_vtk(ox_path, out_dir):
-    """oxides.data (cx cy cz Rp, 单位 b) → oxides.vtk(点 + Rp 标量)。"""
+def write_oxides_vtk(ox_path, out_dir, resolution=20):
+    """oxides.data (cx cy cz Rp, 单位 b) → oxides.vtk。
+
+    球面按经纬 20×20 剖成四边形面片直接写 POLYGONS(照搬 HomeWork/paraview.py
+    的 SphericalPrecipitates.export_vtk),ParaView 加载即显示实体球,无需 Glyph。
+    球半径 = Rp;注意高斯力实际作用到 ~3Rp,球外还有一圈"隐形"影响区。
+    """
     data = np.loadtxt(ox_path)
     if data.ndim == 1:
         data = data.reshape(1, -1)
     centers, Rp = data[:, :3], data[:, 3]
-    n = len(centers)
+
+    all_points, all_cells, off = [], [], 0
+    theta = np.linspace(0, np.pi, resolution)
+    phi = np.linspace(0, 2 * np.pi, resolution)
+    for c, r in zip(centers, Rp):
+        for t in theta:
+            for p in phi:
+                all_points.append([c[0] + r * np.sin(t) * np.cos(p),
+                                   c[1] + r * np.sin(t) * np.sin(p),
+                                   c[2] + r * np.cos(t)])
+        for j in range(resolution - 1):
+            for k in range(resolution - 1):
+                p1 = off + j * resolution + k
+                p2 = off + j * resolution + (k + 1)
+                p3 = off + (j + 1) * resolution + (k + 1)
+                p4 = off + (j + 1) * resolution + k
+                all_cells.append([4, p1, p2, p3, p4])
+        off += resolution * resolution
 
     vtk_file = os.path.join(out_dir, 'oxides.vtk')
     with open(vtk_file, 'w') as f:
         f.write('# vtk DataFile Version 3.0\n')
-        f.write('oxide particles (Gaussian potential)\n')
-        f.write('ASCII\n')
-        f.write('DATASET POLYDATA\n')
-        f.write(f'POINTS {n} float\n')
-        for c in centers:
-            f.write(f'{c[0]:.6e} {c[1]:.6e} {c[2]:.6e}\n')
-        # 每个点配一个 VERTICES 单元,否则 ParaView 视作 0 单元、渲染不出来
-        f.write(f'VERTICES {n} {2*n}\n')
-        for i in range(n):
-            f.write(f'1 {i}\n')
-        f.write(f'POINT_DATA {n}\n')
-        f.write('SCALARS Rp float 1\n')
-        f.write('LOOKUP_TABLE default\n')
-        for r in Rp:
-            f.write(f'{r:.6e}\n')
-    print(f"Oxides: {n} spheres -> {vtk_file}")
+        f.write('oxide particles (Gaussian potential, sphere radius = Rp)\n')
+        f.write('ASCII\nDATASET POLYDATA\n')
+        f.write(f'POINTS {len(all_points)} float\n')
+        for pt in all_points:
+            f.write(f'{pt[0]:.6e} {pt[1]:.6e} {pt[2]:.6e}\n')
+        total_size = sum(len(c) for c in all_cells)
+        f.write(f'POLYGONS {len(all_cells)} {total_size}\n')
+        for cell in all_cells:
+            f.write(' '.join(map(str, cell)) + '\n')
+    print(f"Oxides: {len(centers)} sphere mesh(es) -> {vtk_file}")
 
 
 def wrap_vtk_pbc(vtk_file, Lbox):
