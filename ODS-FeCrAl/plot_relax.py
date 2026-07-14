@@ -39,7 +39,10 @@ def main():
     plt.close()
 
     print(f'数据点: {len(time)}, 总物理时间: {time[-1]*1e9:.2f} ns')
-    print(f'密度: {dens[0]:.4e} -> {dens[-1]:.4e} /m^2 (保持率 {dens[-1]/dens[0]*100:.1f}%)')
+    # 起点跳过第一行:step=1 的记录可能异常偏低(2026-07 弛豫炉实测);
+    # 权威保持率以 relax_config.py 打印的构型实算前/后密度为准
+    d0 = dens[1] if len(dens) > 1 else dens[0]
+    print(f'密度: {d0:.4e} -> {dens[-1]:.4e} /m^2 (保持率 {dens[-1]/d0*100:.1f}%)')
     tail = dens[int(0.8*len(dens)):]
     drift = (tail[-1] - tail[0]) / tail[0] * 100
     print(f'末段20%漂移: {drift:+.2f}%  (|漂移|<1% 可视为趋平)')
