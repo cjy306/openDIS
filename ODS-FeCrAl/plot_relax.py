@@ -31,18 +31,11 @@ def main():
 
     fig, ax = plt.subplots(figsize=(8, 6))
     fig.patch.set_facecolor('white')
-    ax.plot(time * 1e9, dens, color='#1F77B4', lw=0.8, alpha=0.45, label='Raw (every step)')
-
-    # 滑动均值叠加:窗口约为数据量的 1/50(10000 点 → 200 点窗)
-    w = max(3, len(dens) // 50)
-    smooth = np.convolve(dens, np.ones(w) / w, mode='valid')
-    t_s = time[(w - 1) // 2 : (w - 1) // 2 + len(smooth)]
-    ax.plot(t_s * 1e9, smooth, color='#FF7F0E', lw=2.0, label=f'Running mean ({w} pts)')
+    ax.plot(time * 1e9, dens, color='#1F77B4', lw=0.9)
 
     ax.set_xlabel('Time (ns)', fontsize=13)
     ax.set_ylabel(r'Dislocation Density (m$^{-2}$)', fontsize=13)
     ax.set_title('Zero-stress Relaxation: Density vs Time', fontsize=14)
-    ax.legend(fontsize=11, framealpha=0.9)
     ax.grid(True, alpha=0.3, linestyle='--')
     ax.tick_params(labelsize=11)
 

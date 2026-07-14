@@ -44,11 +44,22 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--seed', type=int, default=12345, help='随机实现种子(对应 init_data 目录)')
     parser.add_argument('--restart', type=int, help='从指定步骤重启')
+    parser.add_argument('--init', type=str, default=None,
+                        help='初始构型 .data 文件(默认 init_data_caseA_seed<seed>/init_config.data;'
+                             '读弛豫基体时用,如 output_relax_seed12345/config.9800.data)')
+    parser.add_argument('--out', type=str, default=None,
+                        help='输出目录(默认 output_caseA_seed<seed>)')
     args = parser.parse_args()
 
-    base_dir   = os.path.dirname(os.path.abspath(__file__))
-    init_dir   = os.path.join(base_dir, f'init_data_caseA_seed{args.seed}')
-    output_dir = os.path.join(base_dir, f'output_caseA_seed{args.seed}')
+    base_dir = os.path.dirname(os.path.abspath(__file__))
+    if args.init:
+        init_file = args.init if os.path.isabs(args.init) else os.path.join(base_dir, args.init)
+    else:
+        init_file = os.path.join(base_dir, f'init_data_caseA_seed{args.seed}', 'init_config.data')
+    if args.out:
+        output_dir = args.out if os.path.isabs(args.out) else os.path.join(base_dir, args.out)
+    else:
+        output_dir = os.path.join(base_dir, f'output_caseA_seed{args.seed}')
     os.makedirs(output_dir, exist_ok=True)
 
     if args.restart is not None:
@@ -57,7 +68,7 @@ def main():
             restart_file=os.path.join(output_dir, f'restart.{args.restart}.exadis'))
     else:
         G = ExaDisNet()
-        G.read_paradis(os.path.join(init_dir, 'init_config.data'))
+        G.read_paradis(init_file)
         net = DisNetManager(G)
         restart = None
 
