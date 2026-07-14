@@ -38,7 +38,7 @@ nvidia-smi | head -15
 # ============================================================================
 echo ">>> [1/2] 生成初始构型..."
 cd /public/home/cjy306/openDIS/ODS-FeCrAl
-python generate_caseA.py --seed 12345
+python generate_caseD_smoke.py
 echo ">>> 生成完成"
 
 # ============================================================================
@@ -46,7 +46,7 @@ echo ">>> 生成完成"
 # ============================================================================
 echo ">>> [2/2] 开始模拟..."
 cd /public/home/cjy306/openDIS/ODS-FeCrAl
-python test_caseA_baseline.py --seed 12345
+python test_caseD_smoke.py
 echo ">>> 模拟完成"
 
 echo "=== Job 结束 $(date) ==="
