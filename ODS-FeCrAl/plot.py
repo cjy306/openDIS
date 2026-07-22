@@ -18,13 +18,13 @@ CURVES = [
         "color": "#030E15",   
     },
     {
-        "file":  "/public/home/cjy306/openDIS/ODS-FeCrAl/output_caseA_low/stress_strain_dens.dat",
-        "label": "caseA_low",
+        "file":  "/public/home/cjy306/openDIS/ODS-FeCrAl/output_caseD_smoke/stress_strain_dens.dat",
+        "label": "caseD",
         "color": "#1F77B4",   
     }
 ]
 OUTPUT_DIR  = "/public/home/cjy306/openDIS/ODS-FeCrAl/Post-processing simulation"
-OUTPUT_NAME = "compare"
+OUTPUT_NAME = "orowan_compare"
 # =========================================================
 
 
