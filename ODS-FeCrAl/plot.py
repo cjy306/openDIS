@@ -13,13 +13,18 @@ import matplotlib.pyplot as plt
 # ========== 在这里配置要对比的曲线（可加 2 条以上）==========
 CURVES = [
     {
-        "file":  "/public/home/cjy306/openDIS/ODS-FeCrAl/output_caseA_seed12345/stress_strain_dens.dat",
-        "label": "caseA",
+        "file":  "/public/home/cjy306/openDIS/ODS-FeCrAl/output_caseA_high/stress_strain_dens.dat",
+        "label": "caseA_high",
+        "color": "#030E15",   
+    },
+    {
+        "file":  "/public/home/cjy306/openDIS/ODS-FeCrAl/output_caseA_low/stress_strain_dens.dat",
+        "label": "caseA_low",
         "color": "#1F77B4",   
     }
 ]
 OUTPUT_DIR  = "/public/home/cjy306/openDIS/ODS-FeCrAl/Post-processing simulation"
-OUTPUT_NAME = "erate_compare"
+OUTPUT_NAME = "compare"
 # =========================================================
 
 
