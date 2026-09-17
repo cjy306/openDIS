@@ -16,5 +16,6 @@
 // Available collision types
 #include "collision_retroactive.h"
 #include "collision_orowan.h"
+#include "collision_orowan_geometry.h"
 
 #endif

@@ -380,6 +380,17 @@ class MobilityLaw:
             vmax = kwargs.get('vmax', -1.0)
             mobparams = pyexadis.Mobility_BCC_0B_Params(Medge, Mscrew, Mclimb, Fedge, Fscrew, vmax)
             self.mobility = pyexadis.make_mobility_bcc_0b(params=params, mobparams=mobparams)
+
+        elif self.mobility_law == 'BCC_0B_OrowanGeometry':
+            Medge = get_module_arg('MobilityLaw::'+self.mobility_law, kwargs, 'Medge')
+            Mscrew = get_module_arg('MobilityLaw::'+self.mobility_law, kwargs, 'Mscrew')
+            Mclimb = get_module_arg('MobilityLaw::'+self.mobility_law, kwargs, 'Mclimb')
+            Fedge = kwargs.get('Fedge', 0.0)
+            Fscrew = kwargs.get('Fscrew', 0.0)
+            vmax = kwargs.get('vmax', -1.0)
+            mobparams = pyexadis.Mobility_BCC_0B_Params(Medge, Mscrew, Mclimb, Fedge, Fscrew, vmax)
+            self.mobility = pyexadis.make_mobility_bcc_0b_orowan_geometry(
+                params=params, mobparams=mobparams)
             
         elif self.mobility_law == 'BCC_NL':
             tempK = kwargs.get('tempK', 300.0)
@@ -501,6 +512,7 @@ class TimeIntegration:
             'Trapezoid': self.Integrate,
             'RKF': self.Integrate,
             'Subcycling': self.Integrate,
+            'SubcyclingOrowanGeometry': self.Integrate,
         }
         
         if self.integrator_type != 'EulerForward':
@@ -545,7 +557,7 @@ class TimeIntegration:
             else:
                 self.integrator = pyexadis.make_integrator_rkf(params=params, intparams=intparams, 
                                                                force=force, mobility=mobility)
-        elif self.integrator_type == 'Subcycling':
+        elif self.integrator_type in ['Subcycling', 'SubcyclingOrowanGeometry']:
             rgroups = get_module_arg('TimeIntegration::'+self.integrator_type, kwargs, 'rgroups')
             rtolth = kwargs.get('rtolth', 1.0)
             rtolrel = kwargs.get('rtolrel', 0.1)
@@ -557,8 +569,12 @@ class TimeIntegration:
             mobility, self.mobility_python = get_exadis_mobility(mobility_module, state, params)
             
             intparams = pyexadis.Integrator_Subcycling_Params(rgroups, rtolth, rtolrel, fstats)
-            self.integrator = pyexadis.make_integrator_subcycling(params=params, intparams=intparams, 
-                                                                  force=force, mobility=mobility)
+            if self.integrator_type == 'Subcycling':
+                self.integrator = pyexadis.make_integrator_subcycling(
+                    params=params, intparams=intparams, force=force, mobility=mobility)
+            else:
+                self.integrator = pyexadis.make_integrator_subcycling_orowan_geometry(
+                    params=params, intparams=intparams, force=force, mobility=mobility)
         else:
             raise ValueError('Unknown integrator %s' % integrator)
         
@@ -1052,6 +1068,18 @@ class SimulateNetworkPerf(SimulateNetwork):
                             "Adjust modules or use SimulateNetwork driver.")
         if self.timeint.integrator_type == 'EulerForward':
             raise TypeError("SimulateNetworkPerf cannot be used with EulerForward integrator.")
+
+        geometry_modules = [
+            self.mobility.mobility_law == 'BCC_0B_OrowanGeometry',
+            self.timeint.integrator_type == 'SubcyclingOrowanGeometry',
+            self.collision.collision_mode == 'OrowanGeometry',
+            self.remesh.remesh_rule == 'OrowanGeometry',
+        ]
+        if any(geometry_modules) and not all(geometry_modules):
+            raise ValueError(
+                "Orowan geometry modules must be selected together: "
+                "BCC_0B_OrowanGeometry, SubcyclingOrowanGeometry, "
+                "OrowanGeometry collision, and OrowanGeometry remesh")
         
         # convert DisNet to a complete exadis system object
         params = get_exadis_params(state)

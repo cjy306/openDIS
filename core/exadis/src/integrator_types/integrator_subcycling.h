@@ -504,8 +504,10 @@ public:
     IntegratorSubcyclingBase(System* system, SegSegGroups* _subgroups) :
     subcycling(true) {
         subgroups = _subgroups;
-        for (int i = 0; i < subgroups->Ngroups; i++)
+        for (int i = 0; i < subgroups->Ngroups; i++) {
             nextdtsub[i] = system->params.nextdt;
+            realdtsub[i] = 0.0;
+        }
     }
     
     virtual void init_subcycling_step(System* system) {}
@@ -733,6 +735,12 @@ public:
         Params(std::vector<double> _rgroups) : rgroups(_rgroups) { Iparams = IP(); }
         Params(std::vector<double> _rgroups, IP _Iparams) : rgroups(_rgroups), Iparams(_Iparams) {}
     };
+
+    struct AdaptiveState {
+        double nextdtsub[Ngmax];
+        double realdtsub[Ngmax];
+        int Ngroups;
+    };
     
     IntegratorSubcyclingDriver(System* system, Force* _force, Mobility* _mobility, Params params=Params()) : 
     mobility(_mobility)
@@ -772,6 +780,28 @@ public:
     IntegratorSubcyclingDriver(const IntegratorSubcyclingDriver&) = delete;
     
     SegSegGroups* get_subgroups() { return subgroups; }
+
+    void save_adaptive_state(AdaptiveState& state) const {
+        state.Ngroups = subgroups->Ngroups;
+        for (int i = 0; i < state.Ngroups; ++i) {
+            state.nextdtsub[i] = integrator->nextdtsub[i];
+            state.realdtsub[i] = integrator->realdtsub[i];
+        }
+    }
+
+    void restore_adaptive_state(const AdaptiveState& state) {
+        if (state.Ngroups != subgroups->Ngroups)
+            ExaDiS_fatal("Error: inconsistent Subcycling group count during Orowan retry\n");
+        for (int i = 0; i < state.Ngroups; ++i) {
+            integrator->nextdtsub[i] = state.nextdtsub[i];
+            integrator->realdtsub[i] = state.realdtsub[i];
+        }
+    }
+
+    void limit_global_nextdt(double retry_dt) {
+        int highest = subgroups->Ngroups - 1;
+        integrator->nextdtsub[highest] = fmin(integrator->nextdtsub[highest], retry_dt);
+    }
     
     void write_stats() {
         if (0) {

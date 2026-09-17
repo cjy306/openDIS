@@ -86,5 +86,6 @@ public:
 #include "integrator_rkf.h"
 #include "integrator_multi.h"
 #include "integrator_subcycling.h"
+#include "integrator_subcycling_orowan_geometry.h"
 
 #endif
