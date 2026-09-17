@@ -124,7 +124,7 @@ def main():
             loading_mode="strain_rate",
             erate=1.0e3,
             edir=np.array([0.0, 1.0, 0.0]),  # [010] tension drives the FR arm toward +b
-            max_strain=0.005,
+            max_strain=0.003,
             burgmag=STATE["burgmag"],
             state=STATE,
             print_freq=1,
