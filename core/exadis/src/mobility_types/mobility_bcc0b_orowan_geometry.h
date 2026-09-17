@@ -21,10 +21,6 @@ public:
 
 private:
     MobilityBCC0b* base;
-    Kokkos::View<SphericalObstacle*, T_memory_space> device_obstacles;
-    int Nobstacles = 0;
-    double tangent_tolerance = 1.0e-10;
-    double release_velocity_tolerance = 1.0e-12;
 
     template<class N>
     KOKKOS_INLINE_FUNCTION
@@ -86,57 +82,69 @@ private:
     }
 
 public:
+    struct ContactMobility {
+        MobilityBCC0b* base;
+        Kokkos::View<SphericalObstacle*, T_memory_space> obstacles;
+        int Nobstacles = 0;
+        double tangent_tolerance = 1.0e-10;
+        double release_velocity_tolerance = 1.0e-12;
+
+        ContactMobility(MobilityBCC0b* _base) : base(_base) {}
+
+        template<class N>
+        KOKKOS_INLINE_FUNCTION
+        Vec3 node_velocity(System* system, N* net, const int i, const Vec3& force) const
+        {
+            auto nodes = net->get_nodes();
+            Vec3 velocity = base->node_velocity(system, net, i, force);
+            if (nodes[i].constraint != SPHERE_SURFACE) return velocity;
+
+            int obstacle_id = nodes[i].sphere_id;
+            if (obstacle_id < 0 || obstacle_id >= Nobstacles ||
+                obstacles(obstacle_id).type != OBSTACLE_OROWAN)
+                return Vec3(0.0);
+
+            return MobilityBCC0bOrowanGeometry::constrain_contact_velocity(
+                net, i, velocity, obstacles(obstacle_id),
+                tangent_tolerance, release_velocity_tolerance);
+        }
+    };
+
+    typedef ContactMobility Mob;
+    Mob* mob;
+
     MobilityBCC0bOrowanGeometry(System* system, Params params)
     {
         base = exadis_new<MobilityBCC0b>(system, params);
+        mob = exadis_new<Mob>(base);
         non_linear = base->non_linear;
+        refresh_obstacles(system);
     }
 
     struct NodeMobility {
         System* system;
-        MobilityBCC0b* base;
+        Mob* mob;
         DeviceDisNet* net;
-        Kokkos::View<SphericalObstacle*, T_memory_space> obstacles;
-        int Nobstacles;
-        double tangent_tolerance;
-        double release_velocity_tolerance;
 
-        NodeMobility(System* _system, MobilityBCC0b* _base, DeviceDisNet* _net,
-                     Kokkos::View<SphericalObstacle*, T_memory_space> _obstacles,
-                     int _Nobstacles, double _tangent_tolerance,
-                     double _release_velocity_tolerance) :
-            system(_system), base(_base), net(_net), obstacles(_obstacles),
-            Nobstacles(_Nobstacles), tangent_tolerance(_tangent_tolerance),
-            release_velocity_tolerance(_release_velocity_tolerance) {}
+        NodeMobility(System* _system, Mob* _mob, DeviceDisNet* _net) :
+            system(_system), mob(_mob), net(_net) {}
 
         KOKKOS_INLINE_FUNCTION
         void operator()(const int i) const
         {
             auto nodes = net->get_nodes();
-            Vec3 velocity = base->node_velocity(system, net, i, nodes[i].f);
-            if (nodes[i].constraint == SPHERE_SURFACE) {
-                int obstacle_id = nodes[i].sphere_id;
-                if (obstacle_id < 0 || obstacle_id >= Nobstacles ||
-                    obstacles(obstacle_id).type != OBSTACLE_OROWAN) {
-                    nodes[i].v = Vec3(0.0);
-                    return;
-                }
-                velocity = MobilityBCC0bOrowanGeometry::constrain_contact_velocity(
-                    net, i, velocity, obstacles(obstacle_id),
-                    tangent_tolerance, release_velocity_tolerance);
-            }
-            nodes[i].v = velocity;
+            nodes[i].v = mob->node_velocity(system, net, i, nodes[i].f);
         }
     };
 
     void refresh_obstacles(System* system)
     {
-        Nobstacles = (int)system->obstacles.size();
-        Kokkos::resize(device_obstacles, Nobstacles);
-        if (Nobstacles == 0) return;
-        auto host = Kokkos::create_mirror_view(device_obstacles);
-        for (int i = 0; i < Nobstacles; ++i) host(i) = system->obstacles[i];
-        Kokkos::deep_copy(device_obstacles, host);
+        mob->Nobstacles = (int)system->obstacles.size();
+        Kokkos::resize(mob->obstacles, mob->Nobstacles);
+        if (mob->Nobstacles == 0) return;
+        auto host = Kokkos::create_mirror_view(mob->obstacles);
+        for (int i = 0; i < mob->Nobstacles; ++i) host(i) = system->obstacles[i];
+        Kokkos::deep_copy(mob->obstacles, host);
     }
 
     void compute(System* system) override
@@ -148,27 +156,23 @@ public:
         using policy = Kokkos::RangePolicy<Kokkos::LaunchBounds<32,1>>;
         Kokkos::parallel_for(
             "MobilityBCC0bOrowanGeometry", policy(0, net->Nnodes_local),
-            NodeMobility(system, base, net, device_obstacles, Nobstacles,
-                         tangent_tolerance, release_velocity_tolerance));
+            NodeMobility(system, mob, net));
         Kokkos::fence();
         system->timer[system->TIMER_MOBILITY].stop();
     }
 
     Vec3 node_velocity(System* system, const int& i, const Vec3& force) override
     {
+        if (mob->Nobstacles != (int)system->obstacles.size())
+            refresh_obstacles(system);
         SerialDisNet* net = system->get_serial_network();
-        Vec3 velocity = base->node_velocity(system, net, i, force);
-        if (net->nodes[i].constraint != SPHERE_SURFACE) return velocity;
-        int obstacle_id = net->nodes[i].sphere_id;
-        if (obstacle_id < 0 || obstacle_id >= (int)system->obstacles.size() ||
-            system->obstacles[obstacle_id].type != OBSTACLE_OROWAN)
-            return Vec3(0.0);
-        return constrain_contact_velocity(
-            net, i, velocity, system->obstacles[obstacle_id],
-            tangent_tolerance, release_velocity_tolerance);
+        return mob->node_velocity(system, net, i, force);
     }
 
-    ~MobilityBCC0bOrowanGeometry() override { exadis_delete(base); }
+    ~MobilityBCC0bOrowanGeometry() override {
+        exadis_delete(mob);
+        exadis_delete(base);
+    }
 
     const char* name() override { return "MobilityBCC0bOrowanGeometry"; }
 };
