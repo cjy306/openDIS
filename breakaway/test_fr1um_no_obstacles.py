@@ -51,7 +51,7 @@ def main():
             loading_mode='strain_rate', erate=1e3,
             edir=np.array([0., 0., 1.]), max_strain=0.005,
             burgmag=state['burgmag'], state=state,
-            print_freq=1, write_freq=100, write_dir=output_dir,
+            print_freq=1, write_freq=1000, write_dir=output_dir,
         )
         print('[baseline] 无障碍，加载到0.5%总应变')
         sim.run(net, state)
