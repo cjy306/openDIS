@@ -252,6 +252,4 @@ public:
 
 } // namespace ExaDiS
 
-#include "remesh_orowan_geometry.h"
-
 #endif

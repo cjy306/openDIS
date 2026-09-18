@@ -671,8 +671,6 @@ CollisionBind make_collision(std::string collision_mode, Params& params)
         collision = new CollisionRetroactive(system);
     else if (collision_mode == "Orowan")
         collision = new CollisionOrowan(system);
-    else if (collision_mode == "OrowanGeometry")
-        collision = new CollisionOrowanGeometry(system);
     else if (collision_mode == "None")
         collision = new Collision(system);
     else
@@ -779,8 +777,6 @@ RemeshBind make_remesh(std::string remesh_rule, Params& params, RemeshSerial::Pa
     Remesh* remesh;
     if (remesh_rule == "LengthBased") {
         remesh = new RemeshSerial(system, remeshparams);
-    } else if (remesh_rule == "OrowanGeometry") {
-        remesh = new RemeshOrowanGeometry(system, remeshparams);
     } else if (remesh_rule == "None") { 
         remesh = new Remesh(system);
     } else {
@@ -1300,9 +1296,6 @@ PYBIND11_MODULE(pyexadis, m) {
           py::arg("params"), py::arg("mobparams"));
     m.def("make_mobility_bcc_0b", &make_mobility<MobilityType::BCC_0B>, "Instantiate a BCC_0B mobility law",
           py::arg("params"), py::arg("mobparams"));
-    m.def("make_mobility_bcc_0b_orowan_geometry", &make_mobility<MobilityType::BCC_0B_OROWAN_GEOMETRY>,
-          "Instantiate a BCC_0B mobility law with hard-sphere Orowan geometry",
-          py::arg("params"), py::arg("mobparams"));
     m.def("make_mobility_bcc_nl", &make_mobility<MobilityType::BCC_NL>, "Instantiate a BCC_NL mobility law",
           py::arg("params"), py::arg("mobparams"));
     m.def("make_mobility_fcc_0", &make_mobility<MobilityType::FCC_0>, "Instantiate a FCC_0 mobility law",
@@ -1332,9 +1325,6 @@ PYBIND11_MODULE(pyexadis, m) {
     m.def("make_integrator_rkf_multi", &make_integrator<IntegratorMulti<IntegratorRKF> >, "Instantiate a multi-step RKF integrator",
           py::arg("params"), py::arg("intparams"), py::arg("force"), py::arg("mobility"));
     m.def("make_integrator_subcycling", &make_integrator<IntegratorSubcycling>, "Instantiate a subcycling integrator",
-          py::arg("params"), py::arg("intparams"), py::arg("force"), py::arg("mobility"));
-    m.def("make_integrator_subcycling_orowan_geometry", &make_integrator<IntegratorSubcyclingOrowanGeometry>,
-          "Instantiate a subcycling integrator with hard-sphere Orowan step rejection",
           py::arg("params"), py::arg("intparams"), py::arg("force"), py::arg("mobility"));
     m.def("integrate", &integrate, "Wrapper to perform a time-integration step",
           py::arg("net"), py::arg("integrator"), py::arg("nodevels"), py::arg("applied_stress"), py::arg("nodetags")=std::vector<NodeTag>());
