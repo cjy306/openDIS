@@ -87,11 +87,11 @@ def main() -> None:
             cross_slip=None,
             loading_mode="stress",
             applied_stress=np.zeros(6),
-            max_step=10000,
+            max_step=5000,
             burgmag=state["burgmag"],
             state=state,
             print_freq=1,
-            write_freq=100,
+            write_freq=1,
             write_dir=output_dir,
             out_props=["step", "time", "dt", "density", "Nnodes"],
         )
