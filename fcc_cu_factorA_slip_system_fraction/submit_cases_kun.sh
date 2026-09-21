@@ -33,7 +33,7 @@ init_dir="init_${case_name}_seed${seed}"
 output_dir="output_${case_name}_seed${seed}"
 
 echo "=== ${case_name} 开始：$(date)；作业 ${SLURM_ARRAY_JOB_ID}_${SLURM_ARRAY_TASK_ID} ==="
-nvidia-smi | head -15
+nvidia-smi
 
 echo ">>> [1/2] generate_${case_name}.py"
 python "generate_${case_name}.py" --seed "$seed"
