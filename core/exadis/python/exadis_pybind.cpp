@@ -9,6 +9,8 @@
 
 #include "exadis_pybind.h"
 
+#include <cmath>
+
 
 /*---------------------------------------------------------------------------
  *
@@ -430,6 +432,8 @@ ForceBind make_force(Params& params, typename F::Params& fparams, Cell cell)
         model = ForceBind::DDD_FFT_MODEL;
     else if (std::is_same<F, ForceType::SUBCYCLING_MODEL>::value)
         model = ForceBind::SUBCYCLING_MODEL;
+    else if (std::is_same<F, ForceType::SUBCYCLING_COHERENCY_MODEL>::value)
+        model = ForceBind::SUBCYCLING_COHERENCY_MODEL;
     else if (std::is_same<F, ForceFFT>::value)
         model = ForceBind::FORCE_FFT;
     else
@@ -739,6 +743,8 @@ TopologyBind make_topology(std::string topology_mode, Params& params,
             topology = make_topology_parallel<ForceType::DDD_FFT_MODEL>(system, force, mobility, topolparams);
         } else if (forcebind.model == ForceBind::SUBCYCLING_MODEL) {
             topology = make_topology_parallel<ForceType::SUBCYCLING_MODEL>(system, force, mobility, topolparams);
+        } else if (forcebind.model == ForceBind::SUBCYCLING_COHERENCY_MODEL) {
+            topology = make_topology_parallel<ForceType::SUBCYCLING_COHERENCY_MODEL>(system, force, mobility, topolparams);
         } else {
             ExaDiS_fatal("Error: invalid force type for TopologyParallel binding\n");
         }
@@ -818,6 +824,8 @@ CrossSlipBind make_cross_slip(std::string cross_slip_mode, Params& params, Force
             crossslip = new CrossSlipParallel<ForceType::DDD_FFT_MODEL>(system, force);
         } else if (forcebind.model == ForceBind::SUBCYCLING_MODEL) {
             crossslip = new CrossSlipParallel<ForceType::SUBCYCLING_MODEL>(system, force);
+        } else if (forcebind.model == ForceBind::SUBCYCLING_COHERENCY_MODEL) {
+            crossslip = new CrossSlipParallel<ForceType::SUBCYCLING_COHERENCY_MODEL>(system, force);
         } else {
             ExaDiS_fatal("Error: invalid force type for TopologyParallel binding\n");
         }
@@ -1249,6 +1257,51 @@ PYBIND11_MODULE(pyexadis, m) {
         .def_static("make", [](Params& params, ForceType::SUBCYCLING_MODEL::Params& fparams, Cell& cell) {
             return make_force<ForceType::SUBCYCLING_MODEL>(params, fparams, cell);
         }, py::arg("params"), py::arg("fparams"), py::arg("cell"));
+
+    // SUBCYCLING_COHERENCY_MODEL
+    py::class_<ForceType::SUBCYCLING_COHERENCY_MODEL, ForceSubcycling> force_subcycl_coherency(
+        force_m, "SUBCYCLING_COHERENCY_MODEL"
+    );
+    py::class_<ForceType::SUBCYCLING_COHERENCY_MODEL::Params>(
+        force_subcycl_coherency, "Params"
+    ).def(py::init([](
+        ForceType::CORE_SELF_PKEXT::Params coreparams,
+        std::vector<int> Ngrid,
+        py::array_t<double, py::array::c_style | py::array::forcecast> coherency_stress,
+        bool drift,
+        bool flong_group0
+    ) {
+        if (Ngrid.size() != 3 || Ngrid[0] < 2 || Ngrid[1] < 2 || Ngrid[2] < 2)
+            throw py::value_error("Ngrid must contain three dimensions >= 2");
+        py::buffer_info info = coherency_stress.request();
+        if (info.ndim != 4 || info.shape[0] != Ngrid[0] ||
+            info.shape[1] != Ngrid[1] || info.shape[2] != Ngrid[2] ||
+            info.shape[3] != 6)
+            throw py::value_error(
+                "coherency_stress must have shape (Nx, Ny, Nz, 6) matching Ngrid"
+            );
+        const double* data = static_cast<const double*>(info.ptr);
+        std::vector<double> values(data, data + info.size);
+        for (double value : values) {
+            if (!std::isfinite(value))
+                throw py::value_error("coherency_stress must contain only finite values");
+        }
+        ForceSubcycling::Params subcycling(
+            Ngrid[0], Ngrid[1], Ngrid[2], drift, flong_group0
+        );
+        subcycling.FSegParams = coreparams;
+        return new ForceType::SUBCYCLING_COHERENCY_MODEL::Params(
+            subcycling, Ngrid[0], Ngrid[1], Ngrid[2], values
+        );
+    }), py::arg("coreparams"), py::arg("Ngrid"), py::arg("coherency_stress"),
+        py::arg("drift")=false, py::arg("flong_group0")=true);
+    force_subcycl_coherency.def_static("make", [](
+        Params& params,
+        ForceType::SUBCYCLING_COHERENCY_MODEL::Params& fparams,
+        Cell& cell
+    ) {
+        return make_force<ForceType::SUBCYCLING_COHERENCY_MODEL>(params, fparams, cell);
+    }, py::arg("params"), py::arg("fparams"), py::arg("cell"));
     
     // GLOBAL_MODEL
     py::class_<ForceType::GLOBAL_MODEL, Force> force_global(force_m, "GLOBAL_MODEL");

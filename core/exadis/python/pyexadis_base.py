@@ -263,6 +263,27 @@ class CalForce:
             subcyclparams = pyexadis.Force.SUBCYCLING_MODEL.Params(coreparams=coreparams, Ngrid=Ngrid,
                                                                    drift=drift, flong_group0=flong_group0)
             self.force = pyexadis.Force.SUBCYCLING_MODEL.make(params=self.params, fparams=subcyclparams, cell=cell)
+
+        elif self.force_mode == 'SUBCYCLING_COHERENCY_MODEL':
+            Ngrid = get_module_arg('CalForce::'+self.force_mode, kwargs, 'Ngrid')
+            if isinstance(Ngrid, int): Ngrid = 3*[Ngrid]
+            cell = get_module_arg('CalForce::'+self.force_mode, kwargs, 'cell')
+            if not isinstance(cell, pyexadis.Cell):
+                cell = pyexadis.Cell(h=cell.h, origin=cell.origin, is_periodic=cell.is_periodic)
+            coherency_stress = get_module_arg(
+                'CalForce::'+self.force_mode, kwargs, 'coherency_stress'
+            )
+            coherency_stress = np.asarray(coherency_stress, dtype=np.float64, order='C')
+            drift = kwargs.get('drift', 0)
+            flong_group0 = kwargs.get('flong_group0', 1)
+            subcyclparams = pyexadis.Force.SUBCYCLING_COHERENCY_MODEL.Params(
+                coreparams=coreparams, Ngrid=Ngrid,
+                coherency_stress=coherency_stress,
+                drift=drift, flong_group0=flong_group0,
+            )
+            self.force = pyexadis.Force.SUBCYCLING_COHERENCY_MODEL.make(
+                params=self.params, fparams=subcyclparams, cell=cell
+            )
             
         elif self.force_mode == 'GLOBAL_MODEL':
             cell = get_module_arg('CalForce::'+self.force_mode, kwargs, 'cell')
@@ -513,8 +534,8 @@ class TimeIntegration:
             multi = kwargs.get('multi', 0)
             
             if isinstance(force_module, CalForce):
-                if force_module.force_mode == 'SUBCYCLING_MODEL':
-                    raise ValueError('Force SUBCYCLING_MODEL can only be used with Subcycling integrator')
+                if force_module.force_mode in ['SUBCYCLING_MODEL', 'SUBCYCLING_COHERENCY_MODEL']:
+                    raise ValueError('Subcycling force models can only be used with Subcycling integrator')
             force, self.force_python = get_exadis_force(force_module, state, params)
             mobility, self.mobility_python = get_exadis_mobility(mobility_module, state, params)
             
@@ -532,8 +553,8 @@ class TimeIntegration:
             rtolrel = kwargs.get('rtolrel', 0.1)
             
             if isinstance(force_module, CalForce):
-                if force_module.force_mode == 'SUBCYCLING_MODEL':
-                    raise ValueError('Force SUBCYCLING_MODEL can only be used with Subcycling integrator')
+                if force_module.force_mode in ['SUBCYCLING_MODEL', 'SUBCYCLING_COHERENCY_MODEL']:
+                    raise ValueError('Subcycling force models can only be used with Subcycling integrator')
             force, self.force_python = get_exadis_force(force_module, state, params)
             mobility, self.mobility_python = get_exadis_mobility(mobility_module, state, params)
             
@@ -551,8 +572,8 @@ class TimeIntegration:
             rtolrel = kwargs.get('rtolrel', 0.1)
             fstats = kwargs.get('fstats', "")
             
-            if force_module.force_mode != 'SUBCYCLING_MODEL':
-                raise ValueError('Force SUBCYCLING_MODEL must be used with Subcycling integrator')
+            if force_module.force_mode not in ['SUBCYCLING_MODEL', 'SUBCYCLING_COHERENCY_MODEL']:
+                raise ValueError('A subcycling force model must be used with Subcycling integrator')
             force = force_module.force
             mobility, self.mobility_python = get_exadis_mobility(mobility_module, state, params)
             

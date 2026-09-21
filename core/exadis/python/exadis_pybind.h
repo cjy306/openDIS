@@ -296,7 +296,7 @@ struct SystemBind : ExaDisNet {
 struct ForceBind {
     enum ForceModel {
         LINE_TENSION_MODEL, CUTOFF_MODEL, DDD_FFT_MODEL, 
-        SUBCYCLING_MODEL, GLOBAL_MODEL, PYTHON_MODEL,
+        SUBCYCLING_MODEL, SUBCYCLING_COHERENCY_MODEL, GLOBAL_MODEL, PYTHON_MODEL,
         FORCE_FFT,
     };
     Force* force = nullptr;
