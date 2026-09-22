@@ -112,7 +112,7 @@ def main() -> None:
             cross_slip=None,
             loading_mode="stress",
             applied_stress=np.zeros(6),
-            max_step=50000,
+            max_step=5000,
             burgmag=state["burgmag"],
             state=state,
             print_freq=1,
