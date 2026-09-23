@@ -1,0 +1,29 @@
+{
+  "purpose": "module validation; parameters are not calibrated C35M data",
+  "component_order": [
+    "xx",
+    "yy",
+    "zz",
+    "yz",
+    "xz",
+    "xy"
+  ],
+  "box_m": [
+    3e-07,
+    3e-07,
+    3e-07
+  ],
+  "grid_shape": [
+    64,
+    64,
+    64
+  ],
+  "mean_cr": 0.13,
+  "std_cr": 0.02,
+  "correlation_length_m": 5e-08,
+  "misfit_coefficient_per_atomic_fraction": 0.02,
+  "mu_pa": 81000000000.0,
+  "nu": 0.3,
+  "seed": 12345,
+  "equilibrium_residual": 2.9588796596335076e-15
+}
