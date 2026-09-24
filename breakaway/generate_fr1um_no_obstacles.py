@@ -4,7 +4,7 @@
 构型沿用 ODS-FeCrAl/generate_caseA.py 的闭合 FR 回路思路；四条边预先细分到
 不超过 maxseg，避免正式加载第一步才由 remesh 大量切段。
 
-输出: init_fr1um_no_obstacles/{init_config.data, init_config.vtk}
+输出: init_fr1um_no_obstacles/init_config.data
 """
 import os
 import sys
@@ -14,8 +14,7 @@ pyexadis_paths = ['../python', '../lib', '../core/pydis/python', '../core/exadis
 [sys.path.append(os.path.abspath(path)) for path in pyexadis_paths if path not in sys.path]
 
 import pyexadis
-from pyexadis_base import ExaDisNet, DisNetManager, NodeConstraints
-from pyexadis_utils import write_vtk
+from pyexadis_base import ExaDisNet, NodeConstraints
 
 BURGMAG = 0.248e-9
 LBOX_M = 5.0e-6
@@ -111,8 +110,6 @@ def main():
         Lbox_b, nodes, segs = build_network(np.random.RandomState(12345))
         network = ExaDisNet(pyexadis.Cell(Lbox_b), nodes, segs)
         network.write_data(os.path.join(out_dir, 'init_config.data'))
-        write_vtk(DisNetManager(network), os.path.join(out_dir, 'init_config.vtk'),
-                  crystal='BCC', verbose=False)
         print('无障碍初始网络已写出:', out_dir)
     finally:
         pyexadis.finalize()

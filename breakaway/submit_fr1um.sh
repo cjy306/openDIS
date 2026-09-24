@@ -33,6 +33,6 @@ post_submission=$(sbatch --parsable \
     --dependency="afterok:${cases_job_id}" \
     submit_fr1um_post_kun.sh)
 post_job_id=${post_submission%%;*}
-echo "曲线/VTK后处理作业已提交：$post_job_id"
+echo "曲线后处理作业已提交：$post_job_id"
 echo "依赖关系：afterok:${cases_job_id}"
 echo "查看队列：squeue -j ${cases_job_id},${post_job_id}"

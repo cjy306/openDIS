@@ -35,19 +35,9 @@ cmp init_fr1um_no_obstacles/init_config.data \
     init_fr1um_point_obstacles/init_config.data
 echo "两组初始位错网络完全一致"
 
-echo ">>> [1/2] 绘制应力/位错密度对比图"
+echo ">>> 绘制应力/位错密度对比图"
 python plot_fr1um_compare.py
 test -s post_fr1um_compare/fr1um_compare.png
 test -s post_fr1um_compare/fr1um_compare_summary.txt
-
-echo ">>> [2/2] 转换两组VTK"
-python visualize_fr1um_compare.py
-for case_name in no_obstacles point_obstacles; do
-    if ! compgen -G "vtk_fr1um_compare/${case_name}/config.*.vtk" > /dev/null; then
-        echo "未找到 ${case_name} 的VTK输出" >&2
-        exit 1
-    fi
-done
-test -s vtk_fr1um_compare/point_obstacles/obstacles.vtk
 
 echo "=== FR 1 um 后处理成功结束：$(date) ==="
