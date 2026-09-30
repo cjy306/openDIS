@@ -10,6 +10,16 @@
 - 加载及数值参数与原 run_01 相同：[001]、1000 s⁻¹、终止总应变 0.005（0.5%）、cross_slip=None、write_freq=1000。
 - 保持 maxseg=200b，因此每条源有 60 个节点、59 段；43 条共 2580 节点、2537 段。
 
+## 与 1 μm、seed=12345 比较
+
+在本目录执行 `python plot.py`，自动读取兄弟目录
+`../stress_overshoot_5runs/run_01/output_A75_seed12345/stress_strain_dens.dat`
+及本目录 `output_A75_3um_seed12345/stress_strain_dens.dat`。
+输出 `plots/fr_1um_vs_3um_seed12345.png` 和同名 PDF，左图为应力–应变，右图为总密度–应变。
+允许 3 μm 模拟尚未完成，各组画到最新完整记录；只忽略正在写入、尚无换行符的末行，其他坏行会报错。缺失组提示跳过，全部缺失报错。不外推、不平滑、不平均。
+两组源数为 128/43，密度为 1.024e12/1.032e12，高 Schmid 比例为 75%/74.42%，因此并非严格只改变臂长。
+已用内存合成数据验证单位转换、未完成末行、不等长应变范围以及 PNG/PDF 渲染，未保存合成曲线作为模拟结果。
+
 ## 昆山运行
 
 将整个目录上传至 `/public/home/cjy306/openDIS/stress_overshoot_3um_seed12345`，进入目录执行：

@@ -44,6 +44,21 @@ for i in 01 02 03 04 05; do sbatch submit_kun_run_${i}.sh; done
 脚本读取各组默认输出目录中的 `stress_strain_dens.dat`，绘制应力–应变和位错密度–应变双面板图，保存为 `plots/five_runs_comparison.png` 和同名 PDF。
 应变单位为 %，应力为 MPa，密度为 m⁻²；不平滑、不平均。缺失组会提示并跳过，全部缺失则报错；非有限数值或应变回退会报错，避免绘制含重启拼接问题的曲线。
 
+## 五组 VTK 转换
+
+每组 `run_01` 至 `run_05` 含 `vtk.py`，共用根目录 `vtk_common.py`。
+在超算的 stress_overshoot_5runs 目录提交：
+
+```bash
+for i in 01 02 03 04 05; do sbatch submit_vtk_kun_run_${i}.sh; done
+```
+
+沿用昆山 GPU 环境、1 GPU、8 CPU 和 120 小时时限，仅转换已有快照，不重跑模拟。
+输出在各组 `vtk_A75_seed*/config.0000001000.vtk` 等文件中，文件名补零以保证序列排序。
+在 ParaView 中打开该目录的 config.*.vtk 文件组，可使用 FCC 写出器提供的 SlipSystemID 等数组着色。
+可手动运行 `python run_01/vtk.py --start 0 --end 100000 --stride 2`，其中 stride 是对筛选后的已保存快照每隔 N 帧取一帧；默认转换全部快照。现有同名 VTK 会被重写。
+已验证语法及快照数字排序/筛选；实际转换须在具备 pyexadis 和模拟快照的环境运行。
+
 ## 初态验证
 
 `python -B stress_overshoot_5runs/verify_setup.py`：语法、五组仅 seed 不同、初态布局可复现、A75 计数、FCC Schmid 分类、FR 线段面内性、端点钉扎数量、段长和实算总密度通过。
