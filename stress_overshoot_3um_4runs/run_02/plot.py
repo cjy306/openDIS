@@ -1,0 +1,7 @@
+"""Plot this 3 um repeat."""
+from pathlib import Path
+import sys
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+from plot import main
+if __name__ == '__main__':
+    main(23456)
