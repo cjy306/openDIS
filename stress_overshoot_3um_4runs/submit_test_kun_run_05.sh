@@ -20,5 +20,5 @@ export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK
 export OMP_PROC_BIND=spread
 export OMP_PLACES=threads
 cd /public/home/cjy306/openDIS/stress_overshoot_3um_4runs/run_05
-python generate.py
+python -u -X faulthandler generate.py
 python test.py
