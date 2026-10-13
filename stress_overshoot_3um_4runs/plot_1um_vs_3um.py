@@ -50,7 +50,7 @@ def plot_seed(seed):
     fig.suptitle(f'FCC Cu | seed {seed} | 1 um vs 3 um FR')
     output = BASE_DIR/'plots'/'1um_vs_3um'
     output.mkdir(parents=True, exist_ok=True)
-    for suffix in ('png', 'pdf'):
+    for suffix in ('png',):
         target = output/f'fr_1um_vs_3um_seed{seed}.{suffix}'
         fig.savefig(target, dpi=300, facecolor='white')
         print(f'[saved] {target}')

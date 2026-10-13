@@ -55,7 +55,7 @@ def main():
     fig.suptitle(f"FCC Cu A75 | {len(responses)}/5 runs available")
     output = BASE_DIR / "plots"
     output.mkdir(exist_ok=True)
-    for suffix in ("png", "pdf"):
+    for suffix in ("png",):
         path = output / f"five_runs_comparison.{suffix}"
         fig.savefig(path, dpi=300, facecolor="white")
         print(f"[saved] {path}")

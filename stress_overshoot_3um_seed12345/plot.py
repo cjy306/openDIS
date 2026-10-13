@@ -65,7 +65,7 @@ def main():
     fig.suptitle(f"FCC Cu | seed 12345 | {len(responses)}/2 runs available")
     output = BASE_DIR / "plots"
     output.mkdir(exist_ok=True)
-    for suffix in ("png", "pdf"):
+    for suffix in ("png",):
         path = output / f"fr_1um_vs_3um_seed12345.{suffix}"
         fig.savefig(path, dpi=300, facecolor="white")
         print(f"[saved] {path}")

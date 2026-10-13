@@ -56,7 +56,7 @@ def main(only_seed=None):
     output = BASE_DIR/'plots'
     output.mkdir(exist_ok=True)
     name = 'five_3um_runs_comparison' if only_seed is None else f'3um_seed{only_seed}'
-    for ext in ('png','pdf'):
+    for ext in ('png',):
         target = output/f'{name}.{ext}'
         fig.savefig(target,dpi=300,facecolor='white')
         print(f'[saved] {target}')
