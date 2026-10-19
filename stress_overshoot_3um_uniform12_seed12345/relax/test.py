@@ -92,8 +92,9 @@ class WindowMonitor:
         # PHYS-APPROX: whole-step windows can exceed 10 ns by one step; ceiling = conservative longer window; upgrade = integrator-controlled exact window boundary.
         if self.elapsed < self.window*(1-1e-12):
             return None
+        # Activity is diagnostic only; convergence uses the net tensor increment.
         result = dict(duration=self.elapsed, net_norm=self.norm(self.net),
-                      activity=self.activity, converged=self.activity < self.tolerance)
+                      activity=self.activity, converged=self.norm(self.net) < self.tolerance)
         self.elapsed = 0.0
         self.net[:] = 0.0
         self.activity = 0.0
@@ -156,7 +157,7 @@ def run_relaxation(net, initial_state, modules_factory, folder, input_file,
     net.get_disnet(ExaDisNet).write_data(str(final_file))
     summary = dict(converged=converged,time_s=state['time'],steps=step,
         window_s=monitor.window,tolerance=monitor.tolerance,
-        criterion='sum of per-step plastic strain tensor Frobenius norms in full window',
+        criterion='Frobenius norm of net plastic strain tensor increment in full window',
         last_completed_window=last_window,
         cumulative_ep=cumulative.tolist(),cumulative_activity=activity,
         initial_sha256=hashlib.sha256(input_file.read_bytes()).hexdigest(),

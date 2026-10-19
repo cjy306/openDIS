@@ -24,14 +24,15 @@ def main():
     summary_file=folder/'summary.json'
     summary=json.loads(summary_file.read_text(encoding='utf-8')) if summary_file.exists() else {}
     threshold=summary.get('tolerance',1e-7)
+    old_activity_criterion = summary.get('criterion', '').startswith('sum of per-step')
     fig,axs=plt.subplots(2,2,figsize=(12,8),layout='constrained')
     axs[0,0].plot(t,values('density_m-2'))
     axs[0,0].set_ylabel('Driver density (m$^{-2}$)')
     complete=[r for r in rows if r['window_activity']]
     if complete:
         tw=[float(r['time_s'])*1e9 for r in complete]
-        axs[0,1].plot(tw,[float(r['window_net_norm']) for r in complete],'o-',label='Net tensor norm')
-        axs[0,1].plot(tw,[float(r['window_activity']) for r in complete],'s-',label='Sum of step norms (criterion)')
+        axs[0,1].plot(tw,[float(r['window_net_norm']) for r in complete],'o-',label='Net tensor norm' + (' (diagnostic)' if old_activity_criterion else ' (criterion)'))
+        axs[0,1].plot(tw,[float(r['window_activity']) for r in complete],'s-',label='Sum of step norms' + (' (old criterion)' if old_activity_criterion else ' (diagnostic)'))
     axs[0,1].axhline(threshold,color='red',ls='--',label='1e-7 threshold')
     axs[0,1].set_yscale('symlog',linthresh=threshold*.01)
     axs[0,1].set_ylabel('Full-window plastic strain increment')
