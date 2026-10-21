@@ -22,3 +22,4 @@ output/
 slurm-*.out
 slurm-*.err
 output*/
+*.csv
