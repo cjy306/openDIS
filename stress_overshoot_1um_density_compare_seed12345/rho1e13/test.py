@@ -52,7 +52,7 @@ state = {
 
 
 def make_modules(net, state):
-    calforce = CalForce(force_mode="SUBCYCLING_MODEL", state=state, Ngrid=64,
+    calforce = CalForce(force_mode="SUBCYCLING_MODEL", state=state, Ngrid=128,
                         cell=net.get_disnet(ExaDisNet).cell)
     mobility = MobilityLaw(mobility_law="FCC_0", state=state,
                            Medge=64103.0, Mscrew=64103.0, vmax=4000.0)
