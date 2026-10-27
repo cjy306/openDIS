@@ -54,20 +54,25 @@ def build_arrays(layout, cell, insert_fr, insert_loop, with_loops):
     return np.asarray(nodes), np.asarray(segs), fr_nodes, fr_segs
 
 
-def main():
+def main(default_case='both'):
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--case', choices=['both','no_loops','with_loops'], default='both')
+    parser.add_argument('--case', choices=['both','no_loops','with_loops'], default=default_case)
+    parser.add_argument('--seed', type=int, default=12345)
+    parser.add_argument('--out', type=Path, help='Initial directory for a single case; relative to that case')
     args = parser.parse_args()
     base = Path(__file__).resolve().parent
     cases = ['no_loops','with_loops'] if args.case == 'both' else [args.case]
+    if args.out is not None and len(cases) != 1:
+        parser.error('--out requires a single --case')
+    folders = {case: base/case/(args.out if args.out is not None else Path('init')) for case in cases}
     for case in cases:
-        if (base/case/'init/init_config.data').exists():
+        if (folders[case]/'init_config.data').exists():
             raise FileExistsError(f'{case}/init already exists; reuse or archive it explicitly')
     setup()
     import pyexadis
-    from pyexadis_base import ExaDisNet
-    from pyexadis_utils import insert_frank_read_src, insert_prismatic_loop
-    layout = make_layout(12345)
+    from pyexadis_base import ExaDisNet, DisNetManager
+    from pyexadis_utils import insert_frank_read_src, insert_prismatic_loop, write_vtk
+    layout = make_layout(args.seed)
     pyexadis.initialize()
     try:
         cell = pyexadis.Cell(h=(1e-6/0.248e-9)*np.eye(3), is_periodic=[True]*3)
@@ -88,10 +93,13 @@ def main():
                 raise AssertionError('Wrong FR density')
             if not np.allclose(np.sum(segs[:,2:5]*segs[:,5:8],axis=1),0,atol=1e-10):
                 raise AssertionError('Burgers vector not in glide plane')
-            folder = base/case/'init'
+            folder = folders[case]
             folder.mkdir(parents=True,exist_ok=True)
-            ExaDisNet(cell,nodes.tolist(),segs.tolist()).write_data(str(folder/'init_config.data'))
-            metadata = dict(case=case,seed=12345,box_m=1e-6,burgmag_m=0.248e-9,
+            network = ExaDisNet(cell,nodes.tolist(),segs.tolist())
+            network.write_data(str(folder/'init_config.data'))
+            write_vtk(DisNetManager(network),str(folder/'init_config_labeled.vtk'),
+                      crystal='BCC',verbose=False)
+            metadata = dict(case=case,seed=args.seed,box_m=1e-6,burgmag_m=0.248e-9,
                 fr_length_m=0.4e-6,fr_sources=250,fr_nodes=nn,fr_segments=ns,
                 fr_density_m2=float(lengths[:ns].sum()/1e-18),
                 total_density_m2=float(lengths.sum()/1e-18),
@@ -101,6 +109,12 @@ def main():
                 loop_circumdiameter_m=20e-9,loop_segments=int(len(segs)-ns))
             (folder/'metadata.json').write_text(json.dumps(metadata,indent=2),encoding='utf-8')
             np.savez(folder/'layout.npz',**layout)
+            import csv
+            with (folder/'source_layout.csv').open('w',newline='',encoding='utf-8') as stream:
+                writer = csv.writer(stream)
+                writer.writerow(['source_id','fx','fy','fz','slip_system_id','theta_deg'])
+                for i,(p,sid,theta) in enumerate(zip(layout['centers'],layout['systems'],layout['angles'])):
+                    writer.writerow([i,*p,int(sid),theta])
             print(json.dumps(metadata,indent=2))
     finally:
         pyexadis.finalize()

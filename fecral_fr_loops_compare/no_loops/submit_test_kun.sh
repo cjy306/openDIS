@@ -25,10 +25,10 @@ export PYTHONUNBUFFERED=1
 export PYTHONDONTWRITEBYTECODE=1
 cd "${SLURM_SUBMIT_DIR:?Submit from the case directory}"
 test -f test.py
-test -f ../generate.py
+test -f generate.py
 
 # Each job generates only its own initial file, using the identical seeded FR layout.
 if [ ! -f init/init_config.data ]; then
-    python ../generate.py --case no_loops
+    python generate.py
 fi
 python test.py "$@"

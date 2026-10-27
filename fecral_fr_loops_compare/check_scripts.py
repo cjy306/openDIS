@@ -3,6 +3,22 @@ import unittest
 import numpy as np
 
 class Checks(unittest.TestCase):
+    def test_group_generate_cli_and_plot_cli(self):
+        import subprocess
+        import sys
+        from pathlib import Path
+        base = Path(__file__).resolve().parent
+        for case in ('no_loops','with_loops'):
+            result = subprocess.run([sys.executable,'-B',str(base/case/'generate.py'),'--help'],
+                                    capture_output=True,text=True)
+            self.assertEqual(result.returncode,0,result.stderr)
+            self.assertIn('--seed',result.stdout)
+            self.assertIn('--out',result.stdout)
+        result = subprocess.run([sys.executable,'-B',str(base/'plot.py'),'--help'],
+                                capture_output=True,text=True)
+        self.assertEqual(result.returncode,0,result.stderr)
+        self.assertIn('--input',result.stdout)
+
     def test_layout(self):
         from generate import make_layout
         a = make_layout(12345)

@@ -3,7 +3,7 @@
 整个目录上传超算，OpenDiS核心不修改。默认安装路径为 `$HOME/openDIS`；不同路径请先 export OPENDIS_ROOT=/实际路径/openDIS。
 
 ## 文件
-- generate.py：生成两组相同FR基体，只有with_loops添加环。
+- 父目录generate.py：共用生成实现；每组generate.py：本组直接运行入口，支持--seed和--out。保持共用实现，防止两组FR生成逻辑分叉。
 - no_loops/test.py、with_loops/test.py：分别整体弛豫，然后加载。
 - plot.py：两组应力、总线密度及相对首条加载记录密度增量对比。
 - 每组vtk.py：弛豫及加载快照转换。
@@ -22,9 +22,11 @@ job=$(sbatch --parsable submit_test_kun.sh)
 sbatch --dependency=afterok:$job submit_vtk_kun.sh
 ```
 
-test作业自动生成自身初态，两个作业不写同一文件。相同seed保证FR背景一致。也可以先在已配置ExaDiS的计算环境执行父目录的 `python generate.py` 生成两组。已有初态不覆盖。
+test作业直接执行本组 `python generate.py` 自动生成自身初态，两个作业不写同一文件。相同seed保证FR背景一致。也可以先在已配置ExaDiS的计算环境执行父目录的 `python generate.py` 生成两组。已有初态不覆盖。初态同时输出init_config_labeled.vtk及source_layout.csv，便于查看和核对FR位置、滑移系与面内角度。
 
-两组完成后父目录执行 `python plot.py`，输出 `plots/loops_compare.png`。对比图不是由独立组作业自动生成，以免另一组未完成。VTK位于各组vtk_output和vtk_output_relax目录。
+两组完成后父目录执行 `python plot.py`，输出 `plots/loops_compare.png`；其他输出目录可用 `python plot.py --input output_new`。对比图不是由独立组作业自动生成，以免另一组未完成。VTK位于各组vtk_output和vtk_output_relax目录。
+
+test.py参照rho1e12算例组织：state在文件顶部、make_modules逐项定义模块、main读取构型并运行。支持--init、--out和--restart；保留本课题必须的整体弛豫。没有复制参考算例的FCC参数、5um盒子或无弛豫流程。两组修改seed时必须保持相同。
 
 ## 参数与物理近似
 - 1um立方PBC，seed12345，250根0.4um FR，基体密度1e14/m2。12个{110}<111>系各20或21根，面内方向随机。
