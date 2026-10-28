@@ -1,0 +1,35 @@
+--- a/core/exadis/python/exadis_pybind.cpp
++++ b/core/exadis/python/exadis_pybind.cpp
+@@ -1094,6 +1094,32 @@
+              "centers_b: list of [x,y,z] in Burgers units; radii_b: list of radii in Burgers units; "
+              "type: 0 = Orowan hard sphere (default), 1 = breakaway cut-through point obstacle.",
+              py::arg("centers_b"), py::arg("radii_b"), py::arg("type") = 0)
++        .def("load_obstacles_mixed", [](ExaDisNet& self,
++             const std::vector<Vec3>& centers_b,
++             const std::vector<double>& radii_b,
++             const std::vector<int>& types,
++             const std::vector<double>& phi_crit) {
++                 const size_t n = centers_b.size();
++                 if (radii_b.size() != n || types.size() != n || phi_crit.size() != n)
++                     throw py::value_error("Mixed obstacle arrays must have equal lengths");
++                 std::vector<SphericalObstacle> staged;
++                 staged.reserve(n);
++                 int norowan = 0, nbreakaway = 0;
++                 for (size_t i = 0; i < n; i++) {
++                     if (!std::isfinite(centers_b[i].x) || !std::isfinite(centers_b[i].y) ||
++                         !std::isfinite(centers_b[i].z) || !std::isfinite(radii_b[i]) || radii_b[i] <= 0.0)
++                         throw py::value_error("Obstacle positions must be finite and radii positive");
++                     if (types[i] != OBSTACLE_OROWAN && types[i] != OBSTACLE_BREAKAWAY)
++                         throw py::value_error("Obstacle type must be 0 (Orowan) or 1 (breakaway)");
++                     if (!std::isfinite(phi_crit[i]) || phi_crit[i] <= 0.0 || phi_crit[i] > M_PI)
++                         throw py::value_error("Critical angle must lie in (0, pi] radians");
++                     staged.push_back({centers_b[i], radii_b[i], static_cast<int>(i), phi_crit[i], types[i]});
++                     if (types[i] == OBSTACLE_OROWAN) norowan++; else nbreakaway++;
++                 }
++                 self.system->obstacles.swap(staged);
++                 return py::make_tuple(norowan, nbreakaway);
++             }, "Load one mixed obstacle table; returns (Orowan count, breakaway count)",
++             py::arg("centers_b"), py::arg("radii_b"), py::arg("types"), py::arg("phi_crit"))
+         .def("load_twin_planes", &ExaDisNet::load_twin_planes,
+              "Load planar obstacles (twin boundaries) that block dislocation motion. "
+              "points_b: list of [x,y,z] on each plane in Burgers units; "
