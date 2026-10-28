@@ -35,6 +35,7 @@ def make_layout(seed=12345):
 
 
 def build_arrays(layout, cell, insert_fr, insert_loop, with_loops):
+    print('[generate] building FR nodes and segments', flush=True)
     nodes, segs = [], []
     origin = np.asarray(cell.origin)
     box = np.asarray(cell.h)
@@ -45,12 +46,17 @@ def build_arrays(layout, cell, insert_fr, insert_loop, with_loops):
                   0.4e-6/0.248e-9, origin + box @ p, theta=theta,
                   numnodes=int(np.ceil((0.4e-6/0.248e-9)/20.0))+1)
     fr_nodes, fr_segs = len(nodes), len(segs)
+    print(f'[generate] FR complete: nodes={fr_nodes}, segments={fr_segs}', flush=True)
     if with_loops:
+        print('[generate] adding irradiation loops', flush=True)
         # PHYS-APPROX: monodisperse hexagons, diameter is vertex-to-vertex;
         # ceiling = not measured size distribution; upgrade = measured sampling.
-        for p, kind in zip(layout['loop_centers'], layout['loop_types']):
+        for index, (p, kind) in enumerate(zip(layout['loop_centers'], layout['loop_types']), 1):
             insert_loop('bcc', cell, nodes, segs, layout['loop_burgers'][kind],
                         10e-9/0.248e-9, origin + box @ p, maxseg=20.0)
+            if index == 1 or index % 100 == 0:
+                print(f'[generate] loops completed: {index}/{len(layout["loop_types"])}', flush=True)
+    print(f'[generate] converting arrays: nodes={len(nodes)}, segments={len(segs)}', flush=True)
     return np.asarray(nodes), np.asarray(segs), fr_nodes, fr_segs
 
 
@@ -68,18 +74,29 @@ def main(default_case='both'):
     for case in cases:
         if (folders[case]/'init_config.data').exists():
             raise FileExistsError(f'{case}/init already exists; reuse or archive it explicitly')
-    setup()
+    print('[generate] locating OpenDiS', flush=True)
+    root = setup()
+    print(f'[generate] OpenDiS root={root}; importing pyexadis', flush=True)
     import pyexadis
+    print(f'[generate] pyexadis imported from {pyexadis.__file__}', flush=True)
+    print('[generate] importing Python bindings and geometry helpers', flush=True)
     from pyexadis_base import ExaDisNet, DisNetManager
     from pyexadis_utils import insert_frank_read_src, insert_prismatic_loop, write_vtk
+    print(f'[generate] imports complete; sampling layout, seed={args.seed}', flush=True)
     layout = make_layout(args.seed)
+    print('[generate] calling pyexadis.initialize()', flush=True)
     pyexadis.initialize()
+    print('[generate] initialization complete', flush=True)
     try:
+        print('[generate] constructing periodic cell', flush=True)
         cell = pyexadis.Cell(h=(1e-6/0.248e-9)*np.eye(3), is_periodic=[True]*3)
+        print('[generate] cell complete', flush=True)
         reference = None
         for case in cases:
+            print(f'[generate] case={case}; constructing geometry', flush=True)
             nodes,segs,nn,ns = build_arrays(layout,cell,insert_frank_read_src,
                                           insert_prismatic_loop,case=='with_loops')
+            print('[generate] arrays complete; checking geometry and density', flush=True)
             prefix = nodes[:nn].tobytes()+segs[:ns].tobytes()
             if reference is not None and prefix != reference:
                 raise AssertionError('FR backgrounds differ')
@@ -94,11 +111,16 @@ def main(default_case='both'):
             if not np.allclose(np.sum(segs[:,2:5]*segs[:,5:8],axis=1),0,atol=1e-10):
                 raise AssertionError('Burgers vector not in glide plane')
             folder = folders[case]
+            print(f'[generate] checks passed; creating output directory {folder}', flush=True)
             folder.mkdir(parents=True,exist_ok=True)
+            print('[generate] constructing native ExaDisNet', flush=True)
             network = ExaDisNet(cell,nodes.tolist(),segs.tolist())
+            print('[generate] native network complete; writing init_config.data', flush=True)
             network.write_data(str(folder/'init_config.data'))
+            print('[generate] data written; writing VTK', flush=True)
             write_vtk(DisNetManager(network),str(folder/'init_config_labeled.vtk'),
                       crystal='BCC',verbose=False)
+            print('[generate] VTK written; writing metadata and layout', flush=True)
             metadata = dict(case=case,seed=args.seed,box_m=1e-6,burgmag_m=0.248e-9,
                 fr_length_m=0.4e-6,fr_sources=250,fr_nodes=nn,fr_segments=ns,
                 fr_density_m2=float(lengths[:ns].sum()/1e-18),
@@ -117,7 +139,9 @@ def main(default_case='both'):
                     writer.writerow([i,*p,int(sid),theta])
             print(json.dumps(metadata,indent=2))
     finally:
+        print('[generate] calling pyexadis.finalize()', flush=True)
         pyexadis.finalize()
+        print('[generate] finalization complete', flush=True)
 
 if __name__ == '__main__':
     main()

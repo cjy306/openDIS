@@ -29,6 +29,7 @@ test -f generate.py
 
 # Each job generates only its own initial file, using the identical seeded FR layout.
 if [ ! -f init/init_config.data ]; then
-    python generate.py
+    echo "[generate] job=${SLURM_JOB_ID:-unknown} node=$(hostname) CUDA_VISIBLE_DEVICES=${CUDA_VISIBLE_DEVICES:-unset}"
+    python -X faulthandler -u generate.py
 fi
 python test.py "$@"
