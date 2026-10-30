@@ -1,0 +1,30 @@
+{
+  "case": "with_loops",
+  "seed": 12345,
+  "box_m": 1e-06,
+  "burgmag_m": 2.48e-10,
+  "fr_length_m": 4e-07,
+  "fr_sources": 250,
+  "fr_nodes": 20500,
+  "fr_segments": 20250,
+  "fr_density_m2": 99999999999999.98,
+  "total_density_m2": 159999999999999.9,
+  "fr_sha256": "863534c4631ac5c708f8894ce25b4e734eefe19363ee3afb6653c7443d6f9b8b",
+  "slip_system_counts": [
+    21,
+    21,
+    21,
+    21,
+    21,
+    21,
+    21,
+    21,
+    21,
+    21,
+    20,
+    20
+  ],
+  "loops": 1000,
+  "loop_circumdiameter_m": 2e-08,
+  "loop_segments": 18000
+}

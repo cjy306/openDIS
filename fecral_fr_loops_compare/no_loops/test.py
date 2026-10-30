@@ -35,7 +35,7 @@ state = {
 def make_modules(net, state):
     from pyexadis_base import (CalForce, MobilityLaw, TimeIntegration,
                                Collision, Topology, Remesh, ExaDisNet)
-    calforce = CalForce(force_mode="SUBCYCLING_MODEL", state=state, Ngrid=128,
+    calforce = CalForce(force_mode="SUBCYCLING_MODEL", state=state, Ngrid=64,
                      cell=net.get_disnet(ExaDisNet).cell)
     # PHYS-APPROX: default BCC_NL fits pure Fe, not FeCrAl;
     # ceiling = mechanism comparison; upgrade = alloy-calibrated mobility.
