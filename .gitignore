@@ -4,7 +4,6 @@ build
 cmake/sys.cmake.ext
 *.png
 *.dat
-*.txt
 *.data
 __pycache*
 *egg-info*
