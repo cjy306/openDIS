@@ -1,11 +1,11 @@
 #!/bin/bash
-#SBATCH --job-name=CuNiSi_B_test
+#SBATCH --job-name=CuNiSi_B_vtk
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
 #SBATCH --output=slurm-%x-%j.out
 #SBATCH --error=slurm-%x-%j.err
 #SBATCH --time=120:00:00
-#SBATCH --partition=ksagnormal01
+#SBATCH --partition=qdagnormal
 #SBATCH --gres=gpu:1
 #SBATCH --cpus-per-task=8
 
@@ -25,12 +25,6 @@ export PYTHONUNBUFFERED=1
 export PYTHONDONTWRITEBYTECODE=1
 cd "${SLURM_SUBMIT_DIR:?Submit from A or B directory}"
 
-test -f test.py
-test -f generate.py
-
-# Fail before generation if the selected native module lacks mixed obstacle loading.
-python test.py --check-runtime
-if [ ! -f init/init_config.data ]; then
-    python generate.py
-fi
-python test.py --out "${CASE_OUTPUT:-output}"
+for folder in "${CASE_OUTPUT:-output}_relax" "${CASE_OUTPUT:-output}"; do
+    python vtk.py --input "$folder" --stride "${VTK_STRIDE:-1}"
+done
