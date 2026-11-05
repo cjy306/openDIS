@@ -5,7 +5,7 @@
 #SBATCH --output=slurm-%x-%j.out
 #SBATCH --error=slurm-%x-%j.err
 #SBATCH --time=120:00:00
-#SBATCH --partition=ksagnormal01
+#SBATCH --partition=qdagnormal
 #SBATCH --gres=gpu:1
 #SBATCH --cpus-per-task=8
 
@@ -16,7 +16,7 @@ module load nvidia/cuda/12.1
 module load compiler/gcc/12.2.0
 
 export OPENDIS_ROOT="${OPENDIS_ROOT:-$HOME/openDIS}"
-export PYTHONPATH="$OPENDIS_ROOT/core/exadis/python:$OPENDIS_ROOT/core/pydis/python:${PYTHONPATH:-}"
+export PYTHONPATH="$OPENDIS_ROOT/core/exadis/python:$OPENDIS_ROOT/core/pydis/python:$OPENDIS_ROOT/lib:${PYTHONPATH:-}"
 export LD_LIBRARY_PATH="$CONDA_PREFIX/lib:$OPENDIS_ROOT/build/core/exadis/kokkos/core/src:$OPENDIS_ROOT/build/core/exadis/src:${LD_LIBRARY_PATH:-}"
 export OMP_NUM_THREADS="$SLURM_CPUS_PER_TASK"
 export OMP_PROC_BIND=spread

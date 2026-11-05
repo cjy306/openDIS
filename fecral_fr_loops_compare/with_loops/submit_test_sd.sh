@@ -1,11 +1,11 @@
 #!/bin/bash
-#SBATCH --job-name=vtk_no_loops
+#SBATCH --job-name=fr_with_loops
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
 #SBATCH --output=slurm-%x-%j.out
 #SBATCH --error=slurm-%x-%j.err
 #SBATCH --time=120:00:00
-#SBATCH --partition=ksagnormal01
+#SBATCH --partition=qdagnormal
 #SBATCH --gres=gpu:1
 #SBATCH --cpus-per-task=8
 
@@ -16,7 +16,7 @@ module load nvidia/cuda/12.1
 module load compiler/gcc/12.2.0
 
 export OPENDIS_ROOT="${OPENDIS_ROOT:-$HOME/openDIS}"
-export PYTHONPATH="$OPENDIS_ROOT/core/exadis/python:$OPENDIS_ROOT/core/pydis/python:${PYTHONPATH:-}"
+export PYTHONPATH="$OPENDIS_ROOT/core/exadis/python:$OPENDIS_ROOT/core/pydis/python:$OPENDIS_ROOT/lib:${PYTHONPATH:-}"
 export LD_LIBRARY_PATH="$CONDA_PREFIX/lib:$OPENDIS_ROOT/build/core/exadis/kokkos/core/src:$OPENDIS_ROOT/build/core/exadis/src:${LD_LIBRARY_PATH:-}"
 export OMP_NUM_THREADS="$SLURM_CPUS_PER_TASK"
 export OMP_PROC_BIND=spread
@@ -25,16 +25,11 @@ export PYTHONUNBUFFERED=1
 export PYTHONDONTWRITEBYTECODE=1
 cd "${SLURM_SUBMIT_DIR:?Submit from the case directory}"
 test -f test.py
-test -f ../generate.py
+test -f generate.py
 
-converted=0
-for folder in output_relax output; do
-    if [ -d "$folder" ]; then
-        python vtk.py --input "$folder"
-        converted=1
-    fi
-done
-if [ "$converted" -eq 0 ]; then
-    echo "No output directories available" >&2
-    exit 1
+# Each job generates only its own initial file, using the identical seeded FR layout.
+if [ ! -f init/init_config.data ]; then
+    echo "[generate] job=${SLURM_JOB_ID:-unknown} node=$(hostname) CUDA_VISIBLE_DEVICES=${CUDA_VISIBLE_DEVICES:-unset}"
+    python -X faulthandler -u generate.py
 fi
+python test.py "$@"

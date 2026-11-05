@@ -7,7 +7,7 @@
 - no_loops/test.py、with_loops/test.py：分别整体弛豫，然后加载。
 - plot.py：两组应力、总线密度及相对首条加载记录密度增量对比。
 - 每组vtk.py：弛豫及加载快照转换。
-- 每组submit_test_kun.sh与submit_vtk_kun.sh：昆山ksagnormal01，1GPU/8CPU，120小时。
+- 每组submit_test_sd.sh与submit_vtk_sd.sh：山东qdagnormal，1GPU/8CPU，120小时。
 - relaxation.py：复用原3um FR算例的窗口判据。
 
 ## 提交
@@ -15,11 +15,11 @@
 
 ```bash
 cd fecral_fr_loops_compare/no_loops
-job=$(sbatch --parsable submit_test_kun.sh)
-sbatch --dependency=afterok:$job submit_vtk_kun.sh
+job=$(sbatch --parsable submit_test_sd.sh)
+sbatch --dependency=afterok:$job submit_vtk_sd.sh
 cd ../with_loops
-job=$(sbatch --parsable submit_test_kun.sh)
-sbatch --dependency=afterok:$job submit_vtk_kun.sh
+job=$(sbatch --parsable submit_test_sd.sh)
+sbatch --dependency=afterok:$job submit_vtk_sd.sh
 ```
 
 test作业直接执行本组 `python generate.py` 自动生成自身初态，两个作业不写同一文件。相同seed保证FR背景一致。也可以先在已配置ExaDiS的计算环境执行父目录的 `python generate.py` 生成两组。已有初态不覆盖。初态同时输出init_config_labeled.vtk及source_layout.csv，便于查看和核对FR位置、滑移系与面内角度。
@@ -47,7 +47,7 @@ output_relax保存relax.csv、summary.json和构型。加载重读弛豫构型�
 两组弛豫后实际网络/密度允许不同；不能把环初始线长当成加载中增殖。
 加载每100步输出曲线、1000步快照，另保存loading_start.data及loading_final.data。
 使用 --out output_new 避免覆盖；新目录VTK需手动 `python vtk.py --input output_new`。
-墙钟中断后可 `sbatch submit_test_kun.sh --restart STEP` 恢复output/restart.STEP.exadis。
+墙钟中断后可 `sbatch submit_test_sd.sh --restart STEP` 恢复output/restart.STEP.exadis。
 
 ## 验证
 `python -B -m unittest check_scripts -v` 做离线检查，其中几何测试执行源仓库真实Python构造函数，但不等于原生DDD运行。首次超算试跑需要检查BCC_NL绑定、弛豫和小环存活。当前网格尚未做物理收敛测试。
