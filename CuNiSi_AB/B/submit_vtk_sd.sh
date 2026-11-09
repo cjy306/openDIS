@@ -25,6 +25,4 @@ export PYTHONUNBUFFERED=1
 export PYTHONDONTWRITEBYTECODE=1
 cd "${SLURM_SUBMIT_DIR:?Submit from A or B directory}"
 
-for folder in "${CASE_OUTPUT:-output}_relax" "${CASE_OUTPUT:-output}"; do
-    python vtk.py --input "$folder" --stride "${VTK_STRIDE:-1}"
-done
+python vtk.py --input "${CASE_OUTPUT:-output}" --stride "${VTK_STRIDE:-1}"

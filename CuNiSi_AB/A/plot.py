@@ -1,6 +1,5 @@
 """Plot stress-strain and density-time curves for this case."""
 import argparse
-import csv
 import json
 from pathlib import Path
 import numpy as np
@@ -27,29 +26,21 @@ def main():
     matplotlib.use("Agg")
     import matplotlib.pyplot as plt
     out = BASE_DIR/args.out
-    relax = out.with_name(out.name+"_relax")
     target = BASE_DIR/"plots"
     target.mkdir(exist_ok=True)
-    fig, axes = plt.subplots(2,2,figsize=(11,8),layout="constrained")
+    fig, axes = plt.subplots(1,3,figsize=(15,4),layout="constrained")
     summary = {}
-    if (relax/"relax.csv").is_file():
-        with (relax/"relax.csv").open(encoding="utf-8") as stream:
-            rows = list(csv.DictReader(stream))
-        t = np.array([float(r["time_s"]) for r in rows])
-        rho = np.array([float(r["density_m-2"]) for r in rows])
-        axes[1,0].plot(t*1e9,rho)
-        summary.update(initial_density_m2=float(rho[0]),relaxed_density_m2=float(rho[-1]))
     if (out/"stress_strain_dens.dat").is_file():
         data = np.loadtxt(out/"stress_strain_dens.dat",comments="#",ndmin=2)
-        axes[0,0].plot(data[:,1]*100,data[:,2]/1e6)
-        axes[0,1].plot(data[:,1]*100,data[:,3])
-        axes[1,1].plot(data[:,4]*1e6,data[:,3])
+        axes[0].plot(data[:,1]*100,data[:,2]/1e6)
+        axes[1].plot(data[:,1]*100,data[:,3])
+        axes[2].plot(data[:,4]*1e6,data[:,3])
         state = json.loads((out/"run_settings.json").read_text(encoding="utf-8"))["state"]
         summary.update(final_strain=float(data[-1,1]),yield_02=offset_yield(data,2*state["mu"]*(1+state["nu"])))
     labels = [("Total strain (%)","Axial stress (MPa)"),("Total strain (%)","Density (m$^{-2}$)"),
-              ("Relaxation time (ns)","Density (m$^{-2}$)"),("Loading time (us)","Density (m$^{-2}$)")]
+              ("Loading time (us)","Density (m$^{-2}$)")]
     if not any(ax.lines for ax in axes.flat):
-        raise FileNotFoundError("No relaxation/loading output")
+        raise FileNotFoundError("No loading output")
     for ax,(x,y) in zip(axes.flat,labels):
         ax.set(xlabel=x,ylabel=y)
         ax.grid(alpha=.25)
