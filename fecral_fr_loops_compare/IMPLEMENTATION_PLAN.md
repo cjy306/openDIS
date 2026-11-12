@@ -9,7 +9,7 @@
 
 ## Constraints and review focus
 All files under D:/Wworkspace/fecral_fr_loops_compare. No core edits or job submissions.
-1um PBC, rho1e14, FR0.4um, seed12345; 1000 111 hexagonal loops only in with_loops.
+1um PBC, rho1e14, FR0.4um, seed12345; 100 111 hexagonal loops only in with_loops (reduced from 1000 for the trial).
 Check paired FR identity, actual line density, loop geometry and slip planes.
 Reuse 10ns/1e-7 net tensor relaxation; failed convergence blocks loading.
 BCC_NL300K is pure-Fe approximation; keep glide constraints and cross-slip off.

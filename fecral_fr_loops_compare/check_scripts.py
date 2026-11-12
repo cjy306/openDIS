@@ -27,8 +27,8 @@ class Checks(unittest.TestCase):
         self.assertEqual(sorted(np.bincount(a['systems']).tolist()), [20]*2+[21]*10)
         self.assertTrue(np.allclose(np.sum(a['burgers']*a['planes'], axis=1), 0))
         self.assertTrue(np.allclose(np.linalg.norm(a['burgers'], axis=1), 1))
-        self.assertEqual(a['loop_centers'].shape, (1000, 3))
-        self.assertEqual(np.bincount(a['loop_types']).tolist(), [250]*4)
+        self.assertEqual(a['loop_centers'].shape, (100, 3))
+        self.assertEqual(np.bincount(a['loop_types']).tolist(), [25]*4)
         self.assertFalse(np.array_equal(a['centers'], make_layout(7)['centers']))
 
     def test_window(self):
@@ -59,12 +59,12 @@ class Checks(unittest.TestCase):
         np.testing.assert_array_equal(a,b[:nn])
         np.testing.assert_array_equal(sa,sb[:ns])
         self.assertEqual((nn,ns),(20500,20250))
-        self.assertEqual(len(b)-nn,18000)
+        self.assertEqual(len(b)-nn,1800)
         ends=sb[:,:2].astype(int)
         delta=b[ends[:,1],:3]-b[ends[:,0],:3]
         lengths=np.linalg.norm(delta,axis=1)*0.248e-9
         self.assertAlmostEqual(lengths[:ns].sum()/1e-4,1,places=10)
-        self.assertAlmostEqual(lengths[ns:].sum()/6e-5,1,places=10)
+        self.assertAlmostEqual(lengths[ns:].sum()/6e-6,1,places=10)
         self.assertTrue(np.all(np.linalg.norm(delta,axis=1)<=20+1e-9))
         self.assertTrue(np.allclose(np.sum(delta*sb[:,5:8],axis=1),0,atol=1e-9))
         self.assertTrue(np.all(b[nn:,3]==0))

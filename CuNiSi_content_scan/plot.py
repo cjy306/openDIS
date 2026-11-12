@@ -13,7 +13,7 @@ def main():
     import matplotlib
     matplotlib.use("Agg")
     import matplotlib.pyplot as plt
-    fig, axes = plt.subplots(1,3,figsize=(15,4),layout="constrained")
+    fig, axes = plt.subplots(1,2,figsize=(10,4),layout="constrained")
     for case,label,color in (("f000","No particles","black"),
                              ("f005","5% of reference","tab:blue"),
                              ("f010","10% of reference","tab:orange"),
@@ -22,9 +22,7 @@ def main():
         data = np.loadtxt(out/"stress_strain_dens.dat",comments="#",ndmin=2)
         axes[0].plot(data[:,1]*100,data[:,2]/1e6,label=label,color=color)
         axes[1].plot(data[:,1]*100,data[:,3],label=label,color=color)
-        axes[2].plot(data[:,4]*1e6,data[:,3],label=label,color=color)
-    labels = [("Total strain (%)","Axial stress (MPa)"),("Total strain (%)","Density (m$^{-2}$)"),
-              ("Loading time (us)","Density (m$^{-2}$)")]
+    labels = [("Total strain (%)","Axial stress (MPa)"),("Total strain (%)","Density (m$^{-2}$)")]
     for ax,(x,y) in zip(axes.flat,labels):
         ax.set(xlabel=x,ylabel=y)
         ax.grid(alpha=.25)

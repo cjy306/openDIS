@@ -25,12 +25,12 @@ def make_layout(seed=12345):
     angles = rng.uniform(0,180,250)
     # Separate RNG preserves the FR background when loop settings change.
     loops = np.random.default_rng(seed + 1)
-    types = np.arange(1000) % 4
+    types = np.arange(100) % 4
     loops.shuffle(types)
     return dict(centers=centers, systems=ids, angles=angles,
                 burgers=np.array([x[0] for x in systems]),
                 planes=np.array([x[1] for x in systems]),
-                loop_centers=loops.uniform(0,1,(1000,3)), loop_types=types,
+                loop_centers=loops.uniform(0,1,(100,3)), loop_types=types,
                 loop_burgers=burgers)
 
 
@@ -127,7 +127,7 @@ def main(default_case='both'):
                 total_density_m2=float(lengths.sum()/1e-18),
                 fr_sha256=hashlib.sha256(prefix).hexdigest(),
                 slip_system_counts=np.bincount(layout['systems']).tolist(),
-                loops=1000 if case=='with_loops' else 0,
+                loops=len(layout['loop_types']) if case=='with_loops' else 0,
                 loop_circumdiameter_m=20e-9,loop_segments=int(len(segs)-ns))
             (folder/'metadata.json').write_text(json.dumps(metadata,indent=2),encoding='utf-8')
             np.savez(folder/'layout.npz',**layout)

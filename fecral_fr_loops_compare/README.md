@@ -5,7 +5,7 @@
 ## 文件
 - 父目录generate.py：共用生成实现；每组generate.py：本组直接运行入口，支持--seed和--out。保持共用实现，防止两组FR生成逻辑分叉。
 - no_loops/test.py、with_loops/test.py：分别整体弛豫，然后加载。
-- plot.py：两组应力、总线密度及相对首条加载记录密度增量对比。
+- plot.py：两组应力—总应变、总位错线密度—总应变对比，共两个子图。
 - 每组vtk.py：弛豫及加载快照转换。
 - 每组submit_test_sd.sh与submit_vtk_sd.sh：山东qdagnormal，1GPU/8CPU，120小时。
 - relaxation.py：复用原3um FR算例的窗口判据。
@@ -31,8 +31,12 @@ test.py参照rho1e12算例组织：state在文件顶部、make_modules逐项定�
 ## 参数与物理近似
 - 1um立方PBC，seed12345，250根0.4um FR，基体密度1e14/m2。12个{110}<111>系各20或21根，面内方向随机。
 - FR使用现有两端固定开口线段，未补闭合返回段。这是人工源近似，不代表自然网络。
-- with_loops增加1000个六边形a/2<111>棱柱环，四种轴向各250个，随机位置、不固定节点。
-- 20nm指六边形对顶点距离，周长60nm；环贡献6e13/m2，总初始密度1.6e14/m2。不是等面积圆直径，不是某一ODS材料实测标定。
+- with_loops增加100个六边形a/2<111>棱柱环，四种轴向各25个，随机位置、不固定节点，数密度1e20/m3。
+- 20nm指六边形对顶点距离，周长60nm；环贡献6e12/m2，总初始密度1.06e14/m2。不是等面积圆直径，不是某一ODS材料实测标定。
+
+### 从旧1000环算例切换
+
+旧init和输出不自动覆盖，旧restart不能用于100环算例。在with_loops目录、已配置的计算环境中先执行 `python generate.py --out init_100loops`，再执行 `sbatch submit_test_sd.sh --init init_100loops --out output_100loops`。提交脚本原有init检查保持不变，实际加载由--init指定。新结果手动转换：`python vtk.py --input output_100loops`。plot的--input要求两组使用相同输出目录名；配对重跑时无环组可复用原init并用 `--out output_100loops`，随后在父目录执行 `python plot.py --input output_100loops`。不要与旧1000环结果混用。
 - b=0.248nm、mu=81GPa、nu=0.3；a=2b、maxseg=20b、minseg=5b、rtol=0.5b、rann=1b；Ngrid128。
 - BCC_NL tempK300，默认纯Fe拟合作为FeCrAl近似；不是合金专属迁移率标定。
 - 开启use_glide_planes及enforce_glide_planes；独立交滑移模块关闭，不加入扩散攀移机制。

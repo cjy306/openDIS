@@ -27,17 +27,16 @@ def main():
                if not (base/case/args.input/'stress_strain_dens.dat').is_file()]
     if missing:
         raise FileNotFoundError('Both groups are required; missing: '+', '.join(missing))
-    fig,axs = plt.subplots(1,3,figsize=(16,4.5),layout='constrained')
+    fig,axs = plt.subplots(1,2,figsize=(11,4.5),layout='constrained')
     for case,label,color in [('no_loops','FR only','black'),('with_loops','FR + loops','tab:red')]:
         path = base/case/args.input/'stress_strain_dens.dat'
         e,s,r = parse_response(path.read_text(encoding='utf-8'))
         if e[-1] < 0.5:
             print(f'WARNING: {case} incomplete: final total strain {e[-1]:.6g}%')
-        for ax,y in zip(axs,[s,r,r-r[0]]):
+        for ax,y in zip(axs,[s,r]):
             ax.plot(e,y,label=label,color=color,lw=1)
         print(f'{case}: first recorded rho={r[0]:.6e}, last strain={e[-1]:.6g}%')
-    for ax,title in zip(axs,['Axial stress (MPa)','Total line density (m$^{-2}$)',
-                             'Density change from first loading record (m$^{-2}$)']):
+    for ax,title in zip(axs,['Axial stress (MPa)','Total line density (m$^{-2}$)']):
         ax.set(xlabel='Loading total strain (%)',ylabel=title)
         ax.grid(alpha=.25)
         ax.legend()
