@@ -1,0 +1,17 @@
+{
+  "content_scale": 0.1,
+  "actual_volume_fractions": {
+    "1": 0.0003467900961946432,
+    "0": 0.001282813587127517
+  },
+  "case": "A",
+  "seed": 12345,
+  "burgmag_m": 2.556e-10,
+  "box_m": 3e-07,
+  "density_m2": 1000000000000000.0,
+  "fr_length_m": 1.25e-07,
+  "fr_sources": 216,
+  "local_density_m2": 1666666666666666.8,
+  "fr_sha256": "1c05d07798059525ed6fd12af436ca8203ad94569b2fb98f4c4b21d312a5863d",
+  "particles_sha256": "1ef9f6f18ee483115d227262cf13c6e66484ec0cfbc78376593332dc915e2cc6"
+}

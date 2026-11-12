@@ -35,7 +35,7 @@ state = {
 def make_modules(net, state):
     from pyexadis_base import (CalForce, MobilityLaw, TimeIntegration,
                                Collision, Topology, Remesh, ExaDisNet)
-    calforce = CalForce(force_mode="SUBCYCLING_MODEL", state=state, Ngrid=64,
+    calforce = CalForce(force_mode="SUBCYCLING_MODEL", state=state, Ngrid=128,
                      cell=net.get_disnet(ExaDisNet).cell)
     # PHYS-APPROX: default BCC_NL fits pure Fe, not FeCrAl;
     # ceiling = mechanism comparison; upgrade = alloy-calibrated mobility.
@@ -94,7 +94,7 @@ def main():
             **make_modules(net,state), state=state, burgmag=state["burgmag"],
             loading_mode="strain_rate", applied_stress=np.zeros(6),
             erate=1e3, edir=np.array([0.0,0.0,1.0]), max_strain=0.005,
-            print_freq=1, write_freq=500, write_dir=str(out), restart=restart,
+            print_freq=1, write_freq=1000, write_dir=str(out), restart=restart,
             out_props=["step","strain","stress","density","time","dt","Nnodes","Nsegs"])
         final_state = sim.run(net,state)
         (out/"loading_summary.json").write_text(json.dumps(
