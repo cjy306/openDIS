@@ -6,6 +6,8 @@
 
 state和迁移率直接在各组test.py中；颗粒尺寸/体积分数在各组generate.py顶部。修改两组共用参数时保持一致。
 
+新生成的输入分别保存为init/particles_small.npy、particles_large.npy和twin_planes.npy；模拟按小粒、大粒顺序合并后一次加载。大小颗粒仍联合检查不重叠。兼容旧obstacles.npz，已有结果无需重跑模拟即可重新导出particles_small.vtk和particles_large.vtk；旧particles.vtk不会自动删除，可隐藏以免重复显示。
+
 山东每组目录执行sbatch submit_test_sd.sh；该任务只执行generate→test（直接加载），不自动绘图。之后用sbatch submit_vtk_sd.sh转换VTK，绘图由用户自行执行。
 
 运行前，在现有OpenDiS GPU构建中应用core_patch/mixed_obstacles.patch并重新编译pyexadis。该补丁只增加两类颗粒同时加载的接口。本机未运行DDD，也未提交集群任务。

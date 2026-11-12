@@ -97,7 +97,9 @@ def main():
         network = ExaDisNet(cell, nodes.tolist(), segs.tolist())
         network.write_data(str(folder / "init_config.data"))
         write_vtk(DisNetManager(network), str(folder / "init_config.vtk"), crystal="FCC", Rorient=Rorient, verbose=False)
-        np.savez(folder / "obstacles.npz", particles=particles, twins=twins)
+        np.save(folder / "particles_small.npy", particles[particles[:,4]==1])
+        np.save(folder / "particles_large.npy", particles[particles[:,4]==0])
+        np.save(folder / "twin_planes.npy", twins)
         np.savetxt(folder / "source_layout.csv", layout, delimiter=",", header="slip_id,theta_deg,x_b,y_b,z_b", comments="")
         meta = dict(case=CASE, seed=args.seed, burgmag_m=BURGMAG, box_m=LBOX, density_m2=RHO,
             fr_length_m=FR_LENGTH, fr_sources=NUM_FR, local_density_m2=RHO/.6,

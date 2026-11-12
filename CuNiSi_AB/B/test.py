@@ -53,8 +53,12 @@ def main():
     init, out = BASE_DIR/args.init, BASE_DIR/args.out
     if out.exists() and any(out.iterdir()):
         raise FileExistsError("Output exists; select a new --out")
-    with np.load(init/"obstacles.npz") as data:
-        particles, twins = data["particles"].copy(), data["twins"].copy()
+    if (init/"particles_small.npy").exists():
+        particles = np.vstack([np.load(init/"particles_small.npy"), np.load(init/"particles_large.npy")])
+        twins = np.load(init/"twin_planes.npy")
+    else:  # Existing inputs from earlier runs.
+        with np.load(init/"obstacles.npz") as data:
+            particles, twins = data["particles"].copy(), data["twins"].copy()
     meta = json.loads((init/"metadata.json").read_text(encoding="utf-8"))
     if not np.isclose(meta["burgmag_m"],state["burgmag"],rtol=1e-12,atol=0):
         raise ValueError("Generator and state Burgers magnitudes differ")

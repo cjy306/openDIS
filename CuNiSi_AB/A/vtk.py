@@ -59,9 +59,17 @@ def main():
         raise FileNotFoundError(f"No configurations in {folder}")
     target = BASE_DIR / ("vtk_"+folder.name)
     target.mkdir(exist_ok=True)
-    with np.load(BASE_DIR/"init/obstacles.npz") as data:
-        write_particles(target/"particles.vtk",data["particles"])
-        write_twins(target/"twin_planes.vtk",data["twins"])
+    init = BASE_DIR/"init"
+    if (init/"particles_small.npy").exists():
+        small, large = np.load(init/"particles_small.npy"), np.load(init/"particles_large.npy")
+        twins = np.load(init/"twin_planes.npy")
+    else:  # Split existing combined inputs without regenerating the network.
+        with np.load(init/"obstacles.npz") as data:
+            particles, twins = data["particles"], data["twins"]
+            small, large = particles[particles[:,4]==1], particles[particles[:,4]==0]
+    write_particles(target/"particles_small.vtk",small)
+    write_particles(target/"particles_large.vtk",large)
+    write_twins(target/"twin_planes.vtk",twins)
     import pyexadis
     from pyexadis_utils import read_paradis, write_vtk
     pyexadis.initialize()
