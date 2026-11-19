@@ -36,8 +36,8 @@ def main():
         for ax,y in zip(axs,[s,r]):
             ax.plot(e,y,label=label,color=color,lw=1)
         print(f'{case}: first recorded rho={r[0]:.6e}, last strain={e[-1]:.6g}%')
-    for ax,title in zip(axs,['Axial stress (MPa)','Total line density (m$^{-2}$)']):
-        ax.set(xlabel='Loading total strain (%)',ylabel=title)
+    for ax,title in zip(axs,['stress (MPa)','Density (m$^{-2}$)']):
+        ax.set(xlabel='Strain (%)',ylabel=title)
         ax.grid(alpha=.25)
         ax.legend()
     fig.suptitle('BCC Fe mobility approximation | 1 um | 300 K | seed 12345')
