@@ -1,4 +1,4 @@
-"""Generate exact paired FR backgrounds; add loops only to with_loops."""
+"""Generate PM2000 unirradiated and neutron-irradiated dislocation states."""
 import argparse
 import hashlib
 import itertools
@@ -8,7 +8,7 @@ import numpy as np
 from runtime import setup
 
 
-def make_layout(seed=12345):
+def make_layout(seed=12345, with_loops=False):
     rng = np.random.default_rng(seed)
     burgers = np.array([[1,1,1],[-1,1,1],[1,-1,1],[1,1,-1]], dtype=float)
     burgers /= np.sqrt(3)
@@ -19,19 +19,38 @@ def make_layout(seed=12345):
         if np.count_nonzero(v) == 2 and nz[0] > 0:
             normals.append(v / np.sqrt(2))
     systems = [(b,n) for b in burgers for n in normals if abs(np.dot(b,n)) < 1e-10]
-    ids = np.arange(250) % 12
+    count = 550 if with_loops else 250
+    ids = np.arange(count) % 12
     rng.shuffle(ids)
-    centers = rng.uniform(0, 1, (250,3))
-    angles = rng.uniform(0,180,250)
+    centers = rng.uniform(0, 1, (count,3))
+    angles = rng.uniform(0,180,count)
     # Separate RNG preserves the FR background when loop settings change.
     loops = np.random.default_rng(seed + 1)
-    types = np.arange(100) % 4
+    types = np.r_[np.arange(400) % 4, 4 + np.arange(800) % 3] if with_loops else np.empty(0, dtype=int)
     loops.shuffle(types)
     return dict(centers=centers, systems=ids, angles=angles,
                 burgers=np.array([x[0] for x in systems]),
                 planes=np.array([x[1] for x in systems]),
-                loop_centers=loops.uniform(0,1,(100,3)), loop_types=types,
-                loop_burgers=burgers)
+                loop_centers=loops.uniform(0,1,(len(types),3)), loop_types=types,
+                loop_burgers=np.vstack((burgers, np.eye(3)*2/np.sqrt(3))))
+
+
+def insert_100_loop(nodes, segs, axis, burg, center):
+    # PHYS-APPROX: square prismatic loop, 17 nm across vertices; upgrade to
+    # measured shape/size distributions. Diagonal edges have {110} glide planes.
+    u, v = np.eye(3)[[(axis+1)%3, (axis+2)%3]]
+    corners = np.array([u, v, -u, -v]) * (8.5e-9/0.248e-9)
+    first = len(nodes)
+    for i, start in enumerate(corners):
+        edge = corners[(i+1)%4] - start
+        normal = np.cross(burg, edge)
+        normal /= np.linalg.norm(normal)
+        count = int(np.ceil(np.linalg.norm(edge)/40.0))
+        for j in range(count):
+            index = len(nodes)
+            nodes.append(np.r_[center + start + edge*j/count, 0])
+            end = first if i == 3 and j == count-1 else index+1
+            segs.append(np.r_[index, end, -burg, normal])
 
 
 def build_arrays(layout, cell, insert_fr, insert_loop, with_loops):
@@ -44,16 +63,20 @@ def build_arrays(layout, cell, insert_fr, insert_loop, with_loops):
     for p, sid, theta in zip(layout['centers'], layout['systems'], layout['angles']):
         insert_fr(cell, nodes, segs, layout['burgers'][sid], layout['planes'][sid],
                   0.4e-6/0.248e-9, origin + box @ p, theta=theta,
-                  numnodes=int(np.ceil((0.4e-6/0.248e-9)/20.0))+1)
+                  numnodes=int(np.ceil((0.4e-6/0.248e-9)/40.0))+1)
     fr_nodes, fr_segs = len(nodes), len(segs)
     print(f'[generate] FR complete: nodes={fr_nodes}, segments={fr_segs}', flush=True)
     if with_loops:
         print('[generate] adding irradiation loops', flush=True)
-        # PHYS-APPROX: monodisperse hexagons, diameter is vertex-to-vertex;
+        # PHYS-APPROX: family mean diameters are treated as vertex-to-vertex;
         # ceiling = not measured size distribution; upgrade = measured sampling.
         for index, (p, kind) in enumerate(zip(layout['loop_centers'], layout['loop_types']), 1):
-            insert_loop('bcc', cell, nodes, segs, layout['loop_burgers'][kind],
-                        10e-9/0.248e-9, origin + box @ p, maxseg=20.0)
+            burg = layout['loop_burgers'][kind]
+            if kind < 4:
+                insert_loop('bcc', cell, nodes, segs, burg,
+                            9.8e-9/0.248e-9, origin + box @ p, maxseg=40.0)
+            else:
+                insert_100_loop(nodes, segs, kind-4, burg, origin + box @ p)
             if index == 1 or index % 100 == 0:
                 print(f'[generate] loops completed: {index}/{len(layout["loop_types"])}', flush=True)
     print(f'[generate] converting arrays: nodes={len(nodes)}, segments={len(segs)}', flush=True)
@@ -70,7 +93,7 @@ def main(default_case='both'):
     cases = ['no_loops','with_loops'] if args.case == 'both' else [args.case]
     if args.out is not None and len(cases) != 1:
         parser.error('--out requires a single --case')
-    folders = {case: base/case/(args.out if args.out is not None else Path('init')) for case in cases}
+    folders = {case: base/case/(args.out if args.out is not None else Path('init_pm2000_seg40_10')) for case in cases}
     for case in cases:
         if (folders[case]/'init_config.data').exists():
             raise FileExistsError(f'{case}/init already exists; reuse or archive it explicitly')
@@ -83,7 +106,6 @@ def main(default_case='both'):
     from pyexadis_base import ExaDisNet, DisNetManager
     from pyexadis_utils import insert_frank_read_src, insert_prismatic_loop, write_vtk
     print(f'[generate] imports complete; sampling layout, seed={args.seed}', flush=True)
-    layout = make_layout(args.seed)
     print('[generate] calling pyexadis.initialize()', flush=True)
     pyexadis.initialize()
     print('[generate] initialization complete', flush=True)
@@ -91,22 +113,19 @@ def main(default_case='both'):
         print('[generate] constructing periodic cell', flush=True)
         cell = pyexadis.Cell(h=(1e-6/0.248e-9)*np.eye(3), is_periodic=[True]*3)
         print('[generate] cell complete', flush=True)
-        reference = None
         for case in cases:
+            layout = make_layout(args.seed, case=='with_loops')
             print(f'[generate] case={case}; constructing geometry', flush=True)
             nodes,segs,nn,ns = build_arrays(layout,cell,insert_frank_read_src,
                                           insert_prismatic_loop,case=='with_loops')
             print('[generate] arrays complete; checking geometry and density', flush=True)
             prefix = nodes[:nn].tobytes()+segs[:ns].tobytes()
-            if reference is not None and prefix != reference:
-                raise AssertionError('FR backgrounds differ')
-            reference = prefix
             ends = segs[:,:2].astype(int)
             delta = nodes[ends[:,1],:3]-nodes[ends[:,0],:3]
             box_b = 1e-6/0.248e-9
             delta -= box_b*np.rint(delta/box_b)
             lengths = np.linalg.norm(delta,axis=1)*0.248e-9
-            if not np.isclose(lengths[:ns].sum()/1e-18,1e14,rtol=1e-10):
+            if not np.isclose(lengths[:ns].sum()/1e-18,2.2e14 if case=='with_loops' else 1e14,rtol=1e-10):
                 raise AssertionError('Wrong FR density')
             if not np.allclose(np.sum(segs[:,2:5]*segs[:,5:8],axis=1),0,atol=1e-10):
                 raise AssertionError('Burgers vector not in glide plane')
@@ -122,13 +141,14 @@ def main(default_case='both'):
                       crystal='BCC',verbose=False)
             print('[generate] VTK written; writing metadata and layout', flush=True)
             metadata = dict(case=case,seed=args.seed,box_m=1e-6,burgmag_m=0.248e-9,
-                fr_length_m=0.4e-6,fr_sources=250,fr_nodes=nn,fr_segments=ns,
+                fr_length_m=0.4e-6,fr_sources=len(layout['centers']),fr_nodes=nn,fr_segments=ns,
                 fr_density_m2=float(lengths[:ns].sum()/1e-18),
                 total_density_m2=float(lengths.sum()/1e-18),
                 fr_sha256=hashlib.sha256(prefix).hexdigest(),
                 slip_system_counts=np.bincount(layout['systems']).tolist(),
                 loops=len(layout['loop_types']) if case=='with_loops' else 0,
-                loop_circumdiameter_m=20e-9,loop_segments=int(len(segs)-ns))
+                loops_100=int(np.sum(layout['loop_types']>=4)), loops_111=int(np.sum(layout['loop_types']<4)),
+                loop_circumdiameters_m={'100':17e-9,'111':19.6e-9},loop_segments=int(len(segs)-ns))
             (folder/'metadata.json').write_text(json.dumps(metadata,indent=2),encoding='utf-8')
             np.savez(folder/'layout.npz',**layout)
             import csv

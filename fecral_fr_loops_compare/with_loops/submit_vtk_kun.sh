@@ -1,11 +1,11 @@
 #!/bin/bash
-#SBATCH --job-name=vtk_no_loops
+#SBATCH --job-name=vtk_with_loops
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
 #SBATCH --output=slurm-%x-%j.out
 #SBATCH --error=slurm-%x-%j.err
-#SBATCH --time=120:00:00
-#SBATCH --partition=qdagnormal
+#SBATCH --time=1:00:00
+#SBATCH --partition=ksagnormal01
 #SBATCH --gres=gpu:1
 #SBATCH --cpus-per-task=8
 
@@ -28,7 +28,7 @@ test -f test.py
 test -f ../generate.py
 
 converted=0
-for folder in output_relax output; do
+for folder in output_pm2000_seg40_10_relax output_pm2000_seg40_10; do
     if [ -d "$folder" ]; then
         python vtk.py --input "$folder"
         converted=1

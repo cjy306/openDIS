@@ -1,4 +1,4 @@
-"""Relax the complete case, then load to 0.5% total strain."""
+"""Relax the complete case, then load to 1% total strain."""
 import argparse
 import json
 from pathlib import Path
@@ -11,7 +11,7 @@ from runtime import setup
 from relaxation import run_relaxation
 
 
-DEFAULT_INIT = "init"
+DEFAULT_INIT = "init_pm2000_seg40_10"
 
 state = {
     "crystal": "bcc",
@@ -21,21 +21,21 @@ state = {
     "a": 2.0,
     # PHYS-APPROX: trial mesh for 20 nm loops; ceiling = unverified convergence;
     # upgrade = repeat with finer mesh and compare loop survival and stress.
-    "maxseg": 20.0,
-    "minseg": 5.0,
+    "maxseg": 40.0,
+    "minseg": 10.0,
     "rtol": 0.5,
     "rann": 1.0,
     "nextdt": 1e-12,
     "maxdt": 1e-9,
     "use_glide_planes": 1,
     "enforce_glide_planes": 1,
-    "num_bcc_plane_families": 1,
+    "num_bcc_plane_families": 2,
 }
 
 def make_modules(net, state):
     from pyexadis_base import (CalForce, MobilityLaw, TimeIntegration,
                                Collision, Topology, Remesh, ExaDisNet)
-    calforce = CalForce(force_mode="SUBCYCLING_MODEL", state=state, Ngrid=128,
+    calforce = CalForce(force_mode="SUBCYCLING_MODEL", state=state, Ngrid=64,
                      cell=net.get_disnet(ExaDisNet).cell)
     # PHYS-APPROX: default BCC_NL fits pure Fe, not FeCrAl;
     # ceiling = mechanism comparison; upgrade = alloy-calibrated mobility.
@@ -53,7 +53,7 @@ def make_modules(net, state):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--init", default=DEFAULT_INIT)
-    parser.add_argument("--out", default="output")
+    parser.add_argument("--out", default="output_pm2000_seg40_10")
     parser.add_argument("--restart", type=int, help="Restart an existing loading stage")
     parser.add_argument("--relax-max-time", type=float, default=1e-6)
     parser.add_argument("--relax-max-steps", type=int, default=1000000)
@@ -93,13 +93,13 @@ def main():
         sim = SimulateNetworkPerf(
             **make_modules(net,state), state=state, burgmag=state["burgmag"],
             loading_mode="strain_rate", applied_stress=np.zeros(6),
-            erate=1e3, edir=np.array([0.0,0.0,1.0]), max_strain=0.005,
-            print_freq=1, write_freq=1000, write_dir=str(out), restart=restart,
+            erate=1e3, edir=np.array([0.0,0.0,1.0]), max_strain=0.01,
+            print_freq=1, write_freq=100, write_dir=str(out), restart=restart,
             out_props=["step","strain","stress","density","time","dt","Nnodes","Nsegs"])
         final_state = sim.run(net,state)
         (out/"loading_summary.json").write_text(json.dumps(
             {"final_total_strain": float(final_state["strain"]),
-             "target_total_strain": 0.005}, indent=2), encoding="utf-8")
+             "target_total_strain": 0.01}, indent=2), encoding="utf-8")
         net.get_disnet(ExaDisNet).write_data(str(out/"loading_final.data"))
     finally:
         pyexadis.finalize()

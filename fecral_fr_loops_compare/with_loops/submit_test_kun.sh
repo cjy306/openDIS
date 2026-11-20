@@ -1,11 +1,11 @@
 #!/bin/bash
-#SBATCH --job-name=vtk_with_loops
+#SBATCH --job-name=fr_with_loops
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
 #SBATCH --output=slurm-%x-%j.out
 #SBATCH --error=slurm-%x-%j.err
-#SBATCH --time=120:00:00
-#SBATCH --partition=qdagnormal
+#SBATCH --time=10:00:00
+#SBATCH --partition=ksagnormal01
 #SBATCH --gres=gpu:1
 #SBATCH --cpus-per-task=8
 
@@ -25,16 +25,11 @@ export PYTHONUNBUFFERED=1
 export PYTHONDONTWRITEBYTECODE=1
 cd "${SLURM_SUBMIT_DIR:?Submit from the case directory}"
 test -f test.py
-test -f ../generate.py
+test -f generate.py
 
-converted=0
-for folder in output_relax output; do
-    if [ -d "$folder" ]; then
-        python vtk.py --input "$folder"
-        converted=1
-    fi
-done
-if [ "$converted" -eq 0 ]; then
-    echo "No output directories available" >&2
-    exit 1
+# Generate this PM2000 state if its metadata is missing.
+if [ ! -f init_pm2000_seg40_10/metadata.json ]; then
+    echo "[generate] job=${SLURM_JOB_ID:-unknown} node=$(hostname) CUDA_VISIBLE_DEVICES=${CUDA_VISIBLE_DEVICES:-unset}"
+    python -X faulthandler -u generate.py
 fi
+python test.py "$@"

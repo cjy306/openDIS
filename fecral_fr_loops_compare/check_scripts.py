@@ -27,8 +27,10 @@ class Checks(unittest.TestCase):
         self.assertEqual(sorted(np.bincount(a['systems']).tolist()), [20]*2+[21]*10)
         self.assertTrue(np.allclose(np.sum(a['burgers']*a['planes'], axis=1), 0))
         self.assertTrue(np.allclose(np.linalg.norm(a['burgers'], axis=1), 1))
-        self.assertEqual(a['loop_centers'].shape, (100, 3))
-        self.assertEqual(np.bincount(a['loop_types']).tolist(), [25]*4)
+        self.assertEqual(a['loop_centers'].shape, (0, 3))
+        irr = make_layout(12345, True)
+        self.assertEqual(irr['centers'].shape, (550, 3))
+        self.assertEqual(np.bincount(irr['loop_types']).tolist(), [100]*4+[267,267,266])
         self.assertFalse(np.array_equal(a['centers'], make_layout(7)['centers']))
 
     def test_window(self):
@@ -55,17 +57,20 @@ class Checks(unittest.TestCase):
         cell = SimpleNamespace(origin=np.zeros(3),h=np.eye(3)*(1e-6/0.248e-9))
         args = (make_layout(),cell,scope['insert_frank_read_src'],scope['insert_prismatic_loop'])
         a,sa,nn,ns = build_arrays(*args,False)
-        b,sb,_,_ = build_arrays(*args,True)
-        np.testing.assert_array_equal(a,b[:nn])
-        np.testing.assert_array_equal(sa,sb[:ns])
-        self.assertEqual((nn,ns),(20500,20250))
-        self.assertEqual(len(b)-nn,1800)
+        self.assertEqual((nn,ns),(10500,10250))
+        b,sb,nn,ns = build_arrays(make_layout(with_loops=True),*args[1:],True)
+        self.assertEqual(ns,550*41)
+        self.assertEqual(len(b)-nn,400*6+800*8)
+        loop_norms=np.linalg.norm(sb[ns:,2:5],axis=1)
+        self.assertEqual(np.isclose(loop_norms,2/np.sqrt(3)).sum(),800*8)
+        np.testing.assert_array_equal(np.sort(sb[ns:,0]),np.sort(sb[ns:,1]))
         ends=sb[:,:2].astype(int)
         delta=b[ends[:,1],:3]-b[ends[:,0],:3]
         lengths=np.linalg.norm(delta,axis=1)*0.248e-9
-        self.assertAlmostEqual(lengths[:ns].sum()/1e-4,1,places=10)
-        self.assertAlmostEqual(lengths[ns:].sum()/6e-6,1,places=10)
-        self.assertTrue(np.all(np.linalg.norm(delta,axis=1)<=20+1e-9))
+        self.assertAlmostEqual(lengths[:ns].sum()/2.2e-4,1,places=10)
+        expected=400*6*9.8e-9 + 800*4*np.sqrt(2)*8.5e-9
+        self.assertAlmostEqual(lengths[ns:].sum()/expected,1,places=10)
+        self.assertTrue(np.all(np.linalg.norm(delta,axis=1)<=40+1e-9))
         self.assertTrue(np.allclose(np.sum(delta*sb[:,5:8],axis=1),0,atol=1e-9))
         self.assertTrue(np.all(b[nn:,3]==0))
 

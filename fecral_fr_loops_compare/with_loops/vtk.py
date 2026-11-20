@@ -10,7 +10,7 @@ from runtime import setup
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--input", default="output")
+    parser.add_argument("--input", default="output_pm2000_seg40_10")
     parser.add_argument("--stride", type=int, default=1)
     args = parser.parse_args()
     if args.stride < 1:

@@ -1,11 +1,11 @@
 #!/bin/bash
-#SBATCH --job-name=fr_with_loops
+#SBATCH --job-name=fr_no_loops
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
 #SBATCH --output=slurm-%x-%j.out
 #SBATCH --error=slurm-%x-%j.err
-#SBATCH --time=120:00:00
-#SBATCH --partition=qdagnormal
+#SBATCH --time=10:00:00
+#SBATCH --partition=ksagnormal01
 #SBATCH --gres=gpu:1
 #SBATCH --cpus-per-task=8
 
@@ -27,9 +27,8 @@ cd "${SLURM_SUBMIT_DIR:?Submit from the case directory}"
 test -f test.py
 test -f generate.py
 
-# Each job generates only its own initial file, using the identical seeded FR layout.
-if [ ! -f init/init_config.data ]; then
-    echo "[generate] job=${SLURM_JOB_ID:-unknown} node=$(hostname) CUDA_VISIBLE_DEVICES=${CUDA_VISIBLE_DEVICES:-unset}"
-    python -X faulthandler -u generate.py
+# Generate this PM2000 state if its metadata is missing.
+if [ ! -f init_pm2000_seg40_10/metadata.json ]; then
+    python generate.py
 fi
 python test.py "$@"

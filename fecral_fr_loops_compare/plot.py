@@ -16,7 +16,7 @@ def parse_response(text):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--input', default='output')
+    parser.add_argument('--input', default='output_pm2000_seg40_10')
     args = parser.parse_args()
     import matplotlib
     matplotlib.use('Agg')
@@ -28,10 +28,10 @@ def main():
     if missing:
         raise FileNotFoundError('Both groups are required; missing: '+', '.join(missing))
     fig,axs = plt.subplots(1,2,figsize=(11,4.5),layout='constrained')
-    for case,label,color in [('no_loops','FR only','black'),('with_loops','FR + loops','tab:red')]:
+    for case,label,color in [('no_loops','Unirradiated','black'),('with_loops','Neutron irradiated','tab:red')]:
         path = base/case/args.input/'stress_strain_dens.dat'
         e,s,r = parse_response(path.read_text(encoding='utf-8'))
-        if e[-1] < 0.5:
+        if e[-1] < 1.0:
             print(f'WARNING: {case} incomplete: final total strain {e[-1]:.6g}%')
         for ax,y in zip(axs,[s,r]):
             ax.plot(e,y,label=label,color=color,lw=1)
@@ -41,7 +41,7 @@ def main():
         ax.grid(alpha=.25)
         ax.legend()
     fig.suptitle('BCC Fe mobility approximation | 1 um | 300 K | seed 12345')
-    out = base/'plots'
+    out = base/'plots_pm2000_seg40_10'
     out.mkdir(exist_ok=True)
     fig.savefig(out/'loops_compare.png',dpi=250)
     plt.close(fig)
