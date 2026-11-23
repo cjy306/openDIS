@@ -18,13 +18,13 @@ state = {
     "burgmag": 0.248e-9,
     "mu": 81e9,
     "nu": 0.3,
-    "a": 2.0,
+    "a": 6.0,
     # PHYS-APPROX: trial mesh for 20 nm loops; ceiling = unverified convergence;
     # upgrade = repeat with finer mesh and compare loop survival and stress.
     "maxseg": 40.0,
     "minseg": 10.0,
-    "rtol": 0.5,
-    "rann": 1.0,
+    "rtol": 1.5,
+    "rann": 3.0,
     "nextdt": 1e-12,
     "maxdt": 1e-9,
     "use_glide_planes": 1,
@@ -54,7 +54,10 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--init", default=DEFAULT_INIT)
     parser.add_argument("--out", default="output_pm2000_seg40_10")
-    parser.add_argument("--restart", type=int, help="Restart an existing loading stage")
+    resume = parser.add_mutually_exclusive_group()
+    resume.add_argument("--restart", type=int, help="Restart an existing loading stage")
+    resume.add_argument("--restart-relax", action="store_true",
+                        help="Resume zero-stress relaxation from the last saved window")
     parser.add_argument("--relax-max-time", type=float, default=1e-6)
     parser.add_argument("--relax-max-steps", type=int, default=1000000)
     args = parser.parse_args()
@@ -78,7 +81,8 @@ def main():
             net = DisNetManager(network)
             relaxed = run_relaxation(net, state, make_modules,
                 out.parent/(out.name+"_relax"), init,
-                max_time=args.relax_max_time, max_steps=args.relax_max_steps)
+                max_time=args.relax_max_time, max_steps=args.relax_max_steps,
+                resume=args.restart_relax)
             # Fresh driver and state reset loading reference, NOT relaxed geometry.
             network = ExaDisNet()
             network.read_paradis(str(relaxed))
