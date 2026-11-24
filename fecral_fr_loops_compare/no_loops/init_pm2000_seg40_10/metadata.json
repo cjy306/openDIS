@@ -1,0 +1,35 @@
+{
+  "case": "no_loops",
+  "seed": 12345,
+  "box_m": 1e-06,
+  "burgmag_m": 2.48e-10,
+  "fr_length_m": 4e-07,
+  "fr_sources": 250,
+  "fr_nodes": 10500,
+  "fr_segments": 10250,
+  "fr_density_m2": 100000000000000.03,
+  "total_density_m2": 100000000000000.03,
+  "fr_sha256": "4528dcb6492afb1e694b19a4a88d5eb15917a73152eb591c7ce9d984a138a547",
+  "slip_system_counts": [
+    21,
+    21,
+    21,
+    21,
+    21,
+    21,
+    21,
+    21,
+    21,
+    21,
+    20,
+    20
+  ],
+  "loops": 0,
+  "loops_100": 0,
+  "loops_111": 0,
+  "loop_circumdiameters_m": {
+    "100": 1.7e-08,
+    "111": 1.96e-08
+  },
+  "loop_segments": 0
+}
