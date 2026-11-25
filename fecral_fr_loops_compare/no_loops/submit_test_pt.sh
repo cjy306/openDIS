@@ -1,4 +1,5 @@
 #!/bin/bash -l
+# sbatch -p gpu_4090 --gpus=1 ./submit_test_pt.sh
 #SBATCH --job-name=fr_no_loops_pt
 #SBATCH --time=10:00:00
 #SBATCH --output=slurm-%x-%j.out
